@@ -6,7 +6,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Model;
 
 public class TesterKling implements Runnable {
 	private Model m;
-	private long previousTime;
+	private long previousTime = System.currentTimeMillis();
 	public TesterKling(Model m){
 		this.m = m;
 	}
@@ -21,6 +21,7 @@ public class TesterKling implements Runnable {
 			log("posY=" + m.getPlayer().getY() + " posX=" + m.getPlayer().getX()
 					+ " velocity=" + m.getPlayer().getVelocityY());
 			
+			previousTime = currentTime;
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
