@@ -10,7 +10,7 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = Constants.NAME + " " + Constants.VERSION;
 		cfg.useGL20 = false;
-		cfg.width = 490;
+		cfg.width = 410;
 		cfg.height = 320;
 		
 		new LwjglApplication(new Dimensions(), cfg);
