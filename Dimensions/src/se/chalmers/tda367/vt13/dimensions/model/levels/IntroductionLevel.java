@@ -6,6 +6,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Platform;
 
 public class IntroductionLevel implements Level {
 	private List<Platform> platforms;
+	private int worldSpeed = 10;
 	
 	@Override
 	public List<Platform> getListOfPlatforms() {
@@ -24,6 +25,10 @@ public class IntroductionLevel implements Level {
 		
 	}
 
-	
+	@Override
+	public int getStandardWorldSpeed() {
+		return worldSpeed;
+		
+	}
 
 }

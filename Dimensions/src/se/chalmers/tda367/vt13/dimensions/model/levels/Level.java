@@ -8,4 +8,5 @@ public interface Level {
 	public List<Platform> getListOfPlatforms();
 	public void addPlatform(Platform p);
 	public void removePlatform(Platform p);
+	public int getStandardWorldSpeed();
 }

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.Model;
+import se.chalmers.tda367.vt13.dimensions.model.levels.IntroductionLevel;
 
 public class TesterKling implements Runnable {
 	private Model m;
@@ -41,7 +42,7 @@ public class TesterKling implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		new Thread(new TesterKling(new Model())).start();
+		new Thread(new TesterKling(new Model(new IntroductionLevel()))).start();
 
 	}
 
