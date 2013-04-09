@@ -11,7 +11,6 @@ public class Model {
 	private List<Platform> platforms;
 	private Level level;
 	
-	
 	public Model(Level level){
 		this.level = level;
 		player = new NormalPlayer(this);
@@ -28,6 +27,10 @@ public class Model {
 	 
 	public void update(float time){
 		player.calculateState(time);
+	}
+	
+	public void playerJump(){
+		player.jump();
 	}
 	
 	public Player getPlayer(){

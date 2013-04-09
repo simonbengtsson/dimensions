@@ -18,7 +18,7 @@ public class TesterKling implements Runnable {
 	public void run() {
 		while(true){
 			if(r.nextInt(100) > 90){
-				m.getPlayer().jump();
+				m.playerJump();
 				System.out.println("Jumped!");
 			}
 			
@@ -27,7 +27,7 @@ public class TesterKling implements Runnable {
 			m.update(diff);
 			
 			
-			log("posY=" + m.getPlayer().getY() + " posX=" + m.getPlayer().getX()
+			log("posY=" + m.getPlayer().getPosY() + " posX=" + m.getPlayer().getPosX()
 					+ " velocity=" + m.getPlayer().getVelocityY());
 			
 			previousTime = currentTime;

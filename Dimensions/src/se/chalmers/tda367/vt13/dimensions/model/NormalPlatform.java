@@ -1,29 +1,15 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-public class NormalPlatform implements Platform {
-	private int height;
-	private int width;
-	private int posY;
-	private int posX;
+public class NormalPlatform extends Platform {
+
+	public NormalPlatform(int x, int y, int width, int height) {
+		super(x, y, width, height);
+	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getPosY() {
-		return posY;
-	}
-
-	@Override
-	public int getPosX() {
-		return posX;
-	}
-
 }
