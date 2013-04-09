@@ -6,6 +6,7 @@ public class NormalPlayer implements Player {
 	private int posY;
 	private boolean isFalling;
 	private Model model;
+	private int jumpInitialSpeed = 10;
 	
 	public NormalPlayer(Model m){
 		posX = 0;
@@ -33,7 +34,7 @@ public class NormalPlayer implements Player {
 
 	@Override
 	public void jump() {
-		velocityY = 10;
+		velocityY = jumpInitialSpeed;
 		isFalling = true;
 	}
 	
@@ -43,8 +44,10 @@ public class NormalPlayer implements Player {
 	}
 	
 	public void calculateState(float time){
-		posY = (int) (posY + (velocityY*time) + (0.5*model.getGravity()*time*time));
-		velocityY = velocityY + (model.getGravity() * time);
+		if(isFalling){
+			posY = (int) (posY + (velocityY*time) + (0.5*model.getGravity()*time*time));
+			velocityY = velocityY + (model.getGravity() * time);
+		}
 		posX = (int) (posX + (model.getWorldSpeed()*time));
 	}
 

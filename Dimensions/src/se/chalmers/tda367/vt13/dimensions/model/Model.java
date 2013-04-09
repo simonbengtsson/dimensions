@@ -38,11 +38,11 @@ public class Model {
 		worldSpeed = speed;
 	}
 	
-	public void addPlatform(Platform p){
+	public void addTempPlatform(Platform p){
 		platforms.add(p);
 	}
 	
-	public void removePlatform(Platform p){
+	public void removeTempPlatform(Platform p){
 		platforms.remove(p);
 	}
 }

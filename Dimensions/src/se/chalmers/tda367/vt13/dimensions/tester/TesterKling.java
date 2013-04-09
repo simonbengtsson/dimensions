@@ -1,12 +1,14 @@
 package se.chalmers.tda367.vt13.dimensions.tester;
 
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.Model;
 
 public class TesterKling implements Runnable {
 	private Model m;
 	private long previousTime = System.currentTimeMillis();
+	private Random r = new Random();
 	public TesterKling(Model m){
 		this.m = m;
 	}
@@ -14,9 +16,15 @@ public class TesterKling implements Runnable {
 	@Override
 	public void run() {
 		while(true){
+			if(r.nextInt(100) > 90){
+				m.getPlayer().jump();
+				System.out.println("Jumped!");
+			}
+			
 			long currentTime = System.currentTimeMillis();
 			float diff = (float)(currentTime - previousTime)/1000;
 			m.update(diff);
+			
 			
 			log("posY=" + m.getPlayer().getY() + " posX=" + m.getPlayer().getX()
 					+ " velocity=" + m.getPlayer().getVelocityY());
