@@ -5,6 +5,7 @@ public class Model {
 	private float worldSpeed = 10;
 	private Player player;
 	
+	
 	public Model(){
 		player = new NormalPlayer(this);
 	}
