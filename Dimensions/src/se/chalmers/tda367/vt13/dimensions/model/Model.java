@@ -21,4 +21,8 @@ public class Model {
 	public Player getPlayer(){
 		return player;
 	}
+	
+	public float getWorldSpeed(){
+		return worldSpeed;
+	}
 }

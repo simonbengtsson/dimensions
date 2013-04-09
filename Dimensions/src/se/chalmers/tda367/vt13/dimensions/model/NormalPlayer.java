@@ -45,6 +45,7 @@ public class NormalPlayer implements Player {
 	public void calculateState(float time){
 		posY = (int) (posY + (velocityY*time) + (0.5*model.getGravity()*time*time));
 		velocityY = velocityY + (model.getGravity() * time);
+		posX = (int) (posX + (model.getWorldSpeed()*time));
 	}
 
 }

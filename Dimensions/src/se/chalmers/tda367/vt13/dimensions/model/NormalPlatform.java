@@ -6,7 +6,6 @@ public class NormalPlatform implements Platform {
 	private int posY;
 	private int posX;
 	
-	
 	@Override
 	public int getHeight() {
 		return height;
