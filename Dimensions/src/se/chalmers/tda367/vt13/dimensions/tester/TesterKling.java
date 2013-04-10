@@ -3,10 +3,9 @@ package se.chalmers.tda367.vt13.dimensions.tester;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
-import se.chalmers.tda367.vt13.dimensions.model.Model;
-import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.factories.ModelFactory;
+import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.levels.*;
 
 public class TesterKling implements Runnable {
 	private Model m;
@@ -19,12 +18,12 @@ public class TesterKling implements Runnable {
 	@Override
 	public void run() {
 		while(true){
-//			if(r.nextInt(100) > 90){
-//				m.playerJump();
-//				System.out.println("Jumped!");
-//			}
-			
 			if(r.nextInt(100) > 95){
+				m.playerJump();
+				System.out.println("Jumped!");
+			}
+			
+			if(r.nextInt(100) > 96){
 				PowerUp p = new SlowPowerUp(10, 10, m);
 				p.use();
 				System.out.println("Now slow!");
@@ -40,7 +39,7 @@ public class TesterKling implements Runnable {
 			
 			previousTime = currentTime;
 			try {
-				Thread.sleep(100);
+				Thread.sleep(250);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,7 +49,8 @@ public class TesterKling implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		new Thread(new TesterKling(new Model(new Level()))).start();
+		Model m = ModelFactory.getModel();
+		new Thread(new TesterKling(m)).start();
 
 	}
 
