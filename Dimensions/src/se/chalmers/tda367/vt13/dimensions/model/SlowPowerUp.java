@@ -1,8 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 public class SlowPowerUp extends GameObject implements PowerUp{
-	private int useSpeed = 5;
-	private int duration = 10;
+	private int useSpeed = 2;
+	private int duration = 10000; // In ms
 	private Model m;
 	
 	public SlowPowerUp(int x, int y, Model m){
@@ -12,7 +12,7 @@ public class SlowPowerUp extends GameObject implements PowerUp{
 
 	@Override
 	public void use() {
-		m.setWorldSpeed(useSpeed, duration);
+		m.setPlayerSpeed(useSpeed, duration);
 	}
 
 	@Override

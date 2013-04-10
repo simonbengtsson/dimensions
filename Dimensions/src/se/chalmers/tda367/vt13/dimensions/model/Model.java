@@ -5,20 +5,24 @@ import java.util.*;
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 
 public class Model {
-	private float gravity = -9.82f;
-	private float worldSpeed = 10;
+	private double gravity = -9.82f;
 	private Player player;
 	private List<Platform> platforms;
 	private Level level;
+	private boolean usingPowerUp = false;
 	
 	public Model(Level level){
 		this.level = level;
 		player = new NormalPlayer(this);
-		platforms = level.getListOfPlatforms();
+		platforms = level.getPlatforms();
 	}
 	
-	public float getGravity(){
+	public double getGravity(){
 		return gravity;
+	}
+	
+	public boolean isUsingPowerUp(){
+		return usingPowerUp;
 	}
 	
 	public void setGravity(float gravity){
@@ -37,26 +41,22 @@ public class Model {
 		return player;
 	}
 	
-	public float getWorldSpeed(){
-		return worldSpeed;
+	public void setPlayerSpeed(double speed){
+		player.setVelocityX(speed);
 	}
 	
-	public void setWorldSpeed(float speed){
-		worldSpeed = speed;
-	}
-	
-	public void setWorldSpeed(float speed, int time){
-		setWorldSpeed(speed);
+	public void setPlayerSpeed(double speed, int time){
+		setPlayerSpeed(speed);
 		new Timer().schedule(new TimerTask() {          
 		    @Override
 		    public void run() {
-		    	resetWorldSpeed();
+		    	resetPlayerSpeed();
 		    }
 		}, time);
 	}
 	
-	public void resetWorldSpeed(){
-		worldSpeed = level.getStandardWorldSpeed();
+	public void resetPlayerSpeed(){
+		player.setVelocityX(player.getStandardVelocityX());
 	}
 	
 	public void addTempPlatform(Platform p){

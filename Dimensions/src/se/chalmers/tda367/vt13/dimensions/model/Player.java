@@ -3,10 +3,13 @@ package se.chalmers.tda367.vt13.dimensions.model;
 public abstract class Player extends GameObject {
 	private boolean isFalling;
 	private double jumpInitialSpeed;
+	private double standardVelocityX;
 	
-	public Player(int x, int y) {
+	public Player(int x, int y, double standardVelocityX) {
 		super(x, y);
 		isFalling = true;
+		this.standardVelocityX = standardVelocityX;
+		
 	}
 	
 	public void jump(){
@@ -29,6 +32,10 @@ public abstract class Player extends GameObject {
 
 	public double getJumpInitialSpeed() {
 		return jumpInitialSpeed;
+	}
+	
+	public double getStandardVelocityX(){
+		return standardVelocityX;
 	}
 
 	public void setJumpInitialSpeed(double jumpInitialSpeed) {

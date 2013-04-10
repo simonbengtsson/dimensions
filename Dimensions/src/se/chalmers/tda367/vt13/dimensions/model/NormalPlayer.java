@@ -1,12 +1,13 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 public class NormalPlayer extends Player {
-	private Model model;
+	private Model m;
 	
 	public NormalPlayer(Model m){
-		super(0, 100);
-		this.model = m;
+		super(0, 100, 10);
+		this.m = m;
 		setJumpInitialSpeed(10);
+		setVelocityX(10);
 	}
 	
 	public void onPlatform(){
@@ -16,10 +17,10 @@ public class NormalPlayer extends Player {
 	
 	public void calculateState(float time){
 		if(isFalling()){
-			setPosY((int) (getPosY() + (getVelocityY()*time) + (0.5*model.getGravity()*time*time)));
-			setVelocityY(getVelocityY() + (model.getGravity() * time));
+			setPosY((double) (getPosY() + (getVelocityY()*time) + (0.5*m.getGravity()*time*time)));
+			setVelocityY(getVelocityY() + (m.getGravity() * time));
 		}
-		setPosX((int) (getPosX() + (model.getWorldSpeed()*time)));
+		setPosX((double) (getPosX() + (getVelocityX()*time)));
 	}
 
 	@Override

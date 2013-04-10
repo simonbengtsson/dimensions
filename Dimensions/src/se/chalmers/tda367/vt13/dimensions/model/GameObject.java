@@ -4,8 +4,8 @@ package se.chalmers.tda367.vt13.dimensions.model;
 public abstract class GameObject {
 	private double velocityY;
 	private double velocityX;
-	private int posX;
-	private int posY;
+	private double posX;
+	private double posY;
 	private Collider collider;
 	
 	public GameObject(int x, int y){
@@ -16,19 +16,19 @@ public abstract class GameObject {
 		collider = new Collider();
 	}
 	
-	public int getPosX(){
+	public double getPosX(){
 		return posX;
 	}
 	
-	public int getPosY(){
+	public double getPosY(){
 		return posY;
 	}
 	
-	public void setPosX(int x){
+	public void setPosX(double x){
 		posX = x;
 	}
 	
-	public void setPosY(int y){
+	public void setPosY(double y){
 		posY = y;
 	}
 	
