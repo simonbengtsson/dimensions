@@ -10,7 +10,6 @@ public abstract class Player extends GameObject {
 		super(x, y, z);
 		isFalling = true;
 		this.standardVelocityX = standardVelocityX;
-		
 	}
 	
 	public void setModel(Model m){
@@ -25,8 +24,15 @@ public abstract class Player extends GameObject {
 		setVelocityY(jumpInitialSpeed);
 		isFalling = true;
 	}
+	
+	/*
+	 * 
+	 */
 	public abstract void calculateState(float time);
 	
+	/*
+	 * 
+	 */
 	public boolean collision(GameObject g){
 		return false;
 	}
