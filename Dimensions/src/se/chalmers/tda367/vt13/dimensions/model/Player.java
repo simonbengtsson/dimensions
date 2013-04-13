@@ -5,8 +5,8 @@ public abstract class Player extends GameObject {
 	private double jumpInitialSpeed;
 	private double standardVelocityX;
 	
-	public Player(int x, int y, double standardVelocityX) {
-		super(x, y);
+	public Player(double x, double y, double z, double standardVelocityX) {
+		super(x, y, z);
 		isFalling = true;
 		this.standardVelocityX = standardVelocityX;
 		

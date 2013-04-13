@@ -5,8 +5,8 @@ public class SlowPowerUp extends GameObject implements PowerUp{
 	private int duration = 10000; // In ms
 	private Model m;
 	
-	public SlowPowerUp(int x, int y, Model m){
-		super(x, y);
+	public SlowPowerUp(double x, double y, double z, Model m){
+		super(x, y, z);
 		this.m = m;
 	}
 

@@ -4,7 +4,7 @@ public class NormalPlayer extends Player {
 	private Model m;
 	
 	public NormalPlayer(Model m){
-		super(0, 100, 10);
+		super(0, 100, 0, 10);
 		this.m = m;
 		setJumpInitialSpeed(10);
 		setVelocityX(10);
@@ -17,7 +17,7 @@ public class NormalPlayer extends Player {
 	
 	public void calculateState(float time){
 		if(isFalling()){
-			setPosY((double) (getPosY() + (getVelocityY()*time) + (0.5*m.getGravity()*time*time)));
+			setPosY((getPosY() + (getVelocityY()*time) + (0.5*m.getGravity()*time*time)));
 			setVelocityY(getVelocityY() + (m.getGravity() * time));
 		}
 		setPosX((double) (getPosX() + (getVelocityX()*time)));

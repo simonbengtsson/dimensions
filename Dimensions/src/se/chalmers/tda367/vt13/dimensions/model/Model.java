@@ -11,8 +11,7 @@ public class Model {
 	private List<PowerUp> powerUps;
 	private boolean usingPowerUp = false;
 	
-	public Model(Level level){
-		player = new NormalPlayer(this);
+	public Model(Level level, Player p){
 		platforms = level.getPlatforms();
 		powerUps = level.getPowerUps();
 	}
