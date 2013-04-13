@@ -1,5 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.lang.annotation.Inherited;
+
 public class NormalPlayer extends Player {
 	private Model m;
 	
@@ -15,6 +17,8 @@ public class NormalPlayer extends Player {
 		setVelocityY(0);
 	}
 	
+	/** {@inheritDoc}
+	 */
 	public void calculateState(float time){
 		if(isFalling()){
 			setPosY((double) (getPosY() + (getVelocityY()*time) + (0.5*m.getGravity()*time*time)));
