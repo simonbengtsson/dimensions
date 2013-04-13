@@ -4,12 +4,21 @@ public abstract class Player extends GameObject {
 	private boolean isFalling;
 	private double jumpInitialSpeed;
 	private double standardVelocityX;
+	private Model m;
 	
 	public Player(double x, double y, double z, double standardVelocityX) {
 		super(x, y, z);
 		isFalling = true;
 		this.standardVelocityX = standardVelocityX;
 		
+	}
+	
+	public void setModel(Model m){
+		this.m = m;
+	}
+	
+	public Model getModel(){
+		return m;
 	}
 	
 	public void jump(){

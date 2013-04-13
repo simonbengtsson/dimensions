@@ -40,17 +40,17 @@ public class TesterKling implements Runnable {
 			
 			points.add((int)m.getPlayer().getPosY());
 			
-//			if(m.getPlayer().getPosY() < 10){
-//				drawGraph();
-//				break;
-//			}
+			if(m.getPlayer().getPosY() < 10){
+				drawGraph();
+				break;
+			}
 			
 			log("\tposY=" + (int)m.getPlayer().getPosY() + "\t\tvelocityY=" + (int)m.getPlayer().getVelocityY()
 					+ "\t\tposX=" + (int)m.getPlayer().getPosX() + "\t\tvelocityX=" + (int)m.getPlayer().getVelocityX());
 			
 			previousTime = currentTime;
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

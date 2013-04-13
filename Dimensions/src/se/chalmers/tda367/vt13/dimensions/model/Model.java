@@ -12,6 +12,7 @@ public class Model {
 	private boolean usingPowerUp = false;
 	
 	public Model(Level level, Player p){
+		player = p;
 		platforms = level.getPlatforms();
 		powerUps = level.getPowerUps();
 	}
