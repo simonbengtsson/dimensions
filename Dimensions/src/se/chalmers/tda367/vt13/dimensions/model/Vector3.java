@@ -49,6 +49,10 @@ public class Vector3 {
 		multiply(m, m, m);
 	}
 	
+	public double getLength(){
+		return Math.sqrt((x*x) + (y*y) + (z*z));
+	}
+	
 	public void multiply(double x, double y, double z){
 		this.x = this.x * x;
 		this.y = this.y * y;
@@ -61,8 +65,10 @@ public class Vector3 {
 	
 	public int hashCode(){
 		int hash = 0;
-		
-		return hash;
+		hash += 5*x;
+		hash += 7*y;
+		hash += 9*z;
+		return (int)hash;
 	}
 	
 	public boolean equals(Object o){
