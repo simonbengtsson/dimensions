@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
  * @author Carl Fredriksson
  */
 public class GameController implements ApplicationListener {
-//Test
+
 	// Instance variables
 	GameModel model;
 	GameView view;
