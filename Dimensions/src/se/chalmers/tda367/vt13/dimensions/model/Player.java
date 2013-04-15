@@ -7,27 +7,23 @@ package se.chalmers.tda367.vt13.dimensions.model;
 public class Player extends GameObject {
 
 	// Instance variables
-	private double gravityConstant;
-	private double jumpSpeed;
+	private float gravityConstant;
+	private float jumpSpeed;
 	private boolean isGrounded;
 	
 	// Public methods
 	/**
 	 * Constructor.
 	 * @param position the position of the player within the game
+	 * @param size the size of the player
 	 * @param speed the speed of the player
-	 * @param height the height of the player
-	 * @param width the width of the player
 	 * @param gravityConstant the gravity constant affecting how fast the player falls
 	 * @param jumpSpeed the initial speed of the player when jumping
 	 * @param isGrounded the boolean for if the player is standing on a platform or not
 	 */
-	public Player(Vector3 position, Vector3 speed, double height, double width,
-			double gravityConstant, double jumpSpeed, boolean isGrounded) {
-		setPosition(position);
-		setSpeed(speed);
-		setHeight(height);
-		setWidth(width);
+	public Player(Vector3 position, Vector3 size, Vector3 speed, float gravityConstant,
+			float jumpSpeed, boolean isGrounded) {
+		super(position, size, speed);
 		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;

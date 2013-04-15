@@ -10,11 +10,14 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
 	// Instance variables
 	
 	// Public methods
-	public SpeedPowerUp(Vector3 position, Vector3 speed, double height, double width) {
-		setPosition(position);
-		setSpeed(speed);
-		setHeight(height);
-		setWidth(width);
+	/**
+	 * Constructor. Calls the super class constructor.
+	 * @param position the position of the SpeedPowerUp
+	 * @param size the size of the SpeedPowerUp
+	 * @param speed the speed of the SpeedPowerUp
+	 */
+	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
+		super(position, size, speed);
 	}
 	
 	@Override

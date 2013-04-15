@@ -7,7 +7,7 @@ package se.chalmers.tda367.vt13.dimensions.model;
 public class Vector3 {
 
 	// Instance variables
-	private double x, y, z;
+	private float x, y, z;
 	
 	// Public methods
 	/**
@@ -25,7 +25,7 @@ public class Vector3 {
 	 * @param y the Vector's y value
 	 * @param z the Vector's z value
 	 */
-	public Vector3(double x, double y, double z) {
+	public Vector3(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -45,7 +45,7 @@ public class Vector3 {
 	 * Get method for instance variable x.
 	 * @return the vector's x value
 	 */
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 	
@@ -53,7 +53,7 @@ public class Vector3 {
 	 * Get method for instance variable y.
 	 * @return the vector's y value
 	 */
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 	
@@ -61,7 +61,7 @@ public class Vector3 {
 	 * Get method for instance variable z.
 	 * @return the vector's y value
 	 */
-	public double getZ() {
+	public float getZ() {
 		return z;
 	}
 	
@@ -69,7 +69,7 @@ public class Vector3 {
 	 * Set method for instance variable x.
 	 * @param x the x value for the vector
 	 */
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 	
@@ -77,7 +77,7 @@ public class Vector3 {
 	 * Set method for instance variable y.
 	 * @param y the y value for the vector
 	 */
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 	
@@ -85,7 +85,7 @@ public class Vector3 {
 	 * Set method for instance variable z.
 	 * @param z the z value for the vector
 	 */
-	public void setZ(double z) {
+	public void setZ(float z) {
 		this.z = z;
 	}
 	
@@ -113,7 +113,7 @@ public class Vector3 {
 	 * Scale the vector with a scalar.
 	 * @param scalar the scalar to scale the vector with
 	 */
-	public void scale(double scalar) {
+	public void scale(float scalar) {
 		x = x * scalar;
 		y = y * scalar;
 		z = z * scalar;
