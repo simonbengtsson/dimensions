@@ -119,6 +119,64 @@ public class Vector3 {
 		z = z * scalar;
 	}
 	
+	/**
+	 * Returns the vector as an array
+	 * @return an array
+	 */
+	public double[] getArray(){
+		return new double[]{x, y ,z};
+	}
+	
+	/**
+	 * Sets x, y & z to the specified values.
+	 * @param x Sets x-value
+	 * @param y Sets y-value
+	 * @param z Sets z-value
+	 */
+	public void setXYZ(float x, float y, float z){
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
+	/**
+	 * Clones this vector and returns equal vector.
+	 */
+	public Vector3 clone(){
+		return new Vector3(x, y, z);
+	}
+	
+	public int hashCode(){
+		double hash = 0;
+		hash =+ x*5;
+		hash =+ y*7;
+		hash =+ z*9;
+		return (int)hash;
+	}
+	
+	/**
+	 * Checks whether this vector equals another vector/object.
+	 */
+	public boolean equals(Object o){
+		if(o instanceof Vector3){
+			Vector3 v = (Vector3)o;
+			if(v.getX() == x && v.getY() == y && v.getZ() == z){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Give the values of this vector as a string.
+	 */
+	public String toString(){
+		return "x=" + x + " y=" + y + " z=" + z;
+	}
+
 	// Private methods
 	
 }
