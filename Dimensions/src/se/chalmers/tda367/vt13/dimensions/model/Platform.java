@@ -1,18 +1,31 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-public abstract class Platform extends GameObject {
-	private int width;
-	private int height;
-	public Platform(double x, double y, double z, int width, int height){
-		super(x, y, z);
-		this.width = width;
-		this.height = height;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public int getHeight() {
-		return height;
+/**
+ * Class describing a platform in the game.
+ * @author Carl Fredriksson
+ */
+public class Platform extends GameObject {
+
+	// Instance variables
+	
+	// Public methods
+	public Platform(Vector3 position, Vector3 speed, double height, double width) {
+		setPosition(position);
+		setSpeed(speed);
+		setHeight(height);
+		setWidth(width);
 	}
 	
+	@Override
+	public void update() {
+		move();
+	}
+	
+	// Private methods
+	/**
+	 * Move the platform.
+	 */
+	private void move() {
+		getPosition().add(getSpeed());
+	}
 }

@@ -1,91 +1,124 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+/**
+ * Class describing a three dimensional vector.
+ * @author Carl Fredriksson
+ */
 public class Vector3 {
-	private double x;
-	private double y;
-	private double z;
-		
-	public Vector3(double x, double y, double z){
+
+	// Instance variables
+	private double x, y, z;
+	
+	// Public methods
+	/**
+	 * Default constructor.
+	 */
+	public Vector3() {
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+	}
+	
+	/**
+	 * Constructor.
+	 * @param x the Vector's x value
+	 * @param y the Vector's y value
+	 * @param z the Vector's z value
+	 */
+	public Vector3(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
-	public double[] getArray(){
-		return new double[]{x, y ,z};
+	/**
+	 * Copy constructor.
+	 * @param vector3 the vector3 to copy from
+	 */
+	public Vector3(Vector3 vector3) {
+		this.x = vector3.getX();
+		this.y = vector3.getY();
+		this.z = vector3.getZ();
 	}
 	
-	public double getX(){
+	/**
+	 * Get method for instance variable x.
+	 * @return the vector's x value
+	 */
+	public double getX() {
 		return x;
 	}
 	
-	public double getY(){
+	/**
+	 * Get method for instance variable y.
+	 * @return the vector's y value
+	 */
+	public double getY() {
 		return y;
 	}
 	
-	public double getZ(){
+	/**
+	 * Get method for instance variable z.
+	 * @return the vector's y value
+	 */
+	public double getZ() {
 		return z;
 	}
 	
-	public void setX(double x){
+	/**
+	 * Set method for instance variable x.
+	 * @param x the x value for the vector
+	 */
+	public void setX(double x) {
 		this.x = x;
 	}
 	
-	public void setY(double y){
+	/**
+	 * Set method for instance variable y.
+	 * @param y the y value for the vector
+	 */
+	public void setY(double y) {
 		this.y = y;
 	}
-
-	public void setZ(double z){
+	
+	/**
+	 * Set method for instance variable z.
+	 * @param z the z value for the vector
+	 */
+	public void setZ(double z) {
 		this.z = z;
 	}
 	
-	public void setXYZ(double x, double y, double z){
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	/**
+	 * Vector addition.
+	 * @param otherVector the vector to add to this vector
+	 */
+	public void add(Vector3 otherVector) {
+		this.x = this.x + otherVector.getX();
+		this.y = this.y + otherVector.getY();
+		this.z = this.z + otherVector.getZ();
 	}
 	
-	public void multiply(double m){
-		multiply(m, m, m);
+	/**
+	 * Vector subtraction.
+	 * @param otherVector the vector to subtract from this vector
+	 */
+	public void subtract(Vector3 otherVector) {
+		this.x = this.x - otherVector.getX();
+		this.y = this.y - otherVector.getY();
+		this.z = this.z - otherVector.getZ();
 	}
 	
-	public double getLength(){
-		return Math.sqrt((x*x) + (y*y) + (z*z));
+	/**
+	 * Scale the vector with a scalar.
+	 * @param scalar the scalar to scale the vector with
+	 */
+	public void scale(double scalar) {
+		x = x * scalar;
+		y = y * scalar;
+		z = z * scalar;
 	}
 	
-	public void multiply(double x, double y, double z){
-		this.x = this.x * x;
-		this.y = this.y * y;
-		this.z = this.z * z;
-	}
-	
-	public Vector3 clone(){
-		return new Vector3(x, y, z);
-	}
-	
-	public int hashCode(){
-		int hash = 0;
-		hash += 5*x;
-		hash += 7*y;
-		hash += 9*z;
-		return (int)hash;
-	}
-	
-	public boolean equals(Object o){
-		if(o instanceof Vector3){
-			Vector3 v = (Vector3)o;
-			if(v.getX() == x && v.getY() == y && v.getZ() == z){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
-	}
-	
-	public String toString(){
-		return "x=" + x + " y=" + y + " z=" + z;
-	}
+	// Private methods
 	
 }

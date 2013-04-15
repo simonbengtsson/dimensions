@@ -1,91 +1,85 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+/**
+ * Abstract class for all objects within the game.
+ * @author Carl Fredriksson
+ */
 public abstract class GameObject {
-	private Vector3 velocity;
+	
+	// Instance variables
 	private Vector3 position;
-	private Collider collider;
+	private Vector3 speed;
+	private double height;
+	private double width;
 	
-	public GameObject(double x, double y, double z){
-		position = new Vector3(x, y, z);
-		velocity = new Vector3(0, 0, 0);
-		collider = new Collider();
+	// Public methods
+	/**
+	 * Get method for instance variable position.
+	 * @return the position of the GameObject as a Vector3
+	 */
+	public Vector3 getPosition() {
+		return position;
 	}
 	
-	public Vector3 getPos(){
-		return position.clone();
+	/**
+	 * Get method for instance variable speed.
+	 * @return the speed of the GameObject as a Vector3
+	 */
+	public Vector3 getSpeed() {
+		return speed;
 	}
 	
-	public Vector3 getVelocity() {
-		return velocity.clone();
+	/**
+	 * Get method for instance variable height.
+	 * @return the height of the GameObject
+	 */
+	public double getHeight() {
+		return height;
 	}
 	
-	public void setPos(double x, double y, double z){
-		position.setXYZ(x, y, z);
+	/**
+	 * Get method for instance variable width.
+	 * @return the width of the GameObject
+	 */
+	public double getWidth() {
+		return width;
 	}
 	
-	public void setVelocity(double x, double y, double z) {
-		velocity.setXYZ(x, y, z);
+	/**
+	 * Set method for instance variable position.
+	 * @param position the position of the GameObject as a Vector3
+	 */
+	public void setPosition(Vector3 position) {
+		this.position = position;
 	}
 	
-	public void setPos(Vector3 v){
-		position = v.clone();
+	/**
+	 * Set method for instance variable speed.
+	 * @param speed the speed of the GameObject as a Vector3
+	 */
+	public void setSpeed(Vector3 speed) {
+		this.speed = speed;
 	}
 	
-	public void setVelocity(Vector3 v) {
-		velocity = v.clone();
+	/**
+	 * Set method for instance variable height.
+	 * @param height the height of the GameObject
+	 */
+	public void setHeight(double height) {
+		this.height = height;
 	}
 	
-	public double getPosX(){
-		return position.getX();
+	public void setWidth(double width) {
+		this.width = width;
 	}
 	
-	public double getPosY(){
-		return position.getY();
-	}
+	/**
+	 * Method to be implemented in sub classes.
+	 * Is called by the controller, making all
+	 * objects update their states every frame.
+	 */
+	public abstract void update();
 	
-	public double getPosZ(){
-		return position.getZ();
-	}
-	
-	public double getVelocityX(){
-		return velocity.getX();
-	}
-	
-	public double getVelocityY(){
-		return velocity.getY();
-	}
-	
-	public double getVelocityZ(){
-		return velocity.getZ();
-	}
-	
-	public void setPosX(double x){
-		position.setX(x);
-	}
-	
-	public void setPosY(double y){
-		position.setY(y);
-	}
-	
-	public void setPosZ(double z){
-		position.setZ(z);
-	}
-	
-	public void setVelocityX(double x){
-		velocity.setX(x);
-	}
-	
-	public void setVelocityY(double y){
-		velocity.setY(y);
-	}
-	
-	public void setVelocityZ(double z){
-		velocity.setZ(z);
-	}
-	
-	public Collider getCollider(){
-		return collider;
-	}
-	
-	public abstract void draw();
+	// Private methods
+
 }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;Dimensions-desktop&apos;&#x0A;- Original project: &apos;Dimensions-desktop&apos;&#x0A;- Original element: &apos;se.chalmers.tda367.vt13.dimensions.Main.java&apos;" description="Delete element" element1="/src&lt;se.chalmers.tda367.vt13.dimensions{Main.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1366032512169" subPackages="false" version="1.0"/>
+</session>
