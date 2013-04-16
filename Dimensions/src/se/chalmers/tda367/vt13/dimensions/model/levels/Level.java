@@ -20,7 +20,7 @@ public class Level {
 		stairCase(gameobjects);
 		spawnSingleBlock(gameobjects,50,0,150,50);
 		// Svårt att veta vart man ska spawna powerups, bör göras via position från listan
-		spawnPowerUp(gameobjects,1,200,100);
+		spawnPowerUp(gameobjects,1,200,130);
 		
 		
 	}
