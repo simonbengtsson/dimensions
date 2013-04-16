@@ -60,7 +60,11 @@ public class Level {
 		spawnSingleBlock(l,0,10,100,50);
 		
 	}
-
+	
+	/** Adds a staircase pattern of platforms to the list
+	 * 
+	 * @param l
+	 */
 	public void stairCase(List <GameObject> l){
 		listAddShortPf(l,50,10);
 		listAddShortPf(l,50,50);
