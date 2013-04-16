@@ -6,9 +6,7 @@ public class TestVector {
 	public static void main(String[] args){
 		Vector3 v = new Vector3(1, 1, 1);
 		System.out.println(v.toString());
-		v.multiply(5);
-		System.out.println(v.toString());
-		v.multiply(5, 4, 3);
+		v.scale(5);
 		System.out.println(v.toString());
 	}
 }
