@@ -27,11 +27,11 @@ public class TesterKling implements Runnable {
 	@Override
 	public void run() {
 		while(true){
-			if(r.nextInt(100) > 90){
-				PowerUp p = new SpeedPowerUp(new Vector3(), new Vector3(), new Vector3());
-				p.use(m);
-				System.out.println("Now slow!");
-			}
+//			if(r.nextInt(100) > 90){
+//				PowerUp p = new SpeedPowerUp(new Vector3(), new Vector3(), new Vector3());
+//				p.use(m);
+//				System.out.println("Now slow!");
+//			}
 			
 			long currentTime = System.currentTimeMillis();
 			float diff = (float)(currentTime - previousTime)/1000;
@@ -50,7 +50,7 @@ public class TesterKling implements Runnable {
 			
 			previousTime = currentTime;
 			try {
-				Thread.sleep(100);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,7 +62,7 @@ public class TesterKling implements Runnable {
 	public static void main(String[] args) {
 		Level lv = new Level("Level1");
 		Player player = new Player(new Vector3(10,100,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
-			, 0.75f, 15f, false);
+			, -10f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		GameModel model = new GameModel(lv.getList(), player);

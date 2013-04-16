@@ -10,7 +10,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 public class DimensionsDesktop {
 	
 	public static void main(String[] args){
-		new LwjglApplication(new GameController(), "Dimensions-Desktop", 1000, 800, false);
+		new LwjglApplication(new GameController(), "Dimensions-Desktop", 1000, 500, false);
 	}
 	
 }
