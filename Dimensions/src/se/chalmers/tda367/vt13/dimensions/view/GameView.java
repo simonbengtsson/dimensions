@@ -49,20 +49,20 @@ public class GameView {
 		while (iterator.hasNext()) {
 			GameObject gameObject = iterator.next();
 			if (gameObject instanceof Platform) {
-				spriteBatch.draw(platformTexture, (float)gameObject.getPosition().getX(),
-						(float)gameObject.getPosition().getY(), (float)gameObject.getWidth(),
-							(float)gameObject.getHeight());
+				spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
+						gameObject.getPosition().getY(), gameObject.getSize().getX(),
+						gameObject.getSize().getY());
 			}
 			else if (gameObject instanceof SpeedPowerUp) {
-				spriteBatch.draw(speedPowerUpTexture, (float)gameObject.getPosition().getX(),
-						(float)gameObject.getPosition().getY(), (float)gameObject.getWidth(),
-							(float)gameObject.getHeight());
+				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition().getX(),
+						gameObject.getPosition().getY(), gameObject.getSize().getX(),
+						gameObject.getSize().getY());
 			}
 		}
 		Player player = model.getPlayer();
-		spriteBatch.draw(playerTexture, (float)player.getPosition().getX(),
-				(float)player.getPosition().getY(), (float)player.getWidth(),
-					(float) player.getHeight());
+		spriteBatch.draw(playerTexture, player.getPosition().getX(),
+				player.getPosition().getY(), player.getSize().getX(),
+				player.getSize().getY());
 		spriteBatch.end();
 	}
 	
