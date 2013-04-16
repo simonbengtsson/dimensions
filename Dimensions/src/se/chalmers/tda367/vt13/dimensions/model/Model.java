@@ -59,6 +59,7 @@ public class Model {
 		player.setVelocityX(player.getStandardVelocityX());
 	}
 	
+	//
 	public void addTempPlatform(Platform p){
 		platforms.add(p);
 	}
