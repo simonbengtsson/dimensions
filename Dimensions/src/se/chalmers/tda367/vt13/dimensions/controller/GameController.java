@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.view.*;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -25,25 +26,14 @@ public class GameController implements ApplicationListener {
 	// Public methods
 	@Override
 	public void create() {
-		// LEVEL WILL TAKE CARE OF THIS LATER
-		List<GameObject> gameObjects = new ArrayList<GameObject>();
-		gameObjects.add(new Platform(new Vector3(0, 10, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(50, 10, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(100, 10, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(100, 110, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(230, 50, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(280, 50, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(330, 50, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new SpeedPowerUp(new Vector3(290, 100, 0), new Vector3(25, 25, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(475, 120, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(525, 120, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(750, 20, 0), new Vector3(50, 50, 0), new Vector3()));
-		gameObjects.add(new Platform(new Vector3(950, 20, 0), new Vector3(50, 50, 0), new Vector3()));
+		
+		
+		Level lv = new Level("Level1");
 		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
 			, 0.75f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
-		model = new GameModel(gameObjects, player);
+		model = new GameModel(lv.getList(), player);
 		view = new GameView(model);
 	}
 
