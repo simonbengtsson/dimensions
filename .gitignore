@@ -1,9 +1,6 @@
 #Don't know?#
 *.ucls
-
-*.class
-
-.metadata/*
+*/bin/
 
 #Eclipse metadata folder#
 .metadata/
