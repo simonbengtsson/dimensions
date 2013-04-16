@@ -38,7 +38,7 @@ public class Player extends GameObject {
 			isGrounded = false;
 		}
 	}
-	
+
 	/**
 	 * Get method for instance variable isGrounded.
 	 * @return if the player is standing on a platform or not
