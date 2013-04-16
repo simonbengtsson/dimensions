@@ -33,11 +33,39 @@ public class Level {
 	public List<GameObject> getList(){
 		return this.gameobjects;
 	}
+	/*####################### READ ###########################*/
+	/*~~~~~~~INSTRUCTIONS FOR PLACING PLATFORMS ~~~~~~~~~~/
+	 * Parameters:
+	 * 	first value: offset from the end of the previous platform in X
+	 * 		Example: 0 will place it edge to edge of previous platform (in x-led)
+	 * 				50 will place it 50 units away from the end of the previous platform
+	 * 
+	 *  second value: offset from the previous platform in Y
+	 *  	Example: 0 will place it at the same height
+	 *  			50 will place it 50 units higher than the previous platform
+	 *  			-50 will place it 50 units lower than the previous platform
+	 *  
+	 *  
+	 *  For spawnSingleBlock(l,x,y,width,height):
+	 *  	x as first value above
+	 *  	y as second value above
+	 *  	width specifies the length of the platform
+	 *  	height specifiec the height of the platform
+	 * 
+	 * 
+	 *  NOTE: 
+	 *  	Patterns such as stairCase() and dropDown() has predefined values that should not be changed. 
+	 */
 	
+	
+	/** Spawns the platform where the player will start.
+	 * @param l
+	 */
 	public void spawnStartingPlatform(List<GameObject> l ){
 		spawnSingleBlock(l,0,10,100,50);
+		
 	}
-	// Call listAdd method to add platforms in a staircase pattern
+
 	public void stairCase(List <GameObject> l){
 		listAddShortPf(l,50,10);
 		listAddShortPf(l,50,50);
@@ -52,7 +80,7 @@ public class Level {
 		listAddShortPf(l,0,70);
 	}
 	
-	// Adding short platforms at certain positions given by parameters, offset from last platform
+	
 	public void listAddShortPf(List<GameObject> l, float x,float y){
 		this.lastx = lastx + x;
 		this.lasty = lasty + y;
@@ -72,9 +100,8 @@ public class Level {
 		}
 		
 	}
-	// Adding long platforms at certain positions given by parameters, offset from last platform
+	
 		public void listAddLongPf(List<GameObject> l, float x,float y){
-			// Lite fel beräkning av offset
 			this.lastx = lastx + x;
 			this.lasty = lasty + y;
 			l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(130, 50, 0), new Vector3()));
@@ -82,7 +109,7 @@ public class Level {
 			
 		}
 		
-		// 50 = kant i kant efter ett small block, 130 kant i kant efter ett large block
+	
 		public void spawnSingleBlock(List<GameObject> l , float x, float y,float length,float height){
 			this.lastx= lastx + x;
 			this.lasty = lasty+y;
