@@ -19,6 +19,7 @@ public class Level {
 	private float lasty = 50;
 	
 	public Level(String s){
+		spawnStartingPlatform(gameobjects);
 		stairCase(gameobjects);
 		dropDown(gameobjects);
 		stairCase(gameobjects);
@@ -32,19 +33,23 @@ public class Level {
 	public List<GameObject> getList(){
 		return this.gameobjects;
 	}
+	
+	public void spawnStartingPlatform(List<GameObject> l ){
+		spawnSingleBlock(l,0,10,100,50);
+	}
 	// Call listAdd method to add platforms in a staircase pattern
 	public void stairCase(List <GameObject> l){
-		listAddShortPf(l,0,10);
-		listAddShortPf(l,100,50);
-		listAddShortPf(l,100,50);
+		listAddShortPf(l,50,10);
+		listAddShortPf(l,50,50);
+		listAddShortPf(l,50,50);
 		
 	}
 	
 	
 	public void dropDown(List<GameObject> l ){
 		listAddShortPf(l,50,0);
-		listAddLongPf(l,50,-70);
-		listAddShortPf(l,130,70);
+		listAddLongPf(l,0,-70);
+		listAddShortPf(l,0,70);
 	}
 	
 	// Adding short platforms at certain positions given by parameters, offset from last platform
@@ -52,6 +57,8 @@ public class Level {
 		this.lastx = lastx + x;
 		this.lasty = lasty + y;
 		l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(50, 50, 0), new Vector3()));
+		this.lastx = lastx + 50;
+		
 	}
 	
 	// 1 = Speed, 2 = Slow 3 = ...
@@ -71,6 +78,7 @@ public class Level {
 			this.lastx = lastx + x;
 			this.lasty = lasty + y;
 			l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(130, 50, 0), new Vector3()));
+			this.lastx = lastx + 130;
 			
 		}
 		
@@ -79,6 +87,7 @@ public class Level {
 			this.lastx= lastx + x;
 			this.lasty = lasty+y;
 			l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(length, height, 0), new Vector3()));
+			this.lastx = lastx+ length;
 		}
 	
 	public List<PowerUp> getPowerUps(){
