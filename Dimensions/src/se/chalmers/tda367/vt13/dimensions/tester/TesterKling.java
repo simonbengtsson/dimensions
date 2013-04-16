@@ -29,13 +29,13 @@ public class TesterKling implements Runnable {
 		while(true){
 			if(r.nextInt(100) > 90){
 				PowerUp p = new SpeedPowerUp(new Vector3(), new Vector3(), new Vector3());
-				p.use(m.getPlayer());
+				p.use(m);
 				System.out.println("Now slow!");
 			}
 			
 			long currentTime = System.currentTimeMillis();
 			float diff = (float)(currentTime - previousTime)/1000;
-			m.updateModel();
+			m.updateModel(diff);
 			
 			points.add((int)m.getPlayer().getPosition().getY());
 			

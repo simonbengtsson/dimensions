@@ -22,6 +22,7 @@ public class GameController implements ApplicationListener {
 	// Instance variables
 	GameModel model;
 	GameView view;
+	private long lastUpdate = System.currentTimeMillis();
 	
 	// Public methods
 	@Override
@@ -47,7 +48,9 @@ public class GameController implements ApplicationListener {
 	public void render() {
 		checkCollisions();
 		getInput();
-		model.updateModel();
+		long currentTime = System.currentTimeMillis() - lastUpdate;
+		model.updateModel((float)currentTime/1000);
+		lastUpdate = currentTime;
 		view.draw();
 	}
 
@@ -112,7 +115,7 @@ public class GameController implements ApplicationListener {
 			else if (playerCollider.hit(gameObjectCollider)) {
 				if (gameObject instanceof PowerUp) {
 					PowerUp powerUp = (PowerUp) gameObject;
-					powerUp.use(model.getPlayer());
+					powerUp.use(model);
 					iterator.remove();
 				}
 			}

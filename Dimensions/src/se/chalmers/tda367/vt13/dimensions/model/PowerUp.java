@@ -12,6 +12,6 @@ public interface PowerUp {
 	 * in different ways, depending on the implementing
 	 * PowerUp class.
 	 */
-	public void use(Player player);
+	public void use(GameModel gm);
 	
 }

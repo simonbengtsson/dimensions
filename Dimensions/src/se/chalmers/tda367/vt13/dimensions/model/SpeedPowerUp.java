@@ -6,7 +6,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
  * @author Carl Fredriksson
  */
 public class SpeedPowerUp extends GameObject implements PowerUp {
-
 	// Instance variables
 	
 	// Public methods
@@ -21,23 +20,23 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
 	}
 	
 	@Override
-	public void use(Player player) {
-		if (player.getSpeed().getX() <= 2) {
-			player.getSpeed().setX(player.getSpeed().getX() * 2);
+	public void use(GameModel gm) {
+		if (gm.getPlayer().getSpeed().getX() <= 2) {
+			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
 		}
 	}
 
 	@Override
-	public void update() {
-		move();
+	public void update(float time) {
+		move(time);
 	}
 
 	// Private methods
 	/**
 	 * Move the PowerUp.
 	 */
-	private void move() {
-		getPosition().add(getSpeed());
+	private void move(float time) {
+		
 	}
 	
 }

@@ -20,15 +20,15 @@ public class Platform extends GameObject {
 	}
 	
 	@Override
-	public void update() {
-		move();
+	public void update(float time) {
+		move(time);
 	}
 	
 	// Private methods
 	/**
 	 * Move the platform.
 	 */
-	private void move() {
+	private void move(float time) {
 		getPosition().add(getSpeed());
 	}
 }

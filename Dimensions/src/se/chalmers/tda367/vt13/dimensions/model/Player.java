@@ -58,16 +58,16 @@ public class Player extends GameObject {
 	}
 	
 	@Override
-	public void update() {
-		gravity();
-		move();
+	public void update(float time) {
+		gravity(time);
+		move(time);
 	}
 	
 	// Private methods
 	/**
 	 * Make the player fall if grounded is not true.
 	 */
-	private void gravity() {
+	private void gravity(float time) {
 		if (!isGrounded) {
 			getSpeed().setY(getSpeed().getY() - gravityConstant);
 		}
@@ -79,7 +79,7 @@ public class Player extends GameObject {
 	/**
 	 * Move the player.
 	 */
-	private void move() {
+	private void move(float time) {
 		getPosition().add(getSpeed());
 	}
 

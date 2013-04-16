@@ -77,7 +77,7 @@ public abstract class GameObject {
 	 * Is called by the controller, making all
 	 * objects update their states every frame.
 	 */
-	public abstract void update();
+	public abstract void update(float time);
 	
 	// Private methods
 

@@ -52,27 +52,27 @@ public class GameModel {
 	 * Update all the GameObjects in the gameObjects list,
 	 * and update the player.
 	 */
-	public void updateModel() {
-		updateGameObjects();
-		updatePlayer();
+	public void updateModel(float time) {
+		updateGameObjects(time);
+		updatePlayer(time);
 	}
 	
 	// Private Methods
 	/**
 	 * Update all the GameObjects in the gameObject list.
 	 */
-	private void updateGameObjects() {
+	private void updateGameObjects(float time) {
 		Iterator<GameObject> iterator = gameObjects.iterator();
 		while (iterator.hasNext()) {
-			iterator.next().update();
+			iterator.next().update(time);
 		}
 	}
 	
 	/**
 	 * Update the player.
 	 */
-	private void updatePlayer() {
-		player.update();
+	private void updatePlayer(float time) {
+		player.update(time);
 	}
 	
 }
