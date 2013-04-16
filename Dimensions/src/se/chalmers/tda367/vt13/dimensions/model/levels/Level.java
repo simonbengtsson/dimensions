@@ -6,7 +6,7 @@ import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
+//import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -25,10 +25,14 @@ public class Level {
 		stairCase(gameobjects);
 		spawnSingleBlock(gameobjects,50,0,150,50);
 		// Svårt att veta vart man ska spawna powerups, bör göras via position från listan
-		spawnPowerUp(gameobjects,1,200,100);
+		spawnPowerUp(gameobjects,1,200,130);
 		
 		
 	}
+	
+	
+	
+	
 	
 	public List<GameObject> getList(){
 		return this.gameobjects;
