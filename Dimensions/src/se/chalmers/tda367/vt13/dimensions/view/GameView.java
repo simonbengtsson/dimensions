@@ -21,6 +21,7 @@ public class GameView {
 	private Texture platformTexture;
 	private Texture playerTexture;
 	private Texture speedPowerUpTexture;
+	private Texture colliderTestTexture;
 	
 	// Public Methods
 	/**
@@ -33,6 +34,7 @@ public class GameView {
 		platformTexture = new Texture(Gdx.files.internal("data/PlatformImg.png"));
 		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
 		speedPowerUpTexture = new Texture(Gdx.files.internal("data/SpeedPowerUpImg.png"));
+		colliderTestTexture = new Texture(Gdx.files.internal("data/ColliderImg.png"));
 	}
 	
 	/**

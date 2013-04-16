@@ -86,9 +86,12 @@ public class GameController implements ApplicationListener {
 	private void checkCollisions() {
 		// COLLISION TEST CLASS WILL TAKE CARE OF MOST OF THIS LATER
 		// Player Collider
+		Player player = model.getPlayer();
+		float playerColliderXSize = player.getSize().getX() + player.getSpeed().getX();
+		float playerColliderYSize = player.getSize().getY() + player.getSpeed().getY();
 		Collider playerCollider = new Collider(model.getPlayer().getPosition().getX(), 
-				model.getPlayer().getPosition().getY(), model.getPlayer().getSize().getX(),
-				model.getPlayer().getSize().getY());
+				model.getPlayer().getPosition().getY(), playerColliderXSize,
+				playerColliderYSize);
 		
 		// Collision testing
 		boolean platformCollision = false;
