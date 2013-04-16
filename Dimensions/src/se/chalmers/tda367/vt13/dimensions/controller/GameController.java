@@ -121,5 +121,12 @@ public class GameController implements ApplicationListener {
 			model.getPlayer().setIsGrounded(false);
 		}
 	}
+	/**
+	 * Pretty obvious :)
+	 * @return
+	 */
+	public GameModel getGameModel(){
+		return model;
+	}
 	
 }
