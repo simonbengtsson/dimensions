@@ -24,11 +24,17 @@ public class GameController implements ApplicationListener {
 	// Instance variables
 	GameModel model;
 	GameView view;
+
 	List<GameObject> ls;
+
+	private long lastUpdate = System.currentTimeMillis();
+	private float posX;
+
 	
 	// Public methods
 	@Override
 	public void create() {
+
 		
 		/* Creating Levels
 		Level lv = new Level("Level1");
@@ -43,6 +49,7 @@ public class GameController implements ApplicationListener {
 				
 		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
 			, 0.75f, 15f, false);
+
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		model = new GameModel(ls, player);
@@ -98,9 +105,12 @@ public class GameController implements ApplicationListener {
 	private void checkCollisions() {
 		// COLLISION TEST CLASS WILL TAKE CARE OF MOST OF THIS LATER
 		// Player Collider
+		Player player = model.getPlayer();
+		float playerColliderXSize = player.getSize().getX() + player.getSpeed().getX();
+		float playerColliderYSize = player.getSize().getY() + player.getSpeed().getY();
 		Collider playerCollider = new Collider(model.getPlayer().getPosition().getX(), 
-				model.getPlayer().getPosition().getY(), model.getPlayer().getSize().getX(),
-				model.getPlayer().getSize().getY());
+				model.getPlayer().getPosition().getY(), playerColliderXSize,
+				playerColliderYSize);
 		
 		// Collision testing
 		boolean platformCollision = false;
@@ -121,7 +131,7 @@ public class GameController implements ApplicationListener {
 			else if (playerCollider.hit(gameObjectCollider)) {
 				if (gameObject instanceof PowerUp) {
 					PowerUp powerUp = (PowerUp) gameObject;
-					powerUp.use(model.getPlayer());
+					powerUp.use(model);
 					iterator.remove();
 				}
 			}
@@ -129,6 +139,13 @@ public class GameController implements ApplicationListener {
 		if (!platformCollision) {
 			model.getPlayer().setIsGrounded(false);
 		}
+	}
+	/**
+	 * Pretty obvious :)
+	 * @return
+	 */
+	public GameModel getGameModel(){
+		return model;
 	}
 	
 }

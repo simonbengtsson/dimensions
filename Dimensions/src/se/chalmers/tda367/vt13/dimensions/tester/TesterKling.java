@@ -8,15 +8,19 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import se.chalmers.tda367.vt13.dimensions.factories.ModelFactory;
+import com.badlogic.gdx.graphics.g3d.model.Model;
+
+import se.chalmers.tda367.vt13.dimensions.controller.GameController;
 import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 
 public class TesterKling implements Runnable {
-	private Model m;
+	private GameModel m;
 	private long previousTime = System.currentTimeMillis();
 	private Random r = new Random();
 	private List<Integer> points = new ArrayList<Integer>();
-	public TesterKling(Model m){
+	private long timeStart = System.currentTimeMillis();
+	public TesterKling(GameModel m){
 		this.m = m;
 	}
 	
@@ -24,29 +28,25 @@ public class TesterKling implements Runnable {
 	public void run() {
 		while(true){
 //			if(r.nextInt(100) > 90){
-//				m.playerJump();
-//				System.out.println("Jumped!");
-//			}
-//			
-//			if(r.nextInt(100) > 90){
-//				PowerUp p = new SlowPowerUp(10, 10, m);
-//				p.use();
+//				PowerUp p = new SpeedPowerUp(new Vector3(), new Vector3(), new Vector3());
+//				p.use(m);
 //				System.out.println("Now slow!");
 //			}
 			
 			long currentTime = System.currentTimeMillis();
 			float diff = (float)(currentTime - previousTime)/1000;
-			m.update(diff);
+			m.updateModel(diff);
 			
-			points.add((int)m.getPlayer().getPosY());
+			points.add((int)m.getPlayer().getPosition().getY());
 			
-			if(m.getPlayer().getPosY() < 10){
+			if(m.getPlayer().getPosition().getY() < 10){
 				drawGraph();
+				log("Time since start was " + (float)(currentTime - timeStart)/1000);
 				break;
 			}
 			
-			log("\tposY=" + (int)m.getPlayer().getPosY() + "\t\tvelocityY=" + (int)m.getPlayer().getVelocityY()
-					+ "\t\tposX=" + (int)m.getPlayer().getPosX() + "\t\tvelocityX=" + (int)m.getPlayer().getVelocityX());
+			log("\tposY=" + (int)m.getPlayer().getPosition().getY() + "\t\tvelocityY=" + (int)m.getPlayer().getSpeed().getY()
+					+ "\t\tposX=" + (int)m.getPlayer().getPosition().getX() + "\t\tvelocityX=" + (int)m.getPlayer().getSpeed().getX());
 			
 			previousTime = currentTime;
 			try {
@@ -60,8 +60,15 @@ public class TesterKling implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		Model m = ModelFactory.getModel();
-		new Thread(new TesterKling(m)).start();
+		Level lv = new Level("Level1");
+		Player player = new Player(new Vector3(10,100,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
+			, -10f, 15f, false);
+		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
+		
+		GameModel model = new GameModel(lv.getList(), player);
+		
+		
+		new Thread(new TesterKling(model)).start();
 
 	}
 

@@ -3,6 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.model.levels;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
@@ -10,6 +11,9 @@ import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import java.io.Serializable;
+
+import se.chalmers.tda367.vt13.dimensions.model.*;
+
 
 public class Level implements Serializable {
 	/** Class for creating a level with platforms and powerups
@@ -54,13 +58,7 @@ public class Level implements Serializable {
 		
 	}
 	
-	
-	
-	
-	/** Returns the list of GameObjects which holds the level
-	 * 
-	 * @return List of GameObjects
-	 */
+
 	public List<GameObject> getList(){
 		return this.gameobjects;
 	}

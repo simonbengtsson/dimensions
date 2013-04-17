@@ -30,19 +30,7 @@ public class Model {
 	}
 	 
 	public void update(float time){
-		player.calculateState(time);
-	}
-	
-	public void playerJump(){
-		player.jump();
-	}
-	
-	public Player getPlayer(){
-		return player;
-	}
-	
-	public void setPlayerSpeed(double speed){
-		player.setVelocityX(speed);
+		//player.calculateState(time);
 	}
 	
 	public void setPlayerSpeed(double speed, int time){

@@ -7,7 +7,9 @@ import java.io.Serializable;
  * the players speed when used.
  * @author Carl Fredriksson
  */
+
 public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
+
 
 	// Instance variables
 	
@@ -28,9 +30,9 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	}
 	
 	@Override
-	public void use(Player player) {
-		if (player.getSpeed().getX() <= 2) {
-			player.getSpeed().setX(player.getSpeed().getX() * 2);
+	public void use(GameModel gm) {
+		if (gm.getPlayer().getSpeed().getX() <= 2) {
+			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
 		}
 	}
 
@@ -44,7 +46,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 * Move the PowerUp.
 	 */
 	private void move() {
-		getPosition().add(getSpeed());
+		
 	}
 	
 }
