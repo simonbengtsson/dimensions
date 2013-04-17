@@ -1,11 +1,15 @@
 package se.chalmers.tda367.vt13.dimensions.model;
-
+import java.io.Serializable;
 /**
  * Class describing a three dimensional vector.
  * @author Carl Fredriksson
  */
-public class Vector3 {
+public class Vector3 implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Instance variables
 	private float x, y, z;
 	

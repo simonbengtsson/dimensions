@@ -1,11 +1,17 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.io.Serializable;
+
 /**
  * Abstract class for all objects within the game.
  * @author Carl Fredriksson
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Instance variables
 	private Vector3 position;
 	private Vector3 size;
@@ -22,6 +28,10 @@ public abstract class GameObject {
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
+	}
+	
+	public String toString(){
+		return "Position : " + position + " Size : " + size + " Speed : " + speed;
 	}
 	
 	/**

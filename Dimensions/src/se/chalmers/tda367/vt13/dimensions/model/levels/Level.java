@@ -9,23 +9,47 @@ import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
 //import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import java.io.Serializable;
 
-public class Level {
+public class Level implements Serializable {
+	/** Class for creating a level with platforms and powerups
+	 * 
+	 */
+	 
+	
+	// Instance variables
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private double gravity;
 	List <GameObject> gameobjects = new ArrayList <GameObject>();
 	private float lastx = 0;
 	private float lasty = 50;
+	private String levelname;
 	
+	/** Constructor for creating Levels
+	 * 
+	 * @param s Level name
+	 */
 	public Level(String s){
+		this.levelname = s;
+		
+		// This constructor is currently a mess
+		// TODO: Clean up this mess
+		
 		spawnStartingPlatform(gameobjects);
 		stairCase(gameobjects);
-		dropDown(gameobjects);
-		stairCase(gameobjects);
+		//dropDown(gameobjects);
+		//stairCase(gameobjects);
 		spawnSingleBlock(gameobjects,50,0,150,50);
 		// Svårt att veta vart man ska spawna powerups, bör göras via position från listan
-		spawnPowerUp(gameobjects,1,200,130);
+		//spawnPowerUp(gameobjects,1,0,50);
+		//spawnPowerUp(gameobjects,1,50,100);
+		//spawnPowerUp(gameobjects,1,100,120);
+		//spawnPowerUp(gameobjects,1,150,130);
+		
+		// Save level to file
+		WriteLevel rv = new WriteLevel();
+		rv.saveToFile(this.levelname, this);
 		
 		
 	}
@@ -33,10 +57,15 @@ public class Level {
 	
 	
 	
-	
+	/** Returns the list of GameObjects which holds the level
+	 * 
+	 * @return List of GameObjects
+	 */
 	public List<GameObject> getList(){
 		return this.gameobjects;
 	}
+	
+	
 	/*####################### READ ###########################*/
 	/*~~~~~~~INSTRUCTIONS FOR PLACING PLATFORMS ~~~~~~~~~~/
 	 * Parameters:
@@ -54,7 +83,7 @@ public class Level {
 	 *  	x as first value above
 	 *  	y as second value above
 	 *  	width specifies the length of the platform
-	 *  	height specifiec the height of the platform
+	 *  	height specifies the height of the platform
 	 * 
 	 * 
 	 *  NOTE: 
@@ -71,7 +100,9 @@ public class Level {
 	}
 	
 	/** Adds a staircase pattern of platforms to the list
-	 * 
+	 * Pattern:	      -----
+	 * 			 -----
+	 *      -----
 	 * @param l
 	 */
 	public void stairCase(List <GameObject> l){
@@ -81,14 +112,23 @@ public class Level {
 		
 	}
 	
-	
+	/** Adds a dropDown pattern of platforms to the list 
+	 * Pattern: ----_______-----
+	 * 
+	 * @param l
+	 */
 	public void dropDown(List<GameObject> l ){
 		listAddShortPf(l,50,0);
 		listAddLongPf(l,0,-70);
 		listAddShortPf(l,0,70);
 	}
 	
-	
+	/** Adds a 'short' platform to the list with predefined values
+	 * 
+	 * @param l List
+	 * @param x Offset x from previous platform
+	 * @param y Offset y from previous platform
+	 */
 	public void listAddShortPf(List<GameObject> l, float x,float y){
 		this.lastx = lastx + x;
 		this.lasty = lasty + y;
@@ -97,7 +137,16 @@ public class Level {
 		
 	}
 	
-	// 1 = Speed, 2 = Slow 3 = ...
+	/** Method for adding powerups to the List representing the level
+	 * i = 1: Speed
+	 * i = 2: Slow
+	 * i = 3: ...
+	 * @param l List
+	 * @param i int value representing each powerup
+	 * @param x x-coordinate of spawn
+	 * @param y y-coordinate of spawn
+	 */
+	
 	public void spawnPowerUp(List<GameObject>l,int i,float x,float y){
 		switch(i){
 		case 1:
@@ -108,7 +157,12 @@ public class Level {
 		}
 		
 	}
-	
+	/** Adds a 'long' platform to the list with predefined values
+	 * 
+	 * @param l List
+	 * @param x x-coordinate offset from previous platform
+	 * @param y y-coordinate offset from previous platform
+	 */
 		public void listAddLongPf(List<GameObject> l, float x,float y){
 			this.lastx = lastx + x;
 			this.lasty = lasty + y;
@@ -117,7 +171,14 @@ public class Level {
 			
 		}
 		
-	
+	/** Adds a single block in a user(coder) defined position
+	 * 
+	 * @param l List
+	 * @param x x-coordinate offset from previous platform
+	 * @param y y-coordinate offset from previous platform
+	 * @param length Specifies the length of the platform
+	 * @param height Specifies the height of the platform
+	 */
 		public void spawnSingleBlock(List<GameObject> l , float x, float y,float length,float height){
 			this.lastx= lastx + x;
 			this.lasty = lasty+y;
@@ -125,20 +186,42 @@ public class Level {
 			this.lastx = lastx+ length;
 		}
 	
+	/** Returns the list of powerups
+	 * 
+	 * @return
+	 */
 	public List<PowerUp> getPowerUps(){
 		return powerUps;
 	}
 	
+	/** Returns the list of platforms
+	 * 
+	 * @return
+	 */
 	public List<Platform> getPlatforms(){
 		return platforms;
 	}
+	
+	/** Adding platform to the platforms list
+	 * 
+	 * @param p
+	 */
 	public void addPlatform(Platform p){
 		platforms.add(p);
 	}
+	
+	/** Removing platform from the platforms list
+	 * 
+	 * @param p
+	 */
 	public void removePlatform(Platform p){
 		platforms.remove(p);
 	}
 	
+	/** Returns the gravity of the level
+	 * 
+	 * @return
+	 */
 	public double getGravity(){
 		return gravity;
 	}

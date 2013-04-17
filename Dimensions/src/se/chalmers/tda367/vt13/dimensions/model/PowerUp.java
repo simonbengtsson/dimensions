@@ -4,7 +4,7 @@ package se.chalmers.tda367.vt13.dimensions.model;
  * Interface to be implemented by all PowerUps.
  * @author Carl Fredriksson
  */
-public interface PowerUp {
+public interface PowerUp  {
 
 	/**
 	 * Method called when collision is detected between
