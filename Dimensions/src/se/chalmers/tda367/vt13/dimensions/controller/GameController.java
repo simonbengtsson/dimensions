@@ -106,11 +106,26 @@ public class GameController implements ApplicationListener {
 		// COLLISION TEST CLASS WILL TAKE CARE OF MOST OF THIS LATER
 		// Player Collider
 		Player player = model.getPlayer();
-		float playerColliderXSize = player.getSize().getX() + player.getSpeed().getX();
-		float playerColliderYSize = player.getSize().getY() + player.getSpeed().getY();
-		Collider playerCollider = new Collider(model.getPlayer().getPosition().getX(), 
-				model.getPlayer().getPosition().getY(), playerColliderXSize,
-				playerColliderYSize);
+		float playerColliderXPos = player.getPosition().getX();
+		float playerColliderYPos = player.getPosition().getY();
+		float playerColliderXSize = player.getSize().getX();
+		float playerColliderYSize = player.getSize().getY();
+		if (player.getSpeed().getX() > 0) {
+			playerColliderXSize += player.getSpeed().getX();
+		}
+		else if (player.getSpeed().getX() < 0) {
+			playerColliderXPos += player.getSpeed().getX();
+			playerColliderXSize -= player.getSpeed().getX();
+		}
+		if (player.getSpeed().getY() > 0) {
+			playerColliderYSize += player.getSpeed().getY();
+		}
+		else if (player.getSpeed().getY() < 0) {
+			playerColliderYPos += player.getSpeed().getY();
+			playerColliderYSize -= player.getSpeed().getY();
+		}
+		Collider playerCollider = new Collider(playerColliderXPos, playerColliderYPos,
+				playerColliderXSize, playerColliderYSize);
 		
 		// Collision testing
 		boolean platformCollision = false;
@@ -120,10 +135,10 @@ public class GameController implements ApplicationListener {
 			Collider gameObjectCollider = new Collider(gameObject.getPosition().getX(),
 					gameObject.getPosition().getY(), gameObject.getSize().getX(),
 					gameObject.getSize().getY());
-			if (playerCollider.botHit(gameObjectCollider)) {
+			if (playerCollider.botHit(gameObjectCollider.getTopRect())) {
 				if (gameObject instanceof Platform) {
-					if (model.getPlayer().getSpeed().getY() <= 0) {
-						model.getPlayer().setIsGrounded(true);
+					if (player.getSpeed().getY() <= 0) {
+						player.setIsGrounded(true);
 						platformCollision = true;
 					}
 				}

@@ -32,7 +32,7 @@ public class Player extends GameObject {
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
 			float gravityConstant, float jumpSpeed, boolean isGrounded) {
 		super(position, size, speed);
-		this.gravityConstant = gravityConstant;
+		this.gravityConstant = -gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 	}
