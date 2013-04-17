@@ -4,7 +4,6 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import se.chalmers.tda367.vt13.dimensions.model.*;
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.levels.ReadLevel;
@@ -14,6 +13,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Rectangle;
+
+import org.lwjgl.opengl.Display;
 
 /**   .
  * Game controller.
@@ -39,8 +40,8 @@ public class GameController implements ApplicationListener {
 		*/
 		  // Reading Existing Levels
 		ReadLevel rl = new ReadLevel();
-		ls = rl.readLevelName("NewTest2"+".dat");	
-		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
+		ls = rl.readLevelName("NewTest"+".dat");	
+		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(4, 0, 0)
 			, -0.75f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
@@ -56,21 +57,19 @@ public class GameController implements ApplicationListener {
 
 	@Override
 	public void render() {
+		//Display.sync(200);
 		long currentTime = System.currentTimeMillis();
 		long delta = currentTime-lastUpdate;
+		long before = System.currentTimeMillis();
+		checkCollisions();
+		getInput();
+		model.updateModel();
+		view.draw();
+		lastUpdate = currentTime;
+		long after = System.currentTimeMillis();
+		
 		System.out.println("Delta=" + delta);
-		if(delta > 10){			
-			checkCollisions();
-			getInput();
-			model.updateModel();
-			view.draw();
-			lastUpdate = currentTime;
-		}else{
-			System.out.println("Sleeping for " + (10-delta));
-			
-		}
-		
-		
+		//System.out.println("loop took: " + after-before);
 	}
 
 	@Override
