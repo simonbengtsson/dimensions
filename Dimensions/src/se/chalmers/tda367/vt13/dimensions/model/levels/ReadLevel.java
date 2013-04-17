@@ -11,7 +11,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameObject;
  *
  */
 public class ReadLevel {
-	/** Empty constructor
+	/** Empty constructor.
 	 * 
 	 */
 	public ReadLevel(){};
