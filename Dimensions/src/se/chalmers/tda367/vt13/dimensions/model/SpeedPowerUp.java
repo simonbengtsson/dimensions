@@ -1,13 +1,23 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.io.Serializable;
+
 /**
  * Class for the speed PowerUp. Increases
  * the players speed when used.
  * @author Carl Fredriksson
  */
-public class SpeedPowerUp extends GameObject implements PowerUp {
+
+public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
+
+
 	// Instance variables
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// Public methods
 	/**
 	 * Constructor. Calls the super class constructor.
