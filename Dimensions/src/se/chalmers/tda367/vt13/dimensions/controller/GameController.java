@@ -23,13 +23,14 @@ public class GameController implements ApplicationListener {
 	GameModel model;
 	GameView view;
 	private long lastUpdate = System.currentTimeMillis();
+	private float posX;
 	
 	// Public methods
 	@Override
 	public void create() {
 		Level lv = new Level("Level1");
-		Player player = new Player(new Vector3(20,200,0), new Vector3(50, 50, 0), new Vector3(150, 0, 0)
-			, -100f, 150f, false);
+		Player player = new Player(new Vector3(20,200,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
+			, -0.75f, 10f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		model = new GameModel(lv.getList(), player);
@@ -46,10 +47,7 @@ public class GameController implements ApplicationListener {
 	public void render() {
 		checkCollisions();
 		getInput();
-		long currentTime = System.currentTimeMillis();
-		float diff = ((float)(currentTime - lastUpdate))/1000;
-		model.updateModel(diff);
-		lastUpdate = currentTime;
+		model.updateModel();
 		view.draw();
 	}
 

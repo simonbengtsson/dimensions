@@ -27,15 +27,15 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void update(float time) {
-		move(time);
+	public void update() {
+		move();
 	}
 
 	// Private methods
 	/**
 	 * Move the PowerUp.
 	 */
-	private void move(float time) {
+	private void move() {
 		
 	}
 	

@@ -69,28 +69,28 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void update(float time) {
-		moveX(time);
-		moveY(time);
+	public void update() {
+		moveX();
+		moveY();
 	}
 
 	// Private methods
 	/**
 	 * Move the player
 	 */
-	private void moveY(float time) {
+	private void moveY() {
 		if (!isGrounded) {
 			Vector3 p = getPosition();
 			Vector3 s = getSpeed();
-			p.setY((float) (p.getY() + (s.getY() * time) + (0.5 * gravityConstant * time * time)));
-			s.setY(s.getY() + (gravityConstant * time));
+			p.setY(p.getY() + s.getY());
+			s.setY(s.getY() + gravityConstant);
 		} else {
 			getSpeed().setY(0);
 		}
 	}
 	
-	private void moveX(float time){
-		getPosition().setX((getPosition().getX() + (getSpeed().getX()*time)));
+	private void moveX(){
+		getPosition().setX(getPosition().getX() + getSpeed().getX());
 	}
 
 }
