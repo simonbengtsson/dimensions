@@ -22,15 +22,15 @@ public class GameController implements ApplicationListener {
 	// Instance variables
 	GameModel model;
 	GameView view;
+	private long ticks;
 	private long lastUpdate = System.currentTimeMillis();
-	private float posX;
 	
 	// Public methods
 	@Override
 	public void create() {
 		Level lv = new Level("Level1");
-		Player player = new Player(new Vector3(20,200,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
-			, -0.75f, 10f, false);
+		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
+			, -0.75f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		model = new GameModel(lv.getList(), player);
@@ -45,10 +45,21 @@ public class GameController implements ApplicationListener {
 
 	@Override
 	public void render() {
-		checkCollisions();
-		getInput();
-		model.updateModel();
-		view.draw();
+		long currentTime = System.currentTimeMillis();
+		long delta = currentTime-lastUpdate;
+		System.out.println("Delta=" + delta);
+		if(delta > 10){			
+			checkCollisions();
+			getInput();
+			model.updateModel();
+			view.draw();
+			lastUpdate = currentTime;
+		}else{
+			System.out.println("Sleeping for " + (10-delta));
+			
+		}
+		
+		
 	}
 
 	@Override

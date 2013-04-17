@@ -11,6 +11,7 @@ public class Player extends GameObject {
 	private float gravityConstant;
 	private float jumpSpeed;
 	private boolean isGrounded;
+	private final float standardSpeedX;
 
 	// Public methods
 	/**
@@ -32,6 +33,7 @@ public class Player extends GameObject {
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
 			float gravityConstant, float jumpSpeed, boolean isGrounded) {
 		super(position, size, speed);
+		standardSpeedX = speed.getX();
 		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
@@ -45,6 +47,10 @@ public class Player extends GameObject {
 			getSpeed().setY(jumpSpeed);
 			isGrounded = false;
 		}
+	}
+	
+	public void resetSpeed(){
+		getSpeed().setX(standardSpeedX);
 	}
 
 	/**

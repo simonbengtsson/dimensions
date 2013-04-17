@@ -23,6 +23,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
 	public void use(GameModel gm) {
 		if (gm.getPlayer().getSpeed().getX() <= 2) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
+			
 		}
 	}
 
