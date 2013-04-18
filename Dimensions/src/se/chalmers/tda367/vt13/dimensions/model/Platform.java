@@ -38,4 +38,10 @@ public class Platform extends GameObject implements Serializable {
 	private void move() {
 		getPosition().add(getSpeed());
 	}
+
+	@Override
+	public void playSound() {
+		// TODO Auto-generated method stub
+		
+	}
 }

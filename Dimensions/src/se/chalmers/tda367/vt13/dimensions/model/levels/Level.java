@@ -48,7 +48,7 @@ public class Level implements Serializable {
 		// Svårt att veta vart man ska spawna powerups, bör göras via position från listan
 		//spawnPowerUp(gameobjects,1,0,50);
 		//spawnPowerUp(gameobjects,1,50,100);
-		//spawnPowerUp(gameobjects,1,100,120);
+		spawnPowerUp(gameobjects,1,100,120);
 		//spawnPowerUp(gameobjects,1,150,130);
 		
 		// Save level to file

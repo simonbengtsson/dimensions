@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
 //import java.util.ArrayList;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import se.chalmers.tda367.vt13.dimensions.view.*;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
 import org.lwjgl.opengl.Display;
@@ -20,7 +22,7 @@ import org.lwjgl.opengl.Display;
  * Game controller.
  * @author Carl Fredriksson
  */
-public class GameController implements ApplicationListener {
+public class GameController implements ApplicationListener, SoundObserver {
 
 	// Instance variables
 	GameModel model;
@@ -34,16 +36,22 @@ public class GameController implements ApplicationListener {
 	public void create() {
 
 		
-		/* Creating Levels
-		Level lv = new Level("Level1");
+		
 		Level lv = new Level("Level2");
-		*/
+//		Level lv = new Level("Level2");
+		
 		  // Reading Existing Levels
 		ReadLevel rl = new ReadLevel();
-		ls = rl.readLevelName("NewTest"+".dat");	
+		//ls = rl.readLevelName("NewTest2"+".dat");
+		ls = lv.getList();
+		
 		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(4, 0, 0)
 			, -0.75f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
+		
+		for(GameObject g : ls){
+			g.addObserver(this);
+		}
 		
 		model = new GameModel(ls, player);
 		view = new GameView(model);
@@ -148,6 +156,12 @@ public class GameController implements ApplicationListener {
 	 */
 	public GameModel getGameModel(){
 		return model;
+	}
+
+	@Override
+	public void playSound(String s) {
+		Sound sound = Gdx.audio.newSound(Gdx.files.internal(s));
+		sound.play();
 	}
 	
 }

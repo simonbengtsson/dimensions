@@ -99,4 +99,10 @@ public class Player extends GameObject {
 		getPosition().setX(getPosition().getX() + getSpeed().getX());
 	}
 
+	@Override
+	public void playSound() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

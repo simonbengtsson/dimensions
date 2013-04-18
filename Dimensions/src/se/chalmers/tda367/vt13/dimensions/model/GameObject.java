@@ -1,12 +1,16 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
 
 /**
  * Abstract class for all objects within the game.
  * @author Carl Fredriksson
  */
-public abstract class GameObject implements Serializable{
+public abstract class GameObject implements Serializable, SoundObservable{
 	
 	/**
 	 * 
@@ -16,6 +20,7 @@ public abstract class GameObject implements Serializable{
 	private Vector3 position;
 	private Vector3 size;
 	private Vector3 speed;
+	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
 	
 	// Public methods
 	/**
@@ -28,6 +33,7 @@ public abstract class GameObject implements Serializable{
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
+		//observers = new ArrayList<SoundObserver>();
 	}
 	
 	public String toString(){
@@ -88,6 +94,22 @@ public abstract class GameObject implements Serializable{
 	 * objects update their states every frame.
 	 */
 	public abstract void update();
+	
+	@Override
+	public void addObserver(SoundObserver s){
+		System.out.println(observers);
+		observers.add(s);
+	}
+	
+	@Override
+	public void removeObserver(SoundObserver s){
+		observers.remove(s);
+	}
+	
+	@Override
+	public List<SoundObserver> getObservers(){
+		return observers;
+	}
 	
 	// Private methods
 
