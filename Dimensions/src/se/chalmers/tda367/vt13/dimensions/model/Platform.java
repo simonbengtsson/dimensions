@@ -44,4 +44,10 @@ public class Platform extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String getSoundFileAsString() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 }

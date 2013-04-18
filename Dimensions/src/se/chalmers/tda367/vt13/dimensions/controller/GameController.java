@@ -3,8 +3,11 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 //import java.util.ArrayList;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import se.chalmers.tda367.vt13.dimensions.model.*;
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.levels.ReadLevel;
@@ -30,18 +33,16 @@ public class GameController implements ApplicationListener, SoundObserver {
 	private long ticks;
 	private long lastUpdate = System.currentTimeMillis();
 	List<GameObject> ls;
+	Map<String, Sound> files;
 	
 	// Public methods
 	@Override
 	public void create() {
-
-		
-		
 		Level lv = new Level("Level2");
 //		Level lv = new Level("Level2");
 		
-		  // Reading Existing Levels
-		ReadLevel rl = new ReadLevel();
+		// Reading Existing Levels
+		//ReadLevel rl = new ReadLevel();
 		//ls = rl.readLevelName("NewTest2"+".dat");
 		ls = lv.getList();
 		
@@ -49,8 +50,16 @@ public class GameController implements ApplicationListener, SoundObserver {
 			, -0.75f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
+		// Load all soundfiles & add Controller as observer
+		files = new HashMap<String, Sound>();
 		for(GameObject g : ls){
 			g.addObserver(this);
+			String file = g.getSoundFileAsString();
+			
+			if(!files.containsKey(file) && !file.equals("")){
+				Sound sound = Gdx.audio.newSound(Gdx.files.internal(file));
+				files.put(file, sound);
+			}
 		}
 		
 		model = new GameModel(ls, player);
@@ -160,8 +169,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	@Override
 	public void playSound(String s) {
-		Sound sound = Gdx.audio.newSound(Gdx.files.internal(s));
-		sound.play();
+		files.get(s).play();
 	}
 	
 }

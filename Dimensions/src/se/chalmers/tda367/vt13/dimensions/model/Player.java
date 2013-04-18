@@ -105,4 +105,10 @@ public class Player extends GameObject {
 		
 	}
 
+	@Override
+	public String getSoundFileAsString() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
 }

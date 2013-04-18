@@ -49,7 +49,7 @@ public class Level implements Serializable {
 		//spawnPowerUp(gameobjects,1,0,50);
 		//spawnPowerUp(gameobjects,1,50,100);
 		spawnPowerUp(gameobjects,1,100,120);
-		//spawnPowerUp(gameobjects,1,150,130);
+		spawnPowerUp(gameobjects,1,400,300);
 		
 		// Save level to file
 		WriteLevel rv = new WriteLevel();

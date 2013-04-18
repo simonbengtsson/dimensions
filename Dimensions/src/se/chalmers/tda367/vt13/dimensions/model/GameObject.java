@@ -95,9 +95,10 @@ public abstract class GameObject implements Serializable, SoundObservable{
 	 */
 	public abstract void update();
 	
+	public abstract String getSoundFileAsString();
+	
 	@Override
 	public void addObserver(SoundObserver s){
-		System.out.println(observers);
 		observers.add(s);
 	}
 	

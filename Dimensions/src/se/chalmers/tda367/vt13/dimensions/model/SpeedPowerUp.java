@@ -3,6 +3,10 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Sound;
+
 import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
 
 /**
@@ -31,7 +35,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed);
-		this.file = "data/beep-2.mp3";
+		file = "data/beep-2.mp3";
 	}
 	
 	@Override
@@ -62,6 +66,11 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 		for(SoundObserver s : observers){
 			s.playSound(file);
 		}
+	}
+
+	@Override
+	public String getSoundFileAsString() {
+		return file;
 	}
 	
 }
