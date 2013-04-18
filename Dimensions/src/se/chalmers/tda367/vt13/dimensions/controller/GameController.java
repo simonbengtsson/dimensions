@@ -68,7 +68,7 @@ public class GameController implements ApplicationListener {
 		lastUpdate = currentTime;
 		long after = System.currentTimeMillis();
 		
-		System.out.println("Delta=" + delta);
+		//System.out.println("Delta=" + delta);
 		//System.out.println("loop took: " + after-before);
 	}
 
