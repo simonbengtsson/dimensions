@@ -29,22 +29,15 @@ public class Model {
 		this.gravity = gravity;
 	}
 	 
-	public void update(float time){
-		//player.calculateState(time);
-	}
+
 	
 	public void setPlayerSpeed(double speed, int time){
-		setPlayerSpeed(speed);
 		new Timer().schedule(new TimerTask() {          
 		    @Override
 		    public void run() {
-		    	resetPlayerSpeed();
+		    	
 		    }
 		}, time);
-	}
-	
-	public void resetPlayerSpeed(){
-		player.setVelocityX(player.getStandardVelocityX());
 	}
 	
 	//

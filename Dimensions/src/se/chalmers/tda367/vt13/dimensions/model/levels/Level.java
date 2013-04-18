@@ -3,23 +3,13 @@ package se.chalmers.tda367.vt13.dimensions.model.levels;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.Platform;
-import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
-//import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.*;
 import java.io.Serializable;
 
-import se.chalmers.tda367.vt13.dimensions.model.*;
-
-
+/** 
+ * Class for creating a level with platforms and powerups
+ */
 public class Level implements Serializable {
-	/** Class for creating a level with platforms and powerups
-	 * 
-	 */
-	 
 	
 	// Instance variables
 	private List<Platform> platforms;
@@ -48,8 +38,8 @@ public class Level implements Serializable {
 		// Svårt att veta vart man ska spawna powerups, bör göras via position från listan
 		//spawnPowerUp(gameobjects,1,0,50);
 		//spawnPowerUp(gameobjects,1,50,100);
-		//spawnPowerUp(gameobjects,1,100,120);
-		//spawnPowerUp(gameobjects,1,150,130);
+		spawnPowerUp(gameobjects,1,100,120);
+		spawnPowerUp(gameobjects,1,400,300);
 		
 		// Save level to file
 		WriteLevel rv = new WriteLevel();

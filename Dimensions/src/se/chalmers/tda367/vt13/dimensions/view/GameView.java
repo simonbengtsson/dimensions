@@ -1,6 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.Collider;
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Game view.
+ * 
  * @author Carl Fredriksson
  */
 public class GameView {
@@ -29,11 +32,14 @@ public class GameView {
 	private Texture speedPowerUpTexture;
 	private Texture colliderTexture;
 	private Texture colliderTestTexture;
-	
+	private Map<String, Texture> textures;
+
 	// Public Methods
 	/**
 	 * Constructor.
-	 * @param model the GameModel
+	 * 
+	 * @param model
+	 *            the GameModel
 	 */
 	public GameView(GameModel model) {
 		this.model = model;
@@ -43,8 +49,20 @@ public class GameView {
 		speedPowerUpTexture = new Texture(Gdx.files.internal("data/SpeedPowerUpImg.png"));
 		colliderTexture = new Texture(Gdx.files.internal("data/ColliderImg.png"));
 		colliderTestTexture = new Texture(Gdx.files.internal("data/SolidColliderImg.png"));
+		/*
+		textures = new HashMap<String, Texture>();
+		for (GameObject g : model.getGameObjects()) {
+			String file = g.getTextureFileAsString();
+			if (!textures.containsKey(file)) {
+				Texture t = new Texture(Gdx.files.internal(file));
+				textures.put(file, t);
+			}
+		}
+		String file = model.getPlayer().getTextureFileAsString();
+		textures.put(file, new Texture(Gdx.files.internal(file)));
+		*/
 	}
-	
+
 	/**
 	 * Draw GameObjects on the screen.
 	 */
@@ -52,9 +70,10 @@ public class GameView {
 		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		// Draw GameObjects
 		spriteBatch.begin();
+
 		Iterator<GameObject> iterator = model.getGameObjects().iterator();
 		while (iterator.hasNext()) {
 			GameObject gameObject = iterator.next();
@@ -62,16 +81,6 @@ public class GameView {
 				spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
 						gameObject.getPosition().getY(), gameObject.getSize().getX(),
 						gameObject.getSize().getY());
-						
-				/*
-				Collider gameObjectCollider = new Collider(gameObject.getPosition().getX(),
-						gameObject.getPosition().getY(), gameObject.getSize().getX(),
-						gameObject.getSize().getY());
-				Rectangle boundingRect = gameObjectCollider.getBoundingRect();
-				Rectangle topRect = gameObjectCollider.getTopRect();
-				spriteBatch.draw(colliderTexture, boundingRect.x, boundingRect.y,boundingRect.width, boundingRect.height);
-				spriteBatch.draw(colliderTestTexture, topRect.x, topRect.y, topRect.width, topRect.height);
-				*/
 			}
 			else if (gameObject instanceof SpeedPowerUp) {
 				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition().getX(),
@@ -83,37 +92,40 @@ public class GameView {
 		spriteBatch.draw(playerTexture, player.getPosition().getX(),
 				player.getPosition().getY(), player.getSize().getX(),
 				player.getSize().getY());
-		
-		// COLLIDER TEST
 		/*
-		float playerColliderXPos = player.getPosition().getX();
-		float playerColliderYPos = player.getPosition().getY();
-		float playerColliderXSize = player.getSize().getX();
-		float playerColliderYSize = player.getSize().getY();
-		if (player.getSpeed().getX() > 0) {
-			playerColliderXSize += player.getSpeed().getX();
+			GameObject g = iterator.next();
+			Vector3 pos = g.getPosition();
+			Vector3 size = g.getSize();
+			spriteBatch.draw(textures.get(g.getTextureFileAsString()),
+					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
-		else if (player.getSpeed().getX() < 0) {
-			playerColliderXPos += player.getSpeed().getX();
-			playerColliderXSize -= player.getSpeed().getX();
-		}
-		if (player.getSpeed().getY() > 0) {
-			playerColliderYSize += player.getSpeed().getY();
-		}
-		else if (player.getSpeed().getY() < 0) {
-			playerColliderYPos += player.getSpeed().getY();
-			playerColliderYSize -= player.getSpeed().getY();
-		}
-		Collider playerCollider = new Collider(playerColliderXPos, playerColliderYPos,
-				playerColliderXSize, playerColliderYSize);
-		spriteBatch.draw(colliderTestTexture, playerCollider.getBotRect().x, playerCollider.getBotRect().y,
-				playerCollider.getBotRect().width, playerCollider.getBotRect().height);
-		*/
-		// COLLIDER TEST
-		
+		Player p = model.getPlayer();
+		spriteBatch.draw(textures.get(p.getTextureFileAsString()), p
+				.getPosition().getX(), p.getPosition().getY(), p.getSize()
+				.getX(), p.getSize().getY());
+		 */
+		// Iterator<GameObject> iterator = model.getGameObjects().iterator();
+		// while (iterator.hasNext()) {
+		// GameObject gameObject = iterator.next();
+		// if (gameObject instanceof Platform) {
+		// spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
+		// gameObject.getPosition().getY(), gameObject.getSize().getX(),
+		// gameObject.getSize().getY());
+		// }
+		// else if (gameObject instanceof SpeedPowerUp) {
+		// spriteBatch.draw(speedPowerUpTexture,
+		// gameObject.getPosition().getX(),
+		// gameObject.getPosition().getY(), gameObject.getSize().getX(),
+		// gameObject.getSize().getY());
+		// }
+		// }
+		// Player player = model.getPlayer();
+		// spriteBatch.draw(playerTexture, player.getPosition().getX(),
+		// player.getPosition().getY(), player.getSize().getX(),
+		// player.getSize().getY());
+
 		spriteBatch.end();
 	}
-	
 	// Private Methods
-	
+
 }

@@ -1,6 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.io.Serializable;
+import java.util.List;
+import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
 
 /**
  * Class for the speed PowerUp. Increases
@@ -12,11 +14,9 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 
 	// Instance variables
-	final float speedModifier = 2;
-	
-	/**
-	 * 
-	 */
+	private final float speedModifier = 2;
+	private String soundFile;
+	private String textureFile;
 	private static final long serialVersionUID = 1L;
 
 	// Public methods
@@ -28,6 +28,8 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed);
+		soundFile = "sound/SpeedPowerUp.mp3";
+		textureFile = "data/SpeedPowerUpImg.png";
 	}
 	
 	@Override
@@ -35,8 +37,27 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}
+		playSound();
 	}
 
+	@Override
+	public void playSound() {
+		List<SoundObserver> observers = getObservers();
+		for(SoundObserver s : observers){
+			s.playSound(soundFile);
+		}
+	}
+
+	@Override
+	public String getSoundFileAsString() {
+		return soundFile;
+	}
+
+	@Override
+	public String getTextureFileAsString() {
+		return textureFile;
+	}
+	
 	// Private methods
 	
 }

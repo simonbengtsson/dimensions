@@ -33,22 +33,17 @@ public class TesterKling implements Runnable {
 //				System.out.println("Now slow!");
 //			}
 			
-			long currentTime = System.currentTimeMillis();
-			float diff = (float)(currentTime - previousTime)/1000;
-			m.updateModel(diff);
+			m.updateModel();
 			
 			points.add((int)m.getPlayer().getPosition().getY());
 			
 			if(m.getPlayer().getPosition().getY() < 10){
 				drawGraph();
-				log("Time since start was " + (float)(currentTime - timeStart)/1000);
 				break;
 			}
 			
 			log("\tposY=" + (int)m.getPlayer().getPosition().getY() + "\t\tvelocityY=" + (int)m.getPlayer().getSpeed().getY()
 					+ "\t\tposX=" + (int)m.getPlayer().getPosition().getX() + "\t\tvelocityX=" + (int)m.getPlayer().getSpeed().getX());
-			
-			previousTime = currentTime;
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
