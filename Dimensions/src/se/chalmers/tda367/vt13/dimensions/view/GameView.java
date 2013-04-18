@@ -2,7 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.Iterator;
 
-import se.chalmers.tda367.vt13.dimensions.controller.Collider;
+import se.chalmers.tda367.vt13.dimensions.model.Collider;
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
@@ -27,6 +27,7 @@ public class GameView {
 	private Texture platformTexture;
 	private Texture playerTexture;
 	private Texture speedPowerUpTexture;
+	private Texture colliderTexture;
 	private Texture colliderTestTexture;
 	
 	// Public Methods
@@ -40,7 +41,8 @@ public class GameView {
 		platformTexture = new Texture(Gdx.files.internal("data/PlatformImg.png"));
 		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
 		speedPowerUpTexture = new Texture(Gdx.files.internal("data/SpeedPowerUpImg.png"));
-		colliderTestTexture = new Texture(Gdx.files.internal("data/ColliderImg.png"));
+		colliderTexture = new Texture(Gdx.files.internal("data/ColliderImg.png"));
+		colliderTestTexture = new Texture(Gdx.files.internal("data/SolidColliderImg.png"));
 	}
 	
 	/**
@@ -60,18 +62,16 @@ public class GameView {
 				spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
 						gameObject.getPosition().getY(), gameObject.getSize().getX(),
 						gameObject.getSize().getY());
-				
+						
 				/*
 				Collider gameObjectCollider = new Collider(gameObject.getPosition().getX(),
 						gameObject.getPosition().getY(), gameObject.getSize().getX(),
 						gameObject.getSize().getY());
 				Rectangle boundingRect = gameObjectCollider.getBoundingRect();
 				Rectangle topRect = gameObjectCollider.getTopRect();
-				//spriteBatch.draw(colliderTestTexture, boundingRect.x, boundingRect.y,boundingRect.width, boundingRect.height);
+				spriteBatch.draw(colliderTexture, boundingRect.x, boundingRect.y,boundingRect.width, boundingRect.height);
 				spriteBatch.draw(colliderTestTexture, topRect.x, topRect.y, topRect.width, topRect.height);
-				System.out.println("topRect: x:" + topRect.x + ", y:" + topRect.y + ", width:" +
-					topRect.width + ", height:" + topRect.height);
-			*/
+				*/
 			}
 			else if (gameObject instanceof SpeedPowerUp) {
 				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition().getX(),
@@ -83,7 +83,9 @@ public class GameView {
 		spriteBatch.draw(playerTexture, player.getPosition().getX(),
 				player.getPosition().getY(), player.getSize().getX(),
 				player.getSize().getY());
+		
 		// COLLIDER TEST
+		/*
 		float playerColliderXPos = player.getPosition().getX();
 		float playerColliderYPos = player.getPosition().getY();
 		float playerColliderXSize = player.getSize().getX();
@@ -102,10 +104,13 @@ public class GameView {
 			playerColliderYPos += player.getSpeed().getY();
 			playerColliderYSize -= player.getSpeed().getY();
 		}
-		spriteBatch.draw(colliderTestTexture, playerColliderXPos, playerColliderYPos,
+		Collider playerCollider = new Collider(playerColliderXPos, playerColliderYPos,
 				playerColliderXSize, playerColliderYSize);
-		
+		spriteBatch.draw(colliderTestTexture, playerCollider.getBotRect().x, playerCollider.getBotRect().y,
+				playerCollider.getBotRect().width, playerCollider.getBotRect().height);
+		*/
 		// COLLIDER TEST
+		
 		spriteBatch.end();
 	}
 	

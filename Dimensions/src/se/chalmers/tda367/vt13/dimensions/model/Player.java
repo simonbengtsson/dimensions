@@ -1,8 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 /**
- * Class for the player in the game
- * 
+ * Class for the player in the game.
  * @author Carl Fredriksson
  */
 public class Player extends GameObject {
@@ -11,6 +10,7 @@ public class Player extends GameObject {
 	private float gravityConstant;
 	private float jumpSpeed;
 	private boolean isGrounded;
+	private float baseXSpeed;
 
 	// Public methods
 	/**
@@ -35,6 +35,11 @@ public class Player extends GameObject {
 		this.gravityConstant = -gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
+		baseXSpeed = speed.getX();
+	}
+	
+	public float getBaseXSpeed() {
+		return baseXSpeed;
 	}
 
 	/**
@@ -68,29 +73,18 @@ public class Player extends GameObject {
 		this.isGrounded = isGrounded;
 	}
 
-	@Override
-	public void update() {
-		moveX();
-		moveY();
-	}
-
-	// Private methods
 	/**
-	 * Move the player
+	 * Check if the the player is grounded.
+	 * Adjust speed accordingly.
 	 */
-	private void moveY() {
+	public void calculateSpeed() {
 		if (!isGrounded) {
-			Vector3 p = getPosition();
-			Vector3 s = getSpeed();
-			p.setY(p.getY() + s.getY());
-			s.setY(s.getY() + gravityConstant);
+			getSpeed().setY(getSpeed().getY() + gravityConstant);
 		} else {
 			getSpeed().setY(0);
 		}
 	}
 	
-	private void moveX(){
-		getPosition().setX(getPosition().getX() + getSpeed().getX());
-	}
+	// Private methods
 
 }

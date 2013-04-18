@@ -12,6 +12,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 
 	// Instance variables
+	final float speedModifier = 2;
 	
 	/**
 	 * 
@@ -31,22 +32,11 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	
 	@Override
 	public void use(GameModel gm) {
-		if (gm.getPlayer().getSpeed().getX() <= 2) {
-			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
+		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
+			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}
 	}
 
-	@Override
-	public void update() {
-		move();
-	}
-
 	// Private methods
-	/**
-	 * Move the PowerUp.
-	 */
-	private void move() {
-		
-	}
 	
 }

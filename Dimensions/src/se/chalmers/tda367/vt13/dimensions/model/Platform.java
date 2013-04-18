@@ -26,16 +26,6 @@ public class Platform extends GameObject implements Serializable {
 		super(position, size, speed);
 	}
 	
-	@Override
-	public void update() {
-		move();
-	}
-	
 	// Private methods
-	/**
-	 * Move the platform.
-	 */
-	private void move() {
-		getPosition().add(getSpeed());
-	}
+
 }

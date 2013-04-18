@@ -57,7 +57,7 @@ public abstract class GameObject implements Serializable{
 	public Vector3 getSpeed() {
 		return speed;
 	}
-	
+
 	/**
 	 * Set method for instance variable position.
 	 * @param position the position of the GameObject
@@ -73,21 +73,6 @@ public abstract class GameObject implements Serializable{
 	public void setSize(Vector3 size) {
 		this.size = size;
 	}
-	
-	/**
-	 * Set method for instance variable speed.
-	 * @param speed the speed of the GameObject
-	 */
-	public void setSpeed(Vector3 speed) {
-		this.speed = speed;
-	}
-	
-	/**
-	 * Method to be implemented in sub classes.
-	 * Is called by the controller, making all
-	 * objects update their states every frame.
-	 */
-	public abstract void update();
 	
 	// Private methods
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Rectangle;
 
-/**   .
+/**
  * Game controller.
  * @author Carl Fredriksson
  */
@@ -35,7 +35,6 @@ public class GameController implements ApplicationListener {
 	@Override
 	public void create() {
 
-		
 		/* Creating Levels
 		Level lv = new Level("Level1");
 		Level lv = new Level("Level2");
@@ -44,12 +43,9 @@ public class GameController implements ApplicationListener {
 		ReadLevel rl = new ReadLevel();
 		ls = rl.readLevelName("NewTest"+".dat");
 		
-		
-				
-				
 		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
-			, 0.75f, 15f, false);
-
+		, 0.75f, 15f, false);
+		
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		model = new GameModel(ls, player);
@@ -59,12 +55,11 @@ public class GameController implements ApplicationListener {
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void render() {
-		checkCollisions();
 		getInput();
 		model.updateModel();
 		view.draw();
@@ -99,9 +94,7 @@ public class GameController implements ApplicationListener {
 		}
 	}
 	
-	/**
-	 * Method for checking collisions between GameObjects.
-	 */
+	/*
 	private void checkCollisions() {
 		// COLLISION TEST CLASS WILL TAKE CARE OF MOST OF THIS LATER
 		// Player Collider
@@ -155,6 +148,8 @@ public class GameController implements ApplicationListener {
 			model.getPlayer().setIsGrounded(false);
 		}
 	}
+	*/
+	
 	/**
 	 * Pretty obvious :)
 	 * @return
