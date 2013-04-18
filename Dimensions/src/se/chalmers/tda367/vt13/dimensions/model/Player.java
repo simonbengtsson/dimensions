@@ -12,6 +12,7 @@ public class Player extends GameObject {
 	private float jumpSpeed;
 	private boolean isGrounded;
 	private final float standardSpeedX;
+	private String textureFile;
 
 	// Public methods
 	/**
@@ -37,6 +38,7 @@ public class Player extends GameObject {
 		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
+		textureFile = "data/PlayerImg.png";
 	}
 
 	/**
@@ -109,6 +111,11 @@ public class Player extends GameObject {
 	public String getSoundFileAsString() {
 		// TODO Auto-generated method stub
 		return "";
+	}
+
+	@Override
+	public String getTextureFileAsString() {
+		return textureFile;
 	}
 
 }

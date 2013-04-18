@@ -12,6 +12,7 @@ public class Platform extends GameObject implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String textureFile;
 
 	// Public methods
 	
@@ -24,6 +25,7 @@ public class Platform extends GameObject implements Serializable {
 	 */
 	public Platform(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed);
+		textureFile = "data/PlatformImg.png";
 	}
 	
 	@Override
@@ -49,5 +51,10 @@ public class Platform extends GameObject implements Serializable {
 	public String getSoundFileAsString() {
 		// TODO Auto-generated method stub
 		return "";
+	}
+
+	@Override
+	public String getTextureFileAsString() {
+		return textureFile;
 	}
 }

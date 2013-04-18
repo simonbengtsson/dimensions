@@ -14,7 +14,8 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 
 	// Instance variables
-	private String file;
+	private String soundFile;
+	private String textureFile;
 	private static final long serialVersionUID = 1L;
 
 	// Public methods
@@ -26,7 +27,8 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed);
-		file = "sound/SpeedPowerUp.mp3";
+		soundFile = "sound/SpeedPowerUp.mp3";
+		textureFile = "data/SpeedPowerUpImg.png";
 	}
 	
 	@Override
@@ -54,13 +56,18 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	public void playSound() {
 		List<SoundObserver> observers = getObservers();
 		for(SoundObserver s : observers){
-			s.playSound(file);
+			s.playSound(soundFile);
 		}
 	}
 
 	@Override
 	public String getSoundFileAsString() {
-		return file;
+		return soundFile;
+	}
+
+	@Override
+	public String getTextureFileAsString() {
+		return textureFile;
 	}
 	
 }
