@@ -3,23 +3,13 @@ package se.chalmers.tda367.vt13.dimensions.model.levels;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.Platform;
-import se.chalmers.tda367.vt13.dimensions.model.PowerUp;
-//import se.chalmers.tda367.vt13.dimensions.model.SlowPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.*;
 import java.io.Serializable;
 
-import se.chalmers.tda367.vt13.dimensions.model.*;
-
-
+/** 
+ * Class for creating a level with platforms and powerups
+ */
 public class Level implements Serializable {
-	/** Class for creating a level with platforms and powerups
-	 * 
-	 */
-	 
 	
 	// Instance variables
 	private List<Platform> platforms;

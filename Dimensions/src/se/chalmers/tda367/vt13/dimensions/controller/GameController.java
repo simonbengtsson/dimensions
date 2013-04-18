@@ -1,23 +1,20 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
 //import java.util.ArrayList;
-import java.io.File;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.*;
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
-import se.chalmers.tda367.vt13.dimensions.model.levels.ReadLevel;
+import se.chalmers.tda367.vt13.dimensions.model.levels.*;
 import se.chalmers.tda367.vt13.dimensions.view.*;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Rectangle;
 
 import org.lwjgl.opengl.Display;
 
@@ -38,17 +35,18 @@ public class GameController implements ApplicationListener, SoundObserver {
 	// Public methods
 	@Override
 	public void create() {
-		Level lv = new Level("Level2");
-//		Level lv = new Level("Level2");
 		
-		// Reading Existing Levels
-		//ReadLevel rl = new ReadLevel();
-		//ls = rl.readLevelName("NewTest2"+".dat");
+		// Reads a level, either by creating one or read from a file.
+		
+		Level lv = new Level("Level1");
 		ls = lv.getList();
 		
+//		ReadLevel rl = new ReadLevel();
+//		ls = rl.readLevelName("Level2"+".dat");
+		
+		// Creates a player
 		Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50, 0), new Vector3(4, 0, 0)
 			, -0.75f, 15f, false);
-		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
 		
 		// Load all soundfiles & add Controller as observer
 		files = new HashMap<String, Sound>();

@@ -11,11 +11,8 @@ import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
  * @author Carl Fredriksson
  */
 public abstract class GameObject implements Serializable, SoundObservable{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	// Instance variables
 	private Vector3 position;
 	private Vector3 size;

@@ -2,11 +2,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.io.Serializable;
 import java.util.List;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
-import com.badlogic.gdx.audio.Sound;
-
 import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
 
 /**
@@ -20,10 +15,6 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 	// Instance variables
 	private String file;
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	// Public methods
@@ -35,14 +26,13 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed);
-		file = "data/beep-2.mp3";
+		file = "sound/SpeedPowerUp.mp3";
 	}
 	
 	@Override
 	public void use(GameModel gm) {
 		if (gm.getPlayer().getSpeed().getX() <= 2) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
-			
 		}
 		playSound();
 	}
