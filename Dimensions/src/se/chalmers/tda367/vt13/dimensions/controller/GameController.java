@@ -32,6 +32,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 	List<GameObject> ls;
 	Map<String, Sound> files;
 	
+	
 	// Public methods
 	@Override
 	public void create() {
