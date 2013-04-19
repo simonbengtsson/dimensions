@@ -1,15 +1,17 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.*;
-import se.chalmers.tda367.vt13.dimensions.model.levels.*;
-import se.chalmers.tda367.vt13.dimensions.view.*;
+import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.Player;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
+import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
@@ -21,7 +23,7 @@ import com.badlogic.gdx.audio.Sound;
  * 
  * @author Carl Fredriksson
  */
-public class GameController implements ApplicationListener, SoundObserver {
+public class GameController extends Game implements SoundObserver {
 
 	// Instance variables
 	GameModel model;
@@ -70,24 +72,6 @@ public class GameController implements ApplicationListener, SoundObserver {
 		getInput();
 		model.updateModel();
 		view.draw();
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		view.dispose();
-
 	}
 
 	/**
