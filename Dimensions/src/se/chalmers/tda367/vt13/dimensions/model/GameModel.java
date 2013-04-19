@@ -110,4 +110,8 @@ public class GameModel {
 		}
 	}
 	
+	public boolean isGameOver() {
+		return player.getPosition().getY() + player.getSize().getY() < 0;
+	}
+	
 }

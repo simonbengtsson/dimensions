@@ -34,7 +34,9 @@ public class Level implements Serializable {
 		stairCase(gameobjects);
 		//dropDown(gameobjects);
 		//stairCase(gameobjects);
-		spawnSingleBlock(gameobjects,50,0,150,50);
+		for(int i = 0; i<20; i++){
+			spawnSingleBlock(gameobjects,100,0,150,50);
+		}
 		// SvŒrt att veta vart man ska spawna powerups, bšr gšras via position frŒn listan
 		//spawnPowerUp(gameobjects,1,0,50);
 		//spawnPowerUp(gameobjects,1,50,100);
@@ -195,6 +197,7 @@ public class Level implements Serializable {
 	 * @param p
 	 */
 	public void addPlatform(Platform p){
+		System.out.println(platforms);
 		platforms.add(p);
 	}
 	

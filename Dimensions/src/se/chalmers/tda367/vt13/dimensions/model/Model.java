@@ -10,42 +10,40 @@ public class Model {
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private boolean usingPowerUp = false;
-	
-	public Model(Level level, Player p){
+
+	public Model(Level level, Player p) {
 		player = p;
 		platforms = level.getPlatforms();
 		powerUps = level.getPowerUps();
 	}
-	
-	public double getGravity(){
+
+	public double getGravity() {
 		return gravity;
 	}
-	
-	public boolean isUsingPowerUp(){
+
+	public boolean isUsingPowerUp() {
 		return usingPowerUp;
 	}
-	
-	public void setGravity(float gravity){
+
+	public void setGravity(float gravity) {
 		this.gravity = gravity;
 	}
-	 
 
-	
-	public void setPlayerSpeed(double speed, int time){
-		new Timer().schedule(new TimerTask() {          
-		    @Override
-		    public void run() {
-		    	
-		    }
+	public void setPlayerSpeed(double speed, int time) {
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+
+			}
 		}, time);
 	}
-	
+
 	//
-	public void addTempPlatform(Platform p){
+	public void addTempPlatform(Platform p) {
 		platforms.add(p);
 	}
-	
-	public void removeTempPlatform(Platform p){
+
+	public void removeTempPlatform(Platform p) {
 		platforms.remove(p);
 	}
 }
