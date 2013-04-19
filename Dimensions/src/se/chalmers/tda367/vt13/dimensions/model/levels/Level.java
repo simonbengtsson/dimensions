@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.model.levels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.*;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
@@ -36,12 +37,13 @@ public class Level implements Serializable {
 		
 		spawnStartingPlatform(gameobjects);
 		spawnSingleBlock(gameobjects,0,0,400,50);
-		//stairCase(gameobjects);
-		//dropDown(gameobjects);
-		//stairCase(gameobjects);
 		for(int i = 0; i<5; i++){
 			spawnSingleBlock(gameobjects,0,100,150,50);
 		}
+		/*for(int i = 0; i<20; i++){
+			//spawnSingleBlock(gameobjects,100,0,150,50);
+			randomGenerateLevel(gameobjects,100,50);
+		}*/
 		spawnSingleBlock(gameobjects,0,-300,1000,50);
 		// SvŒrt att veta vart man ska spawna powerups, bšr gšras via position frŒn listan
 		//spawnPowerUp(gameobjects,1,0,50);
@@ -86,6 +88,22 @@ public class Level implements Serializable {
 	 *  	Patterns such as stairCase() and dropDown() has predefined values that should not be changed. 
 	 */
 	
+	
+	public void randomGenerateLevel(List <GameObject> l,int high,int low ){
+		Random rd = new Random();
+		int i =  rd.nextInt(2);
+		
+		int  xval = rd.nextInt(high-low) + low;
+		int yval = rd.nextInt(80-low) + low;
+		switch(i){
+		case 0:
+			stairCase(l);
+			
+		case 1: dropDown(l);
+		
+		case 2: spawnSingleBlock(l,xval,yval,120,50);
+		}
+	}
 	
 	/** Spawns the platform where the player will start.
 	 * @param l
