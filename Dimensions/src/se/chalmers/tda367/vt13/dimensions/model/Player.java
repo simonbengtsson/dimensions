@@ -11,7 +11,7 @@ public class Player extends GameObject {
 	private float jumpSpeed;
 	private boolean isGrounded;
 	private final float baseXSpeed;
-	private String textureFile;
+	private final float baseGravity;
 
 	// Public methods
 	/**
@@ -25,15 +25,24 @@ public class Player extends GameObject {
 	 */
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
 			float gravityConstant, float jumpSpeed, boolean isGrounded) {
-		super(position, size, speed);
+		super(position, size, speed, "data/PlayerImg.png", "");
 		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
+		baseGravity = gravityConstant;
 	}
 	
 	public float getBaseXSpeed() {
 		return baseXSpeed;
+	}
+	
+	public float getGravity(){
+		return gravityConstant;
+	}
+	
+	public void setGravity(float f){
+		gravityConstant = f;
 	}
 
 	/**
@@ -78,23 +87,6 @@ public class Player extends GameObject {
 		} else {
 			getSpeed().setY(0);
 		}
-	}
-
-	@Override
-	public void playSound() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getSoundFileAsString() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	@Override
-	public String getTextureFileAsString() {
-		return textureFile;
 	}
 	
 	// Private methods

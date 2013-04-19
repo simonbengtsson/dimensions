@@ -9,7 +9,10 @@ import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SlowPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -32,7 +35,7 @@ public class GameView {
 	private Texture speedPowerUpTexture;
 	private Texture colliderTexture;
 	private Texture colliderTestTexture;
-	//private Map<String, Texture> textures;
+	private Map<String, Texture> textures;
 
 	// Public Methods
 	/**
@@ -44,23 +47,10 @@ public class GameView {
 	public GameView(GameModel model) {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
-		platformTexture = new Texture(Gdx.files.internal("data/PlatformImg.png"));
-		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
-		speedPowerUpTexture = new Texture(Gdx.files.internal("data/SpeedPowerUpImg.png"));
-		colliderTexture = new Texture(Gdx.files.internal("data/ColliderImg.png"));
-		colliderTestTexture = new Texture(Gdx.files.internal("data/SolidColliderImg.png"));
-		/*
-		textures = new HashMap<String, Texture>();
-		for (GameObject g : model.getGameObjects()) {
-			String file = g.getTextureFileAsString();
-			if (!textures.containsKey(file)) {
-				Texture t = new Texture(Gdx.files.internal(file));
-				textures.put(file, t);
-			}
-		}
-		String file = model.getPlayer().getTextureFileAsString();
-		textures.put(file, new Texture(Gdx.files.internal(file)));
-		*/
+
+		initalizeCalle();
+		// initalizeKim();
+
 	}
 
 	/**
@@ -74,25 +64,30 @@ public class GameView {
 		// Draw GameObjects
 		spriteBatch.begin();
 
-		Iterator<GameObject> iterator = model.getGameObjects().iterator();
-		while (iterator.hasNext()) {
-			GameObject gameObject = iterator.next();
-			if (gameObject instanceof Platform) {
-				spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
-						gameObject.getPosition().getY(), gameObject.getSize().getX(),
-						gameObject.getSize().getY());
-			}
-			else if (gameObject instanceof SpeedPowerUp) {
-				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition().getX(),
-						gameObject.getPosition().getY(), gameObject.getSize().getX(),
-						gameObject.getSize().getY());
+		drawCalle();
+		// drawKim();
+
+		spriteBatch.end();
+	}
+
+	// Private Methods
+
+	private void initalizeKim() {
+		textures = new HashMap<String, Texture>();
+		for (GameObject g : model.getGameObjects()) {
+			String file = g.getTextureFileAsString();
+			if (!textures.containsKey(file) && !file.equals("")) {
+				Texture t = new Texture(Gdx.files.internal(file));
+				textures.put(file, t);
 			}
 		}
-		Player player = model.getPlayer();
-		spriteBatch.draw(playerTexture, player.getPosition().getX(),
-				player.getPosition().getY(), player.getSize().getX(),
-				player.getSize().getY());
-		/*
+		String file = model.getPlayer().getTextureFileAsString();
+		textures.put(file, new Texture(Gdx.files.internal(file)));
+	}
+
+	private void drawKim() {
+		Iterator<GameObject> iterator = model.getGameObjects().iterator();
+		while (iterator.hasNext()) {
 			GameObject g = iterator.next();
 			Vector3 pos = g.getPosition();
 			Vector3 size = g.getSize();
@@ -103,10 +98,38 @@ public class GameView {
 		spriteBatch.draw(textures.get(p.getTextureFileAsString()), p
 				.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
-		 */
-
-		spriteBatch.end();
 	}
-	// Private Methods
+
+	private void initalizeCalle() {
+		platformTexture = new Texture(
+				Gdx.files.internal("data/PlatformImg.png"));
+		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
+		speedPowerUpTexture = new Texture(
+				Gdx.files.internal("data/SpeedPowerUpImg.png"));
+		colliderTexture = new Texture(
+				Gdx.files.internal("data/ColliderImg.png"));
+		colliderTestTexture = new Texture(
+				Gdx.files.internal("data/SolidColliderImg.png"));
+	}
+
+	private void drawCalle() {
+		Iterator<GameObject> iterator = model.getGameObjects().iterator();
+		while (iterator.hasNext()) {
+			GameObject gameObject = iterator.next();
+			if (gameObject instanceof Platform) {
+				spriteBatch.draw(platformTexture, gameObject.getPosition()
+						.getX(), gameObject.getPosition().getY(), gameObject
+						.getSize().getX(), gameObject.getSize().getY());
+			} else if (gameObject instanceof SpeedPowerUp
+					|| gameObject instanceof LowGravityPowerUp) {
+				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition()
+						.getX(), gameObject.getPosition().getY(), gameObject
+						.getSize().getX(), gameObject.getSize().getY());
+			}
+		}
+		spriteBatch.draw(playerTexture, model.getPlayer().getPosition().getX(),
+				model.getPlayer().getPosition().getY(), model.getPlayer()
+						.getSize().getX(), model.getPlayer().getSize().getY());
+	}
 
 }
