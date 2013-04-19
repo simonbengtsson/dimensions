@@ -6,15 +6,11 @@ import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 
 public class Model {
 	private double gravity = -9.82;
-	private Player player;
 	private List<Platform> platforms;
-	private List<PowerUp> powerUps;
 	private boolean usingPowerUp = false;
 
-	public Model(Level level, Player p) {
-		player = p;
+	public Model(Level level, Player p){
 		platforms = level.getPlatforms();
-		powerUps = level.getPowerUps();
 	}
 
 	public double getGravity() {

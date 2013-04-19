@@ -34,6 +34,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	
 	@Override
 	public void use(GameModel gm) {
+		System.out.println("Using powerup");
 		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}

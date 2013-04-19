@@ -16,7 +16,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 
-import org.lwjgl.opengl.Display;
+//import org.lwjgl.opengl.Display;
 
 /**
  * Game controller.
@@ -28,28 +28,12 @@ public class GameController implements ApplicationListener, SoundObserver {
 	// Instance variables
 	GameModel model;
 	GameView view;
-	private long ticks;
 	List<GameObject> ls;
 	Map<String, Sound> files;
 
 	// Public methods
 	@Override
 	public void create() {
-		/*
-		 * Creating Levels Level lv = new Level("Level1"); Level lv = new
-		 * Level("Level2");
-		 */
-		// Reading Existing Levels
-		/*
-		 * ReadLevel rl = new ReadLevel(); ls =
-		 * rl.readLevelName("NewTest"+".dat");
-		 * 
-		 * Player player = new Player(new Vector3(10,150,0), new Vector3(50, 50,
-		 * 0), new Vector3(2, 0, 0) , 0.75f, 15f, false);
-		 */
-		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level
-		// parameter?)
-
 		// Reads a level, either by creating one or read from a file.
 
 		Level lv = new Level("Level1");
@@ -89,6 +73,8 @@ public class GameController implements ApplicationListener, SoundObserver {
 		}
 		// For framrate testing, etc the methods Gdx.graphics.getDeltaTime()
 		// and Gdx.graphics.getFramesPerSecond() exists
+		// Display.sync(200);
+		//checkCollisions();
 		getInput();
 		model.updateModel();
 		view.draw();
@@ -112,7 +98,6 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	}
 
-	// Private methods
 	/**
 	 * Get input from the user, do different stuff depending on what input was
 	 * given.
@@ -126,11 +111,6 @@ public class GameController implements ApplicationListener, SoundObserver {
 		}
 	}
 
-	/**
-	 * Pretty obvious :)
-	 * 
-	 * @return
-	 */
 	public GameModel getGameModel() {
 		return model;
 	}

@@ -89,11 +89,7 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	public void setSize(Vector3 size) {
 		this.size = size;
 	}
-	/*
-<<<<<<< HEAD
-	
-=======
-*/
+
 	/**
 	 * Set method for instance variable speed.
 	 * 
@@ -134,8 +130,7 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	public List<SoundObserver> getObservers() {
 		return observers;
 	}
-
-//>>>>>>> e26976cb22a7187a0b221b95dd071e28d9070b8d
+	
 	// Private methods
 
 }

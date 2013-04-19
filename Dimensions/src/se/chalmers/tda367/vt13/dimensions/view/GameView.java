@@ -33,8 +33,8 @@ public class GameView {
 	private Texture speedPowerUpTexture;
 	private Texture colliderTexture;
 	private Texture colliderTestTexture;
-	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
+	//private Map<String, Texture> textures;
 
 	// Public Methods
 	/**
@@ -111,25 +111,6 @@ public class GameView {
 		 * .getPosition().getX(), p.getPosition().getY(), p.getSize() .getX(),
 		 * p.getSize().getY());
 		 */
-		// Iterator<GameObject> iterator = model.getGameObjects().iterator();
-		// while (iterator.hasNext()) {
-		// GameObject gameObject = iterator.next();
-		// if (gameObject instanceof Platform) {
-		// spriteBatch.draw(platformTexture, gameObject.getPosition().getX(),
-		// gameObject.getPosition().getY(), gameObject.getSize().getX(),
-		// gameObject.getSize().getY());
-		// }
-		// else if (gameObject instanceof SpeedPowerUp) {
-		// spriteBatch.draw(speedPowerUpTexture,
-		// gameObject.getPosition().getX(),
-		// gameObject.getPosition().getY(), gameObject.getSize().getX(),
-		// gameObject.getSize().getY());
-		// }
-		// }
-		// Player player = model.getPlayer();
-		// spriteBatch.draw(playerTexture, player.getPosition().getX(),
-		// player.getPosition().getY(), player.getSize().getX(),
-		// player.getSize().getY());
 
 		spriteBatch.end();
 	}
