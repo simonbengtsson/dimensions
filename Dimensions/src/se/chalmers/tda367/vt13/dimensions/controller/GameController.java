@@ -18,6 +18,7 @@ import com.badlogic.gdx.audio.Sound;
 
 /**
  * Game controller.
+ * 
  * @author Carl Fredriksson
  */
 public class GameController implements ApplicationListener, SoundObserver {
@@ -31,18 +32,17 @@ public class GameController implements ApplicationListener, SoundObserver {
 	// Public methods
 	@Override
 	public void create() {
-		
 		// Reads a level, either by creating one or read from a file.
 
 		Level lv = new Level("Level1");
 		ls = lv.getList();
 
-		// ReadLevel rl = new ReadLevel();
-		// ls = rl.readLevelName("Level2"+".dat");
+		//ReadLevel rl = new ReadLevel();
+		//ls = rl.readLevelName("Level1"+".dat");
 
 		// Creates a player
-		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,0),
-				new Vector3(2, 0, 0), -0.75f, 15f, false);
+		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
+				0), new Vector3(2, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
 		//initalizeKim();
@@ -54,11 +54,17 @@ public class GameController implements ApplicationListener, SoundObserver {
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void render() {
+		if(model.isGameOver()){
+			dispose();
+			create();
+		}
+		// For framrate testing, etc the methods Gdx.graphics.getDeltaTime()
+		// and Gdx.graphics.getFramesPerSecond() exists
 		// Display.sync(200);
 		//checkCollisions();
 		getInput();
@@ -80,11 +86,10 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		view.dispose();
 
 	}
 
-	// Private methods
 	/**
 	 * Get input from the user, do different stuff depending on what input was
 	 * given.
@@ -93,13 +98,11 @@ public class GameController implements ApplicationListener, SoundObserver {
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
 			model.getPlayer().jump();
 		}
+		if (Gdx.input.isTouched()) {
+			model.getPlayer().jump();
+		}
 	}
 
-	/**
-	 * Pretty obvious :)
-	 * 
-	 * @return
-	 */
 	public GameModel getGameModel() {
 		return model;
 	}

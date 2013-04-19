@@ -4,18 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.Collider;
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.Platform;
-import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.SlowPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -36,6 +30,7 @@ public class GameView {
 	private Texture colliderTexture;
 	private Texture colliderTestTexture;
 	private Map<String, Texture> textures;
+	private OrthographicCamera camera;
 
 	// Public Methods
 	/**
@@ -49,8 +44,11 @@ public class GameView {
 		spriteBatch = new SpriteBatch();
 
 		initalizeCalle();
-		// initalizeKim();
+		//initalizeKim();
 
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false);
+	
 	}
 
 	/**
@@ -60,12 +58,16 @@ public class GameView {
 		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		camera.update();
+		spriteBatch.setProjectionMatrix(camera.combined);
+		camera.position.x = model.getPlayer().getPosition().getX()+400;
 
 		// Draw GameObjects
 		spriteBatch.begin();
 
 		drawCalle();
-		// drawKim();
+		//drawKim();
 
 		spriteBatch.end();
 	}
@@ -131,5 +133,9 @@ public class GameView {
 				model.getPlayer().getPosition().getY(), model.getPlayer()
 						.getSize().getX(), model.getPlayer().getSize().getY());
 	}
-
+	
+	public void dispose(){
+		//All assets should be disposed, music images etc
+		spriteBatch.dispose();
+	}
 }
