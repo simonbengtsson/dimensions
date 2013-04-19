@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g3d.model.Model;
 import se.chalmers.tda367.vt13.dimensions.controller.GameController;
 import se.chalmers.tda367.vt13.dimensions.model.*;
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.model.levels.NormalLevel;
 
 public class TesterKling implements Runnable {
 	private GameModel m;
@@ -55,7 +56,7 @@ public class TesterKling implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		Level lv = new Level("Level1");
+		NormalLevel lv = new NormalLevel("Level1", "test");
 		Player player = new Player(new Vector3(10,100,0), new Vector3(50, 50, 0), new Vector3(2, 0, 0)
 			, -10f, 15f, false);
 		// LEVEL WILL TAKE CARE OF THIS LATER (Model constructor with level parameter?)
