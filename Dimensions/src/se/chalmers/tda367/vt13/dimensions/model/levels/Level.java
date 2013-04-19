@@ -32,8 +32,16 @@ public abstract class Level implements Serializable {
 	 */
 	public Level(String s, String filepath){
 		this.levelname = s;
+
 		this.backGroundImagePath = filepath;
 		spawnStartingPlatform(gameobjects);	
+
+		// This constructor is currently a mess
+		// TODO: Clean up this mess
+		
+		spawnStartingPlatform(gameobjects);
+		
+
 	}
 	
 
