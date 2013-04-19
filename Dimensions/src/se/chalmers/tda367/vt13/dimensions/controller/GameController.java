@@ -114,7 +114,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		view.dispose();
 
 	}
 
