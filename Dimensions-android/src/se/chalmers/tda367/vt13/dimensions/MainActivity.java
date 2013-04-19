@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions;
 
-import se.chalmers.tda367.vt13.dimensions.controller.GameController;
+import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -16,6 +16,6 @@ public class MainActivity extends AndroidApplication {
        cfg.useAccelerometer = false;
        cfg.useCompass = false;
          
-       initialize(new GameController(), cfg);
+       initialize(new Dimensions(), cfg);
     }
 }

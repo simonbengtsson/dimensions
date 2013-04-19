@@ -11,9 +11,9 @@ import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 
 //import org.lwjgl.opengl.Display;
@@ -23,26 +23,23 @@ import com.badlogic.gdx.audio.Sound;
  * 
  * @author Carl Fredriksson
  */
-public class GameController extends Game implements SoundObserver {
+public class GameScreen implements Screen, SoundObserver {
 
-	// Instance variables
 	GameModel model;
 	GameView view;
 	List<GameObject> ls;
 	Map<String, Sound> files;
+	Dimensions game;
 
-	// Public methods
-	@Override
-	public void create() {
+	public GameScreen(Dimensions game) {
+		this.game = game;
 		// Reads a level, either by creating one or read from a file.
-
 		RandomLevel lv = new RandomLevel("RandomLevel2",null);
 		ls = lv.getList();
 
 		//ReadLevel rl = new ReadLevel();
 		//ls = rl.readLevelName("RandomLevel1"+".dat");
 
-		// Creates a player
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
 				0), new Vector3(4, 0, 0), -0.75f, 15f, false);
 
@@ -60,12 +57,12 @@ public class GameController extends Game implements SoundObserver {
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		if(model.isGameOver()){
-			dispose();
-			create();
+			game.newGame();
+			game.setScreen(game.getMainMenuScreen());
 		}
-		// For framrate testing, etc the methods Gdx.graphics.getDeltaTime()
+		// For fps testing, etc the methods Gdx.graphics.getDeltaTime()
 		// and Gdx.graphics.getFramesPerSecond() exists
 		// Display.sync(200);
 		//checkCollisions();
@@ -111,6 +108,34 @@ public class GameController extends Game implements SoundObserver {
 				files.put(file, sound);
 			}
 		}
+	}
+	
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
 	}
 
 }
