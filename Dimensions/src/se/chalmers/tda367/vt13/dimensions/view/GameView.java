@@ -4,12 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.Collider;
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.Platform;
-import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.SpeedPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -28,13 +24,8 @@ public class GameView {
 	// Instance Variables
 	private GameModel model;
 	private SpriteBatch spriteBatch;
-	private Texture platformTexture;
-	private Texture playerTexture;
-	private Texture speedPowerUpTexture;
-	private Texture colliderTexture;
-	private Texture colliderTestTexture;
+	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
-	//private Map<String, Texture> textures;
 
 	// Public Methods
 	/**
@@ -46,27 +37,12 @@ public class GameView {
 	public GameView(GameModel model) {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
-		platformTexture = new Texture(
-				Gdx.files.internal("data/PlatformImg.png"));
-		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
-		speedPowerUpTexture = new Texture(
-				Gdx.files.internal("data/SpeedPowerUpImg.png"));
-		colliderTexture = new Texture(
-				Gdx.files.internal("data/ColliderImg.png"));
-		colliderTestTexture = new Texture(
-				Gdx.files.internal("data/SolidColliderImg.png"));
+
+		loadImageFiles();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
-		
-		/*
-		 * textures = new HashMap<String, Texture>(); for (GameObject g :
-		 * model.getGameObjects()) { String file = g.getTextureFileAsString();
-		 * if (!textures.containsKey(file)) { Texture t = new
-		 * Texture(Gdx.files.internal(file)); textures.put(file, t); } } String
-		 * file = model.getPlayer().getTextureFileAsString(); textures.put(file,
-		 * new Texture(Gdx.files.internal(file)));
-		 */
+	
 	}
 
 	/**
@@ -84,35 +60,39 @@ public class GameView {
 		// Draw GameObjects
 		spriteBatch.begin();
 
-		Iterator<GameObject> iterator = model.getGameObjects().iterator();
-		while (iterator.hasNext()) {
-			GameObject gameObject = iterator.next();
-			if (gameObject instanceof Platform) {
-				spriteBatch.draw(platformTexture, gameObject.getPosition()
-						.getX(), gameObject.getPosition().getY(), gameObject
-						.getSize().getX(), gameObject.getSize().getY());
-			} else if (gameObject instanceof SpeedPowerUp) {
-				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition()
-						.getX(), gameObject.getPosition().getY(), gameObject
-						.getSize().getX(), gameObject.getSize().getY());
-			}
-		}
-		Player player = model.getPlayer();
-		spriteBatch.draw(playerTexture, player.getPosition().getX(), player
-				.getPosition().getY(), player.getSize().getX(), player
-				.getSize().getY());
-		/*
-		 * GameObject g = iterator.next(); Vector3 pos = g.getPosition();
-		 * Vector3 size = g.getSize();
-		 * spriteBatch.draw(textures.get(g.getTextureFileAsString()),
-		 * pos.getX(), pos.getY(), size.getX(), size.getY()); } Player p =
-		 * model.getPlayer();
-		 * spriteBatch.draw(textures.get(p.getTextureFileAsString()), p
-		 * .getPosition().getX(), p.getPosition().getY(), p.getSize() .getX(),
-		 * p.getSize().getY());
-		 */
+		drawGameObjects();
 
 		spriteBatch.end();
+	}
+
+	// Private Methods
+
+	private void loadImageFiles() {
+		textures = new HashMap<String, Texture>();
+		for (GameObject g : model.getGameObjects()) {
+			String file = g.getImageFileAsString();
+			if (!textures.containsKey(file) && !file.equals("")) {
+				Texture t = new Texture(Gdx.files.internal(file));
+				textures.put(file, t);
+			}
+		}
+		String file = model.getPlayer().getImageFileAsString();
+		textures.put(file, new Texture(Gdx.files.internal(file)));
+	}
+
+	private void drawGameObjects() {
+		Iterator<GameObject> iterator = model.getGameObjects().iterator();
+		while (iterator.hasNext()) {
+			GameObject g = iterator.next();
+			Vector3 pos = g.getPosition();
+			Vector3 size = g.getSize();
+			spriteBatch.draw(textures.get(g.getImageFileAsString()),
+					pos.getX(), pos.getY(), size.getX(), size.getY());
+		}
+		Player p = model.getPlayer();
+		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
+				.getPosition().getX(), p.getPosition().getY(), p.getSize()
+				.getX(), p.getSize().getY());
 	}
 	
 	public void dispose(){

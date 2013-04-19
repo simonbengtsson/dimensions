@@ -18,6 +18,8 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	private Vector3 position;
 	private Vector3 size;
 	private Vector3 speed;
+	private String soundFile;
+	private String imageFile;
 	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
 
 	// Public methods
@@ -31,10 +33,12 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 * @param speed
 	 *            the speed of the GameObject
 	 */
-	public GameObject(Vector3 position, Vector3 size, Vector3 speed) {
+	public GameObject(Vector3 position, Vector3 size, Vector3 speed, String imageFile, String soundFile) {
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
+		this.soundFile = soundFile;
+		this.imageFile = imageFile;
 		// observers = new ArrayList<SoundObserver>();
 	}
 
@@ -106,7 +110,9 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 * 
 	 * @return
 	 */
-	public abstract String getSoundFileAsString();
+	public String getSoundFileAsString(){
+		return soundFile;
+	}
 
 	/**
 	 * Makes it possible for the view to store String's and the corresponding
@@ -114,7 +120,9 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 * 
 	 * @return
 	 */
-	public abstract String getTextureFileAsString();
+	public String getImageFileAsString(){
+		return imageFile;
+	}
 
 	@Override
 	public void addObserver(SoundObserver s) {
@@ -129,6 +137,12 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	@Override
 	public List<SoundObserver> getObservers() {
 		return observers;
+	}
+	
+	public void playSound(){
+		for(SoundObserver s : observers){
+			s.playSound(soundFile);
+		}
 	}
 	
 	// Private methods

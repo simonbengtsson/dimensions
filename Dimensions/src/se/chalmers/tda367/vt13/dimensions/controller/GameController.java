@@ -1,7 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
-//import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,14 +45,8 @@ public class GameController implements ApplicationListener, SoundObserver {
 				0), new Vector3(2, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
-		/*
-		 * files = new HashMap<String, Sound>(); for (GameObject g : ls) {
-		 * g.addObserver(this); String file = g.getSoundFileAsString();
-		 * 
-		 * if (!files.containsKey(file) && !file.equals("")) { Sound sound =
-		 * Gdx.audio.newSound(Gdx.files.internal(file)); files.put(file, sound);
-		 * } }
-		 */
+		loadSoundFiles();
+		
 		model = new GameModel(ls, player);
 		view = new GameView(model);
 	}
@@ -117,7 +109,20 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	@Override
 	public void playSound(String s) {
-		files.get(s).play();
+		files.get(s).play(0.5f);
+	}
+	
+	private void loadSoundFiles(){
+		files = new HashMap<String, Sound>();
+		for (GameObject g : ls) {
+			g.addObserver(this);
+			String file = g.getSoundFileAsString();
+
+			if (!files.containsKey(file) && !file.equals("")) {
+				Sound sound = Gdx.audio.newSound(Gdx.files.internal(file));
+				files.put(file, sound);
+			}
+		}
 	}
 
 }

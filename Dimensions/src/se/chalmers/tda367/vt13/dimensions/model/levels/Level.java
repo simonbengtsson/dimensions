@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
+
 import java.io.Serializable;
 
 /** 
@@ -159,8 +163,11 @@ public class Level implements Serializable {
 		switch(i){
 		case 1:
 			l.add(new SpeedPowerUp(new Vector3(x, y, 0), new Vector3(25, 25, 0), new Vector3()));
+			break;
 			
-		case 2: 
+		case 2:
+			l.add(new LowGravityPowerUp(new Vector3(x, y, 0), new Vector3(25, 25, 25), new Vector3()));
+			break;
 			// todo
 		}
 		

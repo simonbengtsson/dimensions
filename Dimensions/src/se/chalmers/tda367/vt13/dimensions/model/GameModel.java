@@ -3,6 +3,8 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Iterator;
 import java.util.List;
 
+import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
+
 /**
  * Game model.
  * @author Carl Fredriksson

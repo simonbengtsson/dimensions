@@ -1,12 +1,14 @@
-package se.chalmers.tda367.vt13.dimensions.model;
+package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import java.io.Serializable;
 import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
+import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 /**
- * Class for the speed PowerUp. Increases
- * the players speed when used.
+ * This powerup doubles the speed, if the players speed is equal or below 2 px/frame.
  * @author Carl Fredriksson
  */
 
@@ -15,8 +17,6 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 	// Instance variables
 	private final float speedModifier = 2;
-	private String soundFile;
-	private String textureFile;
 	private static final long serialVersionUID = 1L;
 
 	// Public methods
@@ -27,36 +27,15 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 * @param speed the speed of the SpeedPowerUp
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
-		super(position, size, speed);
-		soundFile = "sound/SpeedPowerUp.mp3";
-		textureFile = "data/SpeedPowerUpImg.png";
+		super(position, size, speed, "data/SpeedPowerUpImg.png", "sound/SpeedPowerUp.mp3");
 	}
 	
 	@Override
 	public void use(GameModel gm) {
-		System.out.println("Using powerup");
 		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}
 		playSound();
-	}
-
-	@Override
-	public void playSound() {
-		List<SoundObserver> observers = getObservers();
-		for(SoundObserver s : observers){
-			s.playSound(soundFile);
-		}
-	}
-
-	@Override
-	public String getSoundFileAsString() {
-		return soundFile;
-	}
-
-	@Override
-	public String getTextureFileAsString() {
-		return textureFile;
 	}
 	
 	// Private methods
