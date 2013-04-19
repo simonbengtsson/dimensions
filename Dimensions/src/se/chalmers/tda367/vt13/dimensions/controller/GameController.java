@@ -45,7 +45,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 				0), new Vector3(2, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
-		initalizeKim();
+		loadSoundFiles();
 		
 		model = new GameModel(ls, player);
 		view = new GameView(model);
@@ -109,10 +109,10 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 	@Override
 	public void playSound(String s) {
-		files.get(s).play();
+		files.get(s).play(0.5f);
 	}
 	
-	private void initalizeKim(){
+	private void loadSoundFiles(){
 		files = new HashMap<String, Sound>();
 		for (GameObject g : ls) {
 			g.addObserver(this);

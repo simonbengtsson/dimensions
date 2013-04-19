@@ -24,11 +24,6 @@ public class GameView {
 	// Instance Variables
 	private GameModel model;
 	private SpriteBatch spriteBatch;
-	private Texture platformTexture;
-	private Texture playerTexture;
-	private Texture speedPowerUpTexture;
-	private Texture colliderTexture;
-	private Texture colliderTestTexture;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
 
@@ -43,7 +38,7 @@ public class GameView {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
 
-		initalizeKim();
+		loadImageFiles();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
@@ -65,14 +60,14 @@ public class GameView {
 		// Draw GameObjects
 		spriteBatch.begin();
 
-		drawKim();
+		drawGameObjects();
 
 		spriteBatch.end();
 	}
 
 	// Private Methods
 
-	private void initalizeKim() {
+	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
 		for (GameObject g : model.getGameObjects()) {
 			String file = g.getImageFileAsString();
@@ -85,7 +80,7 @@ public class GameView {
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
-	private void drawKim() {
+	private void drawGameObjects() {
 		Iterator<GameObject> iterator = model.getGameObjects().iterator();
 		while (iterator.hasNext()) {
 			GameObject g = iterator.next();
@@ -98,38 +93,6 @@ public class GameView {
 		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 				.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
-	}
-
-	private void initalizeCalle() {
-		platformTexture = new Texture(
-				Gdx.files.internal("data/PlatformImg.png"));
-		playerTexture = new Texture(Gdx.files.internal("data/PlayerImg.png"));
-		speedPowerUpTexture = new Texture(
-				Gdx.files.internal("data/SpeedPowerUpImg.png"));
-		colliderTexture = new Texture(
-				Gdx.files.internal("data/ColliderImg.png"));
-		colliderTestTexture = new Texture(
-				Gdx.files.internal("data/SolidColliderImg.png"));
-	}
-
-	private void drawCalle() {
-		Iterator<GameObject> iterator = model.getGameObjects().iterator();
-		while (iterator.hasNext()) {
-			GameObject gameObject = iterator.next();
-			if (gameObject instanceof Platform) {
-				spriteBatch.draw(platformTexture, gameObject.getPosition()
-						.getX(), gameObject.getPosition().getY(), gameObject
-						.getSize().getX(), gameObject.getSize().getY());
-			} else if (gameObject instanceof SpeedPowerUp
-					|| gameObject instanceof LowGravityPowerUp) {
-				spriteBatch.draw(speedPowerUpTexture, gameObject.getPosition()
-						.getX(), gameObject.getPosition().getY(), gameObject
-						.getSize().getX(), gameObject.getSize().getY());
-			}
-		}
-		spriteBatch.draw(playerTexture, model.getPlayer().getPosition().getX(),
-				model.getPlayer().getPosition().getY(), model.getPlayer()
-						.getSize().getX(), model.getPlayer().getSize().getY());
 	}
 	
 	public void dispose(){
