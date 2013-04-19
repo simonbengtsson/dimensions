@@ -54,7 +54,7 @@ public class GameView {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-		updateCameraPosition(3, 10); // Try changing to parameters to get the
+		updateCameraPosition(3, 10, false); // Try changing to parameters to get the
 										// right feeling
 		spriteBatch.setProjectionMatrix(camera.combined);
 		// Draw GameObjects
@@ -74,12 +74,18 @@ public class GameView {
 	 *            How many pixels away from center the player is going to be
 	 *            before camera starts following
 	 */
-	private void updateCameraPosition(int speed, int distance) {
+	private void updateCameraPosition(int speed, int distance, boolean crazyMode) {
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 		float delta = camera.position.y
 				- model.getPlayer().getPosition().getY();
 		if (Math.abs(delta) > distance) {
 			camera.position.y -= delta / 100 * speed;
+		}
+		if(crazyMode){
+			if(!model.getPlayer().getIsGrounded()){
+				camera.zoom += 0.01f;
+				camera.rotate(1f);
+			}
 		}
 	}
 
