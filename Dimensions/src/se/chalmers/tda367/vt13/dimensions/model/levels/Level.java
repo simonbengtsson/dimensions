@@ -35,16 +35,18 @@ public class Level implements Serializable {
 		// TODO: Clean up this mess
 		
 		spawnStartingPlatform(gameobjects);
-		stairCase(gameobjects);
+		spawnSingleBlock(gameobjects,0,0,400,50);
+		//stairCase(gameobjects);
 		//dropDown(gameobjects);
 		//stairCase(gameobjects);
-		for(int i = 0; i<20; i++){
-			spawnSingleBlock(gameobjects,100,0,150,50);
+		for(int i = 0; i<5; i++){
+			spawnSingleBlock(gameobjects,0,100,150,50);
 		}
+		spawnSingleBlock(gameobjects,0,-300,1000,50);
 		// SvŒrt att veta vart man ska spawna powerups, bšr gšras via position frŒn listan
 		//spawnPowerUp(gameobjects,1,0,50);
 		//spawnPowerUp(gameobjects,1,50,100);
-		spawnPowerUp(gameobjects,1,100,120);
+		spawnPowerUp(gameobjects,1,200,250);
 		spawnPowerUp(gameobjects,1,400,300);
 		
 		// Save level to file

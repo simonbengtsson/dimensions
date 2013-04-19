@@ -42,7 +42,7 @@ public class GameView {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
-	
+
 	}
 
 	/**
@@ -52,11 +52,11 @@ public class GameView {
 		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		camera.update();
-		spriteBatch.setProjectionMatrix(camera.combined);
-		camera.position.x = model.getPlayer().getPosition().getX()+400;
 
+		camera.update();
+		updateCameraPosition(3, 10); // Try changing to parameters to get the
+										// right feeling
+		spriteBatch.setProjectionMatrix(camera.combined);
 		// Draw GameObjects
 		spriteBatch.begin();
 
@@ -65,7 +65,23 @@ public class GameView {
 		spriteBatch.end();
 	}
 
-	// Private Methods
+	/**
+	 * Makes the camera follow the player
+	 * 
+	 * @param speed
+	 *            How fast the camera is following the player(y-axis)
+	 * @param activation
+	 *            How many pixels away from center the player is going to be
+	 *            before camera starts following
+	 */
+	private void updateCameraPosition(int speed, int distance) {
+		camera.position.x = model.getPlayer().getPosition().getX() + 400;
+		float delta = camera.position.y
+				- model.getPlayer().getPosition().getY();
+		if (Math.abs(delta) > distance) {
+			camera.position.y -= delta / 100 * speed;
+		}
+	}
 
 	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
@@ -94,9 +110,9 @@ public class GameView {
 				.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
 	}
-	
-	public void dispose(){
-		//All assets should be disposed, music images etc
+
+	public void dispose() {
+		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
 	}
 }
