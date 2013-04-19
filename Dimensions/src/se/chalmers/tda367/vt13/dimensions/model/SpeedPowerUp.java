@@ -14,6 +14,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 
 	// Instance variables
+	private final float speedModifier = 2;
 	private String soundFile;
 	private String textureFile;
 	private static final long serialVersionUID = 1L;
@@ -33,23 +34,11 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	
 	@Override
 	public void use(GameModel gm) {
-		if (gm.getPlayer().getSpeed().getX() <= 2) {
-			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * 2);
+		System.out.println("Using powerup");
+		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
+			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}
 		playSound();
-	}
-
-	@Override
-	public void update() {
-		move();
-	}
-
-	// Private methods
-	/**
-	 * Move the PowerUp.
-	 */
-	private void move() {
-		
 	}
 
 	@Override
@@ -69,5 +58,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	public String getTextureFileAsString() {
 		return textureFile;
 	}
+	
+	// Private methods
 	
 }

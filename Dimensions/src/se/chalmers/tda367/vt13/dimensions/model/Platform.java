@@ -28,18 +28,11 @@ public class Platform extends GameObject implements Serializable {
 		textureFile = "data/PlatformImg.png";
 	}
 	
-	@Override
-	public void update() {
-		move();
-	}
-	
-	// Private methods
-	/**
-	 * Move the platform.
-	 */
-	private void move() {
-		getPosition().add(getSpeed());
-	}
+	/*
+<<<<<<< HEAD
+
+=======
+*/
 
 	@Override
 	public void playSound() {
@@ -57,4 +50,7 @@ public class Platform extends GameObject implements Serializable {
 	public String getTextureFileAsString() {
 		return textureFile;
 	}
+//>>>>>>> e26976cb22a7187a0b221b95dd071e28d9070b8d
+	// Private methods
+	
 }

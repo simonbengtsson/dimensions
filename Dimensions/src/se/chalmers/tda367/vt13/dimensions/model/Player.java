@@ -1,8 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 /**
- * Class for the player in the game
- * 
+ * Class for the player in the game.
  * @author Carl Fredriksson
  */
 public class Player extends GameObject {
@@ -11,34 +10,30 @@ public class Player extends GameObject {
 	private float gravityConstant;
 	private float jumpSpeed;
 	private boolean isGrounded;
-	private final float standardSpeedX;
+	private final float baseXSpeed;
 	private String textureFile;
 
 	// Public methods
 	/**
 	 * Constructor.
-	 * 
-	 * @param position
-	 *            the position of the player within the game
-	 * @param size
-	 *            the size of the player
-	 * @param speed
-	 *            the speed of the player
-	 * @param gravityConstant
-	 *            the gravity constant affecting how fast the player falls
-	 * @param jumpSpeed
-	 *            the initial speed of the player when jumping
-	 * @param isGrounded
-	 *            the boolean for if the player is standing on a platform or not
+	 * @param position the position of the player within the game
+	 * @param size the size of the player
+	 * @param speed the speed of the player
+	 * @param gravityConstant the gravity constant affecting how fast the player falls
+	 * @param jumpSpeed the initial speed of the player when jumping
+	 * @param isGrounded  the boolean for if the player is standing on a platform or not
 	 */
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
 			float gravityConstant, float jumpSpeed, boolean isGrounded) {
 		super(position, size, speed);
-		standardSpeedX = speed.getX();
 		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
-		textureFile = "data/PlayerImg.png";
+		baseXSpeed = speed.getX();
+	}
+	
+	public float getBaseXSpeed() {
+		return baseXSpeed;
 	}
 
 	/**
@@ -52,12 +47,11 @@ public class Player extends GameObject {
 	}
 	
 	public void resetSpeed(){
-		getSpeed().setX(standardSpeedX);
+		getSpeed().setX(baseXSpeed);
 	}
 
 	/**
 	 * Get method for instance variable isGrounded.
-	 * 
 	 * @return if the player is standing on a platform or not
 	 */
 	public boolean getIsGrounded() {
@@ -68,37 +62,22 @@ public class Player extends GameObject {
 	 * Method for setting the isGrounded field of the player. For example:
 	 * isGrounded should be set to true if proper collision with a platform is
 	 * detected in the GameController.
-	 * 
-	 * @param isGrounded
-	 *            if the player is standing on a platform or not
+	 * @param isGrounded if the player is standing on a platform or not
 	 */
 	public void setIsGrounded(boolean isGrounded) {
 		this.isGrounded = isGrounded;
 	}
 
-	@Override
-	public void update() {
-		moveX();
-		moveY();
-	}
-
-	// Private methods
 	/**
-	 * Move the player
+	 * Check if the the player is grounded.
+	 * Adjust speed accordingly.
 	 */
-	private void moveY() {
+	public void calculateSpeed() {
 		if (!isGrounded) {
-			Vector3 p = getPosition();
-			Vector3 s = getSpeed();
-			p.setY(p.getY() + s.getY());
-			s.setY(s.getY() + gravityConstant);
+			getSpeed().setY(getSpeed().getY() + gravityConstant);
 		} else {
 			getSpeed().setY(0);
 		}
-	}
-	
-	private void moveX(){
-		getPosition().setX(getPosition().getX() + getSpeed().getX());
 	}
 
 	@Override
@@ -117,5 +96,7 @@ public class Player extends GameObject {
 	public String getTextureFileAsString() {
 		return textureFile;
 	}
+	
+	// Private methods
 
 }

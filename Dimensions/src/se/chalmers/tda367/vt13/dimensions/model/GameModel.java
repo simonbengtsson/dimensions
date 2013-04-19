@@ -53,26 +53,61 @@ public class GameModel {
 	 * and update the player.
 	 */
 	public void updateModel() {
-		updateGameObjects();
-		updatePlayer();
+		player.calculateSpeed();
+		movePlayer();
 	}
 	
 	// Private Methods
 	/**
-	 * Update all the GameObjects in the gameObject list.
+	 * Move the player with its speed. Check for collisions
+	 * and adjust player accordingly. Last position of the
+	 * player is used to make sure the player is only
+	 * getting grounded when falling or going horizontal.
 	 */
-	private void updateGameObjects() {
+	private void movePlayer() {
+		Vector3 lastPosition = player.getPosition().clone();
+		player.getPosition().add(player.getSpeed());
 		Iterator<GameObject> iterator = gameObjects.iterator();
+		boolean platformCollision = false;
 		while (iterator.hasNext()) {
-			iterator.next().update();
+			GameObject gameObject = iterator.next();
+			if (collision(player, gameObject)) {
+				if (gameObject instanceof Platform && lastPosition.getY() >=
+					(gameObject.getPosition().getY() + gameObject.getSize().getY())) {
+					player.setIsGrounded(true);
+					platformCollision = true;
+					adjustPosition(player, gameObject);
+				}
+				else if (gameObject instanceof PowerUp) {
+					((PowerUp) gameObject).use(this);
+					iterator.remove();
+				}
+			}
+			
+		}
+		if (!platformCollision) {
+			player.setIsGrounded(false);
 		}
 	}
 	
-	/**
-	 * Update the player.
-	 */
-	private void updatePlayer() {
-		player.update();
+	private void moveObject(GameObject gameObject) {
+		gameObject.getPosition().add(gameObject.getSpeed());
+		// COLLISION TESTING
+	}
+	
+	private boolean collision(GameObject object, GameObject otherObject) {
+		return !(object.getPosition().getX() > otherObject.getPosition().getX() + otherObject.getSize().getX() ||
+				object.getPosition().getX() + object.getSize().getX() < otherObject.getPosition().getX() ||
+				object.getPosition().getY() > otherObject.getPosition().getY() + otherObject.getSize().getY() ||
+				object.getPosition().getY() + object.getSize().getY() < otherObject.getPosition().getY());
+	}
+	
+	private void adjustPosition(GameObject object, GameObject otherObject) {
+		if (object.getSpeed().getY() < 0) {
+			float yOverlap = (otherObject.getPosition().getY() + otherObject.getSize().getY()) -
+					object.getPosition().getY();
+			object.getPosition().setY(object.getPosition().getY() + yOverlap);
+		}
 	}
 	
 }

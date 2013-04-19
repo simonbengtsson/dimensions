@@ -23,10 +23,10 @@ public class Collider {
 	 */
 	public Collider(float x, float y, float width, float height) {
 		boundingRect = new Rectangle(x, y, width, height);
-		topRect = new Rectangle(x, height-5, width, 5);
-		botRect = new Rectangle(x, y, width, 5);
-		leftRect = new Rectangle(x, y, 5, height);
-		rightRect = new Rectangle(width-5, y, 5, height);
+		topRect = new Rectangle(x, y+height-20, width, 20);
+		botRect = new Rectangle(x, y, width, 20);
+		leftRect = new Rectangle(x, y, 20, height);
+		rightRect = new Rectangle(x+width-20, y, 20, height);
 	}
 	
 	/**

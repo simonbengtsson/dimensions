@@ -101,12 +101,6 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	}
 
 	/**
-	 * Method to be implemented in sub classes. Is called by the controller,
-	 * making all objects update their states every frame.
-	 */
-	public abstract void update();
-
-	/**
 	 * Makes it possible for the controller to store String's and the
 	 * corresponding Sound() in a map for fast access
 	 * 
@@ -136,7 +130,7 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	public List<SoundObserver> getObservers() {
 		return observers;
 	}
-
+	
 	// Private methods
 
 }
