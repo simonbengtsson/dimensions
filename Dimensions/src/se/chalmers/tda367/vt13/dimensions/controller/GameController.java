@@ -16,7 +16,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 
-import org.lwjgl.opengl.Display;
+//import org.lwjgl.opengl.Display;
 
 /**   .
  * Game controller.
@@ -27,7 +27,6 @@ public class GameController implements ApplicationListener, SoundObserver {
 	// Instance variables
 	GameModel model;
 	GameView view;
-	private long ticks;
 	private long lastUpdate = System.currentTimeMillis();
 	List<GameObject> ls;
 	Map<String, Sound> files;
@@ -74,14 +73,14 @@ public class GameController implements ApplicationListener, SoundObserver {
 	public void render() {
 		//Display.sync(200);
 		long currentTime = System.currentTimeMillis();
-		long delta = currentTime-lastUpdate;
-		long before = System.currentTimeMillis();
+//		long delta = currentTime-lastUpdate;
+//		long before = System.currentTimeMillis();
 		checkCollisions();
 		getInput();
 		model.updateModel();
 		view.draw();
 		lastUpdate = currentTime;
-		long after = System.currentTimeMillis();
+//		long after = System.currentTimeMillis();
 		
 		//System.out.println("Delta=" + delta);
 		//System.out.println("loop took: " + after-before);

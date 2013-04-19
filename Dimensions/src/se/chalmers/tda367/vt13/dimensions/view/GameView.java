@@ -21,10 +21,10 @@ public class GameView {
 	// Instance Variables
 	private GameModel model;
 	private SpriteBatch spriteBatch;
-	private Texture platformTexture;
-	private Texture playerTexture;
-	private Texture speedPowerUpTexture;
-	private Texture colliderTestTexture;
+//	private Texture platformTexture;
+//	private Texture playerTexture;
+//	private Texture speedPowerUpTexture;
+//	private Texture colliderTestTexture;
 	private Map<String, Texture> textures;
 
 	// Public Methods
