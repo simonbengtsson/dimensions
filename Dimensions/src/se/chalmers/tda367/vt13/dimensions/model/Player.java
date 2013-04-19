@@ -55,6 +55,12 @@ public class Player extends GameObject {
 		}
 	}
 	
+	public void dash() {
+		if(!isGrounded) {
+			getSpeed().setX(getSpeed().getX() + 5);
+		}
+	}
+	
 	public void resetSpeed(){
 		getSpeed().setX(baseXSpeed);
 	}

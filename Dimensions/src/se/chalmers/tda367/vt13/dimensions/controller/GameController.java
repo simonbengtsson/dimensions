@@ -42,7 +42,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 
 		// Creates a player
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
-				0), new Vector3(2, 0, 0), -0.75f, 15f, false);
+				0), new Vector3(4, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
 		loadSoundFiles();
@@ -98,6 +98,10 @@ public class GameController implements ApplicationListener, SoundObserver {
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
 			model.getPlayer().jump();
 		}
+		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+			model.getPlayer().dash();
+		}
+		
 		if (Gdx.input.isTouched()) {
 			model.getPlayer().jump();
 		}
