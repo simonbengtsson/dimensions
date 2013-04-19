@@ -43,8 +43,7 @@ public class GameView {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
 
-		initalizeCalle();
-		//initalizeKim();
+		initalizeKim();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
@@ -66,8 +65,7 @@ public class GameView {
 		// Draw GameObjects
 		spriteBatch.begin();
 
-		drawCalle();
-		//drawKim();
+		drawKim();
 
 		spriteBatch.end();
 	}
@@ -77,13 +75,13 @@ public class GameView {
 	private void initalizeKim() {
 		textures = new HashMap<String, Texture>();
 		for (GameObject g : model.getGameObjects()) {
-			String file = g.getTextureFileAsString();
+			String file = g.getImageFileAsString();
 			if (!textures.containsKey(file) && !file.equals("")) {
 				Texture t = new Texture(Gdx.files.internal(file));
 				textures.put(file, t);
 			}
 		}
-		String file = model.getPlayer().getTextureFileAsString();
+		String file = model.getPlayer().getImageFileAsString();
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
@@ -93,11 +91,11 @@ public class GameView {
 			GameObject g = iterator.next();
 			Vector3 pos = g.getPosition();
 			Vector3 size = g.getSize();
-			spriteBatch.draw(textures.get(g.getTextureFileAsString()),
+			spriteBatch.draw(textures.get(g.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		Player p = model.getPlayer();
-		spriteBatch.draw(textures.get(p.getTextureFileAsString()), p
+		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 				.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
 	}

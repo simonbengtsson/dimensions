@@ -45,7 +45,7 @@ public class GameController implements ApplicationListener, SoundObserver {
 				0), new Vector3(2, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
-		//initalizeKim();
+		initalizeKim();
 		
 		model = new GameModel(ls, player);
 		view = new GameView(model);
