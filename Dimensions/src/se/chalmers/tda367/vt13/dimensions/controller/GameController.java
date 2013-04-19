@@ -34,11 +34,11 @@ public class GameController implements ApplicationListener, SoundObserver {
 	public void create() {
 		// Reads a level, either by creating one or read from a file.
 
-		Level lv = new Level("Level1");
+		RandomLevel lv = new RandomLevel("RandomLevel2",null);
 		ls = lv.getList();
 
 		//ReadLevel rl = new ReadLevel();
-		//ls = rl.readLevelName("Level1"+".dat");
+		//ls = rl.readLevelName("RandomLevel1"+".dat");
 
 		// Creates a player
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,

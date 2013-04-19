@@ -14,12 +14,13 @@ import java.io.Serializable;
 /** 
  * Class for creating a level with platforms and powerups
  */
-public class Level implements Serializable {
+public abstract class Level implements Serializable {
 	
 	// Instance variables
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private double gravity;
+	private String backGroundImagePath;
 	List <GameObject> gameobjects = new ArrayList <GameObject>();
 	private float lastx = 0;
 	private float lasty = 50;
@@ -29,31 +30,10 @@ public class Level implements Serializable {
 	 * 
 	 * @param s Level name
 	 */
-	public Level(String s){
+	public Level(String s, String filepath){
 		this.levelname = s;
-		
-		// This constructor is currently a mess
-		// TODO: Clean up this mess
-		
-		spawnStartingPlatform(gameobjects);
-		//stairCase(gameobjects);
-		//dropDown(gameobjects);
-		//stairCase(gameobjects);
-		for(int i = 0; i<20; i++){
-			//spawnSingleBlock(gameobjects,100,0,150,50);
-			randomGenerateLevel(gameobjects,100,50);
-		}
-		// SvŒrt att veta vart man ska spawna powerups, bšr gšras via position frŒn listan
-		//spawnPowerUp(gameobjects,1,0,50);
-		//spawnPowerUp(gameobjects,1,50,100);
-		spawnPowerUp(gameobjects,1,100,120);
-		spawnPowerUp(gameobjects,1,400,300);
-		
-		// Save level to file
-		WriteLevel rv = new WriteLevel();
-		rv.saveToFile(this.levelname, this);
-		
-		
+		this.backGroundImagePath = filepath;
+		spawnStartingPlatform(gameobjects);	
 	}
 	
 
@@ -87,21 +67,7 @@ public class Level implements Serializable {
 	 */
 	
 	
-	public void randomGenerateLevel(List <GameObject> l,int high,int low ){
-		Random rd = new Random();
-		int i =  rd.nextInt(2);
-		
-		int  xval = rd.nextInt(high-low) + low;
-		int yval = rd.nextInt(80-low) + low;
-		switch(i){
-		case 0:
-			stairCase(l);
-			
-		case 1: dropDown(l);
-		
-		case 2: spawnSingleBlock(l,xval,yval,120,50);
-		}
-	}
+
 	
 	/** Spawns the platform where the player will start.
 	 * @param l
@@ -130,7 +96,7 @@ public class Level implements Serializable {
 	 * @param l
 	 */
 	public void dropDown(List<GameObject> l ){
-		listAddShortPf(l,50,0);
+		listAddShortPf(l,50,5);
 		listAddLongPf(l,0,-70);
 		listAddShortPf(l,0,70);
 	}
