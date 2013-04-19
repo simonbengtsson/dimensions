@@ -79,7 +79,7 @@ public class GameView {
 		
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined);
-		System.out.println(camera.position.x);
+		camera.position.x = model.getPlayer().getPosition().getX()+400;
 
 		// Draw GameObjects
 		spriteBatch.begin();
