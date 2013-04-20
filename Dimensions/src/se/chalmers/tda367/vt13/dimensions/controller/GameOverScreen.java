@@ -3,6 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,7 +32,7 @@ public class GameOverScreen implements Screen {
 		font.draw(batch, str, 380, 240);
 		batch.end();
 
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Keys.UP)) {
 			game.setScreen(game.getGameScreen());
 		}
 
