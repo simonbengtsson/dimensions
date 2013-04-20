@@ -123,4 +123,11 @@ public class GameView {
 		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
 	}
+	
+	/*
+	 * Gameover if player slips below camera y position 
+	 */
+	public boolean isGameOver(){
+		return camera.position.y-300 > model.getPlayer().getPosition().getY();
+	}
 }

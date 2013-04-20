@@ -1,7 +1,10 @@
-package se.chalmers.tda367.vt13.dimensions.view;
+package se.chalmers.tda367.vt13.dimensions.controller;
 
-import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-
+// ----------------------------------------------------
+// ----------------------------------------------------
+// NOT YET USED 
+//----------------------------------------------------
+//----------------------------------------------------
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 

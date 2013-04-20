@@ -58,14 +58,11 @@ public class GameScreen implements Screen, SoundObserver {
 
 	@Override
 	public void render(float delta) {
-		if(model.isGameOver()){
+		
+		if(view.isGameOver()){
 			game.newGame();
-			game.setScreen(game.getMainMenuScreen());
+			game.setScreen(game.getGameOverScreen());
 		}
-		// For fps testing, etc the methods Gdx.graphics.getDeltaTime()
-		// and Gdx.graphics.getFramesPerSecond() exists
-		// Display.sync(200);
-		//checkCollisions();
 		getInput();
 		model.updateModel();
 		view.draw();
