@@ -1,8 +1,11 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import java.awt.Toolkit;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
@@ -43,8 +46,8 @@ public class GameView {
 		loadImageFiles();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false);
-
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 	}
 
 	/**

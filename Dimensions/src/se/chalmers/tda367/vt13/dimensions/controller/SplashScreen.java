@@ -23,6 +23,15 @@ public class SplashScreen implements Screen {
 
 	public SplashScreen(Dimensions game) {
 		this.game = game;
+		
+//		splashTexture = new Texture("path");
+//		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+//		
+//		splashSprite = new Sprite();
+//		splashSprite.setOrigin(splashSprite.getWidth() / 2, splashSprite.getHeight() / 2);
+//		splashSprite.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+//		
+//		batch = new SpriteBatch();
 	}
 
 	@Override
@@ -49,14 +58,7 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void show() {
-		splashTexture = new Texture("path");
-		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		splashSprite = new Sprite();
-		splashSprite.setOrigin(splashSprite.getWidth() / 2, splashSprite.getHeight() / 2);
-		splashSprite.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-		
-		batch = new SpriteBatch();
 	}
 
 	@Override
