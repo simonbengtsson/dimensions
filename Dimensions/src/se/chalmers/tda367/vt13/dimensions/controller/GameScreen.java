@@ -16,7 +16,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 
-//import org.lwjgl.opengl.Display;
 
 /**
  * Game controller.
@@ -34,18 +33,18 @@ public class GameScreen implements Screen, SoundObserver {
 	public GameScreen(Dimensions game) {
 		this.game = game;
 		// Reads a level, either by creating one or read from a file.
-		RandomLevel lv = new RandomLevel("RandomLevel2",null);
+		RandomLevel lv = new RandomLevel("RandomLevel2", null);
 		ls = lv.getList();
 
-		//ReadLevel rl = new ReadLevel();
-		//ls = rl.readLevelName("RandomLevel1"+".dat");
+		// ReadLevel rl = new ReadLevel();
+		// ls = rl.readLevelName("RandomLevel1"+".dat");
 
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
 				0), new Vector3(4, 0, 0), -0.75f, 15f, false);
 
 		// Load all soundfiles & add Controller as observer
 		loadSoundFiles();
-		
+
 		model = new GameModel(ls, player);
 		view = new GameView(model);
 	}
@@ -58,8 +57,8 @@ public class GameScreen implements Screen, SoundObserver {
 
 	@Override
 	public void render(float delta) {
-		
-		if(view.isGameOver()){
+
+		if (view.isGameOver()) {
 			game.newGame();
 			game.setScreen(game.getGameOverScreen());
 		}
@@ -79,7 +78,7 @@ public class GameScreen implements Screen, SoundObserver {
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 			model.getPlayer().dash();
 		}
-		
+
 		if (Gdx.input.isTouched()) {
 			model.getPlayer().jump();
 		}
@@ -93,8 +92,8 @@ public class GameScreen implements Screen, SoundObserver {
 	public void playSound(String s) {
 		files.get(s).play(0.5f);
 	}
-	
-	private void loadSoundFiles(){
+
+	private void loadSoundFiles() {
 		files = new HashMap<String, Sound>();
 		for (GameObject g : ls) {
 			g.addObserver(this);
@@ -106,29 +105,29 @@ public class GameScreen implements Screen, SoundObserver {
 			}
 		}
 	}
-	
+
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

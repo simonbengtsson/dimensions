@@ -80,10 +80,10 @@ public class OptionsModel {
 	}
 	
 	public void resetToDefault(){
-		jumpKey = Keys.UP;
-		dashKey = Keys.DOWN;
-		screenSize = new Dimension(1000, 500);
-		fullscreen = false;
+		newJumpKey = Keys.UP;
+		newDashKey = Keys.DOWN;
+		newScreenSize = new Dimension(1000, 500);
+		newFullscreen = false;
 	}
 	
 	public DisplayMode[] getDisplayModes(){

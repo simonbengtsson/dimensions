@@ -19,35 +19,35 @@ public class SplashScreen implements Screen {
 	Texture splashTexture;
 	Sprite splashSprite;
 	SpriteBatch batch;
-	
+	long createTime;
 
 	public SplashScreen(Dimensions game) {
 		this.game = game;
-		
-//		splashTexture = new Texture("path");
-//		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-//		
-//		splashSprite = new Sprite();
-//		splashSprite.setOrigin(splashSprite.getWidth() / 2, splashSprite.getHeight() / 2);
-//		splashSprite.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-//		
-//		batch = new SpriteBatch();
+
+		// The picture to show on splashscreen
+		splashTexture = new Texture(Gdx.files.internal("data/boat.png"));
+		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		batch = new SpriteBatch();
+
+		createTime = System.currentTimeMillis();
 	}
 
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.justTouched()) {
-			game.setScreen(game.getMainMenuScreen());
-		}
-		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		batch.begin();
-		
-		splashSprite.draw(batch);
-		
+		batch.draw(splashTexture, 10, 10);
+
 		batch.end();
+
+		// If splashscreen has been shown longer then 2s, tell master controller
+		// that the splashscreen is done
+		if ((System.currentTimeMillis() - createTime) > 2000) {
+			game.splashScreenDone();
+		}
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void show() {
-		
+		// new Thread(new LoadStuff()).start();
 	}
 
 	@Override
@@ -81,7 +81,19 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		batch.dispose();
+		splashTexture.dispose();
+		// batch.dispose();
+	}
+
+	// A private class for loading everything into the master controller.
+	// Currently not in use
+	private class LoadStuff implements Runnable {
+
+		@Override
+		public void run() {
+			// game.loadGame();
+		}
 
 	}
 

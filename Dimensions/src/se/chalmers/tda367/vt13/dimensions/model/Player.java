@@ -1,5 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Class for the player in the game.
  * @author Carl Fredriksson
@@ -12,6 +15,7 @@ public class Player extends GameObject {
 	private boolean isGrounded;
 	private final float baseXSpeed;
 	private final float baseGravity;
+	private boolean usingDash;
 
 	// Public methods
 	/**
@@ -31,6 +35,7 @@ public class Player extends GameObject {
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
 		baseGravity = gravityConstant;
+		usingDash = false;
 	}
 	
 	public float getBaseXSpeed() {
@@ -56,8 +61,27 @@ public class Player extends GameObject {
 	}
 	
 	public void dash() {
-		if(!isGrounded) {
-			getSpeed().setX(getSpeed().getX() + 5);
+		if(!isGrounded && !usingDash) {
+			usingDash = true;
+			getSpeed().setX(getSpeed().getX() + 20);
+			
+			Timer timer = new Timer();
+			
+			// Resets the speed 500ms after used dash
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					getSpeed().setX(getSpeed().getX() - 20);
+				}
+			}, 500);
+			
+			// Enables the player to use dash again after 5s
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					usingDash = false;
+				}
+			}, 5000);
 		}
 	}
 	

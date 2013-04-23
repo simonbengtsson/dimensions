@@ -1,6 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
-
 import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
@@ -33,7 +32,6 @@ public class MainMenuScreen implements Screen {
 	private final TextButton exit;
 	private TextButtonStyle buttonStyle = new TextButtonStyle();
 	private Stage stage;
-	
 
 	public MainMenuScreen(final Dimensions game) {
 		this.game = game;
@@ -42,66 +40,51 @@ public class MainMenuScreen implements Screen {
 		table = new Table();
 		stage = new Stage();
 		buttonStyle.font = new BitmapFont();
-	    buttonStyle.fontColor = Color.WHITE;
-	    buttonStyle.overFontColor = Color.RED;
-	    buttonStyle.pressedOffsetY = 1f;
-	    buttonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1f);
-		start = new TextButton("Start game",buttonStyle);
-		option = new TextButton("Options",buttonStyle);
+		buttonStyle.fontColor = Color.WHITE;
+		buttonStyle.overFontColor = Color.RED;
+		buttonStyle.pressedOffsetY = 1f;
+		buttonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1f);
+		start = new TextButton("Start game", buttonStyle);
+		option = new TextButton("Options", buttonStyle);
 		exit = new TextButton("Exit game", buttonStyle);
-		
+
 		stage = new Stage();
 		table.setFillParent(true);
 		table.add(start);
-		 start.addListener(new ClickListener(){ 
-			 public void clicked(InputEvent e,float x,float y)
-			 	{
-	        		game.setScreen(game.getGameScreen());
-	        		System.out.println("starbutton");
-			 	}
-			 }
-		 );
-		 
-		 option.addListener(new ClickListener(){
-			 public void clicked(InputEvent e, float x, float y)
-			 	{
-				 game.setScreen(new OptionScreen());
-			 	}
-		 	}
-		);
-		 
-		 exit.addListener(new ClickListener(){
-			 public void clicked(InputEvent e, float x, float y)
-			 	{
-				 int result = JOptionPane.showConfirmDialog(null, "Do you wish to exit the game", null, JOptionPane.OK_CANCEL_OPTION);
-				 if(result == 0){
-					 
-					 System.exit(0);
-				 }
-					 
-			 	}
-		 	}
-		);
-		
-        table.row();
-        table.add(option);
-        table.row();
-        table.add(exit);
-        
-       
-    
-        
-       
-       
-        
-        stage.addActor(table);
-        
-        Gdx.input.setInputProcessor(stage);
-    }
-	
+		start.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				game.setScreen(game.getGameScreen());
+			}
+		});
 
-	
-	
+		option.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				game.setScreen(new OptionScreen());
+			}
+		});
+
+		exit.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				int result = JOptionPane.showConfirmDialog(null,
+						"Do you wish to exit the game", null,
+						JOptionPane.OK_CANCEL_OPTION);
+				if (result == 0) {
+
+					System.exit(0);
+				}
+
+			}
+		});
+
+		table.row();
+		table.add(option);
+		table.row();
+		table.add(exit);
+
+		stage.addActor(table);
+
+		Gdx.input.setInputProcessor(stage);
+	}
 
 	@Override
 	public void render(float delta) {
@@ -113,20 +96,18 @@ public class MainMenuScreen implements Screen {
 		Table.drawDebug(stage);
 		batch.begin();
 		font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		//font.draw(batch, str, 380, 240);
+		// font.draw(batch, str, 380, 240);
 		batch.end();
 
-		/*if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Keys.UP)) {
-			game.setScreen(game.getGameScreen());
-		}
-*/
+		/*
+		 * if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Keys.UP)) {
+		 * game.setScreen(game.getGameScreen()); }
+		 */
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		stage.setViewport(width, height, true);
-       
-    
 
 	}
 
