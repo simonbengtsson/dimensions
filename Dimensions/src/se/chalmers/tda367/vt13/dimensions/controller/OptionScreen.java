@@ -84,7 +84,7 @@ public class OptionScreen extends AbstractMenuScreen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		
 		super.dispose();
 		
 	}

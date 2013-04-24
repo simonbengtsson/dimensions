@@ -45,7 +45,7 @@ public class Dimensions extends Game {
 	 * Called from the splashscreen when it's done.
 	 */
 	public void splashScreenDone() {
-		setScreen(mainMenuScreen);
+		setScreen(new MainMenuScreen(this));
 		splashScreen.dispose();
 	}
 }

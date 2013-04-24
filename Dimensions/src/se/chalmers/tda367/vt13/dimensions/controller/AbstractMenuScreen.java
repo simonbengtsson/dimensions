@@ -106,7 +106,7 @@ public class AbstractMenuScreen implements Screen {
 
 		@Override
 		public void dispose() {
-			//stage.dispose();
+			
 			table.clear();
 
 		}

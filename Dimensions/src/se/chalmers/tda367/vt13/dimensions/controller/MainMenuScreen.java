@@ -44,7 +44,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 			public void clicked(InputEvent e, float x, float y) {
 			
 					System.exit(0);
-				
+				 
 
 			}
 		});

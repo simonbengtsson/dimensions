@@ -37,7 +37,7 @@ public class GameOverScreen extends AbstractMenuScreen {
 		
 		getTable().add(playagain);
 		getTable().row();
-		getTable().add(menu); 
+		getTable().add(menu);  
 		
 		setStageInput();
 		
