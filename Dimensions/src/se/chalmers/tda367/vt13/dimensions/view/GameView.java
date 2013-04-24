@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.HashMap;
+
 import java.util.Iterator;
 import java.util.Map;
 
@@ -20,6 +21,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
+import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
 /**
  * Game view.
@@ -38,6 +43,10 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
+	private TiledMap map;
+	private TileMapRenderer renderer;
+	private SimpleTileAtlas atlas;
+	
 
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
@@ -83,6 +92,13 @@ public class GameView {
 		}
 		walkAnimation = new Animation(0.025f, walkFrames);
 		stateTime = 0f;
+		
+		
+		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
+		//renderer = new TileMapRenderer(map,1f/32f);
+		atlas = new SimpleTileAtlas(map,Gdx.files.internal("data/"));
+		renderer = new TileMapRenderer(map, atlas, 10,10,32, 32);
+		
 	}
 
 	/**
@@ -94,6 +110,7 @@ public class GameView {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
+		renderer.render(camera);
 		updateCameraPosition(3, 10, false); // Try changing to parameters to get
 											// the
 		// right feeling
