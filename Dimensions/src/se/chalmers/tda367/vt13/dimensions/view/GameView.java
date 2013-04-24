@@ -1,11 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
-import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import java.awt.Toolkit;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
@@ -13,11 +10,14 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 /**
  * Game view.
@@ -47,6 +47,13 @@ public class GameView {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		//Below is some tiles testing from tiled
+		/*TextureAtlas atlas;
+		atlas = new TextureAtlas(Gdx.files.internal("packedimages/pack"));
+		AtlasRegion region = atlas.findRegion("imagename");
+		Sprite sprite = atlas.createSprite("otherimagename");
+		NinePatch patch = atlas.createPatch("patchimagename");*/
 		
 	}
 
