@@ -70,7 +70,7 @@ public class GameView {
 
 		// Testing
 
-		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png")); // #9
+		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
 						/ FRAME_ROWS); // #10
@@ -92,9 +92,6 @@ public class GameView {
 		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		
 		camera.update();
 		updateCameraPosition(3, 10, false); // Try changing to parameters to get
@@ -155,9 +152,13 @@ public class GameView {
 			spriteBatch.draw(textures.get(g.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
+		
+		stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
 		spriteBatch.draw(currentFrame,p.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
+		
 //		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 //				.getPosition().getX(), p.getPosition().getY(), p.getSize()
 //				.getX(), p.getSize().getY());

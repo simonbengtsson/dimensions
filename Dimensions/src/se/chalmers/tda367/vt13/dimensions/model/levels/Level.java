@@ -39,7 +39,7 @@ public abstract class Level implements Serializable {
 		// This constructor is currently a mess
 		// TODO: Clean up this mess
 		
-		spawnStartingPlatform(gameobjects);
+		//spawnStartingPlatform(gameobjects);
 		
 
 	}
@@ -81,7 +81,7 @@ public abstract class Level implements Serializable {
 	 * @param l
 	 */
 	public void spawnStartingPlatform(List<GameObject> l ){
-		spawnSingleBlock(l,0,10,100,50);
+		spawnSingleBlock(l,0,10,300,50);
 		
 	}
 	
@@ -107,6 +107,17 @@ public abstract class Level implements Serializable {
 		listAddShortPf(l,50,5);
 		listAddLongPf(l,0,-70);
 		listAddShortPf(l,0,70);
+	}
+	
+	/** Adds a long platform to the list 
+	 * Pattern: ________________
+	 * 
+	 * @param l
+	 */
+	public void longPlatform(List<GameObject> l){
+		listAddLongPf(l,50,0);
+		listAddLongPf(l,0,0);
+		listAddLongPf(l,0,0);
 	}
 	
 	/** Adds a 'short' platform to the list with predefined values

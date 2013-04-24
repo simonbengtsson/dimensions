@@ -6,36 +6,46 @@ import java.util.Random;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 
 public class RandomLevel extends Level {
-	
-	public RandomLevel(String levelname,String pathname){
-		super(levelname,pathname);
-		for(int i = 0; i<5; i++){
-			randomGenerateLevel(gameobjects,100,50);
+
+	public RandomLevel(String levelname, String pathname) {
+		super(levelname, pathname);
+		for (int i = 0; i < 5; i++) {
+			randomGenerateLevel(gameobjects, 100, 50);
+		}
+
+		for (int i = 0; i < 5; i++) {
+			randomGenerateLevel(gameobjects, 300, 50);
 		}
 		
-		for(int i = 0; i<5; i++){
-			randomGenerateLevel(gameobjects,1000,50);
+		for (int i = 0; i < 5; i++) {
+			randomGenerateLevel(gameobjects, 500, 50);
 		}
 		spawnPowerUp(gameobjects, 2, 700, 200);
 		spawnPowerUp(gameobjects, 1, 500, 300);
-		
+
 		WriteLevel rv = new WriteLevel();
 		rv.saveToFile(levelname, this);
 	}
-	
-	public void randomGenerateLevel(List <GameObject> l,int high,int low ){
+
+	public void randomGenerateLevel(List<GameObject> l, int high, int low) {
 		Random rd = new Random();
-		int i =  rd.nextInt(2);
-		
-		int  xval = rd.nextInt(high-low) + low;
-		int yval = rd.nextInt(80-low) + low;
-		switch(i){
+		int i = rd.nextInt(4);
+
+		int xval = rd.nextInt(high - low) + low;
+		int yval = rd.nextInt(80 - low) + low;
+		switch (i) {
 		case 0:
 			stairCase(l);
-			
-		case 1: dropDown(l);
-		
-		case 2: spawnSingleBlock(l,xval,yval,120,50);
+			break;
+		case 1:
+			dropDown(l);
+			break;
+		case 2:
+			spawnSingleBlock(l, xval, yval, 120, 50);
+			break;
+		case 3:
+			longPlatform(l);
+			break;
 		}
 	}
 
