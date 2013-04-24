@@ -1,26 +1,68 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class OptionScreen implements Screen {
+public class OptionScreen extends AbstractMenuScreen {
+	private CheckBox soundCheckbox;
+	private CheckBoxStyle cbs = new CheckBoxStyle();
+	private TextButton gomenu;
+	
+	
+	public OptionScreen(final Dimensions game){
+		super(game);
+		this.gomenu = new TextButton("Go to menu",getButtonStyle());
+		
+		this.gomenu.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y){
+				dispose();
+				game.setScreen(new MainMenuScreen(game));
+				
+			}
+		});
+		/*
+		cbs.font = new BitmapFont();
+		cbs.checkedFontColor = Color.RED;
+		
+		this.soundCheckbox = new CheckBox("Test",cbs);
+		this.soundCheckbox.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y){
+				if(soundCheckbox.isChecked()){
+					// Aktivera ljud
+				}
+				
+				else{
+					//inaktivera ljud
+				}
+			}
+		});
+		
+		getTable().add(soundCheckbox);
+		*/
+		getTable().add(gomenu);
+		setStageInput();
+	
+	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		super.render(delta);
 		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		super.resize(width, height);
 		
 	}
 
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void hide() {
@@ -43,6 +85,7 @@ public class OptionScreen implements Screen {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		super.dispose();
 		
 	}
 

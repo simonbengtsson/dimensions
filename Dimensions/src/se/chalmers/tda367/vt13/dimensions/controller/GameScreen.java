@@ -60,7 +60,8 @@ public class GameScreen implements Screen, SoundObserver {
 
 		if (view.isGameOver()) {
 			game.newGame();
-			game.setScreen(game.getGameOverScreen());
+			game.setScreen(new GameOverScreen(game));
+			
 		}
 		getInput();
 		model.updateModel();

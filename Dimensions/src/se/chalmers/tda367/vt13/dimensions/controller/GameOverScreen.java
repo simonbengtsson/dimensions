@@ -1,46 +1,57 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class GameOverScreen implements Screen {
+public class GameOverScreen extends AbstractMenuScreen {
 
-	Dimensions game;
-	SpriteBatch batch;
-	BitmapFont font;
-	CharSequence str = "Game Over! Click to play again.";
+	private TextButton playagain;
+	private TextButton menu;
 
-	public GameOverScreen(Dimensions game) {
-		this.game = game;
-		batch = new SpriteBatch();
-		font = new BitmapFont();
+	public GameOverScreen(final Dimensions game) {
+		super(game);
+		playagain = new TextButton("Play again", getButtonStyle());
+		menu = new TextButton("Go to menu",getButtonStyle());
+		
+		
+		     
+		
+		
+		playagain.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				dispose();
+				game.setScreen(game.getGameScreen());
+				
+			}
+		});
+		
+		menu.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				dispose();
+				game.setScreen(new MainMenuScreen(game));
+				
+			}
+		});
+		
+		getTable().add(playagain);
+		getTable().row();
+		getTable().add(menu); 
+		
+		setStageInput();
+		
 	}
 
 	@Override
 	public void render(float delta) {
-		// Clear screen with white color
-		Gdx.gl.glClearColor(0, 0, 0.1f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		batch.begin();
-		font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		font.draw(batch, str, 380, 240);
-		batch.end();
-
-		if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Keys.UP)) {
-			game.setScreen(game.getGameScreen());
-		}
+	super.render(delta);
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		super.resize(width, height);
 
 	}
 
