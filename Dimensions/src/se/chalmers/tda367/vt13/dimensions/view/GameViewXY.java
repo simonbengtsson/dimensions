@@ -31,7 +31,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
  * 
  * @author Carl Fredriksson
  */
-public class GameView {
+public class GameViewXY {
 
 	// Instance Variables
 	private GameModel model;
@@ -58,7 +58,7 @@ public class GameView {
 	 * @param model
 	 *            the GameModel
 	 */
-	public GameView(GameModel model) {
+	public GameViewXY(GameModel model) {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
 
@@ -68,17 +68,8 @@ public class GameView {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
-		// Below is some tiles testing from tiled
-		/*
-		 * TextureAtlas atlas; atlas = new
-		 * TextureAtlas(Gdx.files.internal("packedimages/pack")); AtlasRegion
-		 * region = atlas.findRegion("imagename"); Sprite sprite =
-		 * atlas.createSprite("otherimagename"); NinePatch patch =
-		 * atlas.createPatch("patchimagename");
-		 */
-
-		// Testing
-
+		
+		//testing
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
@@ -184,12 +175,5 @@ public class GameView {
 	public void dispose() {
 		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
-	}
-
-	/*
-	 * Gameover if player slips below camera y position
-	 */
-	public boolean isGameOver() {
-		return camera.position.y - 300 > model.getPlayer().getPosition().getY();
 	}
 }

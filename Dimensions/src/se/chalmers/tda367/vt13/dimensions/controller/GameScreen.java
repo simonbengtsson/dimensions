@@ -8,8 +8,9 @@ import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
-import se.chalmers.tda367.vt13.dimensions.view.GameView;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level3D;
+import se.chalmers.tda367.vt13.dimensions.view.GameViewXY;
+import se.chalmers.tda367.vt13.dimensions.view.GameViewXZ;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -23,51 +24,45 @@ import com.badlogic.gdx.audio.Sound;
  * @author Carl Fredriksson
  */
 public class GameScreen implements Screen, SoundObserver {
+	static final int DIMENSION_XY = 0;
+	static final int DIMENSION_XZ = 1;
+	private int activeDimension;
 
 	GameModel model;
-	GameView view;
+	GameViewXY viewXY;
+	GameViewXZ viewXZ;
 	List<GameObject> ls;
 	Map<String, Sound> files;
 	Dimensions game;
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		// Reads a level, either by creating one or read from a file.
-		RandomLevel lv = new RandomLevel("RandomLevel2", null);
+		Level3D lv = new Level3D("Level3D", null);
 		ls = lv.getList();
-
-		// ReadLevel rl = new ReadLevel();
-		// ls = rl.readLevelName("RandomLevel1"+".dat");
-
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
-				0), new Vector3(4, 0, 0), -0.75f, 15f, false);
-
-		// Load all soundfiles & add Controller as observer
+				50), new Vector3(4, 0, 0), -0.75f, 15f, false);
 		loadSoundFiles();
-
 		model = new GameModel(ls, player);
-		view = new GameView(model);
+		viewXY = new GameViewXY(model);
+		viewXZ = new GameViewXZ(model);
+		activeDimension = DIMENSION_XZ;
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void render(float delta) {
-
-		if (view.isGameOver()) {
+		if (model.getPlayer().isGameOver()) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
-			  
 		}
 		getInput();
 		model.updateModel();
-		view.draw();
+		viewXY.draw();
 	}
-
+	
 	/**
 	 * Get input from the user, do different stuff depending on what input was
 	 * given.
@@ -106,33 +101,28 @@ public class GameScreen implements Screen, SoundObserver {
 			}
 		}
 	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-
+	
+	public int getDimension(){
+		return activeDimension;
+	}
+	
+	public void setDimension(int newDimension){
+		activeDimension = newDimension;
 	}
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
+	public void show() {}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
+	public void hide() {}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
+	public void pause() {}
 
 	@Override
-	public void dispose() {
-	}
+	public void resume() {}
+
+	@Override
+	public void dispose() {}
 
 }

@@ -18,7 +18,7 @@ public class Dimensions extends Game {
 		gameOverScreen = new GameOverScreen(this);
 
 		// Which screen do you want to show on start up?
-		setScreen(splashScreen);
+		setScreen(gameScreen);
 	}
 
 	public void newGame() {

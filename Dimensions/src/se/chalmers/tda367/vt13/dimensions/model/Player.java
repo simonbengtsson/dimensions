@@ -119,6 +119,11 @@ public class Player extends GameObject {
 		}
 	}
 	
-	// Private methods
+	/*
+	 * Gameover if player slips below camera y position
+	 */
+	public boolean isGameOver() {
+		return getPosition().getY() < 0;
+	}
 
 }

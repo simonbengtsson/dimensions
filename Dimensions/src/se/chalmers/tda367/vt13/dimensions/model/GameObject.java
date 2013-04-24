@@ -39,7 +39,6 @@ public abstract class GameObject implements Serializable, SoundObservable {
 		this.speed = speed;
 		this.soundFile = soundFile;
 		this.imageFile = imageFile;
-		// observers = new ArrayList<SoundObserver>();
 	}
 
 	public String toString() {
@@ -47,59 +46,26 @@ public abstract class GameObject implements Serializable, SoundObservable {
 				+ speed;
 	}
 
-	/**
-	 * Get method for instance variable position.
-	 * 
-	 * @return the position of the GameObject
-	 */
 	public Vector3 getPosition() {
 		return position;
 	}
 
-	/**
-	 * Get method for instance variable volume.
-	 * 
-	 * @return the volume of the GameObject
-	 */
 	public Vector3 getSize() {
 		return size;
 	}
 
-	/**
-	 * Get method for instance variable speed.
-	 * 
-	 * @return the speed of the GameObject
-	 */
 	public Vector3 getSpeed() {
 		return speed;
 	}
 
-	/**
-	 * Set method for instance variable position.
-	 * 
-	 * @param position
-	 *            the position of the GameObject
-	 */
 	public void setPosition(Vector3 position) {
 		this.position = position;
 	}
 
-	/**
-	 * Set method for instance variable size.
-	 * 
-	 * @param size
-	 *            the size of the GameObject
-	 */
 	public void setSize(Vector3 size) {
 		this.size = size;
 	}
 
-	/**
-	 * Set method for instance variable speed.
-	 * 
-	 * @param speed
-	 *            the speed of the GameObject
-	 */
 	public void setSpeed(Vector3 speed) {
 		this.speed = speed;
 	}
@@ -144,7 +110,4 @@ public abstract class GameObject implements Serializable, SoundObservable {
 			s.playSound(soundFile);
 		}
 	}
-	
-	// Private methods
-
 }
