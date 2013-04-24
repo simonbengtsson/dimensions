@@ -1,11 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
-import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import java.awt.Toolkit;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
@@ -13,11 +10,16 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Game view.
@@ -31,6 +33,14 @@ public class GameView {
 	private SpriteBatch spriteBatch;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
+	private Animation walkAnimation;
+	private Texture walkSheet;
+	private TextureRegion[] walkFrames;
+	private TextureRegion currentFrame;
+	private float stateTime;
+
+	private static final int FRAME_COLS = 6;
+	private static final int FRAME_ROWS = 5;
 
 	// Public Methods
 	/**
@@ -46,8 +56,33 @@ public class GameView {
 		loadImageFiles();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+		camera.setToOrtho(false, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+
+		// Below is some tiles testing from tiled
+		/*
+		 * TextureAtlas atlas; atlas = new
+		 * TextureAtlas(Gdx.files.internal("packedimages/pack")); AtlasRegion
+		 * region = atlas.findRegion("imagename"); Sprite sprite =
+		 * atlas.createSprite("otherimagename"); NinePatch patch =
+		 * atlas.createPatch("patchimagename");
+		 */
+
+		// Testing
+
+		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
+		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
+						/ FRAME_ROWS); // #10
+		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				walkFrames[index++] = tmp[i][j];
+			}
+		}
+		walkAnimation = new Animation(0.025f, walkFrames);
+		stateTime = 0f;
 	}
 
 	/**
@@ -57,10 +92,11 @@ public class GameView {
 		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
+		
 		camera.update();
-		updateCameraPosition(3, 10, false); // Try changing to parameters to get the
-										// right feeling
+		updateCameraPosition(3, 10, false); // Try changing to parameters to get
+											// the
+		// right feeling
 		spriteBatch.setProjectionMatrix(camera.combined);
 		// Draw GameObjects
 		spriteBatch.begin();
@@ -86,8 +122,8 @@ public class GameView {
 		if (Math.abs(delta) > distance) {
 			camera.position.y -= delta / 100 * speed;
 		}
-		if(crazyMode){
-			if(!model.getPlayer().getIsGrounded()){
+		if (crazyMode) {
+			if (!model.getPlayer().getIsGrounded()) {
 				camera.zoom += 0.01f;
 				camera.rotate(1f);
 			}
@@ -116,21 +152,27 @@ public class GameView {
 			spriteBatch.draw(textures.get(g.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
+		
+		stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
-		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
-				.getPosition().getX(), p.getPosition().getY(), p.getSize()
+		spriteBatch.draw(currentFrame,p.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
+		
+//		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
+//				.getPosition().getX(), p.getPosition().getY(), p.getSize()
+//				.getX(), p.getSize().getY());
 	}
 
 	public void dispose() {
 		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
 	}
-	
+
 	/*
-	 * Gameover if player slips below camera y position 
+	 * Gameover if player slips below camera y position
 	 */
-	public boolean isGameOver(){
-		return camera.position.y-300 > model.getPlayer().getPosition().getY();
+	public boolean isGameOver() {
+		return camera.position.y - 300 > model.getPlayer().getPosition().getY();
 	}
 }
