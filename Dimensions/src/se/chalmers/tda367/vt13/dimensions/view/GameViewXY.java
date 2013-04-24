@@ -33,7 +33,6 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
  */
 public class GameViewXY {
 
-	// Instance Variables
 	private GameModel model;
 	private SpriteBatch spriteBatch;
 	private Map<String, Texture> textures;
@@ -47,7 +46,6 @@ public class GameViewXY {
 	private TileMapRenderer renderer;
 	private SimpleTileAtlas atlas;
 	
-
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 

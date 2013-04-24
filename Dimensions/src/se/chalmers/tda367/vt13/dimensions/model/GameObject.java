@@ -6,15 +6,8 @@ import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.controller.SoundObserver;
 
-/**
- * Abstract class for all objects within the game.
- * 
- * @author Carl Fredriksson
- */
 public abstract class GameObject implements Serializable, SoundObservable {
 	private static final long serialVersionUID = 1L;
-
-	// Instance variables
 	private Vector3 position;
 	private Vector3 size;
 	private Vector3 speed;
@@ -22,7 +15,6 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	private String imageFile;
 	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
 
-	// Public methods
 	/**
 	 * Constructor to be used by sub classes.
 	 * 
@@ -33,7 +25,7 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 * @param speed
 	 *            the speed of the GameObject
 	 */
-	public GameObject(Vector3 position, Vector3 size, Vector3 speed, String imageFile, String soundFile) {
+	protected GameObject(Vector3 position, Vector3 size, Vector3 speed, String imageFile, String soundFile) {
 		this.position = position;
 		this.size = size;
 		this.speed = speed;

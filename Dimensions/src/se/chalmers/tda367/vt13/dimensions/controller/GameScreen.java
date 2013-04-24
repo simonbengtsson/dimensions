@@ -8,7 +8,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level3D;
+import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameViewXY;
 import se.chalmers.tda367.vt13.dimensions.view.GameViewXZ;
 
@@ -37,7 +37,7 @@ public class GameScreen implements Screen, SoundObserver {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		Level3D lv = new Level3D("Level3D", null);
+		RandomLevel lv = new RandomLevel("Random", null);
 		ls = lv.getList();
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
 				50), new Vector3(4, 0, 0), -0.75f, 15f, false);
@@ -45,7 +45,7 @@ public class GameScreen implements Screen, SoundObserver {
 		model = new GameModel(ls, player);
 		viewXY = new GameViewXY(model);
 		viewXZ = new GameViewXZ(model);
-		activeDimension = DIMENSION_XZ;
+		activeDimension = DIMENSION_XY;
 	}
 
 	@Override
@@ -60,7 +60,11 @@ public class GameScreen implements Screen, SoundObserver {
 		}
 		getInput();
 		model.updateModel();
-		viewXY.draw();
+		if(activeDimension == DIMENSION_XY){
+			viewXY.draw();
+		} else if (activeDimension == DIMENSION_XZ){
+			viewXZ.draw();
+		}
 	}
 	
 	/**

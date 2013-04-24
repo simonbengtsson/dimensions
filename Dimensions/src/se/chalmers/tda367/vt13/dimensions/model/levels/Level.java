@@ -16,7 +16,6 @@ import java.io.Serializable;
  */
 public abstract class Level implements Serializable {
 	
-	// Instance variables
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private double gravity;
@@ -37,8 +36,8 @@ public abstract class Level implements Serializable {
 		spawnStartingPlatform(gameobjects);	
 
 		// This constructor is currently a mess
-		// TODO: Clean up this mess 
-			
+		// TODO: Clean up this mess
+		
 		//spawnStartingPlatform(gameobjects);
 		
 
@@ -82,6 +81,7 @@ public abstract class Level implements Serializable {
 	 */
 	public void spawnStartingPlatform(List<GameObject> l ){
 		spawnSingleBlock(l,0,10,300,50);
+		
 	}
 	
 	/** Adds a staircase pattern of platforms to the list
@@ -128,7 +128,7 @@ public abstract class Level implements Serializable {
 	public void listAddShortPf(List<GameObject> l, float x,float y){
 		this.lastx = lastx + x;
 		this.lasty = lasty + y;
-		l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(50, 50, 400), new Vector3()));
+		l.add(new Platform(new Vector3(lastx, lasty, 0), new Vector3(50, 50, 0), new Vector3()));
 		this.lastx = lastx + 50;
 		
 	}
@@ -218,10 +218,6 @@ public abstract class Level implements Serializable {
 		platforms.remove(p);
 	}
 	
-	/** Returns the gravity of the level
-	 * 
-	 * @return
-	 */
 	public double getGravity(){
 		return gravity;
 	}

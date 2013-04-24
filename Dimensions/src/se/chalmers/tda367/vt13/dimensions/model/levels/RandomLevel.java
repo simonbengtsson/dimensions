@@ -6,6 +6,7 @@ import java.util.Random;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 
 public class RandomLevel extends Level {
+	private static final long serialVersionUID = 1L;
 
 	public RandomLevel(String levelname, String pathname) {
 		super(levelname, pathname);

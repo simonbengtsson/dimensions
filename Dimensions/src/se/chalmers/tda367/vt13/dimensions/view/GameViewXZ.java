@@ -79,7 +79,6 @@ public class GameViewXZ {
 		
 		
 		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
-		//renderer = new TileMapRenderer(map,1f/32f);
 		atlas = new SimpleTileAtlas(map,Gdx.files.internal("data/"));
 		renderer = new TileMapRenderer(map, atlas, 10,10,32, 32);
 		
@@ -118,17 +117,6 @@ public class GameViewXZ {
 	 */
 	private void updateCameraPosition(int speed, int distance, boolean crazyMode) {
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
-		float delta = camera.position.y
-				- model.getPlayer().getPosition().getY();
-		if (Math.abs(delta) > distance) {
-			camera.position.y -= delta / 100 * speed;
-		}
-		if (crazyMode) {
-			if (!model.getPlayer().getIsGrounded()) {
-				camera.zoom += 0.01f;
-				camera.rotate(1f);
-			}
-		}
 	}
 
 	private void loadImageFiles() {
@@ -151,7 +139,7 @@ public class GameViewXZ {
 			Vector3 pos = g.getPosition();
 			Vector3 size = g.getSize();
 			spriteBatch.draw(textures.get(g.getImageFileAsString()),
-					pos.getX(), pos.getY(), size.getX(), size.getY());
+					pos.getX(), 0, size.getX(), 800);
 		}
 		
 		stateTime += Gdx.graphics.getDeltaTime();
@@ -159,21 +147,10 @@ public class GameViewXZ {
 		Player p = model.getPlayer();
 		spriteBatch.draw(currentFrame,p.getPosition().getX(), p.getPosition().getY(), p.getSize()
 				.getX(), p.getSize().getY());
-		
-//		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
-//				.getPosition().getX(), p.getPosition().getY(), p.getSize()
-//				.getX(), p.getSize().getY());
 	}
 
 	public void dispose() {
 		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
-	}
-
-	/*
-	 * Gameover if player slips below camera y position
-	 */
-	public boolean isGameOver() {
-		return camera.position.y - 300 > model.getPlayer().getPosition().getY();
 	}
 }
