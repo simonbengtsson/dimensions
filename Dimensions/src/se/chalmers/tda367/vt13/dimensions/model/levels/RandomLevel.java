@@ -16,7 +16,8 @@ public class RandomLevel extends Level {
 		for(int i = 0; i<5; i++){
 			randomGenerateLevel(gameobjects,1000,50);
 		}
-		spawnPowerUp(gameobjects,2,100,200);
+		spawnPowerUp(gameobjects, 2, 700, 200);
+		spawnPowerUp(gameobjects, 1, 500, 300);
 		
 		WriteLevel rv = new WriteLevel();
 		rv.saveToFile(levelname, this);
