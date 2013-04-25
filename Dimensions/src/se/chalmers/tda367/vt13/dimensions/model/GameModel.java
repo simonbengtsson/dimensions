@@ -11,9 +11,14 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
  */
 public class GameModel {
 
+	public enum Dimension{
+		XY, XZ, YZ
+	}
+	
 	// Instance Variables
 	private List<GameObject> gameObjects;
 	private Player player;
+	private Dimension dimension;
 	
 	// Public Methods
 	/**
@@ -24,6 +29,7 @@ public class GameModel {
 	public GameModel(List<GameObject> gameObjects, Player player) {
 		this.gameObjects = gameObjects;
 		this.player = player;
+		dimension = Dimension.XY;
 	}
 	
 	/**
@@ -57,6 +63,14 @@ public class GameModel {
 	public void updateModel() {
 		player.calculateSpeed();
 		movePlayer();
+	}
+	
+	public void setDimension(Dimension d){
+		dimension = d;
+	}
+	
+	public Dimension getDimension(){
+		return dimension;
 	}
 	
 	// Private Methods
