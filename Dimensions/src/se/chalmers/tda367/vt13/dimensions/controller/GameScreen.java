@@ -6,6 +6,7 @@ import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
