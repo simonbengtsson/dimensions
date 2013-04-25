@@ -6,6 +6,7 @@ import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-
 
 /**
  * Game controller.
@@ -45,7 +45,7 @@ public class GameScreen implements Screen, SoundObserver {
 		model = new GameModel(ls, player);
 		viewXY = new GameViewXY(model);
 		viewXZ = new GameViewXZ(model);
-		activeDimension = DIMENSION_XY;
+		activeDimension = DIMENSION_XY; //Testing vridning
 	}
 
 	@Override
@@ -60,27 +60,38 @@ public class GameScreen implements Screen, SoundObserver {
 		}
 		getInput();
 		model.updateModel();
-		if(activeDimension == DIMENSION_XY){
+		if (activeDimension == DIMENSION_XY) {
 			viewXY.draw();
-		} else if (activeDimension == DIMENSION_XZ){
+		} else if (activeDimension == DIMENSION_XZ) {
 			viewXZ.draw();
 		}
 	}
-	
+
 	/**
 	 * Get input from the user, do different stuff depending on what input was
 	 * given.
 	 */
 	private void getInput() {
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			model.getPlayer().jump();
-		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			model.getPlayer().dash();
-		}
-
-		if (Gdx.input.isTouched()) {
-			model.getPlayer().jump();
+		if (model.getPlayer().getCurrentDimension() == Dimension.XY) {
+			if (Gdx.input.isKeyPressed(Keys.UP)) {
+				model.getPlayer().jump();
+			}
+			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+				model.getPlayer().dash();
+			}
+			if (Gdx.input.isTouched()) {
+				model.getPlayer().jump();
+			}
+		} else if (model.getPlayer().getCurrentDimension() == Dimension.XZ){
+			if (Gdx.input.isKeyPressed(Keys.UP)) {
+				model.getPlayer().changeDirection();
+			}
+			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+				model.getPlayer().dash();
+			}
+			if (Gdx.input.isTouched()) {
+				model.getPlayer().changeDirection();
+			}
 		}
 	}
 
@@ -105,28 +116,33 @@ public class GameScreen implements Screen, SoundObserver {
 			}
 		}
 	}
-	
-	public int getDimension(){
+
+	public int getDimension() {
 		return activeDimension;
 	}
-	
-	public void setDimension(int newDimension){
+
+	public void setDimension(int newDimension) {
 		activeDimension = newDimension;
 	}
 
 	@Override
-	public void show() {}
+	public void show() {
+	}
 
 	@Override
-	public void hide() {}
+	public void hide() {
+	}
 
 	@Override
-	public void pause() {}
+	public void pause() {
+	}
 
 	@Override
-	public void resume() {}
+	public void resume() {
+	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+	}
 
 }

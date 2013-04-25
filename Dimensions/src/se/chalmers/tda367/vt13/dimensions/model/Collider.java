@@ -6,11 +6,9 @@ package se.chalmers.tda367.vt13.dimensions.model;
  */
 public class Collider {
 
-	// Instance variables
 	private Vector3 position;
 	private Vector3 size;
 	
-	// Public methods
 	/**
 	 * Constructor.
 	 * @param position the position of the Collider.
@@ -37,8 +35,5 @@ public class Collider {
 	
 	public Vector3 getPosition() {
 		return position;
-	}
-	
-	// Private methods
-	
+	}	
 }
