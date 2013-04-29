@@ -15,12 +15,10 @@ public class GameModel {
 		XY, XZ, YZ
 	}
 	
-	// Instance Variables
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Dimension dimension;
 	
-	// Public Methods
 	/**
 	 * Constructor.
 	 * @param gameObjects  the list of GameObjects
@@ -32,18 +30,10 @@ public class GameModel {
 		dimension = Dimension.XY;
 	}
 	
-	/**
-	 * Get method for the instance variable gameObjects.
-	 * @return list of GameObjects
-	 */
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
 	
-	/**
-	 * Get method for the instance variable player.
-	 * @return the player in the game
-	 */
 	public Player getPlayer() {
 		return player;
 	}
@@ -73,7 +63,6 @@ public class GameModel {
 		return dimension;
 	}
 	
-	// Private Methods
 	/**
 	 * Move the player with its speed. Check for collisions
 	 * and adjust player accordingly. Last position of the

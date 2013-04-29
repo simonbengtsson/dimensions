@@ -6,11 +6,8 @@ import java.util.List;
 
 
 public abstract class GameObject implements Serializable, SoundObservable {
-	public enum Dimension {
-		XY, XZ;
-	}
+
 	private static final long serialVersionUID = 1L;
-	private Dimension currentDimension;
 
 	private Vector3 position;
 	private Vector3 size;
@@ -31,7 +28,6 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 */
 	protected GameObject(Vector3 position, Vector3 size, Vector3 speed, String imageFile, String soundFile) {
 		this.position = position;
-		currentDimension = Dimension.XY;
 		this.size = size;
 		this.speed = speed;
 		this.soundFile = soundFile;
@@ -100,14 +96,6 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	@Override
 	public List<SoundObserver> getObservers() {
 		return observers;
-	}
-	
-	public Dimension getCurrentDimension() {
-		return currentDimension;
-	}
-
-	public void setCurrentDimension(Dimension currentDimension) {
-		this.currentDimension = currentDimension;
 	}
 	
 	public void playSound(){

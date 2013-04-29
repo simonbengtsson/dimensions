@@ -31,7 +31,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
  * 
  * @author Carl Fredriksson
  */
-public class GameViewXY {
+public class GameView {
 
 	private GameModel model;
 	private SpriteBatch spriteBatch;
@@ -56,7 +56,7 @@ public class GameViewXY {
 	 * @param model
 	 *            the GameModel
 	 */
-	public GameViewXY(GameModel model) {
+	public GameView(GameModel model) {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
 

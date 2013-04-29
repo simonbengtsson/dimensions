@@ -44,12 +44,6 @@ public class Player extends GameObject {
 		baseXSpeed = speed.getX();
 		baseGravity = gravityConstant;
 		usingDash = false;
-
-		// Test
-		this.zSpeed = 2f;
-		getSpeed().setY(zSpeed);
-		setCurrentDimension(Dimension.XY);
-		onPlatform = true;
 	}
 
 	public float getBaseXSpeed() {
@@ -138,16 +132,10 @@ public class Player extends GameObject {
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
 	public void calculateSpeed() {
-		if (getCurrentDimension() == Dimension.XY) {
-			if (!isGrounded) {
-				getSpeed().setY(getSpeed().getY() + gravityConstant);
-			} else {
-				getSpeed().setY(0);
-			}
-		} else if (getCurrentDimension() == Dimension.XZ) {
-			if (getPosition().getY() > 400 || getPosition().getY() <= 0) {
-				getSpeed().setY(0);
-			}
+		if (!isGrounded) {
+			getSpeed().setY(getSpeed().getY() + gravityConstant);
+		} else {
+			getSpeed().setY(0);
 		}
 	}
 
@@ -155,11 +143,6 @@ public class Player extends GameObject {
 	 * Gameover if player slips below camera y position
 	 */
 	public boolean isGameOver() {
-		if (getCurrentDimension() == Dimension.XY) {
-			return getPosition().getY() < 0;
-		} else { // Dimension XZ
-			return !onPlatform;
-		}
-
+		return getPosition().getY() < 0;
 	}
 }

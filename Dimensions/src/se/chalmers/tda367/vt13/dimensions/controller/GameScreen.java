@@ -6,13 +6,11 @@ import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
+import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
-import se.chalmers.tda367.vt13.dimensions.view.GameViewXY;
-import se.chalmers.tda367.vt13.dimensions.view.GameViewXZ;
+import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -25,13 +23,10 @@ import com.badlogic.gdx.audio.Sound;
  * @author Carl Fredriksson
  */
 public class GameScreen implements Screen, SoundObserver {
-	static final int DIMENSION_XY = 0;
-	static final int DIMENSION_XZ = 1;
 	private int activeDimension;
 
 	GameModel model;
-	GameViewXY viewXY;
-	GameViewXZ viewXZ;
+	GameView view;
 	List<GameObject> ls;
 	Map<String, Sound> files;
 	Dimensions game;
@@ -44,9 +39,7 @@ public class GameScreen implements Screen, SoundObserver {
 				50), new Vector3(4, 0, 0), -0.75f, 15f, false);
 		loadSoundFiles();
 		model = new GameModel(ls, player);
-		viewXY = new GameViewXY(model);
-		viewXZ = new GameViewXZ(model);
-		activeDimension = DIMENSION_XY; //Testing vridning
+		view = new GameView(model);
 	}
 
 	@Override
@@ -61,11 +54,7 @@ public class GameScreen implements Screen, SoundObserver {
 		}
 		getInput();
 		model.updateModel();
-		if (activeDimension == DIMENSION_XY) {
-			viewXY.draw();
-		} else if (activeDimension == DIMENSION_XZ) {
-			viewXZ.draw();
-		}
+		view.draw();
 	}
 
 	/**
@@ -73,7 +62,7 @@ public class GameScreen implements Screen, SoundObserver {
 	 * given.
 	 */
 	private void getInput() {
-		if (model.getPlayer().getCurrentDimension() == Dimension.XY) {
+		if (model.getDimension() == GameModel.Dimension.XY) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				model.getPlayer().jump();
 			}
@@ -83,7 +72,7 @@ public class GameScreen implements Screen, SoundObserver {
 			if (Gdx.input.isTouched()) {
 				model.getPlayer().jump();
 			}
-		} else if (model.getPlayer().getCurrentDimension() == Dimension.XZ){
+		} else if (model.getDimension() == GameModel.Dimension.XZ){
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				model.getPlayer().changeDirection();
 			}
@@ -91,7 +80,7 @@ public class GameScreen implements Screen, SoundObserver {
 				model.getPlayer().dash();
 			}
 			if (Gdx.input.isTouched()) {
-				model.getPlayer().changeDirection();
+				model.getPlayer().changeDirection(); 
 			}
 		}
 	}
