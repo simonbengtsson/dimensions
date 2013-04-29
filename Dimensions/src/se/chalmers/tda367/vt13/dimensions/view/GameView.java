@@ -45,7 +45,7 @@ public class GameView {
 	private TiledMap map;
 	private TileMapRenderer renderer;
 	private SimpleTileAtlas atlas;
-	
+
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 
@@ -66,8 +66,7 @@ public class GameView {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
-		
-		//testing
+		// testing animation
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
@@ -81,34 +80,29 @@ public class GameView {
 		}
 		walkAnimation = new Animation(0.025f, walkFrames);
 		stateTime = 0f;
-		
-		
+
 		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
-		//renderer = new TileMapRenderer(map,1f/32f);
-		atlas = new SimpleTileAtlas(map,Gdx.files.internal("data/"));
-		renderer = new TileMapRenderer(map, atlas, 10,10,32, 32);
-		
+		// renderer = new TileMapRenderer(map,1f/32f);
+		atlas = new SimpleTileAtlas(map, Gdx.files.internal("data/"));
+		renderer = new TileMapRenderer(map, atlas, 10, 10, 32, 32);
+
 	}
 
 	/**
 	 * Draw GameObjects on the screen.
 	 */
 	public void draw() {
-		// Clear screen with white color
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		camera.update();
 		renderer.render(camera);
-		updateCameraPosition(3, 10, false); // Try changing to parameters to get
-											// the
-		// right feeling
+		updateCameraPosition(3);
 		spriteBatch.setProjectionMatrix(camera.combined);
+
 		// Draw GameObjects
 		spriteBatch.begin();
-
 		drawGameObjects();
-
 		spriteBatch.end();
 	}
 
@@ -118,21 +112,27 @@ public class GameView {
 	 * @param speed
 	 *            How fast the camera is following the player(y-axis)
 	 * @param activation
-	 *            How many pixels away from center the player is going to be
-	 *            before camera starts following
+	 *            How many pixels away from the center of the screen the player
+	 *            is going to be before the camera starts following
 	 */
-	private void updateCameraPosition(int speed, int distance, boolean crazyMode) {
+	private void updateCameraPosition(int speed) {
+		// Update camera position X axis
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
-		float delta = camera.position.y
-				- model.getPlayer().getPosition().getY();
-		if (Math.abs(delta) > distance) {
-			camera.position.y -= delta / 100 * speed;
-		}
-		if (crazyMode) {
-			if (!model.getPlayer().getIsGrounded()) {
-				camera.zoom += 0.01f;
-				camera.rotate(1f);
+
+		// Update camera position Y axis
+		float playerPositionY = model.getPlayer().getPosition().getY();
+		float delta = camera.position.y - playerPositionY;
+
+		// If the player's position is close to the camera bottom, just move the
+		// camera with the same speed as the player
+		if (!(Math.abs(delta) >= 200)) {
+			// Only move the camera if it's Y position is more then 10 pixel
+			// away from the player's Y position
+			if (Math.abs(delta) > 10) {
+				camera.position.y -= delta / 100 * speed;
 			}
+		} else {
+			camera.position.y = playerPositionY + 200;
 		}
 	}
 
@@ -158,16 +158,16 @@ public class GameView {
 			spriteBatch.draw(textures.get(g.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
-		
+
 		stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
-		spriteBatch.draw(currentFrame,p.getPosition().getX(), p.getPosition().getY(), p.getSize()
-				.getX(), p.getSize().getY());
-		
-//		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
-//				.getPosition().getX(), p.getPosition().getY(), p.getSize()
-//				.getX(), p.getSize().getY());
+		spriteBatch.draw(currentFrame, p.getPosition().getX(), p.getPosition()
+				.getY(), p.getSize().getX(), p.getSize().getY());
+
+		// spriteBatch.draw(textures.get(p.getImageFileAsString()), p
+		// .getPosition().getX(), p.getPosition().getY(), p.getSize()
+		// .getX(), p.getSize().getY());
 	}
 
 	public void dispose() {

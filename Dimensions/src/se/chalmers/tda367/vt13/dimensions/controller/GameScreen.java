@@ -57,10 +57,6 @@ public class GameScreen implements Screen, SoundObserver {
 		view.draw();
 	}
 
-	/**
-	 * Get input from the user, do different stuff depending on what input was
-	 * given.
-	 */
 	private void getInput() {
 		if (model.getDimension() == GameModel.Dimension.XY) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
@@ -75,9 +71,6 @@ public class GameScreen implements Screen, SoundObserver {
 		} else if (model.getDimension() == GameModel.Dimension.XZ){
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				model.getPlayer().changeDirection();
-			}
-			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-				model.getPlayer().dash();
 			}
 			if (Gdx.input.isTouched()) {
 				model.getPlayer().changeDirection(); 
