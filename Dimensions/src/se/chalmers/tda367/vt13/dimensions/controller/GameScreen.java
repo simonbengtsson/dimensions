@@ -25,7 +25,7 @@ import com.badlogic.gdx.audio.Sound;
 public class GameScreen implements Screen, SoundObserver {
 	private int activeDimension;
 
-	GameWorld model;
+	GameWorld world;
 	GameView view;
 	List<GameObject> ls;
 	Map<String, Sound> files;
@@ -38,8 +38,8 @@ public class GameScreen implements Screen, SoundObserver {
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
 				50), new Vector3(8, 0, 0), 15f, false);
 		loadSoundFiles();
-		model = new GameWorld(ls, player);
-		view = new GameView(model);
+		world = new GameWorld(ls, player);
+		view = new GameView(world);
 	}
 
 	@Override
@@ -48,38 +48,38 @@ public class GameScreen implements Screen, SoundObserver {
 
 	@Override
 	public void render(float delta) {
-		if (model.getPlayer().isGameOver()) {
+		if (world.getPlayer().isGameOver()) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
 		}
 		getInput();
-		model.updateModel();
+		world.updateModel();
 		view.draw();
 	}
 
 	private void getInput() {
-		if (model.getDimension() == GameWorld.Dimension.XY) {
+		if (world.getDimension() == GameWorld.Dimension.XY) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
-				model.getPlayer().jump();
+				world.getPlayer().jump();
 			}
 			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-				model.getPlayer().dash();
+				world.getPlayer().dash();
 			}
 			if (Gdx.input.isTouched()) {
-				model.getPlayer().jump();
+				world.getPlayer().jump();
 			}
-		} else if (model.getDimension() == GameWorld.Dimension.XZ){
+		} else if (world.getDimension() == GameWorld.Dimension.XZ){
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
-				model.getPlayer().jump();
+				world.getPlayer().jump();
 			}
 			if (Gdx.input.isTouched()) {
-				model.getPlayer().changeDirection();
+				world.getPlayer().changeDirection();
 			}
 		}
 	}
 
 	public GameWorld getGameModel() {
-		return model;
+		return world;
 	}
 
 	@Override
