@@ -3,7 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameModel.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 
 /**
  * Class for the player in the game.
@@ -116,7 +116,7 @@ public class Player extends GameObject implements DimensionChangeListener {
 	/**
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
-	public void calculateSpeed(GameModel m) {
+	public void calculateSpeed(GameWorld m) {
 		if (!isGrounded) {
 			getSpeed().setY(getSpeed().getY() + m.getGravity());
 		} else {

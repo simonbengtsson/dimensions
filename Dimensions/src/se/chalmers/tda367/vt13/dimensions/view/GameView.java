@@ -4,7 +4,7 @@ package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
@@ -28,7 +28,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
  */
 public class GameView {
 
-	private GameModel model;
+	private GameWorld model;
 	private SpriteBatch spriteBatch;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
@@ -44,14 +44,13 @@ public class GameView {
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 
-	// Public Methods
 	/**
 	 * Constructor.
 	 * 
 	 * @param model
 	 *            the GameModel
 	 */
-	public GameView(GameModel model) {
+	public GameView(GameWorld model) {
 		this.model = model;
 		spriteBatch = new SpriteBatch();
 
@@ -85,9 +84,9 @@ public class GameView {
 
 		// Draw GameObjects
 		spriteBatch.begin();
-		if (model.getDimension() == GameModel.Dimension.XY) {
+		if (model.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY();
-		} else if (model.getDimension() == GameModel.Dimension.XZ) {
+		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ();
 		}
 

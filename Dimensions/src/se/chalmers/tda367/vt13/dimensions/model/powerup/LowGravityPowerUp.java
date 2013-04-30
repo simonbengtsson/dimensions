@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
@@ -18,7 +18,7 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void use(GameModel gm) {
+	public void use(GameWorld gm) {
 		gm.setGravity(gm.getGravity() * 0.5f);
 	}
 

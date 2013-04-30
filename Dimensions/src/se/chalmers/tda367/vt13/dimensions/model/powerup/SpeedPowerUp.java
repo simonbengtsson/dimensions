@@ -2,7 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import java.io.Serializable;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -30,7 +30,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	}
 	
 	@Override
-	public void use(GameModel gm) {
+	public void use(GameWorld gm) {
 		if (gm.getPlayer().getSpeed().getX() <= gm.getPlayer().getBaseXSpeed()) {
 			gm.getPlayer().getSpeed().setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}

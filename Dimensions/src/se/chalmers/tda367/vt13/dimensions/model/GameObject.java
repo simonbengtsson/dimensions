@@ -15,7 +15,7 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 	private String soundFile;
 	private String imageFile;
 	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
-	private GameModel.Dimension currentDimension;
+	private GameWorld.Dimension currentDimension;
 
 	/**
 	 * Constructor to be used by sub classes.
@@ -33,7 +33,7 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 		this.speed = speed;
 		this.soundFile = soundFile;
 		this.imageFile = imageFile;
-		currentDimension = GameModel.Dimension.XY;
+		currentDimension = GameWorld.Dimension.XY;
 	}
 
 	public String toString() {
@@ -106,7 +106,8 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 		}
 	}
 	
-	public void dimenensionChange(GameModel.Dimension dimension){
+	@Override
+	public void dimenensionChange(GameWorld.Dimension dimension){
 		currentDimension = dimension;
 	}
 }

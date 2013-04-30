@@ -6,17 +6,9 @@ import java.io.Serializable;
  */
 public class Platform extends GameObject implements Serializable {
 
-	// Instance variables
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String textureFile;
 
-	// Public methods
-	
-	
 	/**
 	 * Constructor. Calls the super class constructor.
 	 * @param position the position of the platform
@@ -26,7 +18,4 @@ public class Platform extends GameObject implements Serializable {
 	public Platform(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed, "data/PlatformImg.png", "");
 	}
-	
-	// Private methods
-	
 }

@@ -14,7 +14,7 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
  * 
  * @author Carl Fredriksson
  */
-public class GameModel {
+public class GameWorld {
 
 	public enum Dimension {
 		XY, XZ, YZ
@@ -36,17 +36,11 @@ public class GameModel {
 	 * @param player
 	 *            the player in the game
 	 */
-	public GameModel(List<GameObject> gameObjects, Player player) {
-		this.gameObjects = gameObjects;
-		this.player = player;
-		currentDimension = Dimension.XY;
-		addDimensionChangeListeners();
-		startDimensionTimer(3000);
-		this.gravity = -0.75f;
-		this.baseGravity = -0.75f;
+	public GameWorld(List<GameObject> gameObjects, Player player) {
+		this(gameObjects, player, -0.75f);
 	}
 
-	public GameModel(List<GameObject> gameObjects, Player player, float gravity) {
+	public GameWorld(List<GameObject> gameObjects, Player player, float gravity) {
 		this.gameObjects = gameObjects;
 		this.player = player;
 		currentDimension = Dimension.XY;
@@ -66,7 +60,7 @@ public class GameModel {
 	 * @param interval
 	 *            How often the dimension should change
 	 */
-	public void startDimensionTimer(int interval) {
+	public void createDimensionTimer(int interval) {
 		javax.swing.Timer timer = new Timer(interval, new ActionListener() {
 
 			@Override
@@ -105,7 +99,11 @@ public class GameModel {
 	 */
 	public void updateModel() {
 		player.calculateSpeed(this);
-		movePlayer();
+		if(currentDimension == Dimension.XY) {
+		movePlayerXY();
+		} else {
+			movePlayerXZ();
+		}
 	}
 
 	public void setDimension(Dimension dimension) {
@@ -140,18 +138,18 @@ public class GameModel {
 	 * accordingly. Last position of the player is used to make sure the player
 	 * is only getting grounded when falling or going horizontal.
 	 */
-	private void movePlayer() {
+	private void movePlayerXY() {
 		Vector3 lastPosition = player.getPosition().clone();
 		player.getPosition().add(player.getSpeed());
 		boolean platformCollision = false;
 		for (GameObject gameObject : gameObjects) {
-			if (collision(player, gameObject)) {
+			if (checkCollisionXY(player, gameObject)) {
 				if (gameObject instanceof Platform
 						&& lastPosition.getY() >= (gameObject.getPosition()
 								.getY() + gameObject.getSize().getY())) {
 					player.setIsGrounded(true);
 					platformCollision = true;
-					adjustPosition(player, gameObject);
+					adjustPositionXY(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
 					gameObjects.remove(gameObject);
@@ -163,12 +161,40 @@ public class GameModel {
 			player.setIsGrounded(false);
 		}
 	}
+		/**
+		 * Move the player with its speed. Check for collisions and adjust player
+		 * accordingly. Last position of the player is used to make sure the player
+		 * is only getting grounded when falling or going horizontal.
+		 */
+		private void movePlayerXZ() {
+			Vector3 lastPosition = player.getPosition().clone();
+			player.getPosition().add(player.getSpeed());
+			boolean platformCollision = false;
+			for (GameObject gameObject : gameObjects) {
+				if (checkCollisionXY(player, gameObject)) {
+					if (gameObject instanceof Platform
+							&& lastPosition.getY() >= (gameObject.getPosition()
+									.getY() + gameObject.getSize().getY())) {
+						player.setIsGrounded(true);
+						platformCollision = true;
+						adjustPositionXY(player, gameObject);
+					} else if (gameObject instanceof PowerUp) {
+						((PowerUp) gameObject).use(this);
+						gameObjects.remove(gameObject);
+					}
+				}
+			}
+
+		if (!platformCollision) {
+			player.setIsGrounded(false);
+		}
+	}
 
 	private void moveObject(GameObject gameObject) {
 		gameObject.getPosition().add(gameObject.getSpeed());
 	}
 
-	private boolean collision(GameObject object, GameObject otherObject) {
+	private boolean checkCollisionXY(GameObject object, GameObject otherObject) {
 		return !(object.getPosition().getX() > otherObject.getPosition().getX()
 				+ otherObject.getSize().getX()
 				|| object.getPosition().getX() + object.getSize().getX() < otherObject
@@ -178,8 +204,27 @@ public class GameModel {
 				.getPosition().getY() + object.getSize().getY() < otherObject
 				.getPosition().getY());
 	}
+	
+	private boolean collisionXZ(GameObject object, GameObject otherObject) {
+		return !(object.getPosition().getX() > otherObject.getPosition().getX()
+				+ otherObject.getSize().getX()
+				|| object.getPosition().getX() + object.getSize().getX() < otherObject
+						.getPosition().getX()
+				|| object.getPosition().getZ() > otherObject.getPosition()
+						.getZ() + otherObject.getSize().getZ() || object
+				.getPosition().getZ() + object.getSize().getZ() < otherObject
+				.getPosition().getZ());
+	}
 
-	private void adjustPosition(GameObject object, GameObject otherObject) {
+	private void adjustPositionXY(GameObject object, GameObject otherObject) {
+		if (object.getSpeed().getY() < 0) {
+			float yOverlap = (otherObject.getPosition().getY() + otherObject
+					.getSize().getY()) - object.getPosition().getY();
+			object.getPosition().setY(object.getPosition().getY() + yOverlap);
+		}
+	}
+	
+	private void adjustPositionXZ(GameObject object, GameObject otherObject) {
 		if (object.getSpeed().getY() < 0) {
 			float yOverlap = (otherObject.getPosition().getY() + otherObject
 					.getSize().getY()) - object.getPosition().getY();
