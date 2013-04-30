@@ -13,7 +13,7 @@ public class PlayerTest {
 	@Test
 	public void testJump() {
 		Player p = new Player(new Vector3(10, 100, 0), new Vector3(50, 50, 0),
-				new Vector3(2, 2, 2), 0.75f, 15f, false);
+				new Vector3(2, 2, 2), 15f, false);
 		p.jump();
 		assertEquals(2f, p.getSpeed().getY(), 0.1);
 		p.setIsGrounded(true);
@@ -26,7 +26,7 @@ public class PlayerTest {
 	public void testOnPlatform() {
 		NormalLevel lv = new NormalLevel("Level1", "test");
 		Player player = new Player(new Vector3(10, 100, 0), new Vector3(50, 50,
-				0), new Vector3(2, 0, 0), 0.75f, 15f, true);
+				0), new Vector3(2, 0, 0), 15f, true);
 		GameModel model = new GameModel(lv.getList(), player);
 		model.getPlayer().getIsGrounded();
 		assertTrue(model.getPlayer().getSpeed().getY() == 0);

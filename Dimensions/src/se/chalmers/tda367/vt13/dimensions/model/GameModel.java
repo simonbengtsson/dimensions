@@ -19,7 +19,10 @@ public class GameModel {
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Dimension dimension;
+	private float baseGravity;
+	private float gravity;
 
+	@Deprecated
 	/**
 	 * Constructor.
 	 * 
@@ -32,6 +35,16 @@ public class GameModel {
 		this.gameObjects = gameObjects;
 		this.player = player;
 		dimension = Dimension.XZ;
+		this.gravity = -0.75f;
+		this.baseGravity = -0.75f;
+	}
+
+	public GameModel(List<GameObject> gameObjects, Player player, float gravity) {
+		this.gameObjects = gameObjects;
+		this.player = player;
+		dimension = Dimension.XZ;
+		this.gravity = gravity;
+		this.baseGravity = gravity;
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -57,8 +70,20 @@ public class GameModel {
 	 * player.
 	 */
 	public void updateModel() {
-		player.calculateSpeed();
+		player.calculateSpeed(this);
 		movePlayer();
+	}
+
+	public float getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(float g) {
+		gravity = g;
+	}
+
+	public void resetGravity() {
+		gravity = baseGravity;
 	}
 
 	public void setDimension(Dimension d) {

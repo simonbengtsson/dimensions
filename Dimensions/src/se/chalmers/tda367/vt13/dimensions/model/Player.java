@@ -10,14 +10,10 @@ import java.util.TimerTask;
  */
 public class Player extends GameObject {
 
-	private float gravityConstant;
 	private float jumpSpeed;
-	private float zSpeed;
 	private boolean isGrounded;
 	private final float baseXSpeed;
-	private final float baseGravity;
 	private boolean usingDash;
-	private boolean onPlatform;
 
 	/**
 	 * Constructor.
@@ -36,26 +32,16 @@ public class Player extends GameObject {
 	 *            the boolean for if the player is standing on a platform or not
 	 */
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
-			float gravityConstant, float jumpSpeed, boolean isGrounded) {
+			float jumpSpeed, boolean isGrounded) {
 		super(position, size, speed, "data/PlayerImg.png", "");
-		this.gravityConstant = gravityConstant;
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
-		baseGravity = gravityConstant;
 		usingDash = false;
 	}
 
 	public float getBaseXSpeed() {
 		return baseXSpeed;
-	}
-
-	public float getGravity() {
-		return gravityConstant;
-	}
-
-	public void setGravity(float f) {
-		gravityConstant = f;
 	}
 
 	/**
@@ -128,9 +114,9 @@ public class Player extends GameObject {
 	/**
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
-	public void calculateSpeed() {
+	public void calculateSpeed(GameModel m) {
 		if (!isGrounded) {
-			getSpeed().setY(getSpeed().getY() + gravityConstant);
+			getSpeed().setY(getSpeed().getY() + m.getGravity());
 		} else {
 			getSpeed().setY(0);
 		}

@@ -2,29 +2,16 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.HashMap;
 
-import java.util.Iterator;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameModel;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.tiled.*;
 
 /**
  * Game view.
@@ -67,19 +54,7 @@ public class GameView {
 				Gdx.graphics.getHeight());
 
 		// testing animation
-		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
-		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
-						/ FRAME_ROWS); // #10
-		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		int index = 0;
-		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++) {
-				walkFrames[index++] = tmp[i][j];
-			}
-		}
-		walkAnimation = new Animation(0.025f, walkFrames);
-		stateTime = 0f;
+		initWalkAnimation();
 
 		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
 		// renderer = new TileMapRenderer(map,1f/32f);
@@ -141,6 +116,25 @@ public class GameView {
 		}
 	}
 
+	private void initWalkAnimation() {
+		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
+		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
+						/ FRAME_ROWS); // #10
+		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				walkFrames[index++] = tmp[i][j];
+			}
+		}
+		walkAnimation = new Animation(0.025f, walkFrames);
+		stateTime = 0f;
+	}
+
+	/**
+	 * Loads the image files from all gameobjects and saves them in a HashMap
+	 */
 	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
 		for (GameObject g : model.getGameObjects()) {

@@ -36,7 +36,7 @@ public class GameScreen implements Screen, SoundObserver {
 		NotRandomLevel lv = new NotRandomLevel("Random", null);
 		ls = lv.getList();
 		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
-				50), new Vector3(8, 0, 0), -0.75f, 15f, false);
+				50), new Vector3(8, 0, 0), 15f, false);
 		loadSoundFiles();
 		model = new GameModel(ls, player);
 		view = new GameView(model);
