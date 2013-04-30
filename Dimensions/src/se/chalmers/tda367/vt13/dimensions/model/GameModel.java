@@ -24,7 +24,10 @@ public class GameModel {
 	private Player player;
 	private Dimension currentDimension;
 	private List<DimensionChangeListener> dimensionChangeListeners = new ArrayList<DimensionChangeListener>();
+	private float baseGravity;
+	private float gravity;
 
+	@Deprecated
 	/**
 	 * Constructor.
 	 * 
@@ -39,6 +42,16 @@ public class GameModel {
 		currentDimension = Dimension.XY;
 		addDimensionChangeListeners();
 		startDimensionTimer(3000);
+		this.gravity = -0.75f;
+		this.baseGravity = -0.75f;
+	}
+
+	public GameModel(List<GameObject> gameObjects, Player player, float gravity) {
+		this.gameObjects = gameObjects;
+		this.player = player;
+		currentDimension = Dimension.XY;
+		this.gravity = gravity;
+		this.baseGravity = gravity;
 	}
 
 	public void addDimensionChangeListeners() {
@@ -91,13 +104,25 @@ public class GameModel {
 	 * player.
 	 */
 	public void updateModel() {
-		player.calculateSpeed();
+		player.calculateSpeed(this);
 		movePlayer();
 	}
 
 	public void setDimension(Dimension dimension) {
 		currentDimension = dimension;
 		notifyDimensionChangeListeners();
+	}
+
+	public float getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(float g) {
+		gravity = g;
+	}
+
+	public void resetGravity() {
+		gravity = baseGravity;
 	}
 
 	public Dimension getDimension() {

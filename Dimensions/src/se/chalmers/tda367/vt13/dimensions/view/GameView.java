@@ -62,19 +62,7 @@ public class GameView {
 				Gdx.graphics.getHeight());
 
 		// testing animation
-		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
-		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
-						/ FRAME_ROWS); // #10
-		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		int index = 0;
-		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++) {
-				walkFrames[index++] = tmp[i][j];
-			}
-		}
-		walkAnimation = new Animation(0.025f, walkFrames);
-		stateTime = 0f;
+		initWalkAnimation();
 
 		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
 		// renderer = new TileMapRenderer(map,1f/32f);
@@ -136,6 +124,25 @@ public class GameView {
 		}
 	}
 
+	private void initWalkAnimation() {
+		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
+		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
+						/ FRAME_ROWS); // #10
+		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				walkFrames[index++] = tmp[i][j];
+			}
+		}
+		walkAnimation = new Animation(0.025f, walkFrames);
+		stateTime = 0f;
+	}
+
+	/**
+	 * Loads the image files from all gameobjects and saves them in a HashMap
+	 */
 	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
 		for (GameObject g : model.getGameObjects()) {
