@@ -4,6 +4,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
+@SuppressWarnings("serial")
 public class SlowPowerUp extends GameObject implements PowerUp {
 	
 	public SlowPowerUp(Vector3 position, Vector3 size, Vector3 speed) {

@@ -102,7 +102,12 @@ public class GameView {
 
 		// Draw GameObjects
 		spriteBatch.begin();
-		drawGameObjects();
+		if (model.getDimension() == GameModel.Dimension.XY) {
+			drawGameObjectsXY();
+		} else if (model.getDimension() == GameModel.Dimension.XZ) {
+			drawGameObjectsXZ();
+		}
+
 		spriteBatch.end();
 	}
 
@@ -125,7 +130,7 @@ public class GameView {
 
 		// If the player's position is close to the camera bottom, just move the
 		// camera with the same speed as the player
-		if (!(Math.abs(delta) >= 200)) {
+		if (!(Math.abs(delta) >= 200) || model.getPlayer().getIsGrounded()) {
 			// Only move the camera if it's Y position is more then 10 pixel
 			// away from the player's Y position
 			if (Math.abs(delta) > 10) {
@@ -149,29 +154,37 @@ public class GameView {
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
-	private void drawGameObjects() {
-		Iterator<GameObject> iterator = model.getGameObjects().iterator();
-		while (iterator.hasNext()) {
-			GameObject g = iterator.next();
-			Vector3 pos = g.getPosition();
-			Vector3 size = g.getSize();
-			spriteBatch.draw(textures.get(g.getImageFileAsString()),
+	private void drawGameObjectsXY() {
+		for (GameObject gameObject : model.getGameObjects()) {
+			Vector3 pos = gameObject.getPosition();
+			Vector3 size = gameObject.getSize();
+			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
-
 		stateTime += Gdx.graphics.getDeltaTime();
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
 		spriteBatch.draw(currentFrame, p.getPosition().getX(), p.getPosition()
 				.getY(), p.getSize().getX(), p.getSize().getY());
+	}
 
-		// spriteBatch.draw(textures.get(p.getImageFileAsString()), p
-		// .getPosition().getX(), p.getPosition().getY(), p.getSize()
-		// .getX(), p.getSize().getY());
+	private void drawGameObjectsXZ() {
+		for (GameObject gameObject : model.getGameObjects()) {
+			Vector3 pos = gameObject.getPosition();
+			Vector3 size = gameObject.getSize();
+			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
+					pos.getX(), pos.getZ(), size.getX(), size.getZ());
+		}
+		stateTime += Gdx.graphics.getDeltaTime();
+		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+		Player p = model.getPlayer();
+
+		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
+				.getPosition().getX(), p.getPosition().getY(), p.getSize()
+				.getX(), p.getSize().getY());
 	}
 
 	public void dispose() {
-		// All assets should be disposed, music images etc
 		spriteBatch.dispose();
 	}
 }

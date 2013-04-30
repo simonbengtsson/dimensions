@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.model.levels;
 
+@SuppressWarnings("serial")
 public class NormalLevel extends Level {
 	public NormalLevel(String levelname, String backgroundfilepath){
 		super(levelname, backgroundfilepath);

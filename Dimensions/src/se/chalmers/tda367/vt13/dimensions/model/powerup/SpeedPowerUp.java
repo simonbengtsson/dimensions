@@ -1,10 +1,9 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import java.io.Serializable;
-import java.util.List;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 /**

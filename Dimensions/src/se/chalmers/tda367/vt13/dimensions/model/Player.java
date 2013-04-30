@@ -72,10 +72,7 @@ public class Player extends GameObject {
 	 * Moves the player up with z-speed;
 	 */
 	public void changeDirection() {
-		// TODO Gets called more then one time each key press which makes it
-		// more complicated then just change direction by multiplying with -1 or
-		// similar
-		getSpeed().setY(-zSpeed);
+		// TODO
 	}
 
 	public void dash() {

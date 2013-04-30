@@ -1,6 +1,10 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
-import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.GameModel;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.Player;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+
 
 /**
  * This powerup sets the gravity to half of the current.
