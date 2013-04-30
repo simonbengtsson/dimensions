@@ -68,12 +68,12 @@ public class GameScreen implements Screen, SoundObserver {
 			if (Gdx.input.isTouched()) {
 				model.getPlayer().jump();
 			}
-		} else if (model.getDimension() == GameModel.Dimension.XZ){
+		} else if (model.getDimension() == GameModel.Dimension.XZ) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				model.getPlayer().jump();
 			}
 			if (Gdx.input.isTouched()) {
-				model.getPlayer().changeDirection(); 
+				model.getPlayer().changeDirection();
 			}
 		}
 	}
