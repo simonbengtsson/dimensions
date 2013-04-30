@@ -1,5 +1,6 @@
 *.ucls
 */bin/
+Dimensions/reports/
 
 #Eclipse metadata folder#
 .metadata/

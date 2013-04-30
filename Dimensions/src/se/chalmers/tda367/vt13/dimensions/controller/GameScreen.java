@@ -73,7 +73,7 @@ public class GameScreen implements Screen, SoundObserver {
 				model.getPlayer().jump();
 			}
 			if (Gdx.input.isTouched()) {
-				model.getPlayer().changeDirection(); 
+				model.getPlayer().changeDirection();
 			}
 		}
 	}
