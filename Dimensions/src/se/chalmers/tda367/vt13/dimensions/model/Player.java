@@ -3,12 +3,14 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import se.chalmers.tda367.vt13.dimensions.model.GameModel.Dimension;
+
 /**
  * Class for the player in the game.
  * 
  * @author Carl Fredriksson
  */
-public class Player extends GameObject {
+public class Player extends GameObject implements DimensionChangeListener {
 
 	private float jumpSpeed;
 	private boolean isGrounded;

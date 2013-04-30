@@ -1,6 +1,11 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.Timer;
 
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
@@ -17,7 +22,8 @@ public class GameModel {
 
 	private List<GameObject> gameObjects;
 	private Player player;
-	private Dimension dimension;
+	private Dimension currentDimension;
+	private List<DimensionChangeListener> dimensionChangeListeners = new ArrayList<DimensionChangeListener>();
 	private float baseGravity;
 	private float gravity;
 
@@ -33,7 +39,9 @@ public class GameModel {
 	public GameModel(List<GameObject> gameObjects, Player player) {
 		this.gameObjects = gameObjects;
 		this.player = player;
-		dimension = Dimension.XZ;
+		currentDimension = Dimension.XY;
+		addDimensionChangeListeners();
+		startDimensionTimer(3000);
 		this.gravity = -0.75f;
 		this.baseGravity = -0.75f;
 	}
@@ -41,9 +49,36 @@ public class GameModel {
 	public GameModel(List<GameObject> gameObjects, Player player, float gravity) {
 		this.gameObjects = gameObjects;
 		this.player = player;
-		dimension = Dimension.XZ;
+		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
+	}
+
+	public void addDimensionChangeListeners() {
+		for (GameObject gameObject : gameObjects) {
+			dimensionChangeListeners.add(gameObject);
+		}
+	}
+
+	/**
+	 * Changes dimension after specified time. For testing only.
+	 * 
+	 * @param interval
+	 *            How often the dimension should change
+	 */
+	public void startDimensionTimer(int interval) {
+		javax.swing.Timer timer = new Timer(interval, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (currentDimension == Dimension.XY) {
+					currentDimension = Dimension.XZ;
+				} else {
+					currentDimension = Dimension.XY;
+				}
+			}
+		});
+		timer.start();
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -73,6 +108,11 @@ public class GameModel {
 		movePlayer();
 	}
 
+	public void setDimension(Dimension dimension) {
+		currentDimension = dimension;
+		notifyDimensionChangeListeners();
+	}
+
 	public float getGravity() {
 		return gravity;
 	}
@@ -85,12 +125,14 @@ public class GameModel {
 		gravity = baseGravity;
 	}
 
-	public void setDimension(Dimension d) {
-		dimension = d;
+	public Dimension getDimension() {
+		return currentDimension;
 	}
 
-	public Dimension getDimension() {
-		return dimension;
+	private void notifyDimensionChangeListeners() {
+		for (DimensionChangeListener listener : dimensionChangeListeners) {
+			listener.dimenensionChange(currentDimension);
+		}
 	}
 
 	/**
