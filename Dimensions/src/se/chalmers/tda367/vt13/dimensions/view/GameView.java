@@ -1,8 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
-import java.util.HashMap;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameModel;
@@ -15,11 +14,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
