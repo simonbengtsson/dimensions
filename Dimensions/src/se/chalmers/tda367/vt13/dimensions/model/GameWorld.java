@@ -46,7 +46,7 @@ public class GameWorld {
 		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
-		createDimensionTimer(2000);
+		//createDimensionTimer(3000);
 	}
 
 	public void addDimensionChangeListeners() {

@@ -60,7 +60,7 @@ public class Player extends GameObject implements DimensionChangeListener {
 	 * Moves the player up with z-speed;
 	 */
 	public void changeDirection() {
-		// TODO
+		getPosition().setZ(getPosition().getZ()+10);
 	}
 
 	public void dash() {

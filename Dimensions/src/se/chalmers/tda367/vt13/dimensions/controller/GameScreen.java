@@ -10,6 +10,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.levels.NotRandomLevel;
+import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -33,9 +34,9 @@ public class GameScreen implements Screen, SoundObserver {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		NotRandomLevel lv = new NotRandomLevel("Random", null);
+		RandomLevel lv = new RandomLevel("Random", null);
 		ls = lv.getList();
-		Player player = new Player(new Vector3(10, 150, 0), new Vector3(50, 50,
+		Player player = new Player(new Vector3(10, 150, 150), new Vector3(50, 50,
 				50), new Vector3(8, 0, 0), 15f, false);
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
@@ -70,7 +71,7 @@ public class GameScreen implements Screen, SoundObserver {
 			}
 		} else if (world.getDimension() == GameWorld.Dimension.XZ){
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
-				world.getPlayer().jump();
+				world.getPlayer().changeDirection();
 			}
 			if (Gdx.input.isTouched()) {
 				world.getPlayer().changeDirection();

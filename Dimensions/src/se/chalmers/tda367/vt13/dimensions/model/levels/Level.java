@@ -129,7 +129,7 @@ public abstract class Level implements Serializable {
 	public void listAddShortPf(List<GameObject> l, float x, float y) {
 		this.lastx = lastx + x;
 		this.lasty = lasty + y;
-		
+
 		l.add(new Platform(new Vector3(lastx, lasty, 0),
 				new Vector3(50, 50, 0), new Vector3()));
 		this.lastx = lastx + 50;

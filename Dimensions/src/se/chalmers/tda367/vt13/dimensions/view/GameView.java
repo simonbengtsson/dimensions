@@ -1,6 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,10 +75,10 @@ public class GameView {
 	public void draw() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
+		updateCameraPosition(3);
 		camera.update();
 		renderer.render(camera);
-		updateCameraPosition(3);
+		
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		// Draw GameObjects
@@ -94,13 +93,10 @@ public class GameView {
 	}
 
 	/**
-	 * Makes the camera follow the player
+	 * Makes the camera smoothly follow the player.
 	 * 
 	 * @param speed
 	 *            How fast the camera is following the player(y-axis)
-	 * @param activation
-	 *            How many pixels away from the center of the screen the player
-	 *            is going to be before the camera starts following
 	 */
 	private void updateCameraPosition(int speed) {
 		// Update camera position X axis
@@ -112,22 +108,26 @@ public class GameView {
 
 		// If the player's position is close to the camera bottom, just move the
 		// camera with the same speed as the player
-		if (!(Math.abs(delta) >= 200) || model.getPlayer().getIsGrounded()) {
-			// Only move the camera if it's Y position is more then 10 pixel
-			// away from the player's Y position
+		if (delta > 200) {
+			camera.position.y = playerPositionY + Gdx.graphics.getHeight()/2;
+		} else if (delta < -200){
+			camera.position.y = playerPositionY - Gdx.graphics.getHeight()/2;
+			System.out.println(delta);
+
+		} else {			
+			// Only move the cameras Y position if it's Y position is more then
+			// 10 pixel away from the player's Y position --> improving performance
 			if (Math.abs(delta) > 10) {
 				camera.position.y -= delta / 100 * speed;
 			}
-		} else {
-			camera.position.y = playerPositionY + 200;
-		}
+		}	
 	}
 
 	private void initWalkAnimation() {
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
-						/ FRAME_ROWS); // #10
+						/ FRAME_ROWS);
 		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
@@ -177,12 +177,10 @@ public class GameView {
 					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
-		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
-
 		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
-				.getPosition().getX(), p.getPosition().getY(), p.getSize()
-				.getX(), p.getSize().getY());
+				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
+				.getX(), p.getSize().getZ());
 	}
 
 	public void dispose() {
