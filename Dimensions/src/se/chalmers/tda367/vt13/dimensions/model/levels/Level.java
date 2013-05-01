@@ -161,7 +161,6 @@ public abstract class Level implements Serializable {
 			l.add(new LowGravityPowerUp(new Vector3(x, y, 0), new Vector3(25,
 					25, 25), new Vector3()));
 			break;
-		// todo
 		}
 
 	}
@@ -199,12 +198,22 @@ public abstract class Level implements Serializable {
 	 * @param height
 	 *            Specifies the height of the platform
 	 */
-	public void spawnSingleBlock(List<GameObject> l , float x, float y, float length, float height){
-			this.lastx = lastx + x;
-			this.lasty = lasty+y;
-			l.add(new Platform(new Vector3(lastx, lasty, -200f), new Vector3(length, height, 2000), new Vector3()));
-			this.lastx = lastx+ length;
-		}
+	public void spawnSingleBlock(List<GameObject> l, float x, float y,
+			float length, float height) {
+		this.lastx = lastx + x;
+		this.lasty = lasty + y;
+		l.add(new Platform(new Vector3(lastx, lasty, -200f), new Vector3(
+				length, height, 2000), new Vector3()));
+		this.lastx = lastx + length;
+	}
+	
+	public void spawnSingleBlock(List<GameObject> l, Vector3 position, Vector3 size) {
+		this.lastx = lastx + position.getX();
+		this.lasty = lasty + position.getY();
+		l.add(new Platform(new Vector3(lastx, lasty, -200f), new Vector3(
+				size.getX(), size.getY(), 2000), new Vector3()));
+		this.lastx = lastx + size.getX();
+	}
 
 	/*
 	 * private void presentPaused () { batcher.draw(Assets.pauseMenu, 160 - 192

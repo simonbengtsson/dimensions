@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.levels.NotRandomLevel;
-import se.chalmers.tda367.vt13.dimensions.model.levels.RandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -34,10 +33,10 @@ public class GameScreen implements Screen, SoundObserver {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		RandomLevel lv = new RandomLevel("Random", null);
+		NotRandomLevel lv = new NotRandomLevel("Random", null);
 		ls = lv.getList();
-		Player player = new Player(new Vector3(10, 150, 150), new Vector3(50, 50,
-				50), new Vector3(8, 0, 0), 15f, false);
+		Player player = new Player(new Vector3(10, 150, Gdx.graphics.getHeight()/2), new Vector3(50, 50,
+				50), new Vector3(8, 0, 0), 15f, false); 
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
 		view = new GameView(world);

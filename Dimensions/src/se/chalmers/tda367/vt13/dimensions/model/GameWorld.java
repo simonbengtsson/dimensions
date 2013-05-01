@@ -153,7 +153,7 @@ public class GameWorld {
 					adjustPositionXY(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
-					gameObjects.remove(gameObject);
+					//gameObjects.remove(gameObject);
 				}
 			}
 		}
@@ -201,11 +201,7 @@ public class GameWorld {
 	}
 
 	private void adjustPositionXZ(GameObject object, GameObject otherObject) {
-		if (object.getSpeed().getY() < 0) {
-			float yOverlap = (otherObject.getPosition().getY() + otherObject
-					.getSize().getY()) - object.getPosition().getY();
-			object.getPosition().setY(object.getPosition().getY() + yOverlap);
-		}
+		
 	}
 
 }

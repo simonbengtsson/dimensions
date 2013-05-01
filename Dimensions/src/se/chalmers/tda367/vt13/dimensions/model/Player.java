@@ -125,7 +125,7 @@ public class Player extends GameObject implements DimensionChangeListener {
 	}
 
 	/**
-	 * Gameover if player slips below camera y position
+	 * Gameover if player slips below screens 0 coordinate
 	 */
 	public boolean isGameOver() {
 		return getPosition().getY() < 0;
