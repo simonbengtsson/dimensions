@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class GameObject implements Serializable, SoundObservable, DimensionChangeListener {
+public abstract class GameObject implements Serializable, SoundObservable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,6 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 	private String soundFile;
 	private String imageFile;
 	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
-	private GameWorld.Dimension currentDimension;
 
 	/**
 	 * Constructor to be used by sub classes.
@@ -33,7 +32,6 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 		this.speed = speed;
 		this.soundFile = soundFile;
 		this.imageFile = imageFile;
-		currentDimension = GameWorld.Dimension.XY;
 	}
 
 	public String toString() {
@@ -104,10 +102,5 @@ public abstract class GameObject implements Serializable, SoundObservable, Dimen
 		for(SoundObserver s : observers){
 			s.playSound(soundFile);
 		}
-	}
-	
-	@Override
-	public void dimenensionChange(GameWorld.Dimension dimension){
-		currentDimension = dimension;
 	}
 }

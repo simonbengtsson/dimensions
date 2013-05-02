@@ -2,7 +2,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Timer;
@@ -23,7 +22,6 @@ public class GameWorld {
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Dimension currentDimension;
-	private List<DimensionChangeListener> dimensionChangeListeners = new ArrayList<DimensionChangeListener>();
 	private float baseGravity;
 	private float gravity;
 
@@ -47,12 +45,6 @@ public class GameWorld {
 		this.gravity = gravity;
 		this.baseGravity = gravity;
 		//createDimensionTimer(3000);
-	}
-
-	public void addDimensionChangeListeners() {
-		for (GameObject gameObject : gameObjects) {
-			dimensionChangeListeners.add(gameObject);
-		}
 	}
 
 	/**
@@ -109,7 +101,6 @@ public class GameWorld {
 
 	public void setDimension(Dimension dimension) {
 		currentDimension = dimension;
-		notifyDimensionChangeListeners();
 	}
 
 	public float getGravity() {
@@ -126,12 +117,6 @@ public class GameWorld {
 
 	public Dimension getDimension() {
 		return currentDimension;
-	}
-
-	private void notifyDimensionChangeListeners() {
-		for (DimensionChangeListener listener : dimensionChangeListeners) {
-			listener.dimenensionChange(currentDimension);
-		}
 	}
 
 	/**

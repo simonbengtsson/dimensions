@@ -10,7 +10,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
  * 
  * @author Carl Fredriksson
  */
-public class Player extends GameObject implements DimensionChangeListener {
+public class Player extends GameObject {
 
 	private float jumpSpeed;
 	private boolean isGrounded;
