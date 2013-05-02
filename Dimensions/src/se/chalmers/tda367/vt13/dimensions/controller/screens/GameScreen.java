@@ -1,9 +1,10 @@
-package se.chalmers.tda367.vt13.dimensions.controller;
+package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.Player;

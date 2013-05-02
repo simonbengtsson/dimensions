@@ -1,5 +1,10 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
+import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 

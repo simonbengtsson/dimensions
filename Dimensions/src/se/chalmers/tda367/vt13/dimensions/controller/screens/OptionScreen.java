@@ -1,4 +1,6 @@
-package se.chalmers.tda367.vt13.dimensions.controller;
+package se.chalmers.tda367.vt13.dimensions.controller.screens;
+
+import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -6,7 +6,6 @@ Dimensions/reports/
 .metadata/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
