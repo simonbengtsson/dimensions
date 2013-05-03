@@ -156,8 +156,7 @@ public class GameWorld {
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
-					// gameObjects.remove(gameObject); TODO get exception if
-					// removing?
+					gameObjects.remove(gameObject);
 				} else if (gameObject instanceof Obstacle) {
 					notifyWorldListeners(WorldEvent.GAME_OVER);
 				}

@@ -12,6 +12,7 @@ public class NotRandomLevel extends Level {
 		spawnSingleBlock(gameobjects, new Vector3(300, 10, 10), new Vector3(500, 50, 300));
 		spawnSingleBlock(gameobjects, new Vector3(150, 140, 10), new Vector3(500, 50, 300));
 		spawnSingleBlock(gameobjects, new Vector3(430, -250, 10), new Vector3(500, 50, 300));
+		spawnPowerUp(gameobjects, PowerUp.SPEED, 270, 110);
 		Obstacle spikes = new Obstacle(new Vector3(1250, 210, 100), new Vector3(100, 30, 50), new Vector3(), "data/spikes.png", "");
 		gameobjects.add(spikes);
 	}
