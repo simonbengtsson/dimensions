@@ -7,9 +7,11 @@ import java.util.Map;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.model.levels.NotRandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
@@ -23,7 +25,7 @@ import com.badlogic.gdx.audio.Sound;
  * 
  * @author Carl Fredriksson
  */
-public class GameScreen implements Screen, SoundObserver {
+public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private int activeDimension;
 
 	GameWorld world;
@@ -40,6 +42,7 @@ public class GameScreen implements Screen, SoundObserver {
 				50), new Vector3(8, 0, 0), 15f, false); 
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
+		world.addWorldListener(this);
 		view = new GameView(world);
 	}
 
@@ -50,8 +53,7 @@ public class GameScreen implements Screen, SoundObserver {
 	@Override
 	public void render(float delta) {
 		if (world.getPlayer().isGameOver()) {
-			game.newGame();
-			game.setScreen(new GameOverScreen(game));
+			worldChange(WorldEvent.GAME_OVER);
 		}
 		getInput();
 		world.updateModel();
@@ -129,4 +131,9 @@ public class GameScreen implements Screen, SoundObserver {
 	public void dispose() {
 	}
 
+	@Override
+	public void worldChange(WorldEvent worldEvent) {
+		game.newGame();
+		game.setScreen(new GameOverScreen(game));
+	}
 }

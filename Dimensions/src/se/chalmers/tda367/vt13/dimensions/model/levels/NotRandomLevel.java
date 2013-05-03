@@ -8,10 +8,11 @@ public class NotRandomLevel extends Level {
 
 	public NotRandomLevel(String levelname, String filepath) {
 		super(levelname, filepath);
-		spawnSingleBlock(gameobjects, new Vector3(), new Vector3(500, 50, 300));
-		spawnSingleBlock(gameobjects, new Vector3(), new Vector3(500, 50, 300));
-		spawnSingleBlock(gameobjects, new Vector3(500, 10, 10), new Vector3(500, 50, 300));
-		Obstacle spikes = new Obstacle(new Vector3(1000, 110, 100), new Vector3(100, 30, 50), new Vector3(), "data/spikes.png", "");
+		spawnSingleBlock(gameobjects, new Vector3(10, 100, 10), new Vector3(500, 50, 300));
+		spawnSingleBlock(gameobjects, new Vector3(300, 10, 10), new Vector3(500, 50, 300));
+		spawnSingleBlock(gameobjects, new Vector3(150, 140, 10), new Vector3(500, 50, 300));
+		spawnSingleBlock(gameobjects, new Vector3(430, -250, 10), new Vector3(500, 50, 300));
+		Obstacle spikes = new Obstacle(new Vector3(1250, 210, 100), new Vector3(100, 30, 50), new Vector3(), "data/spikes.png", "");
 		gameobjects.add(spikes);
 	}
 }

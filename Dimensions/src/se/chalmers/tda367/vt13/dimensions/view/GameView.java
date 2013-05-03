@@ -102,6 +102,8 @@ public class GameView {
 		// Update camera position X axis
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 
+		
+		/*
 		// Update camera position Y axis
 		float playerPositionY = model.getPlayer().getPosition().getY();
 		float delta = camera.position.y - playerPositionY;
@@ -121,6 +123,7 @@ public class GameView {
 				camera.position.y -= delta / 100 * speed;
 			}
 		}	
+		*/
 	}
 
 	private void initWalkAnimation() {
