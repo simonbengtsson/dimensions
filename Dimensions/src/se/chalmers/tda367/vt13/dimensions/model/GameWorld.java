@@ -2,7 +2,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 @SuppressWarnings("serial")
 public class RandomLevel extends Level {
@@ -29,8 +31,8 @@ public class RandomLevel extends Level {
 		for (int i = 0; i < 5; i++) {
 			randomGenerateLevel(gameobjects, 900, 50);
 		}
-		spawnPowerUp(gameobjects, PowerUp.GRAVITY, 700, 200);
-		spawnPowerUp(gameobjects, PowerUp.SPEED, 500, 300);
+		spawnPowerUp(gameobjects, PowerUp.LOW_GRAVITY, new Vector3(700, 200, 200));
+		spawnPowerUp(gameobjects, PowerUp.SPEED, new Vector3(500, 300, 200));
 
 		WriteLevel rv = new WriteLevel();
 		rv.saveToFile(levelname, this);

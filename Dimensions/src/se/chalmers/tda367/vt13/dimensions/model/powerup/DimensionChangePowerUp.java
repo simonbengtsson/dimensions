@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 @SuppressWarnings("serial")
@@ -13,7 +14,11 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 
 	@Override
 	public void use(GameWorld gw) {
-		//model.setDimension(GameModel.Dimension.XZ);
+		if(gw.getDimension() == Dimension.XY){
+			gw.setDimension(Dimension.XZ);
+		}else if(gw.getDimension() == Dimension.XZ){
+			gw.setDimension(Dimension.XY);
+		}
 	}
 
 }

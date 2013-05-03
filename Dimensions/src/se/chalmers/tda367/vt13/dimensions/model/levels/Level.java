@@ -15,10 +15,6 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
  * Class for creating a level with platforms and powerups
  */
 public abstract class Level implements Serializable {
-	
-	public enum PowerUp{
-		SPEED, GRAVITY;
-	}
 
 	private static final long serialVersionUID = 2122723720243818390L;
 	private List<Platform> platforms;
@@ -28,6 +24,7 @@ public abstract class Level implements Serializable {
 	protected List<GameObject> gameobjects = new ArrayList<GameObject>();
 	private float lastx = 0;
 	private float lasty = 50;
+	private float lastz = 0;
 	private String levelname;
 
 	/**
@@ -154,15 +151,16 @@ public abstract class Level implements Serializable {
 	 *            y-coordinate of spawn
 	 */
 
-	public void spawnPowerUp(List<GameObject> l, PowerUp powerUpType, float x, float y) {
+	public void spawnPowerUp(List<GameObject> l, int powerUpType,
+			Vector3 position) {
 		switch (powerUpType) {
-		case SPEED:
-			l.add(new SpeedPowerUp(new Vector3(x, y, 0),
+		case PowerUp.SPEED:
+			l.add(new SpeedPowerUp(new Vector3(position),
 					new Vector3(25, 25, 0), new Vector3()));
 			break;
 
-		case GRAVITY:
-			l.add(new LowGravityPowerUp(new Vector3(x, y, 0), new Vector3(25,
+		case PowerUp.LOW_GRAVITY:
+			l.add(new LowGravityPowerUp(new Vector3(position), new Vector3(25,
 					25, 25), new Vector3()));
 			break;
 		}
@@ -210,12 +208,14 @@ public abstract class Level implements Serializable {
 				length, height, 2000), new Vector3()));
 		this.lastx = lastx + length;
 	}
-	
-	public void spawnSingleBlock(List<GameObject> l, Vector3 position, Vector3 size) {
-		this.lastx = lastx + position.getX();
-		this.lasty = lasty + position.getY();
-		l.add(new Platform(new Vector3(lastx, lasty, -200f), new Vector3(
-				size.getX(), size.getY(), 2000), new Vector3()));
+
+	public void spawnSingleBlock(List<GameObject> l, Vector3 offset,
+			Vector3 size) {
+		this.lastx = lastx + offset.getX();
+		this.lasty = lasty + offset.getY();
+		this.lastz = lastz + offset.getZ();
+		l.add(new Platform(new Vector3(lastx, lasty, lastz), new Vector3(size),
+				new Vector3()));
 		this.lastx = lastx + size.getX();
 	}
 

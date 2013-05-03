@@ -7,7 +7,10 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
  * @author Carl Fredriksson
  */
 public interface PowerUp  {
-
+	public static final int SPEED = 1;
+	public static final int LOW_GRAVITY = 2;
+	public static final int DIMENSION_CHANGE = 3;
+	public static final int SLOW = 4;
 	/**
 	 * Method called when collision is detected between
 	 * the player and the PowerUp. Affects the player

@@ -13,6 +13,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.model.levels.NormalLevel;
 import se.chalmers.tda367.vt13.dimensions.model.levels.NotRandomLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
@@ -37,7 +38,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		NotRandomLevel lv = new NotRandomLevel("Random", null);
+		//NotRandomLevel lv = new NotRandomLevel("Random", null);
+		NormalLevel lv = new NormalLevel("Normal", null);
 		ls = lv.getList();
 		Player player = new Player(new Vector3(10, 150,
 				Gdx.graphics.getHeight() / 2), new Vector3(50, 50, 50),
