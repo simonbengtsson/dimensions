@@ -3,16 +3,20 @@ package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JLabel;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
@@ -39,7 +43,8 @@ public class GameView {
 	private TiledMap map;
 	private TileMapRenderer renderer;
 	private SimpleTileAtlas atlas;
-
+	private int thescore = 0;
+	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 
@@ -78,7 +83,7 @@ public class GameView {
 		updateCameraPosition(3);
 		camera.update();
 		renderer.render(camera);
-		
+		calculateScore();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		// Draw GameObjects
@@ -88,8 +93,24 @@ public class GameView {
 		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ();
 		}
+		
+		font.setColor(Color.YELLOW);
+		font.draw(spriteBatch, "Score: " + thescore,camera.position.x+330,camera.position.y+230);
+		
+		
 
 		spriteBatch.end();
+	}
+	
+	private void calculateScore(){
+		float score = model.getPlayer().getPosition().getX()/10;
+		int tmp = (int)score/10;
+		
+		for(int i=0; i<tmp;i++){
+			this.thescore = this.thescore +1 ;
+			System.out.println(thescore);
+		}
+		
 	}
 
 	/**
