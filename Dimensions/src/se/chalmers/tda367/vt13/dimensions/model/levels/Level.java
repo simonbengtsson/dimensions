@@ -15,6 +15,10 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
  * Class for creating a level with platforms and powerups
  */
 public abstract class Level implements Serializable {
+	
+	public enum PowerUp{
+		SPEED, GRAVITY;
+	}
 
 	private static final long serialVersionUID = 2122723720243818390L;
 	private List<Platform> platforms;
@@ -150,14 +154,14 @@ public abstract class Level implements Serializable {
 	 *            y-coordinate of spawn
 	 */
 
-	public void spawnPowerUp(List<GameObject> l, int i, float x, float y) {
-		switch (i) {
-		case 1:
+	public void spawnPowerUp(List<GameObject> l, PowerUp powerUpType, float x, float y) {
+		switch (powerUpType) {
+		case SPEED:
 			l.add(new SpeedPowerUp(new Vector3(x, y, 0),
 					new Vector3(25, 25, 0), new Vector3()));
 			break;
 
-		case 2:
+		case GRAVITY:
 			l.add(new LowGravityPowerUp(new Vector3(x, y, 0), new Vector3(25,
 					25, 25), new Vector3()));
 			break;
