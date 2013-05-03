@@ -3,6 +3,7 @@ Dimensions/reports/
 
 #Eclipse metadata folder#
 .metadata/
+*/jarlist.cache
 
 # Package Files #
 *.war

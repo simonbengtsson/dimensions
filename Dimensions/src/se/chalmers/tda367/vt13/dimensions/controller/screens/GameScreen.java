@@ -7,6 +7,7 @@ import java.util.Map;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
@@ -38,8 +39,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		this.game = game;
 		NotRandomLevel lv = new NotRandomLevel("Random", null);
 		ls = lv.getList();
-		Player player = new Player(new Vector3(10, 150, Gdx.graphics.getHeight()/2), new Vector3(50, 50,
-				50), new Vector3(8, 0, 0), 15f, false); 
+		Player player = new Player(new Vector3(10, 150,
+				Gdx.graphics.getHeight() / 2), new Vector3(50, 50, 50),
+				new Vector3(8, 0, 0), 15f, false);
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
 		world.addWorldListener(this);
@@ -61,23 +63,45 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	}
 
 	private void getInput() {
-		if (world.getDimension() == GameWorld.Dimension.XY) {
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
+		getInputUp();
+		getInputDown();
+	}
+
+	/**
+	 * Handles all input from upkeys and uptouchareas.
+	 */
+	private void getInputUp() {
+		if (Gdx.input.isKeyPressed(Keys.UP)
+				|| (Gdx.input.isTouched() && (Gdx.input.getY() < Gdx.graphics
+						.getHeight() / 2))) {
+			// Actions when dimension is XY
+			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().jump();
+
+				// Actions when dimension is XZ
+			} else if (world.getDimension() == Dimension.XZ) {
+				world.getPlayer().changeDirection();
 			}
-			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+
+		}
+	}
+
+	/**
+	 * Handles all input from downkeys and downtouchareas.
+	 */
+	private void getInputDown() {
+		if (Gdx.input.isKeyPressed(Keys.DOWN)
+				|| (Gdx.input.isTouched() && (Gdx.input.getY() >= Gdx.graphics
+						.getHeight() / 2))) {
+			// Actions when dimension is XY
+			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().dash();
+
+				// Actions when dimension is XZ
+			} else if (world.getDimension() == Dimension.XZ) {
+
 			}
-			if (Gdx.input.isTouched()) {
-				world.getPlayer().jump();
-			}
-		} else if (world.getDimension() == GameWorld.Dimension.XZ){
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
-				world.getPlayer().changeDirection();
-			}
-			if (Gdx.input.isTouched()) {
-				world.getPlayer().changeDirection();
-			}
+
 		}
 	}
 
