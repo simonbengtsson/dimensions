@@ -103,14 +103,7 @@ public class GameView {
 	}
 	
 	private void calculateScore(){
-		float score = model.getPlayer().getPosition().getX()/10;
-		int tmp = (int)score/10;
-		
-		for(int i=0; i<tmp;i++){
-			this.thescore = this.thescore +1 ;
-			System.out.println(thescore);
-		}
-		
+		thescore = (int)model.getPlayer().getPosition().getX()/10;	
 	}
 
 	/**
