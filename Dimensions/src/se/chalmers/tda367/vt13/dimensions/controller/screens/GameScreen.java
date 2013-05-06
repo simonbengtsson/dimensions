@@ -82,7 +82,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 				// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
-				world.getPlayer().changeDirection();
+				world.getPlayer().moveUp();
 			}
 
 		}
@@ -101,7 +101,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 				// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
-
+				world.getPlayer().moveDown();
 			}
 
 		}

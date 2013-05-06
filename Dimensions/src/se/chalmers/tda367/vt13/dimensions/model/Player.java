@@ -15,6 +15,7 @@ public class Player extends GameObject {
 	private float jumpSpeed;
 	private boolean isGrounded;
 	private final float baseXSpeed;
+	private final float baseZSpeed;
 	private boolean usingDash;
 
 	/**
@@ -39,6 +40,7 @@ public class Player extends GameObject {
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
+		baseZSpeed = 10;
 		usingDash = false;
 	}
 
@@ -59,8 +61,15 @@ public class Player extends GameObject {
 	/**
 	 * Moves the player up with z-speed;
 	 */
-	public void changeDirection() {
-		getPosition().setZ(getPosition().getZ()+10);
+	public void moveUp() {
+		getSpeed().setZ(baseZSpeed);
+	}
+	
+	/**
+	 * Moves the player down with z-speed;
+	 */
+	public void moveDown() {
+		getSpeed().setZ(-baseZSpeed);
 	}
 
 	public void dash() {
@@ -88,7 +97,7 @@ public class Player extends GameObject {
 		}
 	}
 
-	public void resetSpeed() {
+	public void resetXSpeed() {
 		getSpeed().setX(baseXSpeed);
 	}
 
@@ -116,7 +125,7 @@ public class Player extends GameObject {
 	/**
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
-	public void calculateSpeed(GameWorld m) {
+	public void calculateYSpeed(GameWorld m) {
 		if (!isGrounded) {
 			getSpeed().setY(getSpeed().getY() + m.getGravity());
 		} else {
