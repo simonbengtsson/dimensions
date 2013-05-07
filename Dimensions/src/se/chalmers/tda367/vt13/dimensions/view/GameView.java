@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.ParallaxBackground;
+import se.chalmers.tda367.vt13.dimensions.model.ParallaxLayer;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -15,9 +17,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
@@ -41,12 +46,19 @@ public class GameView {
 	private TextureRegion currentFrame;
 	private float stateTime;
 	private TiledMap map;
+	private boolean showAlert = true;
+	private int alertIndex = 0;
+	private double [] stateAlert = new double[10];
 	private TileMapRenderer renderer;
 	private SimpleTileAtlas atlas;
 	private int thescore = 0;
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
+	private ParallaxBackground rbg;
+	private Texture bg;
+	private Sprite bgsprite;
+	
 
 	/**
 	 * Constructor.
@@ -63,15 +75,25 @@ public class GameView {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-
+		for(int i=0; i<stateAlert.length;i++){
+			double tmp = 2.0;
+			stateAlert[i] = tmp;
+			tmp = tmp +3.0;
+		}
+		
+		////this.rbg = new ParallaxBackground(camera.viewportWidth,camera.viewportHeight);
+		//initiateBackground();
 		// testing animation
 		initWalkAnimation();
 
-		map = new TiledLoader().createMap(Gdx.files.internal("data/lvl1.tmx"));
-		// renderer = new TileMapRenderer(map,1f/32f);
-		atlas = new SimpleTileAtlas(map, Gdx.files.internal("data/"));
-		renderer = new TileMapRenderer(map, atlas, 10, 10, 32, 32);
+		bg = new Texture(Gdx.files.internal("data/bakgrund.png"));
+		bg.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		bgsprite = new Sprite(bg,0,0,20000,512);
+		
 
+		
+
+		
 	}
 
 	/**
@@ -80,14 +102,21 @@ public class GameView {
 	public void draw() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
 		updateCameraPosition(3);
+		
 		camera.update();
-		renderer.render(camera);
+		//renderer.render(camera);
 		calculateScore();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		// Draw GameObjects
 		spriteBatch.begin();
+		bgsprite.draw(spriteBatch);
+		//rbg.render(camera.position.x,camera.position.y,spriteBatch);
+		
+		
+			
 		if (model.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY();
 		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
@@ -97,10 +126,28 @@ public class GameView {
 		font.setColor(Color.YELLOW);
 		font.draw(spriteBatch, "Score: " + thescore,camera.position.x+330,camera.position.y+230);
 		
+		/*if(Gdx.graphics.getDeltaTime() > this.alertIndex && Gdx.graphics.getDeltaTime() < this.alertIndex+1){
+			while(Gdx.graphics.getDeltaTime() > this.alertIndex && Gdx.graphics.getDeltaTime() < this.alertIndex+1){ 
+			font.draw(spriteBatch,"WARNING", camera.position.x,camera.position.y+100);
+			}
+			this.alertIndex = (int) this.stateAlert[alertIndex+1];
+		}
+		*/
+		
+		
+		
+	 
+		
+		
+		
 		
 
 		spriteBatch.end();
 	}
+	
+	/*private String dimensionChangeMsg(){
+	return "Warning, Dimensions changing";	
+	}*/
 	
 	private void calculateScore(){
 		thescore = (int)model.getPlayer().getPosition().getX()/10;	
@@ -140,6 +187,18 @@ public class GameView {
 		*/
 	}
 
+/*	public void initiateBackground(){
+		TextureAtlas spriteSheet = new TextureAtlas(Gdx.files.internal("data/world1.txt"));
+		TextureRegion bg = spriteSheet.findRegion("wold");
+		
+		
+		
+		
+		rbg.addLayer(new ParallaxLayer(bg,2f)); 
+	}*/
+	
+	
+	
 	private void initWalkAnimation() {
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
@@ -180,6 +239,13 @@ public class GameView {
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
+		
+				
+				
+				
+			
+		
+		
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
 		spriteBatch.draw(currentFrame, p.getPosition().getX(), p.getPosition()
@@ -194,10 +260,20 @@ public class GameView {
 					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
+		
+				
+				
+			
+		
+		
 		Player p = model.getPlayer();
 		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
 				.getX(), p.getSize().getZ());
+	}
+	
+	public OrthographicCamera getCamera(){
+		return this.camera;
 	}
 
 	public void dispose() {
