@@ -3,14 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JLabel;
-
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.ParallaxBackground;
-import se.chalmers.tda367.vt13.dimensions.model.ParallaxLayer;
-import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -22,11 +15,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
 /**
@@ -48,7 +39,7 @@ public class GameView {
 	private TiledMap map;
 	private boolean showAlert = true;
 	private int alertIndex = 0;
-	private double [] stateAlert = new double[10];
+	private double[] stateAlert = new double[10];
 	private TileMapRenderer renderer;
 	private SimpleTileAtlas atlas;
 	private int thescore = 0;
@@ -58,7 +49,6 @@ public class GameView {
 	private ParallaxBackground rbg;
 	private Texture bg;
 	private Sprite bgsprite;
-	
 
 	/**
 	 * Constructor.
@@ -75,25 +65,22 @@ public class GameView {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		for(int i=0; i<stateAlert.length;i++){
+		for (int i = 0; i < stateAlert.length; i++) {
 			double tmp = 2.0;
 			stateAlert[i] = tmp;
-			tmp = tmp +3.0;
+			tmp = tmp + 3.0;
 		}
-		
-		////this.rbg = new ParallaxBackground(camera.viewportWidth,camera.viewportHeight);
-		//initiateBackground();
+
+		// //this.rbg = new
+		// ParallaxBackground(camera.viewportWidth,camera.viewportHeight);
+		// initiateBackground();
 		// testing animation
 		initWalkAnimation();
 
 		bg = new Texture(Gdx.files.internal("data/bakgrund.png"));
 		bg.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		bgsprite = new Sprite(bg,0,0,20000,512);
-		
+		bgsprite = new Sprite(bg, 0, 0, 20000, 512);
 
-		
-
-		
 	}
 
 	/**
@@ -102,55 +89,49 @@ public class GameView {
 	public void draw() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		updateCameraPosition(3);
-		
+
 		camera.update();
-		//renderer.render(camera);
+		// renderer.render(camera);
 		calculateScore();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		// Draw GameObjects
 		spriteBatch.begin();
 		bgsprite.draw(spriteBatch);
-		//rbg.render(camera.position.x,camera.position.y,spriteBatch);
-		
-		
-			
+		// rbg.render(camera.position.x,camera.position.y,spriteBatch);
+
 		if (model.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY();
 		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ();
 		}
-		
+
 		font.setColor(Color.YELLOW);
-		font.draw(spriteBatch, "Score: " + thescore,camera.position.x+330,camera.position.y+230);
-		
-		/*if(Gdx.graphics.getDeltaTime() > this.alertIndex && Gdx.graphics.getDeltaTime() < this.alertIndex+1){
-			while(Gdx.graphics.getDeltaTime() > this.alertIndex && Gdx.graphics.getDeltaTime() < this.alertIndex+1){ 
-			font.draw(spriteBatch,"WARNING", camera.position.x,camera.position.y+100);
-			}
-			this.alertIndex = (int) this.stateAlert[alertIndex+1];
-		}
-		*/
-		
-		
-		
-	 
-		
-		
-		
-		
+		font.draw(spriteBatch, "Score: " + thescore, camera.position.x + 330,
+				camera.position.y + 230);
+
+		/*
+		 * if(Gdx.graphics.getDeltaTime() > this.alertIndex &&
+		 * Gdx.graphics.getDeltaTime() < this.alertIndex+1){
+		 * while(Gdx.graphics.getDeltaTime() > this.alertIndex &&
+		 * Gdx.graphics.getDeltaTime() < this.alertIndex+1){
+		 * font.draw(spriteBatch,"WARNING",
+		 * camera.position.x,camera.position.y+100); } this.alertIndex = (int)
+		 * this.stateAlert[alertIndex+1]; }
+		 */
 
 		spriteBatch.end();
 	}
-	
-	/*private String dimensionChangeMsg(){
-	return "Warning, Dimensions changing";	
-	}*/
-	
-	private void calculateScore(){
-		thescore = (int)model.getPlayer().getPosition().getX()/10;	
+
+	/*
+	 * private String dimensionChangeMsg(){ return
+	 * "Warning, Dimensions changing"; }
+	 */
+
+	private void calculateScore() {
+		thescore = (int) model.getPlayer().getPosition().getX() / 10;
 	}
 
 	/**
@@ -163,42 +144,35 @@ public class GameView {
 		// Update camera position X axis
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 
-		
 		/*
-		// Update camera position Y axis
-		float playerPositionY = model.getPlayer().getPosition().getY();
-		float delta = camera.position.y - playerPositionY;
-
-		// If the player's position is close to the camera bottom, just move the
-		// camera with the same speed as the player
-		if (delta > 200) {
-			camera.position.y = playerPositionY + Gdx.graphics.getHeight()/2;
-		} else if (delta < -200){
-			camera.position.y = playerPositionY - Gdx.graphics.getHeight()/2;
-			System.out.println(delta);
-
-		} else {			
-			// Only move the cameras Y position if it's Y position is more then
-			// 10 pixel away from the player's Y position --> improving performance
-			if (Math.abs(delta) > 10) {
-				camera.position.y -= delta / 100 * speed;
-			}
-		}	
-		*/
+		 * // Update camera position Y axis float playerPositionY =
+		 * model.getPlayer().getPosition().getY(); float delta =
+		 * camera.position.y - playerPositionY;
+		 * 
+		 * // If the player's position is close to the camera bottom, just move
+		 * the // camera with the same speed as the player if (delta > 200) {
+		 * camera.position.y = playerPositionY + Gdx.graphics.getHeight()/2; }
+		 * else if (delta < -200){ camera.position.y = playerPositionY -
+		 * Gdx.graphics.getHeight()/2; System.out.println(delta);
+		 * 
+		 * } else { // Only move the cameras Y position if it's Y position is
+		 * more then // 10 pixel away from the player's Y position --> improving
+		 * performance if (Math.abs(delta) > 10) { camera.position.y -= delta /
+		 * 100 * speed; } }
+		 */
 	}
 
-/*	public void initiateBackground(){
-		TextureAtlas spriteSheet = new TextureAtlas(Gdx.files.internal("data/world1.txt"));
-		TextureRegion bg = spriteSheet.findRegion("wold");
-		
-		
-		
-		
-		rbg.addLayer(new ParallaxLayer(bg,2f)); 
-	}*/
-	
-	
-	
+	/*
+	 * public void initiateBackground(){ TextureAtlas spriteSheet = new
+	 * TextureAtlas(Gdx.files.internal("data/world1.txt")); TextureRegion bg =
+	 * spriteSheet.findRegion("wold");
+	 * 
+	 * 
+	 * 
+	 * 
+	 * rbg.addLayer(new ParallaxLayer(bg,2f)); }
+	 */
+
 	private void initWalkAnimation() {
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
@@ -239,13 +213,7 @@ public class GameView {
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
-		
-				
-				
-				
-			
-		
-		
+
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 		Player p = model.getPlayer();
 		spriteBatch.draw(currentFrame, p.getPosition().getX(), p.getPosition()
@@ -260,19 +228,14 @@ public class GameView {
 					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
-		
-				
-				
-			
-		
-		
+
 		Player p = model.getPlayer();
 		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
 				.getX(), p.getSize().getZ());
 	}
-	
-	public OrthographicCamera getCamera(){
+
+	public OrthographicCamera getCamera() {
 		return this.camera;
 	}
 

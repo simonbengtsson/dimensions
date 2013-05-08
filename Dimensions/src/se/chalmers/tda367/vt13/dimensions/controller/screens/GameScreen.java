@@ -5,16 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
-import se.chalmers.tda367.vt13.dimensions.model.Player;
-import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
-import se.chalmers.tda367.vt13.dimensions.model.levels.NormalLevel;
-import se.chalmers.tda367.vt13.dimensions.model.levels.NotRandomLevel;
+import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.*;
+import se.chalmers.tda367.vt13.dimensions.model.levels.*;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -38,7 +31,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		//NotRandomLevel lv = new NotRandomLevel("Random", null);
+		// NotRandomLevel lv = new NotRandomLevel("Random", null);
 		NormalLevel lv = new NormalLevel("Normal", null);
 		ls = lv.getList();
 		Player player = new Player(new Vector3(10, 150,

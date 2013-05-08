@@ -3,8 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-
 /**
  * Class for the player in the game.
  * 
@@ -64,7 +62,7 @@ public class Player extends GameObject {
 	public void moveUp() {
 		getSpeed().setZ(baseZSpeed);
 	}
-	
+
 	/**
 	 * Moves the player down with z-speed;
 	 */
@@ -132,9 +130,10 @@ public class Player extends GameObject {
 			getSpeed().setY(0);
 		}
 	}
-	
-	public Player clone(){
-		return new Player(getPosition().clone(), getSize().clone(), getSpeed().clone(), jumpSpeed, isGrounded);
+
+	public Player clone() {
+		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
+				.clone(), jumpSpeed, isGrounded);
 	}
 
 	/**

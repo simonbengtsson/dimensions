@@ -23,7 +23,8 @@ public class GameWorld {
 
 	/**
 	 * I'm thinking there is more events the controller is interested in later,
-	 * for example reaching a checkpoint or finish the level so I made this an enum. Open for suggetions though //Simon
+	 * for example reaching a checkpoint or finish the level so I made this an
+	 * enum. Open for suggetions though //Simon
 	 */
 	public enum WorldEvent {
 		GAME_OVER;
@@ -35,7 +36,6 @@ public class GameWorld {
 	private float baseGravity;
 	private float gravity;
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
-
 
 	/**
 	 * Constructor.
@@ -110,13 +110,13 @@ public class GameWorld {
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(this);
 			movePlayerXY();
-		}
-		else if (currentDimension == Dimension.XZ) {
+		} else if (currentDimension == Dimension.XZ) {
 			movePlayerXZ();
 		}
 		// TESTING
-		System.out.println("X: "+ player.getPosition().getX() + " - Y: " + 
-				player.getPosition().getY() + " - Z: " + player.getPosition().getZ());
+		System.out.println("X: " + player.getPosition().getX() + " - Y: "
+				+ player.getPosition().getY() + " - Z: "
+				+ player.getPosition().getZ());
 	}
 
 	public void setDimension(Dimension dimension) {
@@ -181,21 +181,21 @@ public class GameWorld {
 			player.setIsGrounded(false);
 		}
 	}
-	
+
 	/**
-	 * Move the player with its speed. Since the dimension is XZ
-	 * gravity is not a factor.
+	 * Move the player with its speed. Since the dimension is XZ gravity is not
+	 * a factor.
 	 */
 	private void movePlayerXZ() {
 		player.getPosition().add(player.getSpeed());
-		player.setSpeed(new Vector3(player.getSpeed().getX(), 0 , 0));
+		player.setSpeed(new Vector3(player.getSpeed().getX(), 0, 0));
 		Iterator<GameObject> iterator = gameObjects.iterator();
 		while (iterator.hasNext()) {
 			GameObject gameObject = iterator.next();
 			if (checkCollisionXZ(player, gameObject)) {
 				if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
-					gameObjects.remove(gameObject);
+					// gameObjects.remove(gameObject);
 				} else if (gameObject instanceof Obstacle) {
 					notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
@@ -217,7 +217,7 @@ public class GameWorld {
 				.getPosition().getY() + object.getSize().getY() < otherObject
 				.getPosition().getY());
 	}
-	
+
 	private boolean checkCollisionXZ(GameObject object, GameObject otherObject) {
 		return !(object.getPosition().getX() > otherObject.getPosition().getX()
 				+ otherObject.getSize().getX()
