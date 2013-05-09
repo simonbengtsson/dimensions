@@ -13,10 +13,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -33,7 +31,6 @@ public class GameView {
 	private GameWorld model;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
-	private SpriteBatch spriteBatch;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
 	private Animation walkAnimation;
@@ -41,13 +38,10 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private double[] stateAlert = new double[10];
 	private int thescore = 0;
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
-	private Texture bg;
-	private Sprite bgsprite;
 
 	/**
 	 * Constructor.
@@ -57,34 +51,17 @@ public class GameView {
 	 */
 	public GameView(GameWorld model) {
 		this.model = model;
-		spriteBatch = new SpriteBatch();
-
 		loadImageFiles();
 
 		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
-		map = new TmxMapLoader()
-				.load("data/lvl1.tmx");
+		map = new TmxMapLoader().load("data/super-koalio/level1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		for (int i = 0; i < stateAlert.length; i++) {
-			double tmp = 2.0;
-			stateAlert[i] = tmp;
-			tmp = tmp + 3.0;
-		}
+		camera.setToOrtho(false, 30, 20);
+		camera.update();
 
-		// //this.rbg = new
-		// ParallaxBackground(camera.viewportWidth,camera.viewportHeight);
-		// initiateBackground();
-		// testing animation
 		initWalkAnimation();
-
-		bg = new Texture(Gdx.files.internal("data/bakgrund.png"));
-		bg.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		bgsprite = new Sprite(bg, 0, 0, 20000, 512);
-
 	}
 
 	/**
@@ -93,49 +70,29 @@ public class GameView {
 	public void draw() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		// updateCameraPosition(3);
-		camera.position.x = model.getPlayer().getPosition().getX() + 400;
+		
+		// updateCameraPosition(3); //Uncomment for follow the player on the y-axis
+		camera.position.x = model.getPlayer().getPosition().getX();
 		camera.update();
 
 		renderer.setView(camera);
 		renderer.render();
 
 		calculateScore();
-		spriteBatch.setProjectionMatrix(camera.combined);
 
-		// Draw GameObjects
-		spriteBatch.begin();
-		bgsprite.draw(spriteBatch);
-		// rbg.render(camera.position.x,camera.position.y,spriteBatch);
-
+		//Draw gameObjects
+		SpriteBatch batch = renderer.getSpriteBatch();
+		batch.begin();
 		if (model.getDimension() == GameWorld.Dimension.XY) {
-			drawGameObjectsXY();
+			drawGameObjectsXY(batch);
 		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
-			drawGameObjectsXZ();
+			drawGameObjectsXZ(batch);
 		}
-
 		font.setColor(Color.YELLOW);
-		font.draw(spriteBatch, "Score: " + thescore, camera.position.x + 330,
+		font.draw(batch, "Score: " + thescore, camera.position.x + 330,
 				camera.position.y + 230);
-
-		/*
-		 * if(Gdx.graphics.getDeltaTime() > this.alertIndex &&
-		 * Gdx.graphics.getDeltaTime() < this.alertIndex+1){
-		 * while(Gdx.graphics.getDeltaTime() > this.alertIndex &&
-		 * Gdx.graphics.getDeltaTime() < this.alertIndex+1){
-		 * font.draw(spriteBatch,"WARNING",
-		 * camera.position.x,camera.position.y+100); } this.alertIndex = (int)
-		 * this.stateAlert[alertIndex+1]; }
-		 */
-
-		spriteBatch.end();
+		batch.end();
 	}
-
-	/*
-	 * private String dimensionChangeMsg(){ return
-	 * "Warning, Dimensions changing"; }
-	 */
 
 	private void calculateScore() {
 		thescore = (int) model.getPlayer().getPosition().getX() / 10;
@@ -217,7 +174,7 @@ public class GameView {
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
-	private void drawGameObjectsXY() {
+	private void drawGameObjectsXY(SpriteBatch spriteBatch) {
 		for (GameObject gameObject : model.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
@@ -232,7 +189,7 @@ public class GameView {
 				.getY(), p.getSize().getX(), p.getSize().getY());
 	}
 
-	private void drawGameObjectsXZ() {
+	private void drawGameObjectsXZ(SpriteBatch spriteBatch) {
 		for (GameObject gameObject : model.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
@@ -252,6 +209,5 @@ public class GameView {
 	}
 
 	public void dispose() {
-		spriteBatch.dispose();
 	}
 }
