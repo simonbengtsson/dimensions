@@ -3,7 +3,11 @@ package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.model.*;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.ParallaxBackground;
+import se.chalmers.tda367.vt13.dimensions.model.Player;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,9 +20,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 
 /**
  * Game view.
@@ -36,12 +37,9 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private TiledMap map;
 	private boolean showAlert = true;
 	private int alertIndex = 0;
 	private double[] stateAlert = new double[10];
-	private TileMapRenderer renderer;
-	private SimpleTileAtlas atlas;
 	private int thescore = 0;
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
