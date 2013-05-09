@@ -62,9 +62,9 @@ public class GameView {
 		loadImageFiles();
 
 		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
-//		map = new TmxMapLoader()
-//				.load("data/lvl1.tmx");
-//		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+		map = new TmxMapLoader()
+				.load("data/lvl1.tmx");
+		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
@@ -98,8 +98,8 @@ public class GameView {
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 		camera.update();
 
-		//renderer.setView(camera);
-		//renderer.render();
+		renderer.setView(camera);
+		renderer.render();
 
 		calculateScore();
 		spriteBatch.setProjectionMatrix(camera.combined);
