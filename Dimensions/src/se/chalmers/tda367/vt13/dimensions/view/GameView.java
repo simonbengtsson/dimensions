@@ -5,7 +5,6 @@ import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.ParallaxBackground;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -20,6 +19,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
  * Game view.
@@ -29,6 +31,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class GameView {
 
 	private GameWorld model;
+	private TiledMap map;
+	private OrthogonalTiledMapRenderer renderer;
 	private SpriteBatch spriteBatch;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
@@ -37,14 +41,11 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private boolean showAlert = true;
-	private int alertIndex = 0;
 	private double[] stateAlert = new double[10];
 	private int thescore = 0;
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
-	private ParallaxBackground rbg;
 	private Texture bg;
 	private Sprite bgsprite;
 
@@ -59,6 +60,11 @@ public class GameView {
 		spriteBatch = new SpriteBatch();
 
 		loadImageFiles();
+
+		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
+//		map = new TmxMapLoader()
+//				.load("data/maps/tiled/super-koalio/level1.tmx");
+//		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(),
@@ -88,10 +94,13 @@ public class GameView {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		updateCameraPosition(3);
-
+		// updateCameraPosition(3);
+		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 		camera.update();
-		// renderer.render(camera);
+
+		//renderer.setView(camera);
+		//renderer.render();
+
 		calculateScore();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
@@ -142,22 +151,27 @@ public class GameView {
 		// Update camera position X axis
 		camera.position.x = model.getPlayer().getPosition().getX() + 400;
 
-		/*
-		 * // Update camera position Y axis float playerPositionY =
-		 * model.getPlayer().getPosition().getY(); float delta =
-		 * camera.position.y - playerPositionY;
-		 * 
-		 * // If the player's position is close to the camera bottom, just move
-		 * the // camera with the same speed as the player if (delta > 200) {
-		 * camera.position.y = playerPositionY + Gdx.graphics.getHeight()/2; }
-		 * else if (delta < -200){ camera.position.y = playerPositionY -
-		 * Gdx.graphics.getHeight()/2; System.out.println(delta);
-		 * 
-		 * } else { // Only move the cameras Y position if it's Y position is
-		 * more then // 10 pixel away from the player's Y position --> improving
-		 * performance if (Math.abs(delta) > 10) { camera.position.y -= delta /
-		 * 100 * speed; } }
-		 */
+		// Update camera position Y axis
+		float playerPositionY = model.getPlayer().getPosition().getY();
+		float delta = camera.position.y - playerPositionY;
+
+		// If the player's position is close to the camera bottom, just move
+		// the camera with the same speed as the player
+		if (delta > 200) {
+			camera.position.y = playerPositionY + Gdx.graphics.getHeight() / 2;
+		} else if (delta < -200) {
+			camera.position.y = playerPositionY - Gdx.graphics.getHeight() / 2;
+			System.out.println(delta);
+		}
+		// Only move the cameras Y position if it's Y position is more then 10
+		// pixel away from the player's Y position --> improving performance
+		else {
+
+			if (Math.abs(delta) > 10) {
+				camera.position.y -= delta / 100 * speed;
+			}
+		}
+
 	}
 
 	/*
