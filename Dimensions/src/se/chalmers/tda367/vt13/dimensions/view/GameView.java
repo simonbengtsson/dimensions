@@ -63,7 +63,7 @@ public class GameView {
 
 		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
 //		map = new TmxMapLoader()
-//				.load("data/maps/tiled/super-koalio/level1.tmx");
+//				.load("data/lvl1.tmx");
 //		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
 
 		camera = new OrthographicCamera();
