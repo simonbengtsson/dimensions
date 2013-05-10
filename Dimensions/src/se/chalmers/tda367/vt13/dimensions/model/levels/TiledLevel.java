@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model.levels;
 
 import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
+import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.*;
 
@@ -14,5 +15,9 @@ public class TiledLevel extends Level {
 		Obstacle spikes = new Obstacle(new Vector3(50, 2, 0), new Vector3(2, 1, 1), 
 				new Vector3(), "data/spikes.png", "");
 		gameobjects.add(spikes);
+		Platform testPlatform = new Platform(new Vector3(40, 10, 10), new Vector3(30, 2, 1), new Vector3());
+		gameobjects.add(testPlatform);
+		spawnSingleBlock(gameobjects, new Vector3(), new Vector3(10, 50, 500));
+		
 	}
 }

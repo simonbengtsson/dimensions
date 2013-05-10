@@ -49,12 +49,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		//NormalLevel lv = new NormalLevel("Normal", null);
+		// NormalLevel lv = new NormalLevel("Normal", null);
 		TiledLevel lv = new TiledLevel("Tiled", null);
 		ls = lv.getList();
-		Player player = new Player(new Vector3(10, 10,
-				10), new Vector3(2.1f, 2.1f, 2.1f),
-				new Vector3(0.3f, 0, 0), 1f, false);
+		Player player = new Player(new Vector3(10, 10, 10), new Vector3(2.1f,
+				2.1f, 2.1f), new Vector3(0.3f, 0, 0), 1f, false);
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
 		world.addWorldListener(this);
@@ -71,7 +70,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			worldChange(WorldEvent.GAME_OVER);
 		}
 		getInput();
-		checkTiledCollisions();
+		checkTileCollisions();
 		world.updateModel();
 		view.draw();
 	}
@@ -176,20 +175,23 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			game.setScreen(new GameOverScreen(game));
 		}
 	}
-	
-	public void checkTiledCollisions() {
-		Player player = world.getPlayer();
-		player.setIsGrounded(false); //set to true if player is touching object
 
-		// clamp the velocity to the maximum, x-axis only
+	public void checkTileCollisions() {
+		Player player = world.getPlayer();
+		player.setIsGrounded(false); // set to true if player is touching object
+
+		// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason is to prevent
+		// the player to go through platforms and other gameobjexts
 		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
-			player.getSpeed().setY(Math.signum(player.getSpeed().getY()) * Player.MAX_VELOCITY);
+			player.getSpeed()
+					.setY(Math.signum(player.getSpeed().getY())
+							* Player.MAX_VELOCITY);
 		}
-		
+
 		Rectangle playerRect = rectPool.obtain();
-		playerRect.set(world.getPlayer().getPosition().getX(), world.getPlayer()
-				.getPosition().getY(), world.getPlayer().getSize().getX(),
-				world.getPlayer().getSize().getY());
+		playerRect.set(world.getPlayer().getPosition().getX(), world
+				.getPlayer().getPosition().getY(), world.getPlayer().getSize()
+				.getX(), world.getPlayer().getSize().getY());
 		int startX, startY, endX, endY;
 		playerRect.x = world.getPlayer().getPosition().getX();
 
@@ -228,7 +230,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	private void getTiles(int startX, int startY, int endX, int endY,
 			Array<Rectangle> tiles) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) view.getMap().getLayers().get(1);
+		TiledMapTileLayer layer = (TiledMapTileLayer) view.getMap().getLayers()
+				.get(1);
 		rectPool.freeAll(tiles);
 		tiles.clear();
 		for (int y = startY; y <= endY; y++) {
