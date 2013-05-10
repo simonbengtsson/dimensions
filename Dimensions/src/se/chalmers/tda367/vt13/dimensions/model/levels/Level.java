@@ -36,7 +36,7 @@ public abstract class Level implements Serializable {
 	public Level(String levelName, String filepath) {
 		this.levelname = levelName;
 		this.backGroundImagePath = filepath;
-		spawnStartingPlatform(gameobjects);
+		//spawnStartingPlatform(gameobjects);
 
 		// This constructor is currently a mess
 		// TODO: Clean up this mess
@@ -261,7 +261,6 @@ public abstract class Level implements Serializable {
 	 * @param p
 	 */
 	public void addPlatform(Platform p) {
-		System.out.println(platforms);
 		platforms.add(p);
 	}
 

@@ -10,7 +10,6 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.*;
 import se.chalmers.tda367.vt13.dimensions.model.levels.*;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -32,12 +31,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		NormalLevel lv = new NormalLevel("Normal", null);
+		//NormalLevel lv = new NormalLevel("Normal", null);
+		TiledLevel lv = new TiledLevel("Tiled", null);
 		ls = lv.getList();
-//		float playerWidth = 1 / 16f * regions[0].getRegionWidth();
-//		float playerHeight = 1 / 16f * regions[0].getRegionHeight();
-		Player player = new Player(new Vector3(10, 150,
-				Gdx.graphics.getHeight() / 2), new Vector3(50, 50, 50),
+		Player player = new Player(new Vector3(10, 10,
+				10), new Vector3(2.1f, 2.1f, 2.1f),
 				new Vector3(0.1f, 0, 0), 15f, false);
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
@@ -55,7 +53,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			worldChange(WorldEvent.GAME_OVER);
 		}
 		getInput();
-		world.updateModel();
+		//world.updateModel();
 		view.draw();
 	}
 
@@ -154,7 +152,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void worldChange(WorldEvent worldEvent) {
-		game.newGame();
-		game.setScreen(new GameOverScreen(game));
+		if (worldEvent == WorldEvent.GAME_OVER) {
+			game.newGame();
+			game.setScreen(new GameOverScreen(game));
+		}
 	}
 }

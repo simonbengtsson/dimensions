@@ -65,7 +65,6 @@ public class AbstractMenuScreen implements Screen {
 		Table.drawDebug(stage);
 		batch.begin();
 		font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		// font.draw(batch, str, 380, 240);
 		batch.end();
 
 		/*

@@ -56,8 +56,9 @@ public class GameWorld {
 		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
-		createDimensionTimer(3000);
+		//createDimensionTimer(3000);
 	}
+	
 
 	/**
 	 * Changes dimension after specified time. For testing only.
@@ -73,11 +74,11 @@ public class GameWorld {
 				if (currentDimension == Dimension.XY) {
 					currentDimension = Dimension.XZ;
 					// TESTING
-					System.out.println("DIMENSION IS NOW XZ");
+					//System.out.println("DIMENSION IS NOW XZ");
 				} else {
 					currentDimension = Dimension.XY;
 					// TESTING
-					System.out.println("DIMENSION IS NOW XY");
+					//System.out.println("DIMENSION IS NOW XY");
 				}
 			}
 		});
@@ -113,10 +114,6 @@ public class GameWorld {
 		} else if (currentDimension == Dimension.XZ) {
 			movePlayerXZ();
 		}
-		// TESTING
-		System.out.println("X: " + player.getPosition().getX() + " - Y: "
-				+ player.getPosition().getY() + " - Z: "
-				+ player.getPosition().getZ());
 	}
 
 	public void setDimension(Dimension dimension) {
