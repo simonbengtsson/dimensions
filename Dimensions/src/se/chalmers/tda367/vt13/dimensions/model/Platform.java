@@ -16,6 +16,6 @@ public class Platform extends GameObject implements Serializable {
 	 * @param speed the speed of the platform
 	 */
 	public Platform(Vector3 position, Vector3 size, Vector3 speed) {
-		super(position, size, speed, "data/PlatformImg.png", "");
+		super(position, size, speed, "data/PlatformMini.png", "");
 	}
 }

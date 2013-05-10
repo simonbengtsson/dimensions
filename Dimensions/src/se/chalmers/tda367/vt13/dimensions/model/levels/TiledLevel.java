@@ -18,6 +18,5 @@ public class TiledLevel extends Level {
 		Platform testPlatform = new Platform(new Vector3(40, 10, 10), new Vector3(30, 2, 1), new Vector3());
 		gameobjects.add(testPlatform);
 		spawnSingleBlock(gameobjects, new Vector3(), new Vector3(10, 50, 500));
-		
 	}
 }

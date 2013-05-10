@@ -14,11 +14,9 @@ import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 
 
-	// Instance variables
 	private final float speedModifier = 2;
 	private static final long serialVersionUID = 1L;
 
-	// Public methods
 	/**
 	 * Constructor. Calls the super class constructor.
 	 * @param position the position of the SpeedPowerUp
@@ -26,7 +24,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 * @param speed the speed of the SpeedPowerUp
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
-		super(position, size, speed, "data/SpeedPowerUpImg.png", "sound/SpeedPowerUp.mp3");
+		super(position, size, speed, "data/SpeedPowerUpMini.png", "sound/SpeedPowerUp.mp3");
 	}
 	
 	@Override
@@ -36,7 +34,4 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 		}
 		playSound();
 	}
-	
-	// Private methods
-	
 }
