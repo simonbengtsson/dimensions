@@ -45,9 +45,8 @@ public class GameWorld {
 	 * @param player
 	 *            the player in the game
 	 */
-	@Deprecated
 	public GameWorld(List<GameObject> gameObjects, Player player) {
-		this(gameObjects, player, -0.75f);
+		this(gameObjects, player, -0.05f);
 	}
 
 	public GameWorld(List<GameObject> gameObjects, Player player, float gravity) {
@@ -152,8 +151,9 @@ public class GameWorld {
 	 * is only getting grounded when falling or going horizontal.
 	 */
 	private void movePlayerXY() {
-		Vector3 lastPosition = player.getPosition().clone();
 		player.getPosition().add(player.getSpeed());
+		/*
+		Vector3 lastPosition = player.getPosition().clone();
 		boolean platformCollision = false;
 		Iterator<GameObject> iterator = gameObjects.iterator();
 		while (iterator.hasNext()) {
@@ -177,6 +177,7 @@ public class GameWorld {
 		if (!platformCollision) {
 			player.setIsGrounded(false);
 		}
+		*/
 	}
 
 	/**

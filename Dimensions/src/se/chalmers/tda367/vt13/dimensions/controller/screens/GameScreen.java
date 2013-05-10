@@ -5,15 +5,26 @@ import java.util.List;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.model.*;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.*;
-import se.chalmers.tda367.vt13.dimensions.model.levels.*;
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
+import se.chalmers.tda367.vt13.dimensions.model.Player;
+import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.model.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * Game controller.
@@ -22,6 +33,13 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private int activeDimension;
+	private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+		@Override
+		protected Rectangle newObject() {
+			return new Rectangle();
+		}
+	};
+	private Array<Rectangle> tiles = new Array<Rectangle>();
 
 	GameWorld world;
 	GameView view;
@@ -36,7 +54,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		ls = lv.getList();
 		Player player = new Player(new Vector3(10, 10,
 				10), new Vector3(2.1f, 2.1f, 2.1f),
-				new Vector3(0.1f, 0, 0), 15f, false);
+				new Vector3(0.3f, 0, 0), 1f, false);
 		loadSoundFiles();
 		world = new GameWorld(ls, player);
 		world.addWorldListener(this);
@@ -53,7 +71,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			worldChange(WorldEvent.GAME_OVER);
 		}
 		getInput();
-		//world.updateModel();
+		checkTiledCollisions();
+		world.updateModel();
 		view.draw();
 	}
 
@@ -155,6 +174,71 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		if (worldEvent == WorldEvent.GAME_OVER) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
+		}
+	}
+	
+	public void checkTiledCollisions() {
+		Player player = world.getPlayer();
+
+		// clamp the velocity to the maximum, x-axis only
+		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
+			player.getSpeed().setY(Math.signum(player.getSpeed().getY()) * Player.MAX_VELOCITY);
+		}
+		
+		Rectangle playerRect = rectPool.obtain();
+		playerRect.set(world.getPlayer().getPosition().getX(), world.getPlayer()
+				.getPosition().getY(), world.getPlayer().getSize().getX(),
+				world.getPlayer().getSize().getY());
+		int startX, startY, endX, endY;
+		playerRect.x = world.getPlayer().getPosition().getX();
+
+		// if the player is moving upwards, check the tiles to the top of it's
+		// top bounding box edge, otherwise check the ones to the bottom
+		if (world.getPlayer().getSpeed().getY() > 0) {
+			startY = endY = (int) (world.getPlayer().getPosition().getY()
+					+ world.getPlayer().getSize().getY() + world.getPlayer()
+					.getSpeed().getY());
+		} else {
+			startY = endY = (int) (world.getPlayer().getPosition().getY() + world
+					.getPlayer().getSpeed().getY());
+		}
+		startX = (int) (world.getPlayer().getPosition().getX());
+		endX = (int) (world.getPlayer().getPosition().getX() + world
+				.getPlayer().getSize().getX());
+		getTiles(startX, startY, endX, endY, tiles);
+		playerRect.y += world.getPlayer().getSpeed().getY();
+		for (Rectangle tile : tiles) {
+			if (playerRect.overlaps(tile)) {
+				// reset the player y-position here
+				// so it is just below/above the tile we collided with
+				if (world.getPlayer().getSpeed().getY() > 0) {
+					world.getPlayer().getPosition()
+							.setY(tile.y - world.getPlayer().getSize().getY());
+				} else {
+					world.getPlayer().getPosition().setY(tile.y + tile.height);
+					world.getPlayer().setIsGrounded(true);
+				}
+				world.getPlayer().getSpeed().setY(0);
+				break;
+			}
+		}
+		rectPool.free(playerRect);
+	}
+
+	private void getTiles(int startX, int startY, int endX, int endY,
+			Array<Rectangle> tiles) {
+		TiledMapTileLayer layer = (TiledMapTileLayer) view.getMap().getLayers().get(1);
+		rectPool.freeAll(tiles);
+		tiles.clear();
+		for (int y = startY; y <= endY; y++) {
+			for (int x = startX; x <= endX; x++) {
+				Cell cell = layer.getCell(x, y);
+				if (cell != null) {
+					Rectangle rect = rectPool.obtain();
+					rect.set(x, y, 1, 1);
+					tiles.add(rect);
+				}
+			}
 		}
 	}
 }

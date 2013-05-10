@@ -10,6 +10,7 @@ import java.util.TimerTask;
  */
 public class Player extends GameObject {
 
+	public static float MAX_VELOCITY = 1f;
 	private float jumpSpeed;
 	private boolean isGrounded;
 	private final float baseXSpeed;
@@ -123,11 +124,11 @@ public class Player extends GameObject {
 	/**
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
-	public void calculateYSpeed(GameWorld m) {
-		if (!isGrounded) {
-			getSpeed().setY(getSpeed().getY() + m.getGravity());
-		} else {
+	public void calculateYSpeed(GameWorld world) {
+		if (isGrounded) {
 			getSpeed().setY(0);
+		} else {
+			world.getPlayer().getSpeed().setY(getSpeed().getY() + world.getGravity());
 		}
 	}
 
