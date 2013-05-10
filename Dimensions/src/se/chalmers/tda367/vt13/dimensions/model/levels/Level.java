@@ -156,12 +156,12 @@ public abstract class Level implements Serializable {
 		switch (powerUpType) {
 		case PowerUp.SPEED:
 			l.add(new SpeedPowerUp(new Vector3(position),
-					new Vector3(25, 25, 0), new Vector3()));
+					new Vector3(1, 1, 1), new Vector3()));
 			break;
 
 		case PowerUp.LOW_GRAVITY:
-			l.add(new LowGravityPowerUp(new Vector3(position), new Vector3(25,
-					25, 25), new Vector3()));
+			l.add(new LowGravityPowerUp(new Vector3(position), new Vector3(1,
+					1, 1), new Vector3()));
 			break;
 		}
 

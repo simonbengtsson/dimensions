@@ -179,7 +179,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	
 	public void checkTiledCollisions() {
 		Player player = world.getPlayer();
-		player.setIsGrounded(false);
+		player.setIsGrounded(false); //set to true if player is touching object
 
 		// clamp the velocity to the maximum, x-axis only
 		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {

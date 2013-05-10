@@ -9,5 +9,10 @@ public class TiledLevel extends Level {
 
 	public TiledLevel(String levelName, String filepath) {
 		super(levelName, filepath);
+		spawnPowerUp(gameobjects, PowerUp.SPEED, new Vector3(30, 10, 0));
+		spawnPowerUp(gameobjects, PowerUp.LOW_GRAVITY, new Vector3(90, 5, 0));
+		Obstacle spikes = new Obstacle(new Vector3(50, 2, 0), new Vector3(2, 1, 1), 
+				new Vector3(), "data/spikes.png", "");
+		gameobjects.add(spikes);
 	}
 }
