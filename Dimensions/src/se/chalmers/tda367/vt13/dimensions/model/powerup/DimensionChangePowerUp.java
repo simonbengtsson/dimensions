@@ -1,5 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;

@@ -8,7 +8,7 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 public class NormalLevel extends Level {
 	public NormalLevel(String levelname, String backgroundfilepath) {
 		super(levelname, backgroundfilepath);
-		spawnSingleBlock(getList(), new Vector3(), new Vector3(20000, 50, 500));
+		spawnSingleBlock(getGameObjects(), new Vector3(), new Vector3(20000, 50, 500));
 		spawnPowerUp(gameobjects, PowerUp.SPEED, new Vector3(700, 200, 200));
 		spawnPowerUp(gameobjects, PowerUp.LOW_GRAVITY, new Vector3(1600, 400, 200));
 		// DIMENSION CHANGE TESTING WITH OBSTACLES

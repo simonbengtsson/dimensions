@@ -26,13 +26,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
-/**
- * Game controller.
- * 
- * @author Carl Fredriksson
- */
 public class GameScreen implements Screen, SoundObserver, WorldListener {
-	private int activeDimension;
 	private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 		@Override
 		protected Rectangle newObject() {
@@ -40,24 +34,21 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	};
 	private Array<Rectangle> tiles = new Array<Rectangle>();
-
 	GameWorld world;
 	GameView view;
-	List<GameObject> ls;
 	Map<String, Sound> files;
 	Dimensions game;
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
-		// NormalLevel lv = new NormalLevel("Normal", null);
-		TiledLevel lv = new TiledLevel("Tiled", null);
-		ls = lv.getList();
-		Player player = new Player(new Vector3(10, 10, 10), new Vector3(2.1f,
-				2.1f, 2.1f), new Vector3(0.3f, 0, 0), 1f, false);
-		loadSoundFiles();
-		world = new GameWorld(ls, player);
+	}
+	
+	@Override
+	public void show() {
+		world = new GameWorld(new TiledLevel("Tiled", null, Dimension.XY));
 		world.addWorldListener(this);
-		view = new GameView(world);
+		view = new GameView(world, Dimension.XY);
+		loadSoundFiles();
 	}
 
 	@Override
@@ -67,7 +58,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	@Override
 	public void render(float delta) {
 		if (world.getPlayer().isGameOver()) {
-			worldChange(WorldEvent.GAME_OVER);
+			worldChange(WorldEvent.GAME_OVER, null);
 		}
 		getInput();
 		checkTileCollisions();
@@ -129,7 +120,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	private void loadSoundFiles() {
 		files = new HashMap<String, Sound>();
-		for (GameObject g : ls) {
+		for (GameObject g : world.getGameObjects()) {
 			g.addObserver(this);
 			String file = g.getSoundFileAsString();
 
@@ -138,18 +129,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				files.put(file, sound);
 			}
 		}
-	}
-
-	public int getDimension() {
-		return activeDimension;
-	}
-
-	public void setDimension(int newDimension) {
-		activeDimension = newDimension;
-	}
-
-	@Override
-	public void show() {
 	}
 
 	@Override
@@ -166,13 +145,17 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void dispose() {
+		
 	}
 
 	@Override
-	public void worldChange(WorldEvent worldEvent) {
-		if (worldEvent == WorldEvent.GAME_OVER) {
+	public void worldChange(WorldEvent type, Object value) {
+		if (type == WorldEvent.GAME_OVER) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
+		} else if (type == WorldEvent.DIMENSION_CHANGED) {
+			//game.newGame();
+			//game.setScreen(new MainMenuScreen(game));
 		}
 	}
 
@@ -180,8 +163,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		Player player = world.getPlayer();
 		player.setIsGrounded(false); // set to true if player is touching object
 
-		// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason is to prevent
-		// the player to go through platforms and other gameobjexts
+		// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason
+		// is to prevent the player to go through platforms and other gameobjects
 		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
 			player.getSpeed()
 					.setY(Math.signum(player.getSpeed().getY())
@@ -230,7 +213,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	private void getTiles(int startX, int startY, int endX, int endY,
 			Array<Rectangle> tiles) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) view.getMap().getLayers()
+		TiledMapTileLayer layer = (TiledMapTileLayer) world.getLevel().getMap().getLayers()
 				.get(1);
 		rectPool.freeAll(tiles);
 		tiles.clear();

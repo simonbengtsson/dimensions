@@ -5,6 +5,7 @@ import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -18,13 +19,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 
 /**
  * Game view.
@@ -33,8 +29,7 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class GameView {
 
-	private GameWorld model;
-	private TiledMap map;
+	private GameWorld world;
 	private OrthogonalTiledMapRenderer renderer;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
@@ -51,16 +46,14 @@ public class GameView {
 	/**
 	 * Constructor.
 	 * 
-	 * @param model
-	 *            the GameModel
+	 * @param world
+	 *            the Gameworld
 	 */
-	public GameView(GameWorld model) {
-		this.model = model;
+	public GameView(GameWorld world, Dimension dimension) {
+		this.world = world;
 		loadImageFiles();
-
-		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
-		map = new TmxMapLoader().load("data/tiledMaps/level1.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+		
+		renderer = new OrthogonalTiledMapRenderer(world.getLevel().getMap(), 1 / 16f);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
@@ -77,10 +70,8 @@ public class GameView {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-
-		// updateCameraPosition(3); //Uncomment for follow the player on the
-		// y-axis
-		camera.position.x = model.getPlayer().getPosition().getX();
+		// updateCameraPosition(3); //Uncomment for follow the player y-axis
+		camera.position.x = world.getPlayer().getPosition().getX();
 		camera.update();
 
 		renderer.setView(camera);
@@ -91,9 +82,9 @@ public class GameView {
 		// Draw gameObjects
 		SpriteBatch batch = renderer.getSpriteBatch();
 		batch.begin();
-		if (model.getDimension() == GameWorld.Dimension.XY) {
+		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
-		} else if (model.getDimension() == GameWorld.Dimension.XZ) {
+		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ(batch);
 		}
 		font.setColor(Color.YELLOW);
@@ -103,7 +94,7 @@ public class GameView {
 	}
 
 	private void calculateScore() {
-		thescore = (int) model.getPlayer().getPosition().getX() / 10;
+		thescore = (int) world.getPlayer().getPosition().getX() / 10;
 	}
 
 	/**
@@ -114,10 +105,10 @@ public class GameView {
 	 */
 	private void updateCameraPosition(int speed) {
 		// Update camera position X axis
-		camera.position.x = model.getPlayer().getPosition().getX() + 400;
+		camera.position.x = world.getPlayer().getPosition().getX() + 400;
 
 		// Update camera position Y axis
-		float playerPositionY = model.getPlayer().getPosition().getY();
+		float playerPositionY = world.getPlayer().getPosition().getY();
 		float delta = camera.position.y - playerPositionY;
 
 		// If the player's position is close to the camera bottom, just move
@@ -128,7 +119,7 @@ public class GameView {
 			camera.position.y = playerPositionY - Gdx.graphics.getHeight() / 2;
 		}
 	}
-	
+
 	private void initWalkAnimation() {
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] regions = TextureRegion.split(walkSheet,
@@ -150,19 +141,19 @@ public class GameView {
 	 */
 	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
-		for (GameObject g : model.getGameObjects()) {
+		for (GameObject g : world.getGameObjects()) {
 			String file = g.getImageFileAsString();
 			if (!textures.containsKey(file) && !file.equals("")) {
 				Texture t = new Texture(Gdx.files.internal(file));
 				textures.put(file, t);
 			}
 		}
-		String file = model.getPlayer().getImageFileAsString();
+		String file = world.getPlayer().getImageFileAsString();
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
 	private void drawGameObjectsXY(SpriteBatch spriteBatch) {
-		for (GameObject gameObject : model.getGameObjects()) {
+		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
 			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
@@ -171,13 +162,13 @@ public class GameView {
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-		Player p = model.getPlayer();
+		Player p = world.getPlayer();
 		spriteBatch.draw(currentFrame, p.getPosition().getX(), p.getPosition()
 				.getY(), p.getSize().getX(), p.getSize().getY());
 	}
 
 	private void drawGameObjectsXZ(SpriteBatch spriteBatch) {
-		for (GameObject gameObject : model.getGameObjects()) {
+		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
 			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
@@ -185,7 +176,7 @@ public class GameView {
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
-		Player p = model.getPlayer();
+		Player p = world.getPlayer();
 		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
 				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
 				.getX(), p.getSize().getZ());
@@ -193,12 +184,5 @@ public class GameView {
 
 	public OrthographicCamera getCamera() {
 		return this.camera;
-	}
-
-	public void dispose() {
-	}
-	
-	public TiledMap getMap() {
-		return map;
 	}
 }

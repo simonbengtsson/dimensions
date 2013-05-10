@@ -11,6 +11,8 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+
 /**
  * Class for creating a level with platforms and powerups
  */
@@ -19,13 +21,13 @@ public abstract class Level implements Serializable {
 	private static final long serialVersionUID = 2122723720243818390L;
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
-	private double gravity;
 	private String backGroundImagePath;
 	protected List<GameObject> gameobjects = new ArrayList<GameObject>();
 	private float lastx = 0;
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
+	protected TiledMap map;
 
 	/**
 	 * Constructor for creating Levels
@@ -40,13 +42,10 @@ public abstract class Level implements Serializable {
 
 		// This constructor is currently a mess
 		// TODO: Clean up this mess
-
-		// spawnStartingPlatform(gameobjects);
-
 	}
 
-	public List<GameObject> getList() {
-		return this.gameobjects;
+	public List<GameObject> getGameObjects() {
+		return gameobjects;
 	}
 
 	/* ####################### READ ########################### */
@@ -272,8 +271,12 @@ public abstract class Level implements Serializable {
 	public void removePlatform(Platform p) {
 		platforms.remove(p);
 	}
-
-	public double getGravity() {
-		return gravity;
+	
+	public TiledMap getMap() {
+		return map;
+	}
+	
+	public void setMap(TiledMap newMap) {
+		map = newMap;
 	}
 }

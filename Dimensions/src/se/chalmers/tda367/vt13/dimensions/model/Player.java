@@ -18,7 +18,15 @@ public class Player extends GameObject {
 	private boolean usingDash;
 
 	/**
-	 * Constructor.
+	 * Creates player with default values
+	 */
+	public Player() {
+		this(new Vector3(10, 10, 10), new Vector3(2.1f, 2.1f, 2.1f),
+				new Vector3(0.3f, 0, 0), 1f, false);
+	}
+
+	/**
+	 * Creates player with spcified values
 	 * 
 	 * @param position
 	 *            the position of the player within the game
@@ -129,7 +137,8 @@ public class Player extends GameObject {
 		if (isGrounded) {
 			getSpeed().setY(0);
 		} else {
-			world.getPlayer().getSpeed().setY(getSpeed().getY() + world.getGravity());
+			world.getPlayer().getSpeed()
+					.setY(getSpeed().getY() + world.getGravity());
 		}
 	}
 

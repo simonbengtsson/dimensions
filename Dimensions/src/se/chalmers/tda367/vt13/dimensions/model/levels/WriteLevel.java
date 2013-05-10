@@ -29,7 +29,7 @@ public class WriteLevel {
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
 			// Write the list to the file and close the stream
-			oos.writeObject(l.getList());
+			oos.writeObject(l.getGameObjects());
 			oos.flush();
 			oos.close();
 			

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.Timer;
 
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 /**
@@ -27,35 +28,56 @@ public class GameWorld {
 	 * enum. Open for suggetions though //Simon
 	 */
 	public enum WorldEvent {
-		GAME_OVER;
+		GAME_OVER, DIMENSION_CHANGED;
 	}
 
 	private List<GameObject> gameObjects;
+	private Level level;
 	private Player player;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
-
+	
 	/**
-	 * Constructor.
-	 * 
+	 * New GameWorld with given Level
 	 * @param gameObjects
-	 *            the list of GameObjects
-	 * @param player
-	 *            the player in the game
 	 */
-	public GameWorld(List<GameObject> gameObjects, Player player) {
-		this(gameObjects, player, -0.05f);
+	public GameWorld(Level level) {
+		this(new Player(), level);
+	}
+	
+	/**
+	 * New GameWorld with given Level
+	 * @param gameObjects
+	 */
+	public GameWorld(Player player, Level level) {
+		this.level = level;
+		this.gameObjects = level.getGameObjects();
+		this.player = new Player();
+		currentDimension = Dimension.XY;
+		this.gravity = -0.05f;
+		this.baseGravity = gravity;
+		createDimensionTimer(3000);
 	}
 
-	public GameWorld(List<GameObject> gameObjects, Player player, float gravity) {
+	/**
+	 * @param gameObjects
+	 *            the list of GameObjects
+	 */
+	@Deprecated
+	public GameWorld(List<GameObject> gameObjects) {
+		this(gameObjects, -0.05f);
+	}
+
+	@Deprecated
+	public GameWorld(List<GameObject> gameObjects, float gravity) {
 		this.gameObjects = gameObjects;
-		this.player = player;
+		this.player = new Player();
 		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
-		// createDimensionTimer(3000);
+		createDimensionTimer(3000);
 	}
 
 	/**
@@ -71,12 +93,10 @@ public class GameWorld {
 			public void actionPerformed(ActionEvent e) {
 				if (currentDimension == Dimension.XY) {
 					currentDimension = Dimension.XZ;
-					// TESTING
-					// System.out.println("DIMENSION IS NOW XZ");
+					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, Dimension.XZ);
 				} else {
 					currentDimension = Dimension.XY;
-					// TESTING
-					// System.out.println("DIMENSION IS NOW XY");
+					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, Dimension.XY);
 				}
 			}
 		});
@@ -125,6 +145,10 @@ public class GameWorld {
 	public void setGravity(float g) {
 		gravity = g;
 	}
+	
+	public Level getLevel(){
+		return level;
+	}
 
 	public void resetGravity() {
 		gravity = baseGravity;
@@ -134,9 +158,9 @@ public class GameWorld {
 		return currentDimension;
 	}
 
-	private void notifyWorldListeners(WorldEvent worldEvent) {
+	private void notifyWorldListeners(WorldEvent worldEvent, Object value) {
 		for (WorldListener wordListener : listeners) {
-			wordListener.worldChange(worldEvent);
+			wordListener.worldChange(worldEvent, value);
 		}
 	}
 
@@ -163,7 +187,7 @@ public class GameWorld {
 					((PowerUp) gameObject).use(this);
 					iterator.remove();
 				} else if (gameObject instanceof Obstacle) {
-					notifyWorldListeners(WorldEvent.GAME_OVER);
+					notifyWorldListeners(WorldEvent.GAME_OVER, null);
 				}
 			}
 		}
@@ -182,16 +206,12 @@ public class GameWorld {
 			if (checkCollisionXZ(player, gameObject)) {
 				if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
-					// gameObjects.remove(gameObject);
+					gameObjects.remove(gameObject);
 				} else if (gameObject instanceof Obstacle) {
-					notifyWorldListeners(WorldEvent.GAME_OVER);
+					notifyWorldListeners(WorldEvent.GAME_OVER, null);
 				}
 			}
 		}
-	}
-
-	private void moveObject(GameObject gameObject) {
-		gameObject.getPosition().add(gameObject.getSpeed());
 	}
 
 	private boolean checkCollisionXY(GameObject object, GameObject otherObject) {
