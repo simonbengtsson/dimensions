@@ -221,8 +221,10 @@ public class GameView {
 	}
 
 	public void checkTiledCollision() {
-		model.getPlayer().getSpeed().setX(0.5f);
-		model.getPlayer().getPosition().add(model.getPlayer().getSpeed());
+		Player player = model.getPlayer();
+		player.getSpeed().setX(0.5f);
+		player.getPosition().add(model.getPlayer().getSpeed());
+		player.getSpeed().add(new Vector3 (0, -0.1f, 0));
 		// perform collision detection & response, on each axis, separately
 		// if the koala is moving right, check the tiles to the right of it's
 		// right bounding box edge, otherwise check the ones to the left
