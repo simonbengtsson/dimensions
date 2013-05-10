@@ -55,9 +55,8 @@ public class GameWorld {
 		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
-		//createDimensionTimer(3000);
+		// createDimensionTimer(3000);
 	}
-	
 
 	/**
 	 * Changes dimension after specified time. For testing only.
@@ -73,11 +72,11 @@ public class GameWorld {
 				if (currentDimension == Dimension.XY) {
 					currentDimension = Dimension.XZ;
 					// TESTING
-					//System.out.println("DIMENSION IS NOW XZ");
+					// System.out.println("DIMENSION IS NOW XZ");
 				} else {
 					currentDimension = Dimension.XY;
 					// TESTING
-					//System.out.println("DIMENSION IS NOW XY");
+					// System.out.println("DIMENSION IS NOW XY");
 				}
 			}
 		});
@@ -152,18 +151,13 @@ public class GameWorld {
 	 */
 	private void movePlayerXY() {
 		player.getPosition().add(player.getSpeed());
-		/*
-		Vector3 lastPosition = player.getPosition().clone();
-		boolean platformCollision = false;
 		Iterator<GameObject> iterator = gameObjects.iterator();
 		while (iterator.hasNext()) {
 			GameObject gameObject = iterator.next();
 			if (checkCollisionXY(player, gameObject)) {
 				if (gameObject instanceof Platform
-						&& lastPosition.getY() >= (gameObject.getPosition()
-								.getY() + gameObject.getSize().getY())) {
+						&& player.getSpeed().getY() < 0) {
 					player.setIsGrounded(true);
-					platformCollision = true;
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
@@ -173,11 +167,6 @@ public class GameWorld {
 				}
 			}
 		}
-
-		if (!platformCollision) {
-			player.setIsGrounded(false);
-		}
-		*/
 	}
 
 	/**

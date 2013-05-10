@@ -54,6 +54,7 @@ public class Player extends GameObject {
 		if (isGrounded) {
 			getSpeed().setY(jumpSpeed);
 			isGrounded = false;
+			System.out.println("jump");
 		}
 	}
 
