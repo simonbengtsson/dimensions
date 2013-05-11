@@ -5,6 +5,7 @@ import java.io.Serializable;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.util.Constants;
 
 /**
  * This powerup doubles the speed, if the players speed is equal or below 2 px/frame.
@@ -26,7 +27,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp,Serializable {
 	 * @param speed the speed of the SpeedPowerUp
 	 */
 	public SpeedPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
-		super(position, size, speed, "data/SpeedPowerUpImg.png", "sound/SpeedPowerUp.mp3");
+		super(position, size, speed, Constants.SPEEDPOWERUP_IMAGE, Constants.SPEEDPOWERUP_SOUND);
 	}
 	
 	@Override
