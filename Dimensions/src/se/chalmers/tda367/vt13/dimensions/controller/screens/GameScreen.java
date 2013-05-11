@@ -60,8 +60,18 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private void getInput() {
 		getInputUp();
 		getInputDown();
+		getInputSpecialKeys();
 	}
 
+	/**
+	 * Handles all input that isn't player navigation
+	 */
+	public void getInputSpecialKeys(){
+		if(Gdx.input.isKeyPressed(Keys.ENTER)){
+			world.resetToCheckPoint();
+		}
+	}
+	
 	/**
 	 * Handles all input from upkeys and uptouchareas.
 	 */
@@ -73,7 +83,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().jump();
 
-				// Actions when dimension is XZ
+			// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
 				world.getPlayer().moveUp();
 			}

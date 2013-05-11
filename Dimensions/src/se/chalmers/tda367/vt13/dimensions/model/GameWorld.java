@@ -36,6 +36,7 @@ public class GameWorld {
 	private float baseGravity;
 	private float gravity;
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
+	private CheckPoint cp;
 
 	/**
 	 * Constructor.
@@ -56,6 +57,7 @@ public class GameWorld {
 		currentDimension = Dimension.XY;
 		this.gravity = gravity;
 		this.baseGravity = gravity;
+		cp = new CheckPoint(this);
 		createDimensionTimer(3000);
 	}
 
@@ -117,6 +119,14 @@ public class GameWorld {
 		System.out.println("X: " + player.getPosition().getX() + " - Y: "
 				+ player.getPosition().getY() + " - Z: "
 				+ player.getPosition().getZ());
+	}
+	
+	public void resetToCheckPoint(){
+		player = cp.getPlayer();
+	}
+	
+	public void placeCheckPoint(){
+		cp = new CheckPoint(this);
 	}
 
 	public void setDimension(Dimension dimension) {
