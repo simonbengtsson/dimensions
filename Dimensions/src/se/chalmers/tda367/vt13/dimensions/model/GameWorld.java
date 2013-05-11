@@ -1,12 +1,10 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
@@ -38,17 +36,19 @@ public class GameWorld {
 	private float baseGravity;
 	private float gravity;
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
-	
+
 	/**
 	 * New GameWorld with given Level
+	 * 
 	 * @param gameObjects
 	 */
 	public GameWorld(Level level) {
 		this(new Player(), level);
 	}
-	
+
 	/**
 	 * New GameWorld with given Level
+	 * 
 	 * @param gameObjects
 	 */
 	public GameWorld(Player player, Level level) {
@@ -58,7 +58,7 @@ public class GameWorld {
 		currentDimension = Dimension.XY;
 		this.gravity = -0.05f;
 		this.baseGravity = gravity;
-		createDimensionTimer(3000);
+		//createDimensionTimer(3000);
 	}
 
 	/**
@@ -87,20 +87,22 @@ public class GameWorld {
 	 *            How often the dimension should change
 	 */
 	public void createDimensionTimer(int interval) {
-		javax.swing.Timer timer = new Timer(interval, new ActionListener() {
+		Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+            @Override
+            public void run() {
 				if (currentDimension == Dimension.XY) {
 					currentDimension = Dimension.XZ;
-					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, Dimension.XZ);
+					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED,
+							Dimension.XZ);
 				} else {
 					currentDimension = Dimension.XY;
-					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, Dimension.XY);
+					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED,
+							Dimension.XY);
 				}
-			}
-		});
-		timer.start();
+            }
+        }, 1000, 1000);
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -145,8 +147,8 @@ public class GameWorld {
 	public void setGravity(float g) {
 		gravity = g;
 	}
-	
-	public Level getLevel(){
+
+	public Level getLevel() {
 		return level;
 	}
 
