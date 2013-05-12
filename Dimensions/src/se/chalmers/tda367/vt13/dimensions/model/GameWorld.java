@@ -37,6 +37,7 @@ public class GameWorld {
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
 	private TiledMap mapXY;
 	private TiledMap mapXZ;
+	private CheckPoint cp;
 
 	/**
 	 * New GameWorld with given Level
@@ -58,6 +59,7 @@ public class GameWorld {
 		this.mapXY = level.getMapXY();
 		this.mapXZ = level.getMapXZ();
 		this.baseGravity = gravity;
+		cp = new CheckPoint(this);
 
 		// TODO Make the below properties of each level (?)
 		this.gravity = -0.05f;
@@ -102,6 +104,14 @@ public class GameWorld {
 			currentDimension = Dimension.XY;
 		}
 		notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, currentDimension);
+	}
+
+	public void resetToCheckPoint() {
+		player = cp.getPlayer();
+	}
+
+	public void placeCheckPoint() {
+		cp = new CheckPoint(this);
 	}
 
 	public void setDimension(Dimension dimension) {
