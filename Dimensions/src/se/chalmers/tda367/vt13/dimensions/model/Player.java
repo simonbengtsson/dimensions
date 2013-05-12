@@ -21,7 +21,7 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2.1f, 2.1f, 2.1f),
+		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2),
 				new Vector3(0.3f, 0, 0), 1f, false);
 	}
 

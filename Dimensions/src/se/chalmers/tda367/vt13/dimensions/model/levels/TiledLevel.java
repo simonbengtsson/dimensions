@@ -4,7 +4,6 @@ import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -21,11 +20,9 @@ public class TiledLevel extends Level {
 
 	private void addGameObjects() {
 		//Spawn a few original gameobjects. Everything else is in the tiled maps.
-		//PowerUp
-		gameobjects.add(new SpeedPowerUp(new Vector3(50, 16, 16), new Vector3(1, 1, 1), new Vector3()));
-		for(int i = 0; i<3; i++) {
-			gameobjects.add(new DimensionChangePowerUp(new Vector3(60 + i*30, 16, 16), new Vector3(1, 1, 0), new Vector3()));
-		}
+		//PowerUps
+		gameobjects.add(new SpeedPowerUp(new Vector3(50, 16, 16), new Vector3(1, 1, 5), new Vector3()));
+		gameobjects.add(new DimensionChangePowerUp(new Vector3(30, 5, 5), new Vector3(1, 1, 1), new Vector3()));
 		//Obstacles
 		for (int i = 0; i < 18; i++) {
 			gameobjects.add(new Obstacle(new Vector3(35 + i*1.8f, 2, 0), new Vector3(2,
