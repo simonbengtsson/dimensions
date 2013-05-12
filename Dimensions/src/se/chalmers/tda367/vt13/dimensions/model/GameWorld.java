@@ -40,6 +40,7 @@ public class GameWorld {
 	private TiledMap mapXY;
 	private TiledMap mapXZ;
 	private CheckPoint cp;
+	private boolean isPaused = false;
 
 	/**
 	 * New GameWorld with given Level
@@ -92,33 +93,44 @@ public class GameWorld {
 	 */
 	public void updateModel() {
 		checkTileCollisions();
-		if (currentDimension == Dimension.XY) {
-			player.calculateYSpeed(this);
-			movePlayerXY();
-		} else if (currentDimension == Dimension.XZ) {
-			movePlayerXZ();
+		if (!isPaused) {
+			if (currentDimension == Dimension.XY) {
+				player.calculateYSpeed(this);
+				movePlayerXY();
+			} else if (currentDimension == Dimension.XZ) {
+				movePlayerXZ();
+			}
 		}
 	}
 
 	public void swapDimension() {
-		if (currentDimension == Dimension.XY) {
-			currentDimension = Dimension.XZ;
-		} else {
-			currentDimension = Dimension.XY;
+		if (!isPaused) {
+			if (currentDimension == Dimension.XY) {
+				currentDimension = Dimension.XZ;
+			} else {
+				currentDimension = Dimension.XY;
+			}
+			notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, currentDimension);
 		}
-		notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, currentDimension);
+
 	}
 
 	public void resetToCheckPoint() {
-		player = cp.getPlayer();
+		if (!isPaused) {
+			player = cp.getPlayer();
+		}
 	}
 
 	public void placeCheckPoint() {
-		cp = new CheckPoint(this);
+		if (!isPaused) {
+			cp = new CheckPoint(this);
+		}
 	}
 
 	public void setDimension(Dimension dimension) {
-		currentDimension = dimension;
+		if (!isPaused) {
+			currentDimension = dimension;
+		}
 	}
 
 	public float getGravity() {
@@ -126,11 +138,19 @@ public class GameWorld {
 	}
 
 	public void setGravity(float g) {
-		gravity = g;
+		if (!isPaused) {
+			gravity = g;
+		}
+	}
+
+	public void setIsPaused(boolean b) {
+		isPaused = b;
 	}
 
 	public void resetGravity() {
-		gravity = baseGravity;
+		if (!isPaused) {
+			gravity = baseGravity;
+		}
 	}
 
 	public Dimension getDimension() {
@@ -278,7 +298,7 @@ public class GameWorld {
 				if (((TiledMapTileLayer) getCurrentMap().getLayers().get(1))
 						.getCell(x, y) != null) {
 					if (speed.getY() <= 0) {
-						pos.setY((int) (y+1)); // adjust position
+						pos.setY((int) (y + 1)); // adjust position
 						player.setIsGrounded(true);
 						speed.setY(0);
 					}
@@ -296,7 +316,7 @@ public class GameWorld {
 				}
 			}
 		}
-		
+
 		// GameOver if player moves out of bounds (XZ)
 		if (currentDimension == Dimension.XZ && !player.getIsGrounded()) {
 			System.out.println(pos);
