@@ -1,31 +1,38 @@
 package se.chalmers.tda367.vt13.dimensions.model.levels;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 @SuppressWarnings("serial")
 public class TiledLevel extends Level {
-	
-	public TiledLevel(String levelName, String filepath, Dimension dimension) {
+
+	public TiledLevel(String levelName, String filepath) {
 		super(levelName, filepath);
-		if(dimension == Dimension.XY){
-			map = new TmxMapLoader().load("data/tiledMaps/levelXY.tmx");
-		} else if (dimension == Dimension.XZ) {
-			map = new TmxMapLoader().load("data/tiledMaps/levelXZ.tmx");
+		mapXY = new TmxMapLoader().load("data/tiledMaps/levelXY.tmx");
+		mapXZ = new TmxMapLoader().load("data/tiledMaps/levelXZ.tmx");
+		addGameObjects();
+	}
+
+	private void addGameObjects() {
+		//Spawn a few original gameobjects. Everything else is in the tiled maps.
+		//PowerUp
+		gameobjects.add(new SpeedPowerUp(new Vector3(50, 16, 16), new Vector3(1, 1, 1), new Vector3()));
+		for(int i = 0; i<3; i++) {
+			gameobjects.add(new DimensionChangePowerUp(new Vector3(60 + i*30, 16, 16), new Vector3(1, 1, 0), new Vector3()));
 		}
-		spawnPowerUp(gameobjects, PowerUp.SPEED, new Vector3(30, 10, 0));
-		spawnPowerUp(gameobjects, PowerUp.LOW_GRAVITY, new Vector3(90, 5, 0));
-		Obstacle spikes = new Obstacle(new Vector3(50, 2, 0), new Vector3(2, 1, 1), 
-				new Vector3(), "data/spikes.png", "");
-		gameobjects.add(spikes);
-		Platform testPlatform = new Platform(new Vector3(40, 10, 10), new Vector3(30, 2, 10), new Vector3());
-		gameobjects.add(testPlatform);
-		spawnSingleBlock(gameobjects, new Vector3(), new Vector3(10, 50, 500));
+		//Obstacles
+		for (int i = 0; i < 18; i++) {
+			gameobjects.add(new Obstacle(new Vector3(35 + i*1.8f, 2, 0), new Vector3(2,
+					1, 1), new Vector3(), "data/spikes.png", ""));
+		}
+		// Platform
+		gameobjects.add(new Platform(new Vector3(40, 10, 10), new Vector3(30,
+				2, 10), new Vector3()));
 	}
 }

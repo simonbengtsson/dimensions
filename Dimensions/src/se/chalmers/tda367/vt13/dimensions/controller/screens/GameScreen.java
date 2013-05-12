@@ -1,7 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
@@ -13,6 +13,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
@@ -23,17 +24,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
-	private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
-		@Override
-		protected Rectangle newObject() {
-			return new Rectangle();
-		}
-	};
-	private Array<Rectangle> tiles = new Array<Rectangle>();
+	private ArrayList<Rectangle> tiles = new ArrayList<Rectangle>();
+	private ArrayList<Rectangle> obstacleTiles = new ArrayList<Rectangle>();
+	private Rectangle playerRect = new Rectangle();
 	GameWorld world;
 	GameView view;
 	Map<String, Sound> files;
@@ -42,13 +37,18 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public GameScreen(Dimensions game) {
 		this.game = game;
 	}
-	
+
 	@Override
 	public void show() {
-		world = new GameWorld(new TiledLevel("Tiled", null, Dimension.XY));
+		Level level = new TiledLevel("Tiled", null);
+		world = new GameWorld(level);
 		world.addWorldListener(this);
-		view = new GameView(world, Dimension.XY);
+		view = new GameView(world);
 		loadSoundFiles();
+		// For collision testing with player
+		addTiles((TiledMapTileLayer) world.getCurrentMap().getLayers().get(1));
+		addObstacleTiles((TiledMapTileLayer) world.getCurrentMap().getLayers()
+				.get(2));
 	}
 
 	@Override
@@ -61,7 +61,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			worldChange(WorldEvent.GAME_OVER, null);
 		}
 		getInput();
-		checkTileCollisions();
+		if (world.getDimension() == Dimension.XY) {
+			checkTileCollisionsXY();
+		} else if (world.getDimension() == Dimension.XZ) {
+			checkTileCollisionsXZ();
+		}
+		checkObstacleCollisions();
 		world.updateModel();
 		view.draw();
 	}
@@ -145,85 +150,136 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
+	/**
+	 * Performs updates on world events
+	 */
 	@Override
 	public void worldChange(WorldEvent type, Object value) {
 		if (type == WorldEvent.GAME_OVER) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
 		} else if (type == WorldEvent.DIMENSION_CHANGED) {
-			//game.newGame();
-			//game.setScreen(new MainMenuScreen(game));
+			view.changeMap((Dimension) value);
+			// Removes and adds all new tiles
+			addTiles((TiledMapTileLayer) world.getCurrentMap().getLayers()
+					.get(1));
 		}
 	}
 
-	public void checkTileCollisions() {
+	/**
+	 * Adjust players speed and position on collisions
+	 */
+	private void checkTileCollisionsXY() {
 		Player player = world.getPlayer();
-		player.setIsGrounded(false); // set to true if player is touching object
-
-		// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason
-		// is to prevent the player to go through platforms and other gameobjects
-		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
-			player.getSpeed()
-					.setY(Math.signum(player.getSpeed().getY())
-							* Player.MAX_VELOCITY);
-		}
-
-		Rectangle playerRect = rectPool.obtain();
-		playerRect.set(world.getPlayer().getPosition().getX(), world
-				.getPlayer().getPosition().getY(), world.getPlayer().getSize()
-				.getX(), world.getPlayer().getSize().getY());
-		int startX, startY, endX, endY;
-		playerRect.x = world.getPlayer().getPosition().getX();
-
-		// if the player is moving upwards, check the tiles to the top of it's
-		// top bounding box edge, otherwise check the ones to the bottom
-		if (world.getPlayer().getSpeed().getY() > 0) {
-			startY = endY = (int) (world.getPlayer().getPosition().getY()
-					+ world.getPlayer().getSize().getY() + world.getPlayer()
-					.getSpeed().getY());
-		} else {
-			startY = endY = (int) (world.getPlayer().getPosition().getY() + world
-					.getPlayer().getSpeed().getY());
-		}
-		startX = (int) (world.getPlayer().getPosition().getX());
-		endX = (int) (world.getPlayer().getPosition().getX() + world
-				.getPlayer().getSize().getX());
-		getTiles(startX, startY, endX, endY, tiles);
-		playerRect.y += world.getPlayer().getSpeed().getY();
+		// Sets grounded to true later if standing on platform or similar
+		player.setIsGrounded(false);
+		updatePlayerRect();
 		for (Rectangle tile : tiles) {
 			if (playerRect.overlaps(tile)) {
-				// reset the player y-position here
-				// so it is just below/above the tile we collided with
-				if (world.getPlayer().getSpeed().getY() > 0) {
-					world.getPlayer().getPosition()
-							.setY(tile.y - world.getPlayer().getSize().getY());
-				} else {
-					world.getPlayer().getPosition().setY(tile.y + tile.height);
-					world.getPlayer().setIsGrounded(true);
+				// If player is moving upwards, do nothing. Could easily be
+				// changed here.
+				if (player.getSpeed().getY() <= 0) {
+					player.getPosition().setY(tile.y + tile.height);
+					player.setIsGrounded(true);
+					world.getPlayer().getSpeed().setY(0);
+					break;
 				}
-				world.getPlayer().getSpeed().setY(0);
+			}
+		}
+	}
+
+	/**
+	 * Rather than check for collision, checks for none collsions. Not
+	 * efficient, but closer to how it is represented. Game over if the player
+	 * is of the ground layer in the tiled map
+	 */
+	private void checkTileCollisionsXZ() {
+		boolean aTileCollided = false;
+		updatePlayerRect();
+		for (Rectangle tile : tiles) {
+			if (playerRect.overlaps(tile)) {
+				aTileCollided = true;
 				break;
 			}
 		}
-		rectPool.free(playerRect);
+		if (!aTileCollided) {
+			System.out.println("GameOver");
+			worldChange(WorldEvent.GAME_OVER, null);
+		}
+
 	}
 
-	private void getTiles(int startX, int startY, int endX, int endY,
-			Array<Rectangle> tiles) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) world.getLevel().getMap().getLayers()
-				.get(1);
-		rectPool.freeAll(tiles);
+	// TODO Tmp this works just fine... Might want to integrate it with the
+	// other collision testing methods later somehow though
+	private void checkObstacleCollisions() {
+		updatePlayerRect(); // Probably safe to remove
+		for (Rectangle tile : obstacleTiles) {
+			if (playerRect.overlaps(tile)) {
+				System.out.println("gameoverobstacle");
+				worldChange(WorldEvent.GAME_OVER, null);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Called before collision testing to make sure the player rectangle is the
+	 * same position as the player
+	 */
+	private void updatePlayerRect() {
+		Vector3 position = world.getPlayer().getPosition();
+		Vector3 size = world.getPlayer().getSize();
+		playerRect.width = size.getX();
+		playerRect.x = position.getX();
+		if (world.getDimension() == Dimension.XY) {
+			playerRect.y = position.getY();
+			playerRect.height = size.getY();
+		} else if (world.getDimension() == Dimension.XZ) {
+			playerRect.y = position.getZ();
+			playerRect.height = size.getZ();
+		}
+	}
+
+	/**
+	 * Adds all tiles from the specified layer for collision testing with
+	 * player. (OBS only gets tiles to the 300th tile TODO)
+	 * 
+	 * @param layer
+	 *            The layer which to collision test the player with
+	 */
+	public void addTiles(TiledMapTileLayer layer) {
 		tiles.clear();
-		for (int y = startY; y <= endY; y++) {
-			for (int x = startX; x <= endX; x++) {
+		for (int y = 0; y <= 20; y++) {
+			for (int x = 0; x <= 300; x++) {
 				Cell cell = layer.getCell(x, y);
 				if (cell != null) {
-					Rectangle rect = rectPool.obtain();
+					Rectangle rect = new Rectangle();
 					rect.set(x, y, 1, 1);
 					tiles.add(rect);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Adds all obstacle tiles from specified "Obstacle" layer. (Obs! Only to
+	 * the 300th x tile. TODO)
+	 * 
+	 * @param layer
+	 *            The layer holding obstacle tiles
+	 */
+	public void addObstacleTiles(TiledMapTileLayer layer) {
+		obstacleTiles.clear();
+		for (int y = 0; y <= 20; y++) {
+			for (int x = 0; x <= 300; x++) {
+				Cell cell = layer.getCell(x, y);
+				if (cell != null) {
+					Rectangle rect = new Rectangle();
+					rect.set(x, y, 1, 1);
+					obstacleTiles.add(rect);
 				}
 			}
 		}

@@ -27,7 +27,8 @@ public abstract class Level implements Serializable {
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
-	protected TiledMap map;
+	protected TiledMap mapXY;
+	protected TiledMap mapXZ;
 
 	/**
 	 * Constructor for creating Levels
@@ -46,6 +47,11 @@ public abstract class Level implements Serializable {
 
 	public List<GameObject> getGameObjects() {
 		return gameobjects;
+	}
+	
+	protected void setMaps(TiledMap mapXY, TiledMap mapXZ){
+		this.mapXY = mapXY;
+		this.mapXZ = mapXZ;
 	}
 
 	/* ####################### READ ########################### */
@@ -272,11 +278,11 @@ public abstract class Level implements Serializable {
 		platforms.remove(p);
 	}
 	
-	public TiledMap getMap() {
-		return map;
+	public TiledMap getMapXY() {
+		return mapXY;
 	}
 	
-	public void setMap(TiledMap newMap) {
-		map = newMap;
+	public TiledMap getMapXZ() {
+		return mapXZ;
 	}
 }

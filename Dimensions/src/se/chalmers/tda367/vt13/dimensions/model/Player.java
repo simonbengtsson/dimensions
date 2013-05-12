@@ -47,7 +47,7 @@ public class Player extends GameObject {
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
-		baseZSpeed = 10;
+		baseZSpeed = 0.5f;
 		usingDash = false;
 	}
 
@@ -62,7 +62,6 @@ public class Player extends GameObject {
 		if (isGrounded) {
 			getSpeed().setY(jumpSpeed);
 			isGrounded = false;
-			System.out.println("jump");
 		}
 	}
 

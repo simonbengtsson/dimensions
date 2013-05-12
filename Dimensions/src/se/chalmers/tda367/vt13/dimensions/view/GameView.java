@@ -18,8 +18,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
@@ -49,34 +47,38 @@ public class GameView {
 	 * @param world
 	 *            the Gameworld
 	 */
-	public GameView(GameWorld world, Dimension dimension) {
+	public GameView(GameWorld world) {
 		this.world = world;
 		loadImageFiles();
-		
-		renderer = new OrthogonalTiledMapRenderer(world.getLevel().getMap(), 1 / 16f);
-
+		renderer = new OrthogonalTiledMapRenderer(world.getCurrentMap(),
+				1 / 16f);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
-
 		initWalkAnimation();
+		font.setColor(Color.YELLOW);
+	}
+
+	public void changeMap(Dimension d) {
+		if (d == Dimension.XY) {
+			renderer.setMap(world.getMapXY());
+		} else if (d == Dimension.XZ) {
+			renderer.setMap(world.getMapXZ());
+		}
 	}
 
 	/**
 	 * Draw GameObjects on the screen.
 	 */
 	public void draw() {
-		// clear the screen
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		// updateCameraPosition(3); //Uncomment for follow the player y-axis
-		camera.position.x = world.getPlayer().getPosition().getX();
+		// Uncomment below for making the camera follow the player on the y-axis
+		// updateCameraPosition(3);
+		camera.position.x = world.getPlayer().getPosition().getX() + 12;
 		camera.update();
-
 		renderer.setView(camera);
 		renderer.render();
-
 		calculateScore();
 
 		// Draw gameObjects
@@ -87,9 +89,9 @@ public class GameView {
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ(batch);
 		}
-		font.setColor(Color.YELLOW);
-		font.draw(batch, "Score: " + thescore, camera.position.x + 330,
-				camera.position.y + 230);
+		// Doesn't play well with the down scaled game world. Added a github
+		// issue. The easiest thing might be to scale up the world again?
+		// font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
 		batch.end();
 	}
 

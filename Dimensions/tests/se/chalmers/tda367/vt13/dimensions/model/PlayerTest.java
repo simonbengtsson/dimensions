@@ -29,7 +29,7 @@ public class PlayerTest {
 		NormalLevel lv = new NormalLevel("Level1", "test");
 		Player player = new Player(new Vector3(10, 100, 0), new Vector3(50, 50,
 				0), new Vector3(2, 0, 0), 15f, true);
-		GameWorld world = new GameWorld(new TiledLevel("Test", null, Dimension.XY));
+		GameWorld world = new GameWorld(new TiledLevel("Test", null));
 		world.getPlayer().getIsGrounded();
 		assertTrue(world.getPlayer().getSpeed().getY() == 0);
 		assertTrue(world.getPlayer().getIsGrounded());

@@ -3,11 +3,11 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
+
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 /**
  * Game model.
@@ -30,12 +30,13 @@ public class GameWorld {
 	}
 
 	private List<GameObject> gameObjects;
-	private Level level;
 	private Player player;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
+	private TiledMap mapXY;
+	private TiledMap mapXZ;
 
 	/**
 	 * New GameWorld with given Level
@@ -52,57 +53,15 @@ public class GameWorld {
 	 * @param gameObjects
 	 */
 	public GameWorld(Player player, Level level) {
-		this.level = level;
+		this.player = player;
 		this.gameObjects = level.getGameObjects();
-		this.player = new Player();
-		currentDimension = Dimension.XY;
+		this.mapXY = level.getMapXY();
+		this.mapXZ = level.getMapXZ();
+		this.baseGravity = gravity;
+
+		// TODO Make the below properties of each level (?)
 		this.gravity = -0.05f;
-		this.baseGravity = gravity;
-		//createDimensionTimer(3000);
-	}
-
-	/**
-	 * @param gameObjects
-	 *            the list of GameObjects
-	 */
-	@Deprecated
-	public GameWorld(List<GameObject> gameObjects) {
-		this(gameObjects, -0.05f);
-	}
-
-	@Deprecated
-	public GameWorld(List<GameObject> gameObjects, float gravity) {
-		this.gameObjects = gameObjects;
-		this.player = new Player();
-		currentDimension = Dimension.XY;
-		this.gravity = gravity;
-		this.baseGravity = gravity;
-		createDimensionTimer(3000);
-	}
-
-	/**
-	 * Changes dimension after specified time. For testing only.
-	 * 
-	 * @param interval
-	 *            How often the dimension should change
-	 */
-	public void createDimensionTimer(int interval) {
-		Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-				if (currentDimension == Dimension.XY) {
-					currentDimension = Dimension.XZ;
-					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED,
-							Dimension.XZ);
-				} else {
-					currentDimension = Dimension.XY;
-					notifyWorldListeners(WorldEvent.DIMENSION_CHANGED,
-							Dimension.XY);
-				}
-            }
-        }, 1000, 1000);
+		currentDimension = Dimension.XY; // Starting dimension
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -136,6 +95,15 @@ public class GameWorld {
 		}
 	}
 
+	public void swapDimension() {
+		if (currentDimension == Dimension.XY) {
+			currentDimension = Dimension.XZ;
+		} else {
+			currentDimension = Dimension.XY;
+		}
+		notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, currentDimension);
+	}
+
 	public void setDimension(Dimension dimension) {
 		currentDimension = dimension;
 	}
@@ -146,10 +114,6 @@ public class GameWorld {
 
 	public void setGravity(float g) {
 		gravity = g;
-	}
-
-	public Level getLevel() {
-		return level;
 	}
 
 	public void resetGravity() {
@@ -177,6 +141,14 @@ public class GameWorld {
 	 */
 	private void movePlayerXY() {
 		player.getPosition().add(player.getSpeed());
+		// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason
+		// is to prevent the player to go through platforms and other
+		// gameobjects
+		if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
+			player.getSpeed()
+					.setY(Math.signum(player.getSpeed().getY())
+							* Player.MAX_VELOCITY);
+		}
 		Iterator<GameObject> iterator = gameObjects.iterator();
 		while (iterator.hasNext()) {
 			GameObject gameObject = iterator.next();
@@ -246,4 +218,20 @@ public class GameWorld {
 		}
 	}
 
+	public TiledMap getCurrentMap() {
+		if (currentDimension == Dimension.XY) {
+			return mapXY;
+		} else if (currentDimension == Dimension.XZ) {
+			return mapXZ;
+		}
+		return null;
+	}
+
+	public TiledMap getMapXY() {
+		return mapXY;
+	}
+
+	public TiledMap getMapXZ() {
+		return mapXZ;
+	}
 }
