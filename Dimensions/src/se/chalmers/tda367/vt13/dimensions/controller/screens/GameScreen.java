@@ -33,6 +33,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	GameView view;
 	Map<String, Sound> files;
 	Dimensions game;
+	private boolean wasEscapePressed = false;
+	private boolean wasEnterPressed = false;
+	private boolean isPaused = false;
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
@@ -80,12 +83,53 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	/**
 	 * Handles all input that isn't player navigation
 	 */
-	public void getInputSpecialKeys(){
-		if(Gdx.input.isKeyPressed(Keys.ENTER)){
-			world.resetToCheckPoint();
+	private void getInputSpecialKeys() {
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
+			if (!wasEnterPressed) {
+				world.resetToCheckPoint();
+				wasEnterPressed = true;
+			}
+		} else {
+			wasEnterPressed = false;
+		}
+
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			if (!wasEscapePressed) {
+				togglePause();
+				wasEscapePressed = true;
+			}
+		} else {
+			wasEscapePressed = false;
 		}
 	}
-	
+
+	/**
+	 * Called when the game should be paused.
+	 */
+	private void togglePause() {
+		if (isPaused) {
+			unPauseGame();
+		} else {
+			pauseGame();
+		}
+	}
+
+	/**
+	 * Handles all actions to pause the game.
+	 */
+	private void pauseGame() {
+		isPaused = true;
+		world.setIsPaused(true);
+	}
+
+	/**
+	 * Handles all actions to unpause the game.
+	 */
+	private void unPauseGame() {
+		isPaused = false;
+		world.setIsPaused(false);
+	}
+
 	/**
 	 * Handles all input from upkeys and uptouchareas.
 	 */
@@ -97,7 +141,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().jump();
 
-			// Actions when dimension is XZ
+				// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
 				world.getPlayer().moveUp();
 			}
