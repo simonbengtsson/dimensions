@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -79,7 +79,7 @@ public class GameWorld {
 	public void update() {
 		switch (currentState) {
 		case GAME_RUNNING:
-			updateModel();
+			updateRunning();
 			break;
 		case GAME_PAUSED:
 			break;
@@ -128,7 +128,7 @@ public class GameWorld {
 	 * Update all the GameObjects in the gameObjects list, and update the
 	 * player.
 	 */
-	public void updateModel() {
+	public void updateRunning() {
 		checkTileCollisions();
 		if (!isPaused) {
 			if (currentDimension == Dimension.XY) {

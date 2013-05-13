@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model.levels;
+package se.chalmers.tda367.vt13.dimensions.levels;
 
 import java.util.List;
 import java.util.Random;
