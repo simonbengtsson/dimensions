@@ -29,7 +29,7 @@ public class GameWorld {
 	public enum WorldEvent {
 		GAME_OVER, DIMENSION_CHANGED;
 	}
-	
+
 	public enum State {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, GAME_LEVEL_END;
 	}
@@ -46,6 +46,8 @@ public class GameWorld {
 	private State currentState;
 	private CheckPoint cp;
 	private boolean isPaused = false;
+	private int score;
+	private Level currentLevel;
 
 	/**
 	 * New GameWorld with given Level
@@ -71,6 +73,7 @@ public class GameWorld {
 		this.baseGravity = gravity;
 		this.currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);
+		currentLevel = level;
 	}
 
 	public void update() {
@@ -90,9 +93,25 @@ public class GameWorld {
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
+	
+	public Level getCurrentLevel(){
+		return currentLevel;
+	}
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int i) {
+		score = i;
+	}
+
+	public void addToScore(int i) {
+		score += i;
 	}
 
 	/**
@@ -128,7 +147,7 @@ public class GameWorld {
 			} else {
 				currentDimension = Dimension.XY;
 			}
-			notifyWorldListeners(WorldEvent.DIMENSION_CHANGED, currentDimension);
+			notifyWorldListeners(WorldEvent.DIMENSION_CHANGED);
 		}
 
 	}
@@ -175,9 +194,9 @@ public class GameWorld {
 		return currentDimension;
 	}
 
-	private void notifyWorldListeners(WorldEvent worldEvent, Object value) {
+	private void notifyWorldListeners(WorldEvent worldEvent) {
 		for (WorldListener wordListener : listeners) {
-			wordListener.worldChange(worldEvent, value);
+			wordListener.worldChange(worldEvent, this);
 		}
 	}
 
@@ -212,7 +231,7 @@ public class GameWorld {
 					((PowerUp) gameObject).use(this);
 					iterator.remove();
 				} else if (gameObject instanceof Obstacle) {
-					notifyWorldListeners(WorldEvent.GAME_OVER, null);
+					notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
 			}
 		}
@@ -233,7 +252,7 @@ public class GameWorld {
 					((PowerUp) gameObject).use(this);
 					gameObjects.remove(gameObject);
 				} else if (gameObject instanceof Obstacle) {
-					notifyWorldListeners(WorldEvent.GAME_OVER, null);
+					notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
 			}
 		}
@@ -329,14 +348,14 @@ public class GameWorld {
 				// check if hit an obstacle (layer 2)
 				if (((TiledMapTileLayer) getCurrentMap().getLayers().get(2))
 						.getCell(x, y) != null) {
-					notifyWorldListeners(WorldEvent.GAME_OVER, null);
+					notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
 			}
 		}
 
 		// GameOver if player moves out of bounds (XZ)
 		if (currentDimension == Dimension.XZ && !player.getIsGrounded()) {
-			notifyWorldListeners(WorldEvent.GAME_OVER, null);
+			notifyWorldListeners(WorldEvent.GAME_OVER);
 		}
 	}
 }
