@@ -6,6 +6,7 @@ import java.util.Random;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
+import se.chalmers.tda367.vt13.dimensions.util.WriteLevel;
 
 @SuppressWarnings("serial")
 public class RandomLevel extends Level {

@@ -1,8 +1,9 @@
-package se.chalmers.tda367.vt13.dimensions.levels;
+package se.chalmers.tda367.vt13.dimensions.util;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.tda367.vt13.dimensions.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 /** Class for writing the List of GameObjects from a Level to a file
  * 
