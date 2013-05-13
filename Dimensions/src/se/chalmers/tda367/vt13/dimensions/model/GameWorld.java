@@ -129,7 +129,8 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
-		checkTileCollisions();
+		ColliderHandler ch = new ColliderHandler();
+		ch.checkTileCollisions(this);
 		if (!isPaused) {
 			if (currentDimension == Dimension.XY) {
 				player.calculateYSpeed(this);
@@ -194,7 +195,7 @@ public class GameWorld {
 		return currentDimension;
 	}
 
-	private void notifyWorldListeners(WorldEvent worldEvent) {
+	public void notifyWorldListeners(WorldEvent worldEvent) {
 		for (WorldListener wordListener : listeners) {
 			wordListener.worldChange(worldEvent, this);
 		}
@@ -303,59 +304,5 @@ public class GameWorld {
 
 	public TiledMap getMapXZ() {
 		return mapXZ;
-	}
-
-	/**
-	 * Adjust players speed and position on collisions
-	 */
-	private void checkTileCollisions() {
-
-		// don't need this if changing to public instance variables
-		Vector3 speed = player.getSpeed();
-		Vector3 pos = player.getPosition();
-		Vector3 size = player.getSize();
-
-		player.setIsGrounded(false);
-
-		// Check for different things depending on dimension
-		int posY = 0;
-		int height = 0;
-		if (currentDimension == Dimension.XY) {
-			posY = (int) pos.getY();
-			height = (int) size.getY();
-		} else if (currentDimension == Dimension.XZ) {
-			posY = (int) pos.getZ();
-			height = (int) size.getZ();
-		}
-
-		// Loop through the tiles under the player and check collisions
-		for (int y = posY; y <= posY + height; y++) {
-			for (int x = (int) pos.getX(); x <= pos.getX() + (size.getX()); x++) {
-				// check if hit the ground / a platform (layer 1)
-				if (((TiledMapTileLayer) getCurrentMap().getLayers().get(1))
-						.getCell(x, y) != null) {
-					if (speed.getY() <= 0) {
-						pos.setY((int) (y + 1)); // adjust position
-						player.setIsGrounded(true);
-						speed.setY(0);
-					}
-					// Fix for not grounded the first frameupdate. Should
-					// be possible to do it in another way
-					if (currentDimension == Dimension.XZ) {
-						player.setIsGrounded(true);
-					}
-				}
-				// check if hit an obstacle (layer 2)
-				if (((TiledMapTileLayer) getCurrentMap().getLayers().get(2))
-						.getCell(x, y) != null) {
-					notifyWorldListeners(WorldEvent.GAME_OVER);
-				}
-			}
-		}
-
-		// GameOver if player moves out of bounds (XZ)
-		if (currentDimension == Dimension.XZ && !player.getIsGrounded()) {
-			notifyWorldListeners(WorldEvent.GAME_OVER);
-		}
 	}
 }
