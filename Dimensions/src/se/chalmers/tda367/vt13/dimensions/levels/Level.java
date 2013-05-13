@@ -25,7 +25,7 @@ public abstract class Level implements Serializable {
 	protected Dimension startingDimension = Dimension.XY;
 	protected TiledMap mapXY;
 	protected TiledMap mapXZ;
-	
+
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private String backGroundImagePath;
@@ -33,7 +33,6 @@ public abstract class Level implements Serializable {
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
-
 
 	/**
 	 * @param levelName
@@ -47,7 +46,7 @@ public abstract class Level implements Serializable {
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
-	
+
 	/* ####################### READ ########################### */
 	/*
 	 * ~~~~~~~INSTRUCTIONS FOR PLACING PLATFORMS ~~~~~~~~~~/ Parameters: first
@@ -154,8 +153,8 @@ public abstract class Level implements Serializable {
 			Vector3 position) {
 		switch (powerUpType) {
 		case PowerUp.SPEED:
-			l.add(new SpeedPowerUp(new Vector3(position),
-					new Vector3(1, 1, 1), new Vector3()));
+			l.add(new SpeedPowerUp(new Vector3(position), new Vector3(1, 1, 1),
+					new Vector3()));
 			break;
 
 		case PowerUp.LOW_GRAVITY:
@@ -270,20 +269,24 @@ public abstract class Level implements Serializable {
 	public void removePlatform(Platform p) {
 		platforms.remove(p);
 	}
-	
+
 	public TiledMap getMapXY() {
 		return mapXY;
 	}
-	
+
 	public TiledMap getMapXZ() {
 		return mapXZ;
 	}
-	
-	public Dimension getStartingDimension(){
+
+	public Dimension getStartingDimension() {
 		return startingDimension;
 	}
-	
-	public float getGravity(){
+
+	public float getGravity() {
 		return gravity;
+	}
+	
+	public String getLevelName(){
+		return levelname;
 	}
 }

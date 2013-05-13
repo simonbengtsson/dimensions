@@ -1,6 +1,9 @@
 package se.chalmers.tda367.vt13.dimensions.levels;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class LevelHandler {
 	private HashMap<String, Level> levels;
@@ -41,5 +44,33 @@ public class LevelHandler {
 	 */
 	public Level getLevel(String s){
 		return levels.get(s);
+	}
+	
+	/**
+	 * Returns a list of Strings, representing all levels.
+	 * @return
+	 */
+	public List<String> getListOfLevelsAsStrings(){
+		List<String> list = new ArrayList<String>();
+		Iterator<String> iter = levels.keySet().iterator();
+		while(iter.hasNext()){
+			String s = iter.next();
+			list.add(s);
+		}
+		return list;
+	}
+	
+	/**
+	 * Returns a list of all Levels.
+	 * @return
+	 */
+	public List<Level> getListOfLevels(){
+		List<Level> list = new ArrayList<Level>();
+		Iterator<Level> iter = levels.values().iterator();
+		while(iter.hasNext()){
+			Level l = iter.next();
+			list.add(l);
+		}
+		return list;
 	}
 }
