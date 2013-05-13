@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model;
+ package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -231,7 +231,7 @@ public class GameWorld {
 			if (checkCollisionXZ(player, gameObject)) {
 				if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(this);
-					gameObjects.remove(gameObject);
+					iterator.remove();
 				} else if (gameObject instanceof Obstacle) {
 					notifyWorldListeners(WorldEvent.GAME_OVER, null);
 				}
