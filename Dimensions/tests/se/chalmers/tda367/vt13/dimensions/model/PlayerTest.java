@@ -6,9 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.levels.NormalLevel;
-import se.chalmers.tda367.vt13.dimensions.model.levels.TiledLevel;
+import se.chalmers.tda367.vt13.dimensions.levels.NormalLevel;
+import se.chalmers.tda367.vt13.dimensions.levels.TiledLevel;
 
 public class PlayerTest {
 

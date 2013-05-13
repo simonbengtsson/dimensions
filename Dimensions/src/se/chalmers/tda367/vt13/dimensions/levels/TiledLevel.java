@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model.levels;
+package se.chalmers.tda367.vt13.dimensions.levels;
 
 import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
@@ -21,7 +21,7 @@ public class TiledLevel extends Level {
 	private void addGameObjects() {
 		//Spawn a few original gameobjects. Everything else is in the tiled maps.
 		//PowerUps
-		gameObjects.add(new SpeedPowerUp(new Vector3(50, 16, 16), new Vector3(1, 1, 5), new Vector3()));
+		gameObjects.add(new SpeedPowerUp(new Vector3(50, 16, 16), new Vector3(1, 1, 1), new Vector3()));
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 5, 5), new Vector3(1, 1, 1), new Vector3()));
 		//Obstacles
 		for (int i = 0; i < 18; i++) {
