@@ -17,7 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 /**
  * Class for creating a level with platforms and powerups
  */
-public abstract class Level implements Serializable {
+public class Level implements Serializable {
 
 	private static final long serialVersionUID = 2122723720243818390L;
 	protected List<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -26,21 +26,30 @@ public abstract class Level implements Serializable {
 	protected TiledMap mapXY;
 	protected TiledMap mapXZ;
 
-	private List<Platform> platforms;
-	private List<PowerUp> powerUps;
+	//private List<Platform> platforms;
+	//private List<PowerUp> powerUps;
 	private String backGroundImagePath;
 	private float lastx = 0;
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
+	private int highScore;
 
+	@Deprecated
 	/**
 	 * @param levelName
 	 * @param filepath
 	 */
-	protected Level(String levelName, String filepath) {
+	public Level(String levelName, String filepath) {
 		this.levelname = levelName;
 		this.backGroundImagePath = filepath;
+	}
+	
+	public Level(String name, List<GameObject> gameObjects, float gravity){
+		this.levelname = name;
+		this.gameObjects = gameObjects;
+		this.gravity = gravity;
+		
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -216,60 +225,6 @@ public abstract class Level implements Serializable {
 		this.lastx = lastx + size.getX();
 	}
 
-	/*
-	 * private void presentPaused () { batcher.draw(Assets.pauseMenu, 160 - 192
-	 * / 2, 240 - 96 / 2, 192, 96); Assets.font.draw(batcher, scoreString, 16,
-	 * 480 - 20); }
-	 * 
-	 * private void presentLevelEnd () { String topText = "the princess is ...";
-	 * String bottomText = "in another castle!"; float topWidth =
-	 * Assets.font.getBounds(topText).width; float bottomWidth =
-	 * Assets.font.getBounds(bottomText).width; Assets.font.draw(batcher,
-	 * topText, 160 - topWidth / 2, 480 - 40); Assets.font.draw(batcher,
-	 * bottomText, 160 - bottomWidth / 2, 40); }
-	 * 
-	 * private void presentGameOver () { batcher.draw(Assets.gameOver, 160 - 160
-	 * / 2, 240 - 96 / 2, 160, 96); float scoreWidth =
-	 * Assets.font.getBounds(scoreString).width; Assets.font.draw(batcher,
-	 * scoreString, 160 - scoreWidth / 2, 480 - 20); }
-	 */
-
-	/**
-	 * Returns the list of powerups
-	 * 
-	 * @return
-	 */
-	public List<PowerUp> getPowerUps() {
-		return powerUps;
-	}
-
-	/**
-	 * Returns the list of platforms
-	 * 
-	 * @return
-	 */
-	public List<Platform> getPlatforms() {
-		return platforms;
-	}
-
-	/**
-	 * Adding platform to the platforms list
-	 * 
-	 * @param p
-	 */
-	public void addPlatform(Platform p) {
-		platforms.add(p);
-	}
-
-	/**
-	 * Removing platform from the platforms list
-	 * 
-	 * @param p
-	 */
-	public void removePlatform(Platform p) {
-		platforms.remove(p);
-	}
-
 	public TiledMap getMapXY() {
 		return mapXY;
 	}
@@ -286,7 +241,7 @@ public abstract class Level implements Serializable {
 		return gravity;
 	}
 	
-	public String getLevelName(){
+	public String getName(){
 		return levelname;
 	}
 }
