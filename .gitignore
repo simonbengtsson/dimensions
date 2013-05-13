@@ -1,5 +1,7 @@
 *.ucls
 Dimensions/reports/
+Dimensions-android/bin/dexedLibs/
+Dimensions-android/bin/res/
 
 #Eclipse metadata folder#
 .metadata/
