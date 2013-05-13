@@ -29,6 +29,10 @@ public class GameWorld {
 	public enum WorldEvent {
 		GAME_OVER, DIMENSION_CHANGED;
 	}
+	
+	public enum State {
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, GAME_LEVEL_END;
+	}
 
 	private List<GameObject> gameObjects;
 	private Player player;
@@ -39,6 +43,7 @@ public class GameWorld {
 	// Just realized these maps classes are apart of Libgdx TODO remove
 	private TiledMap mapXY;
 	private TiledMap mapXZ;
+	private State currentState;
 	private CheckPoint cp;
 	private boolean isPaused = false;
 
@@ -59,14 +64,27 @@ public class GameWorld {
 	public GameWorld(Player player, Level level) {
 		this.player = player;
 		this.gameObjects = level.getGameObjects();
+		this.gravity = level.getGravity();
+		this.currentDimension = level.getStartingDimension();
 		this.mapXY = level.getMapXY();
 		this.mapXZ = level.getMapXZ();
 		this.baseGravity = gravity;
+		this.currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);
+	}
 
-		// TODO Make the below properties of each level (?)
-		this.gravity = -0.05f;
-		currentDimension = Dimension.XY; // Starting dimension
+	public void update() {
+		switch (currentState) {
+		case GAME_RUNNING:
+			updateModel();
+			break;
+		case GAME_PAUSED:
+			break;
+		case GAME_LEVEL_END:
+			break;
+		case GAME_OVER:
+			break;
+		}
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -308,7 +326,6 @@ public class GameWorld {
 						player.setIsGrounded(true);
 					}
 				}
-				System.out.println(getCurrentMap().getLayers().getCount());
 				// check if hit an obstacle (layer 2)
 				if (((TiledMapTileLayer) getCurrentMap().getLayers().get(2))
 						.getCell(x, y) != null) {
@@ -319,7 +336,6 @@ public class GameWorld {
 
 		// GameOver if player moves out of bounds (XZ)
 		if (currentDimension == Dimension.XZ && !player.getIsGrounded()) {
-			System.out.println(pos);
 			notifyWorldListeners(WorldEvent.GAME_OVER, null);
 		}
 	}

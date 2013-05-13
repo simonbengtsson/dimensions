@@ -91,7 +91,7 @@ public class GameView {
 		}
 		// Doesn't play well with the down scaled game world. Added a github
 		// issue. The easiest thing might be to scale up the world again?
-		// font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
+		//font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
 		batch.end();
 	}
 

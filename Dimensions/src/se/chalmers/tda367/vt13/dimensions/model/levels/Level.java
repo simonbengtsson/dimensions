@@ -7,6 +7,7 @@ import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
@@ -19,41 +20,34 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 public abstract class Level implements Serializable {
 
 	private static final long serialVersionUID = 2122723720243818390L;
+	protected List<GameObject> gameObjects = new ArrayList<GameObject>();
+	protected float gravity = -0.05f;
+	protected Dimension startingDimension = Dimension.XY;
+	protected TiledMap mapXY;
+	protected TiledMap mapXZ;
+	
 	private List<Platform> platforms;
 	private List<PowerUp> powerUps;
 	private String backGroundImagePath;
-	protected List<GameObject> gameobjects = new ArrayList<GameObject>();
 	private float lastx = 0;
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
-	protected TiledMap mapXY;
-	protected TiledMap mapXZ;
+
 
 	/**
-	 * Constructor for creating Levels
-	 * 
-	 * @param s
-	 *            Level name
+	 * @param levelName
+	 * @param filepath
 	 */
-	public Level(String levelName, String filepath) {
+	protected Level(String levelName, String filepath) {
 		this.levelname = levelName;
 		this.backGroundImagePath = filepath;
-		//spawnStartingPlatform(gameobjects);
-
-		// This constructor is currently a mess
-		// TODO: Clean up this mess
 	}
 
 	public List<GameObject> getGameObjects() {
-		return gameobjects;
+		return gameObjects;
 	}
 	
-	protected void setMaps(TiledMap mapXY, TiledMap mapXZ){
-		this.mapXY = mapXY;
-		this.mapXZ = mapXZ;
-	}
-
 	/* ####################### READ ########################### */
 	/*
 	 * ~~~~~~~INSTRUCTIONS FOR PLACING PLATFORMS ~~~~~~~~~~/ Parameters: first
@@ -169,7 +163,6 @@ public abstract class Level implements Serializable {
 					1, 1), new Vector3()));
 			break;
 		}
-
 	}
 
 	/**
@@ -284,5 +277,13 @@ public abstract class Level implements Serializable {
 	
 	public TiledMap getMapXZ() {
 		return mapXZ;
+	}
+	
+	public Dimension getStartingDimension(){
+		return startingDimension;
+	}
+	
+	public float getGravity(){
+		return gravity;
 	}
 }

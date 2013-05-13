@@ -13,26 +13,26 @@ public class RandomLevel extends Level {
 	public RandomLevel(String levelname, String pathname) {
 		super(levelname, pathname);
 		for (int i = 0; i < 5; i++) {
-			randomGenerateLevel(gameobjects, 100, 50);
+			randomGenerateLevel(gameObjects, 100, 50);
 		}
 
 		for (int i = 0; i < 5; i++) {
-			randomGenerateLevel(gameobjects, 300, 50);
+			randomGenerateLevel(gameObjects, 300, 50);
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			randomGenerateLevel(gameobjects, 500, 50);
+			randomGenerateLevel(gameObjects, 500, 50);
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			randomGenerateLevel(gameobjects, 700, 50);
+			randomGenerateLevel(gameObjects, 700, 50);
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			randomGenerateLevel(gameobjects, 900, 50);
+			randomGenerateLevel(gameObjects, 900, 50);
 		}
-		spawnPowerUp(gameobjects, PowerUp.LOW_GRAVITY, new Vector3(700, 200, 200));
-		spawnPowerUp(gameobjects, PowerUp.SPEED, new Vector3(500, 300, 200));
+		spawnPowerUp(gameObjects, PowerUp.LOW_GRAVITY, new Vector3(700, 200, 200));
+		spawnPowerUp(gameObjects, PowerUp.SPEED, new Vector3(500, 300, 200));
 
 		WriteLevel rv = new WriteLevel();
 		rv.saveToFile(levelname, this);
