@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.model.progresshandler;
 
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.levels.Level;
 
 /**
  * A class to handle progress for a individual level.
@@ -48,6 +48,10 @@ public class ProgressLevel {
 		if(i >= highScore){
 			highScore = i;
 		}
+	}
+	
+	public Level getLevel(){
+		return level;
 	}
 
 }
