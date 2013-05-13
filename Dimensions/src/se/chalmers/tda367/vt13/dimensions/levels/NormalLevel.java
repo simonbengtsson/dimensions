@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model.levels;
+package se.chalmers.tda367.vt13.dimensions.levels;
 
 import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;

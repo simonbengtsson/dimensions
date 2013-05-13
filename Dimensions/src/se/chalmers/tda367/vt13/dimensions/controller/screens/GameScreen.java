@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
-import se.chalmers.tda367.vt13.dimensions.model.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -51,7 +51,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			worldChange(WorldEvent.GAME_OVER, null);
 		}
 		getInput();
-		world.updateModel();
+		world.update();
 		view.draw();
 	}
 
