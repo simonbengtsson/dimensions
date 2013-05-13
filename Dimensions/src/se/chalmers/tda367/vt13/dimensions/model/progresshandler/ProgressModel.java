@@ -1,9 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model.progresshandler;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;

@@ -192,13 +192,13 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	 * Performs updates on world events
 	 */
 	@Override
-	public void worldChange(WorldEvent type, Object value) {
+	public void worldChange(WorldEvent type, GameWorld world) {
 		if (type == WorldEvent.GAME_OVER) {
 			game.newGame();
 			game.setScreen(new GameOverScreen(game));
 		} else if (type == WorldEvent.DIMENSION_CHANGED) {
 			world.getPlayer().setIsGrounded(true);
-			view.changeMap((Dimension) value);
+			view.changeMap(world.getDimension());
 		}
 	}
 }
