@@ -12,6 +12,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -35,9 +36,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	@Override
 	public void show() {
 		Level level = new TiledLevel("Tiled", null);
-		world = new GameWorld(level);
+		TiledMapHandler tiledMapHandler = new TiledMapHandler();
+		world = new GameWorld(level, tiledMapHandler);
 		world.addWorldListener(this);
-		view = new GameView(world);
+		view = new GameView(world, level.getMapXY(), level.getMapXZ());
+		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
 	}
 

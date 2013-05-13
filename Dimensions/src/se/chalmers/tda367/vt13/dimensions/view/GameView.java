@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
@@ -28,6 +29,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 public class GameView {
 
 	private GameWorld world;
+	private TiledMap mapXY;
+	private TiledMap mapXZ;
 	private OrthogonalTiledMapRenderer renderer;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
@@ -47,10 +50,12 @@ public class GameView {
 	 * @param world
 	 *            the Gameworld
 	 */
-	public GameView(GameWorld world) {
+	public GameView(GameWorld world, TiledMap mapXY, TiledMap mapXZ) {
 		this.world = world;
+		this.mapXY = mapXY;
+		this.mapXZ = mapXZ;
 		loadImageFiles();
-		renderer = new OrthogonalTiledMapRenderer(world.getCurrentMap(),
+		renderer = new OrthogonalTiledMapRenderer(getCurrentMap(),
 				1 / 16f);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
@@ -58,12 +63,21 @@ public class GameView {
 		initWalkAnimation();
 		font.setColor(Color.YELLOW);
 	}
-
+	
+	public TiledMap getCurrentMap() {
+		if (world.getDimension() == Dimension.XY) {
+			return mapXY;
+		} else if (world.getDimension() == Dimension.XZ) {
+			return mapXZ;
+		}
+		return null;
+	}
+	
 	public void changeMap(Dimension d) {
 		if (d == Dimension.XY) {
-			renderer.setMap(world.getMapXY());
+			renderer.setMap(mapXY);
 		} else if (d == Dimension.XZ) {
-			renderer.setMap(world.getMapXZ());
+			renderer.setMap(mapXZ);
 		}
 	}
 
