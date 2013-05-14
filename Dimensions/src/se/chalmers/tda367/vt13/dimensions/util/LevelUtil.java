@@ -79,7 +79,8 @@ public class LevelUtil {
 		ObjectOutputStream out = null;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(new File(
-					Constants.LEVELFOLDER + l.getName())));
+					Constants.LEVELFOLDER + File.pathSeparator + l.getName()
+							+ Constants.LEVELFILE_EXTENSION)));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,6 +105,16 @@ public class LevelUtil {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Saves all Levels in the LevelHandler to file.
+	 */
+	public static void saveAllLevelsToFile() {
+		List<Level> levels = LevelHandler.getInstance().getListOfLevels();
+		for (Level l : levels) {
+			saveToFile(l);
 		}
 	}
 

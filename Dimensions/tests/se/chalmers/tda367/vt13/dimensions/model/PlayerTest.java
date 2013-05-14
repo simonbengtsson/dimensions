@@ -1,5 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import se.chalmers.tda367.vt13.dimensions.model.levels.NormalLevel;
+
 
 public class PlayerTest {
 
