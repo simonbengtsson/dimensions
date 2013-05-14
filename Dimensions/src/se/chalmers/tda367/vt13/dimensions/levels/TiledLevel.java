@@ -12,8 +12,8 @@ public class TiledLevel extends Level {
 
 	public TiledLevel(String levelName, String filepath) {
 		super(levelName, filepath);
-		mapXY = new TmxMapLoader().load("data/tiledMaps/levelXY.tmx");
-		mapXZ = new TmxMapLoader().load("data/tiledMaps/levelXZ.tmx");
+		mapXY = "data/tiledMaps/levelXY.tmx";
+		mapXZ = "data/tiledMaps/levelXZ.tmx";
 		addGameObjects();
 	}
 

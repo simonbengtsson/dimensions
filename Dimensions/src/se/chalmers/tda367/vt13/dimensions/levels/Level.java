@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
-
-import com.badlogic.gdx.maps.tiled.TiledMap;
 
 /**
  * Class for creating a level with platforms and powerups
@@ -23,8 +21,8 @@ public class Level implements Serializable {
 	protected List<GameObject> gameObjects = new ArrayList<GameObject>();
 	protected float gravity = -0.05f;
 	protected Dimension startingDimension = Dimension.XY;
-	protected TiledMap mapXY;
-	protected TiledMap mapXZ;
+	protected String mapXY;
+	protected String mapXZ;
 
 	//private List<Platform> platforms;
 	//private List<PowerUp> powerUps;
@@ -225,11 +223,11 @@ public class Level implements Serializable {
 		this.lastx = lastx + size.getX();
 	}
 
-	public TiledMap getMapXY() {
+	public String getMapStringXY() {
 		return mapXY;
 	}
 
-	public TiledMap getMapXZ() {
+	public String getMapStringXZ() {
 		return mapXZ;
 	}
 
