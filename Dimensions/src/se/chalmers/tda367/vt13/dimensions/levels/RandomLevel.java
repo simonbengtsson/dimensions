@@ -11,8 +11,8 @@ import se.chalmers.tda367.vt13.dimensions.util.WriteLevel;
 @SuppressWarnings("serial")
 public class RandomLevel extends Level {
 
-	public RandomLevel(String levelname, String pathname) {
-		super(levelname, pathname);
+	public RandomLevel() {
+		super("Random");
 		for (int i = 0; i < 5; i++) {
 			randomGenerateLevel(gameObjects, 100, 50);
 		}
@@ -36,7 +36,7 @@ public class RandomLevel extends Level {
 		spawnPowerUp(gameObjects, PowerUp.SPEED, new Vector3(500, 300, 200));
 
 		WriteLevel rv = new WriteLevel();
-		rv.saveToFile(levelname, this);
+		rv.saveToFile("Random", this);
 	}
 
 	public void randomGenerateLevel(List<GameObject> l, int high, int low) {

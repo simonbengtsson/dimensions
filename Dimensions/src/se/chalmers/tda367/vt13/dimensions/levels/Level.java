@@ -26,28 +26,29 @@ public class Level implements Serializable {
 
 	//private List<Platform> platforms;
 	//private List<PowerUp> powerUps;
-	private String backGroundImagePath;
+	//private String backGroundImagePath;
 	private float lastx = 0;
 	private float lasty = 50;
 	private float lastz = 0;
 	private String levelname;
-	private int highScore;
-
-	@Deprecated
+	//private int highScore;
+	
 	/**
-	 * @param levelName
-	 * @param filepath
+	 * 
+	 * @param name
+	 * @param gameObjects
+	 * @param gravity
 	 */
-	public Level(String levelName, String filepath) {
-		this.levelname = levelName;
-		this.backGroundImagePath = filepath;
+	public Level(String name, float gravity){
+		this.levelname = name;
+		this.gravity = gravity;
 	}
 	
-	public Level(String name, List<GameObject> gameObjects, float gravity){
-		this.levelname = name;
-		this.gameObjects = gameObjects;
-		this.gravity = gravity;
-		
+	/**
+	 * @param name
+	 */
+	public Level(String name){
+		this(name, 0.05f);
 	}
 
 	public List<GameObject> getGameObjects() {

@@ -8,6 +8,7 @@ import java.util.TimerTask;
  * 
  * @author Carl Fredriksson
  */
+@SuppressWarnings("serial")
 public class Player extends GameObject {
 
 	public static float MAX_VELOCITY = 1f;

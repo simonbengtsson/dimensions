@@ -1,7 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.levels;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;

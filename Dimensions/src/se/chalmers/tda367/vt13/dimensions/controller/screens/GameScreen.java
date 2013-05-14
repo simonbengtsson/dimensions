@@ -35,7 +35,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void show() {
-		Level level = new TiledLevel("Tiled", null);
+		Level level = new TiledLevel();
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		world = new GameWorld(level, tiledMapHandler);
 		world.addWorldListener(this);
