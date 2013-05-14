@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model;
+package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

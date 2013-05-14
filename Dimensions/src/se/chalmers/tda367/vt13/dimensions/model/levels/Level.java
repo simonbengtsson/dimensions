@@ -21,8 +21,8 @@ public class Level implements Serializable {
 	protected List<GameObject> gameObjects = new ArrayList<GameObject>();
 	protected float gravity = -0.05f;
 	protected Dimension startingDimension = Dimension.XY;
-	protected String stringMapXY;
-	protected String stringMapXZ;
+	protected String mapXYPath;
+	protected String mapXZPath;
 	protected float levelFinishedPosition;
 	//private String backGroundImagePath;
 	private float lastx = 0;
@@ -226,12 +226,12 @@ public class Level implements Serializable {
 		this.lastx = lastx + size.getX();
 	}
 
-	public String getMapStringXY() {
-		return stringMapXY;
+	public String getMapXYPath() {
+		return mapXYPath;
 	}
 
-	public String getMapStringXZ() {
-		return stringMapXZ;
+	public String getMapXZPath() {
+		return mapXZPath;
 	}
 
 	public Dimension getStartingDimension() {

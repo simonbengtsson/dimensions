@@ -10,21 +10,21 @@ public class TiledLevel extends Level {
 
 	public TiledLevel() {
 		this("Tiled", null);
-		stringMapXY = "data/tiledMaps/levelXY.tmx";
-		stringMapXZ = "data/tiledMaps/levelXZ.tmx";
+		mapXYPath = "data/tiledMaps/levelXY.tmx";
+		mapXZPath = "data/tiledMaps/levelXZ.tmx";
 		levelFinishedPosition = 205;
-		stringMapXY = "data/tiledMaps/levelXY.tmx";
-		stringMapXZ = "data/tiledMaps/levelXZ.tmx";
+		mapXYPath = "data/tiledMaps/levelXY.tmx";
+		mapXZPath = "data/tiledMaps/levelXZ.tmx";
 		addGameObjects();
 	}
 	
 	public TiledLevel(String levelName, String filepath) {
 		super(levelName);
-		stringMapXY = "data/tiledMaps/levelXY.tmx";
-		stringMapXZ = "data/tiledMaps/levelXZ.tmx";
+		mapXYPath = "data/tiledMaps/levelXY.tmx";
+		mapXZPath = "data/tiledMaps/levelXZ.tmx";
 		levelFinishedPosition = 205;
-		stringMapXY = "data/tiledMaps/levelXY.tmx";
-		stringMapXZ = "data/tiledMaps/levelXZ.tmx";
+		mapXYPath = "data/tiledMaps/levelXY.tmx";
+		mapXZPath = "data/tiledMaps/levelXZ.tmx";
 		addGameObjects();
 	}
 

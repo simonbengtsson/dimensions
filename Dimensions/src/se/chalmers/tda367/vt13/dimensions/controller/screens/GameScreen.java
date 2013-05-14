@@ -38,7 +38,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		world = new GameWorld(level, tiledMapHandler);
 		world.addWorldListener(this);
-		view = new GameView(world, tiledMapHandler.getMap(level.getMapStringXY()), tiledMapHandler.getMap(level.getMapStringXZ()));
+		view = new GameView(world, tiledMapHandler.getMap(level.getMapXYPath()), tiledMapHandler.getMap(level.getMapXZPath()));
 		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
 	}
