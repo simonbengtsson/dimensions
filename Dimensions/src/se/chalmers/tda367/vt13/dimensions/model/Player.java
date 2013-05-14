@@ -83,7 +83,7 @@ public class Player extends GameObject {
 	public void dash() {
 		if (!isGrounded && !usingDash) {
 			usingDash = true;
-			getSpeed().setX(getSpeed().getX() + 20);
+			getSpeed().setX(getSpeed().getX() + 1);
 
 			Timer timer = new Timer();
 
@@ -91,7 +91,7 @@ public class Player extends GameObject {
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					getSpeed().setX(getSpeed().getX() - 20);
+					getSpeed().setX(getSpeed().getX() - 1);
 				}
 			}, 500);
 
