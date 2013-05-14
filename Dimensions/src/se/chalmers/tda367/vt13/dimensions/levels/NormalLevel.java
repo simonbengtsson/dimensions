@@ -1,119 +1,126 @@
 package se.chalmers.tda367.vt13.dimensions.levels;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Obstacle;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.util.Constants;
+import se.chalmers.tda367.vt13.dimensions.util.LevelCreator;
 import se.chalmers.tda367.vt13.dimensions.util.WriteLevel;
 
 @SuppressWarnings("serial")
-public class NormalLevel extends Level {
-	public NormalLevel(String levelname, String backgroundfilepath) {
-		super(levelname, backgroundfilepath);
-		spawnSingleBlock(getGameObjects(), new Vector3(), new Vector3(20000, 50, 500));
-		spawnPowerUp(gameObjects, PowerUp.SPEED, new Vector3(700, 200, 200));
-		spawnPowerUp(gameObjects, PowerUp.LOW_GRAVITY, new Vector3(1600, 400,
-				200));
+public class NormalLevel extends Level{
+	public NormalLevel() {
+		super("NormalLevel", null, 0.05f, Dimension.XY);
+		LevelCreator lc = new LevelCreator(new ArrayList<GameObject>());
+
+		lc.spawnSingleBlock(new Vector3(), new Vector3(20000, 50, 500));
+		lc.spawnPowerUp(PowerUp.SPEED, new Vector3(700, 200, 200));
+		lc.spawnPowerUp(PowerUp.LOW_GRAVITY, new Vector3(1600, 400, 200));
 		// DIMENSION CHANGE TESTING WITH OBSTACLES
 		Obstacle spikes1 = new Obstacle(new Vector3(300, 110, 0), new Vector3(
 				50, 50, 50), new Vector3(), Constants.SPIKEOBSTACLE_IMAGE,
 				Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes1);
+		lc.add(spikes1);
 		Obstacle spikes2 = new Obstacle(new Vector3(900, 110, 100),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes2);
+		lc.add(spikes2);
 		Obstacle spikes3 = new Obstacle(new Vector3(1500, 110, 400),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes3);
+		lc.add(spikes3);
 		Obstacle spikes4 = new Obstacle(new Vector3(2100, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes4);
+		lc.add(spikes4);
 		Obstacle spikes5 = new Obstacle(new Vector3(2700, 110, 200),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes5);
+		lc.add(spikes5);
 		Obstacle spikes6 = new Obstacle(new Vector3(3300, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes6);
+		lc.add(spikes6);
 		Obstacle spikes7 = new Obstacle(new Vector3(3900, 110, 100),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes7);
+		lc.add(spikes7);
 		Obstacle spikes8 = new Obstacle(new Vector3(4500, 110, 400),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes8);
+		lc.add(spikes8);
 		Obstacle spikes9 = new Obstacle(new Vector3(5100, 110, 200),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes9);
+		lc.add(spikes9);
 		Obstacle spikes10 = new Obstacle(new Vector3(5700, 110, 0),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes10);
+		lc.add(spikes10);
 		Obstacle spikes11 = new Obstacle(new Vector3(6300, 110, 300),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes11);
+		lc.add(spikes11);
 		Obstacle spikes12 = new Obstacle(new Vector3(6900, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes12);
+		lc.add(spikes12);
 		Obstacle spikes13 = new Obstacle(new Vector3(7500, 110, 0),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes13);
+		lc.add(spikes13);
 		Obstacle spikes14 = new Obstacle(new Vector3(8100, 110, 100),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes14);
+		lc.add(spikes14);
 		Obstacle spikes15 = new Obstacle(new Vector3(8700, 110, 400),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes15);
+		lc.add(spikes15);
 		Obstacle spikes16 = new Obstacle(new Vector3(9300, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes16);
+		lc.add(spikes16);
 		Obstacle spikes17 = new Obstacle(new Vector3(9900, 110, 200),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes17);
+		lc.add(spikes17);
 		Obstacle spikes18 = new Obstacle(new Vector3(10500, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes18);
+		lc.add(spikes18);
 		Obstacle spikes19 = new Obstacle(new Vector3(11100, 110, 100),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes19);
+		lc.add(spikes19);
 		Obstacle spikes20 = new Obstacle(new Vector3(11700, 110, 400),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes20);
+		lc.add(spikes20);
 		Obstacle spikes21 = new Obstacle(new Vector3(12300, 110, 200),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes21);
+		lc.add(spikes21);
 		Obstacle spikes22 = new Obstacle(new Vector3(12900, 110, 0),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes22);
+		lc.add(spikes22);
 		Obstacle spikes23 = new Obstacle(new Vector3(13500, 110, 300),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes23);
+		lc.add(spikes23);
 		Obstacle spikes24 = new Obstacle(new Vector3(14100, 110, 500),
 				new Vector3(50, 50, 50), new Vector3(),
 				Constants.SPIKEOBSTACLE_IMAGE, Constants.SPIKEOBSTACLE_SOUND);
-		gameObjects.add(spikes24);
-
-		WriteLevel rv = new WriteLevel();
-		rv.saveToFile(levelname, this);
+		lc.add(spikes24);
+		
+		List<GameObject> done = lc.creationCompleted();
+		setGameObjects(done);
 	}
 
 }

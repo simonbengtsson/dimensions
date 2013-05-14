@@ -25,7 +25,7 @@ public class PlayerTest {
 
 	@Test
 	public void testOnPlatform() {
-		NormalLevel lv = new NormalLevel("Level1", "test");
+		NormalLevel lv = new NormalLevel();
 		Player player = new Player(new Vector3(10, 100, 0), new Vector3(50, 50,
 				0), new Vector3(2, 0, 0), 15f, true);
 		GameWorld world = new GameWorld(new TiledLevel("Test", null));

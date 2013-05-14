@@ -21,5 +21,6 @@ public class Constants {
 	public static final String LOWGRAVITYPOWERUP_IMAGE = "data/SpeedPowerUpImg.png";
 	public static final String LOWGRAVITYPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
 	
+	public static final String LEVELFILE_EXTENSION = ".dat";
 	public static final String LEVELFOLDER = "levels";
 }
