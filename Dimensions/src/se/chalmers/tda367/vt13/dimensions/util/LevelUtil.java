@@ -112,7 +112,7 @@ public class LevelUtil {
 	 * Saves all Levels in the LevelHandler to file.
 	 */
 	public static void saveAllLevelsToFile() {
-		List<Level> levels = LevelHandler.getInstance().getListOfLevels();
+		List<Level> levels = LevelHandler.getInstance().getLevels();
 		for (Level l : levels) {
 			saveToFile(l);
 		}
