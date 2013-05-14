@@ -48,6 +48,13 @@ public class Level implements Serializable {
 	public Level(String name){
 		this(name, -0.05f);
 	}
+	
+	public Level(String name, float gravity, List<GameObject> gameObjects, Dimension start){
+		this.levelname = name;
+		this.gravity = gravity;
+		this.gameObjects = gameObjects;
+		this.startingDimension = start;
+	}
 
 	public List<GameObject> getGameObjects() {
 		return gameObjects;

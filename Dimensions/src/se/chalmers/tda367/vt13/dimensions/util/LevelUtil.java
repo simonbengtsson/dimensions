@@ -57,8 +57,10 @@ public class LevelUtil {
 		for (File f : files) {
 			Level level = null;
 			try {
-				level = (Level) new ObjectInputStream(new FileInputStream(f))
-						.readObject();
+				ObjectInputStream o = new ObjectInputStream(new FileInputStream(f));
+				level = (Level) o.readObject();
+				o.close();
+				
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (FileNotFoundException e) {
@@ -79,7 +81,7 @@ public class LevelUtil {
 		ObjectOutputStream out = null;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(new File(
-					Constants.LEVELFOLDER + File.pathSeparator + l.getName()
+					Constants.LEVELFOLDER + "/" + l.getName()
 							+ Constants.LEVELFILE_EXTENSION)));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
