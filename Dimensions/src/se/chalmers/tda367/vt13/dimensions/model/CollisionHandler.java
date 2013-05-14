@@ -108,8 +108,6 @@ public class CollisionHandler {
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(world);
 					iterator.remove();
-				} else if (gameObject instanceof Obstacle) {
-					world.notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
 			}
 		}
@@ -125,8 +123,6 @@ public class CollisionHandler {
 				if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(world);
 					iterator.remove();
-				} else if (gameObject instanceof Obstacle) {
-					world.notifyWorldListeners(WorldEvent.GAME_OVER);
 				}
 			}
 		}
