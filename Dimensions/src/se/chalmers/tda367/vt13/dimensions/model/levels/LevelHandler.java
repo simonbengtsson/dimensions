@@ -11,6 +11,7 @@ public class LevelHandler {
 	private static LevelHandler instance;
 
 	private LevelHandler() {
+		levels = new HashSet<Level>();
 	}
 
 	/**

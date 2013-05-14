@@ -14,18 +14,34 @@ public class NewGameScreen extends AbstractMenuScreen {
 	public NewGameScreen(final Dimensions game) {
 		super(game);
 		List<String> levels = LevelHandler.getInstance().getLevelsAsStrings();
-
+		
 		for (String s : levels) {
 			TextButton level = new TextButton(s, getButtonStyle());
 			level.addListener(new ClickListener() {
 				public void clicked(InputEvent e, float x, float y) {
-					dispose();
+					//dispose();
 					// Link to a new game method and provide the string for the
 					// level
 
 				}
 			});
+			
+			getTable().add(level);
+			getTable().row();
 		}
+		
+		TextButton goBack = new TextButton("Back", getButtonStyle());
+		goBack.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y){
+				dispose();
+				game.setScreen(new MainMenuScreen(game));
+			}
+		});
+		
+		getTable().row();
+		getTable().add(goBack);
+		
+		setStageInput();
 
 	}
 

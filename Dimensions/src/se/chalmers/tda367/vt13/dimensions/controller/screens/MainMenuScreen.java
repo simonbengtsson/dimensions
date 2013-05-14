@@ -20,12 +20,18 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		option = new TextButton("Options", getButtonStyle());
 		exit = new TextButton("Exit game", getButtonStyle());
 
-		getTable().add(start);
 		start.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
 				dispose();
-
 				game.setScreen(game.getGameScreen());
+
+			}
+		});
+		
+		levelSelect.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				dispose();
+				game.setScreen(new NewGameScreen(game));
 
 			}
 		});
@@ -45,7 +51,10 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
 			}
 		});
-
+		
+		getTable().add(start);
+		getTable().row();
+		getTable().add(levelSelect);
 		getTable().row();
 		getTable().add(option);
 		getTable().row();
