@@ -48,7 +48,7 @@ public class Level implements Serializable {
 	 * @param name
 	 */
 	public Level(String name){
-		this(name, 0.05f);
+		this(name, -0.05f);
 	}
 
 	public List<GameObject> getGameObjects() {
