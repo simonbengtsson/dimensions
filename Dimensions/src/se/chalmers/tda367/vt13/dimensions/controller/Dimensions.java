@@ -4,6 +4,8 @@ import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
+import se.chalmers.tda367.vt13.dimensions.model.levels.LevelHandler;
+import se.chalmers.tda367.vt13.dimensions.util.LevelUtil;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
@@ -17,6 +19,7 @@ public class Dimensions extends Game {
 
 	@Override
 	public void create() {
+		LevelUtil.loadAllLevels(); // Loads all Levels into the game
 		mainMenuScreen = new MainMenuScreen(this);
 		gameScreen = new GameScreen(this);
 		splashScreen = new SplashScreen(this);

@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.util;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,24 +53,31 @@ public class LevelUtil {
 	 * LevelHandler.
 	 */
 	public static void loadAllLevels() {
+		// Load all files from file
 		File folder = new File(Constants.LEVELFOLDER);
 		File[] files = folder.listFiles();
 		for (File f : files) {
 			Level level = null;
 			try {
-				ObjectInputStream o = new ObjectInputStream(new FileInputStream(f));
+				ObjectInputStream o = new ObjectInputStream(
+						new FileInputStream(f));
 				level = (Level) o.readObject();
 				o.close();
-				
+				LevelHandler.getInstance().registerLevel(level);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+			} catch (EOFException e) {
+				// If a file is not a Level. Don't do anything.
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			LevelHandler.getInstance().registerLevel(level);
+
 		}
+
+		// Load levels created at game start-up
+		DynamicallyCreatedLevels.load();
 	}
 
 	/**
