@@ -9,9 +9,11 @@ import se.chalmers.tda367.vt13.dimensions.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -26,7 +28,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	Dimensions game;
 	private boolean wasEscapePressed = false;
 	private boolean wasEnterPressed = false;
-	private boolean isPaused = false;
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
@@ -34,10 +35,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void show() {
-		Level level = new TiledLevel("Tiled", null);
-		world = new GameWorld(level);
+		Level level = new TiledLevel();
+		TiledMapHandler tiledMapHandler = new TiledMapHandler();
+		world = new GameWorld(level, tiledMapHandler);
 		world.addWorldListener(this);
-		view = new GameView(world);
+		view = new GameView(world, tiledMapHandler.getMap(level.getStringMapXY()), tiledMapHandler.getMap(level.getStringMapXZ()));
+		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
 	}
 
@@ -47,9 +50,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		if (world.getPlayer().isGameOver()) {
-			worldChange(WorldEvent.GAME_OVER, null);
-		}
 		getInput();
 		world.update();
 		view.draw();
@@ -88,27 +88,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	 * Called when the game should be paused.
 	 */
 	private void togglePause() {
-		if (isPaused) {
-			unPauseGame();
+		if (world.getCurrentState() == State.GAME_RUNNING) {
+			world.setCurrentState(State.GAME_PAUSED);
 		} else {
-			pauseGame();
+			world.setCurrentState(State.GAME_RUNNING);
 		}
-	}
-
-	/**
-	 * Handles all actions to pause the game.
-	 */
-	private void pauseGame() {
-		isPaused = true;
-		world.setIsPaused(true);
-	}
-
-	/**
-	 * Handles all actions to unpause the game.
-	 */
-	private void unPauseGame() {
-		isPaused = false;
-		world.setIsPaused(false);
 	}
 
 	/**

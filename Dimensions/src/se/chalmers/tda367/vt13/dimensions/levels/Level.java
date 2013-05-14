@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
-
-import com.badlogic.gdx.maps.tiled.TiledMap;
 
 /**
  * Class for creating a level with platforms and powerups
@@ -25,16 +25,24 @@ public class Level implements Serializable {
 	protected Dimension startingDimension = Dimension.XY;
 	protected TiledMap mapXY;
 	protected TiledMap mapXZ;
-	private float lastx = 0;
-	private float lasty = 50;
-	private float lastz = 0;
+	protected String stringMapXY;
+	protected String stringMapXZ;
 	private String levelname;
 
 	@Deprecated
 	/**
-	 * @param levelName
-	 * @param filepath
+	 * @param name
 	 */
+	public Level(String name){
+		this(name, -0.05f);
+	}
+	
+	@Deprecated
+	public Level(String name, float gravity){
+		this(name, new ArrayList<GameObject>(), gravity, Dimension.XY);
+	}
+
+	@Deprecated
 	public Level(String levelName, String filepath) {
 		this.levelname = levelName;
 		//this.backGroundImagePath = filepath;
@@ -42,10 +50,9 @@ public class Level implements Serializable {
 	
 	public Level(String name, List<GameObject> gameObjects, float gravity, Dimension start){
 		this.levelname = name;
-		this.gameObjects = gameObjects;
 		this.gravity = gravity;
 		this.startingDimension = start;
-		
+		this.gameObjects = gameObjects;
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -56,9 +63,6 @@ public class Level implements Serializable {
 		return mapXY;
 	}
 
-	public TiledMap getMapXZ() {
-		return mapXZ;
-	}
 
 	public Dimension getStartingDimension() {
 		return startingDimension;
@@ -70,6 +74,14 @@ public class Level implements Serializable {
 	
 	public String getName(){
 		return levelname;
+	}
+	
+	public String getStringMapXY(){
+		return stringMapXY;
+	}
+	
+	public String getStringMapXZ(){
+		return stringMapXZ;
 	}
 	
 	public void setGameObjects(List<GameObject> l){

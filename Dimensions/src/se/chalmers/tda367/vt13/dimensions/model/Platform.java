@@ -7,7 +7,6 @@ import java.io.Serializable;
 public class Platform extends GameObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String textureFile;
 
 	/**
 	 * Constructor. Calls the super class constructor.

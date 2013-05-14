@@ -17,6 +17,7 @@ public class RandomLevel extends Level {
 	public RandomLevel() {
 		super("RandomLevel", new ArrayList<GameObject>(), 0.05f, Dimension.XY);
 		LevelCreator lc = new LevelCreator(gameObjects);
+		
 		for (int i = 0; i < 5; i++) {
 			lc.randomGenerateLevel(100, 50);
 		}
@@ -36,6 +37,7 @@ public class RandomLevel extends Level {
 		for (int i = 0; i < 5; i++) {
 			lc.randomGenerateLevel(900, 50);
 		}
+
 		lc.spawnPowerUp(PowerUp.LOW_GRAVITY, new Vector3(700, 200, 200));
 		lc.spawnPowerUp(PowerUp.SPEED, new Vector3(500, 300, 200));
 		

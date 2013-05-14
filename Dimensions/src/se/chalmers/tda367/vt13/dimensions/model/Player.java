@@ -8,6 +8,7 @@ import java.util.TimerTask;
  * 
  * @author Carl Fredriksson
  */
+@SuppressWarnings("serial")
 public class Player extends GameObject {
 
 	public static float MAX_VELOCITY = 1f;
@@ -144,12 +145,5 @@ public class Player extends GameObject {
 	public Player clone() {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
 				.clone(), jumpSpeed, isGrounded);
-	}
-
-	/**
-	 * Gameover if player slips below screens 0 coordinate
-	 */
-	public boolean isGameOver() {
-		return getPosition().getY() < 0;
 	}
 }

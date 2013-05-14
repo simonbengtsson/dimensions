@@ -3,10 +3,10 @@ package se.chalmers.tda367.vt13.dimensions.model.progresshandler;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import se.chalmers.tda367.vt13.dimensions.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
-import se.chalmers.tda367.vt13.dimensions.levels.Level;
 
 /**
  * This class handles the progress for a device. Later implementations may
