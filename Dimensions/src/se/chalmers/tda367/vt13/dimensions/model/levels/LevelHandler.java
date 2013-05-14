@@ -65,7 +65,7 @@ public class LevelHandler {
 	 * 
 	 * @return
 	 */
-	public List<String> getListOfLevelsAsStrings() {
+	public List<String> getLevelsAsStrings() {
 		List<String> list = new ArrayList<String>();
 		Iterator<Level> iter = levels.iterator();
 		while (iter.hasNext()) {
@@ -80,7 +80,7 @@ public class LevelHandler {
 	 * 
 	 * @return
 	 */
-	public List<Level> getListOfLevels() {
+	public List<Level> getLevels() {
 		List<Level> list = new ArrayList<Level>();
 		Iterator<Level> iter = levels.iterator();
 		while (iter.hasNext()) {
