@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
@@ -33,8 +34,8 @@ public class ProgressModel implements WorldListener {
 	}
 
 	@Override
-	public void worldChange(WorldEvent worldEvent, GameWorld w) {
-		if (worldEvent == WorldEvent.GAME_OVER) {
+	public void worldChange(State newWorldState, GameWorld w) {
+		if (newWorldState == State.GAME_OVER) {
 			// new ProgressLevel(w.getCurrentLevel(), w.getScore());
 		}
 

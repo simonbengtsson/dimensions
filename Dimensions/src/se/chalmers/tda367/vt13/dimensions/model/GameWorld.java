@@ -22,7 +22,7 @@ public class GameWorld {
 	}
 
 	public enum State {
-		GAME_RUNNING, GAME_PAUSED, GAME_OVER, GAME_LEVEL_END, DIMENSION_CHANGE;
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE;
 	}
 
 	private List<GameObject> gameObjects;
@@ -71,8 +71,8 @@ public class GameWorld {
 		case GAME_PAUSED:
 			updatePaused();
 			break;
-		case GAME_LEVEL_END:
-			updateLevelEnd();
+		case LEVEL_FINISHED:
+			updateLevelFinished();
 			break;
 		case GAME_OVER:
 			updateGameOver();
@@ -105,25 +105,33 @@ public class GameWorld {
 		if (isGameOver()) {
 			currentState = State.GAME_OVER;
 		}
+		if (isLevelFinished()) {
+			currentState = State.LEVEL_FINISHED;
+		}
 	}
 
 	private void updatePaused() {
 		// TODO show paused screen
 	}
 
-	private void updateLevelEnd() {
-		// TODO show Level end screen
+	private void updateLevelFinished() {
+		notifyWorldListeners(State.LEVEL_FINISHED);
 	}
 
 	private void updateGameOver() {
-		notifyWorldListeners(WorldEvent.GAME_OVER);
+		notifyWorldListeners(State.GAME_OVER);
 	}
 
 	private void updateDimensionChange() {
 		// Hint dimension change?
-		notifyWorldListeners(WorldEvent.DIMENSION_CHANGED);
+		notifyWorldListeners(State.DIMENSION_CHANGE);
+		updateRunning(); // Fix for avoiding lag
+		currentState = State.GAME_RUNNING;
 	}
 
+	/**
+	 * If dimension XY, change it to XZ and the opposite
+	 */
 	public void swapDimension() {
 		if (currentDimension == Dimension.XY) {
 			currentDimension = Dimension.XZ;
@@ -140,6 +148,11 @@ public class GameWorld {
 	 */
 	public boolean isGameOver() {
 		return player.getPosition().getY() < 0;
+	}
+
+	private boolean isLevelFinished() {
+		return player.getPosition().getX() >= currentLevel
+				.getLevelFinishedPosition();
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -198,9 +211,9 @@ public class GameWorld {
 		return currentDimension;
 	}
 
-	public void notifyWorldListeners(WorldEvent worldEvent) {
+	public void notifyWorldListeners(State newWorldState) {
 		for (WorldListener wordListener : listeners) {
-			wordListener.worldChange(worldEvent, this);
+			wordListener.worldChange(newWorldState, this);
 		}
 	}
 

@@ -12,6 +12,7 @@ public class TiledLevel extends Level {
 		this("Tiled", null);
 		mapXY = "data/tiledMaps/levelXY.tmx";
 		mapXZ = "data/tiledMaps/levelXZ.tmx";
+		levelFinishedPosition = 205;
 		addGameObjects();
 	}
 	
@@ -19,6 +20,7 @@ public class TiledLevel extends Level {
 		super(levelName);
 		mapXY = "data/tiledMaps/levelXY.tmx";
 		mapXZ = "data/tiledMaps/levelXZ.tmx";
+		levelFinishedPosition = 205;
 		addGameObjects();
 	}
 

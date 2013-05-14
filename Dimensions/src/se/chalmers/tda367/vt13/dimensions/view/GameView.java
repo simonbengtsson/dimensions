@@ -114,15 +114,12 @@ public class GameView {
 	}
 
 	/**
-	 * Makes the camera smoothly follow the player.
+	 * Makes the camera smoothly follow the player y axis.
 	 * 
 	 * @param speed
 	 *            How fast the camera is following the player(y-axis)
 	 */
-	private void updateCameraPosition(int speed) {
-		// Update camera position X axis
-		camera.position.x = world.getPlayer().getPosition().getX() + 400;
-
+	private void updateCameraPositionY(int speed) {
 		// Update camera position Y axis
 		float playerPositionY = world.getPlayer().getPosition().getY();
 		float delta = camera.position.y - playerPositionY;

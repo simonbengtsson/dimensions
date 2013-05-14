@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.WorldEvent;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 
@@ -70,14 +70,14 @@ public class CollisionHandler {
 				}
 				// check if hit an obstacle (layer 2)
 				if (tiledMapHandler.isCellObstacle(x, y)) {
-					world.notifyWorldListeners(WorldEvent.GAME_OVER);
+					world.notifyWorldListeners(State.GAME_OVER);
 				}
 			}
 		}
 
 		// GameOver if player moves out of bounds (XZ)
 		if (world.getDimension() == Dimension.XZ && !player.getIsGrounded()) {
-			world.notifyWorldListeners(WorldEvent.GAME_OVER);
+			world.notifyWorldListeners(State.GAME_OVER);
 		}
 	}
 

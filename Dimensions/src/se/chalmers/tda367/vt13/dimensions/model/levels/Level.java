@@ -23,9 +23,12 @@ public class Level implements Serializable {
 	protected Dimension startingDimension = Dimension.XY;
 	protected String mapXY;
 	protected String mapXZ;
+	protected float levelFinishedPosition;
 
-	//private List<Platform> platforms;
-	//private List<PowerUp> powerUps;
+	public float getLevelFinishedPosition() {
+		return levelFinishedPosition;
+	}
+
 	//private String backGroundImagePath;
 	private float lastx = 0;
 	private float lasty = 50;
