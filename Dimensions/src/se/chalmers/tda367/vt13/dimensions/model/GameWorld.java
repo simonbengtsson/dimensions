@@ -1,9 +1,9 @@
- package se.chalmers.tda367.vt13.dimensions.model;
+package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 
 /**
@@ -17,17 +17,12 @@ public class GameWorld {
 		XY, XZ, YZ
 	}
 
-	/**
-	 * I'm thinking there is more events the controller is interested in later,
-	 * for example reaching a checkpoint or finish the level so I made this an
-	 * enum. Open for suggetions though //Simon
-	 */
 	public enum WorldEvent {
 		GAME_OVER, DIMENSION_CHANGED;
 	}
 
 	public enum State {
-		GAME_RUNNING, GAME_PAUSED, GAME_OVER, GAME_LEVEL_END;
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, GAME_LEVEL_END, DIMENSION_CHANGE;
 	}
 
 	private List<GameObject> gameObjects;
@@ -39,7 +34,6 @@ public class GameWorld {
 	private List<WorldListener> listeners = new ArrayList<WorldListener>();
 	private State currentState;
 	private CheckPoint cp;
-	private boolean isPaused = false;
 	private int score;
 	private Level currentLevel;
 
@@ -75,19 +69,84 @@ public class GameWorld {
 			updateRunning();
 			break;
 		case GAME_PAUSED:
+			updatePaused();
 			break;
 		case GAME_LEVEL_END:
+			updateLevelEnd();
 			break;
 		case GAME_OVER:
+			updateGameOver();
+			break;
+		case DIMENSION_CHANGE:
+			updateDimensionChange();
 			break;
 		}
+	}
+
+	/**
+	 * Update all the GameObjects in the gameObjects list, and update the
+	 * player.
+	 */
+	public void updateRunning() {
+		player.getPosition().add(player.getSpeed());
+		collisionHandler.checkCollisions(this);
+		if (currentDimension == Dimension.XY) {
+			player.calculateYSpeed(this);
+			// Reset the player's speed to MAX_VELOCITY if it's too fast, the
+			// reason is to simulate drag
+			if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
+				player.getSpeed().setY(
+						Math.signum(player.getSpeed().getY())
+								* Player.MAX_VELOCITY);
+			}
+		} else if (currentDimension == Dimension.XZ) {
+			player.setSpeed(new Vector3(player.getSpeed().getX(), 0, 0));
+		}
+		if (isGameOver()) {
+			currentState = State.GAME_OVER;
+		}
+	}
+
+	private void updatePaused() {
+		// TODO show paused screen
+	}
+
+	private void updateLevelEnd() {
+		// TODO show Level end screen
+	}
+
+	private void updateGameOver() {
+		notifyWorldListeners(WorldEvent.GAME_OVER);
+	}
+
+	private void updateDimensionChange() {
+		// Hint dimension change?
+		notifyWorldListeners(WorldEvent.DIMENSION_CHANGED);
+	}
+
+	public void swapDimension() {
+		if (currentDimension == Dimension.XY) {
+			currentDimension = Dimension.XZ;
+		} else {
+			currentDimension = Dimension.XY;
+		}
+		currentState = State.DIMENSION_CHANGE;
+	}
+
+	/**
+	 * Game over conditions, only if player is below 0 on the y-axis for now
+	 * 
+	 * @return if game over
+	 */
+	public boolean isGameOver() {
+		return player.getPosition().getY() < 0;
 	}
 
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
-	
-	public Level getCurrentLevel(){
+
+	public Level getCurrentLevel() {
 		return currentLevel;
 	}
 
@@ -103,71 +162,24 @@ public class GameWorld {
 		score = i;
 	}
 
-	public void addToScore(int i) {
-		score += i;
+	public void setCurrentState(State newState) {
+		currentState = newState;
 	}
 
-	/**
-	 * Add a game object to the gameObjects list.
-	 * 
-	 * @param gameObject
-	 *            the GameObject to be added to the list
-	 */
-	public void addGameObject(GameObject gameObject) {
-		gameObjects.add(gameObject);
-	}
-
-	/**
-	 * Update all the GameObjects in the gameObjects list, and update the
-	 * player.
-	 */
-	public void updateRunning() {
-		if (!isPaused) {
-			player.getPosition().add(player.getSpeed());
-			collisionHandler.checkCollisions(this);
-			if (currentDimension == Dimension.XY) {
-				player.calculateYSpeed(this);
-				// Reset the player's speed to MAX_VELOCITY if it's too fast, the reason
-				// is to simulate drag
-				if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
-					player.getSpeed()
-							.setY(Math.signum(player.getSpeed().getY())
-									* Player.MAX_VELOCITY);
-				}
-			} else if (currentDimension == Dimension.XZ) {
-				player.setSpeed(new Vector3(player.getSpeed().getX(), 0, 0));
-			}
-		}
-	}
-
-	public void swapDimension() {
-		if (!isPaused) {
-			if (currentDimension == Dimension.XY) {
-				currentDimension = Dimension.XZ;
-			} else {
-				currentDimension = Dimension.XY;
-			}
-			notifyWorldListeners(WorldEvent.DIMENSION_CHANGED);
-		}
-
+	public State getCurrentState() {
+		return currentState;
 	}
 
 	public void resetToCheckPoint() {
-		if (!isPaused) {
-			player = cp.getPlayer();
-		}
+		player = cp.getPlayer();
 	}
 
 	public void placeCheckPoint() {
-		if (!isPaused) {
-			cp = new CheckPoint(this);
-		}
+		cp = new CheckPoint(this);
 	}
 
 	public void setDimension(Dimension dimension) {
-		if (!isPaused) {
-			currentDimension = dimension;
-		}
+		currentDimension = dimension;
 	}
 
 	public float getGravity() {
@@ -175,19 +187,11 @@ public class GameWorld {
 	}
 
 	public void setGravity(float g) {
-		if (!isPaused) {
-			gravity = g;
-		}
-	}
-
-	public void setIsPaused(boolean b) {
-		isPaused = b;
+		gravity = g;
 	}
 
 	public void resetGravity() {
-		if (!isPaused) {
-			gravity = baseGravity;
-		}
+		gravity = baseGravity;
 	}
 
 	public Dimension getDimension() {

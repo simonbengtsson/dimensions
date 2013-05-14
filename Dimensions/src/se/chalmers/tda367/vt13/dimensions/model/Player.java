@@ -146,11 +146,4 @@ public class Player extends GameObject {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
 				.clone(), jumpSpeed, isGrounded);
 	}
-
-	/**
-	 * Gameover if player slips below screens 0 coordinate
-	 */
-	public boolean isGameOver() {
-		return getPosition().getY() < 0;
-	}
 }

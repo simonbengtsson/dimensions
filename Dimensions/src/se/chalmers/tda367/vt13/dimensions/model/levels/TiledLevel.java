@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.levels;
+package se.chalmers.tda367.vt13.dimensions.model.levels;
 
 import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;

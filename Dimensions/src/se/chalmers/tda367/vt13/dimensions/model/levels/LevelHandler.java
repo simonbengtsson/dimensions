@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.levels;
+package se.chalmers.tda367.vt13.dimensions.model.levels;
 
 import java.util.ArrayList;
 import java.util.HashSet;

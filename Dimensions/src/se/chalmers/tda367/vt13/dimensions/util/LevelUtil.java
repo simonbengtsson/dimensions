@@ -9,9 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.levels.Level;
-import se.chalmers.tda367.vt13.dimensions.levels.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
+import se.chalmers.tda367.vt13.dimensions.model.levels.LevelHandler;
 
 /**
  * Class for reading an existing level from a given file

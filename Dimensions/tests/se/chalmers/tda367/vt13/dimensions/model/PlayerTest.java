@@ -1,13 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import se.chalmers.tda367.vt13.dimensions.levels.NormalLevel;
-import se.chalmers.tda367.vt13.dimensions.levels.TiledLevel;
 
 public class PlayerTest {
 
