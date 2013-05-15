@@ -1,17 +1,22 @@
 package se.chalmers.tda367.vt13.dimensions.model.levels;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
 	private HashSet<Level> levels;
+	private Deque<ProgressLevel> progressLevels;
 	private static LevelHandler instance;
 
 	private LevelHandler() {
 		levels = new HashSet<Level>();
+		progressLevels = new ArrayDeque<ProgressLevel>();
 	}
 
 	/**
@@ -40,6 +45,7 @@ public class LevelHandler {
 	 */
 	public void registerLevel(Level l) {
 		levels.add(l);
+		progressLevels.addLast(new ProgressLevel(l));
 	}
 
 	/**
@@ -89,5 +95,58 @@ public class LevelHandler {
 			list.add(l);
 		}
 		return list;
+	}
+
+	/**
+	 * Returns the next unfinished Level.
+	 * 
+	 * @return
+	 */
+	public Level getNextUnfinishedLevel() {
+		Level returning = null;
+		Iterator<ProgressLevel> iter = progressLevels.iterator();
+		while (iter.hasNext()) {
+			ProgressLevel progress = iter.next();
+			if (!progress.isCompleted()) {
+				returning = progress.getLevel();
+				break;
+			}
+		}
+		return returning;
+	}
+
+	/**
+	 * Returns a list with all finished ProgressLevels, containing score and the
+	 * Level itself.
+	 * 
+	 * @return
+	 */
+	public List<ProgressLevel> getAllFinishedLevels() {
+		List<ProgressLevel> list = new ArrayList<ProgressLevel>();
+		Iterator<ProgressLevel> iter = progressLevels.iterator();
+		while (iter.hasNext()) {
+			ProgressLevel pl = iter.next();
+			if (pl.isCompleted()) {
+				list.add(pl);
+			}
+		}
+		return list;
+	}
+	
+	public ProgressLevel getProgressFor(Level l) {
+		ProgressLevel returning = null;
+		Iterator<ProgressLevel> iter = progressLevels.iterator();
+		while (iter.hasNext()) {
+			ProgressLevel p = iter.next();
+			if (p.getLevel() == l) {
+				p = returning;
+				return p;
+			}
+		}
+		return returning;
+	}
+	
+	public ProgressLevel getProgressLevel(int i){
+		return (ProgressLevel) progressLevels.toArray()[i];
 	}
 }
