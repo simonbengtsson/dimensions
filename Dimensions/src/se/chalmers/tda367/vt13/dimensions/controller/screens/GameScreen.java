@@ -177,7 +177,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	@Override
 	public void worldChange(State newWorldState, GameWorld world) {
 		if (newWorldState == State.GAME_OVER) {
-			game.newGame();
 			game.setScreen(new GameOverScreen(game));
 		} else if (newWorldState == State.DIMENSION_CHANGE) {
 			world.getPlayer().setIsGrounded(true);

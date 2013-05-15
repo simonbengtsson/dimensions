@@ -30,10 +30,6 @@ public class Dimensions extends Game {
 		setScreen(mainMenuScreen);
 	}
 
-	public void newGame() {
-		gameScreen = new GameScreen(this);
-	}
-
 	public Screen getGameOverScreen() {
 		return gameOverScreen;
 	}
