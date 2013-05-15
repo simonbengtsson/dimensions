@@ -10,10 +10,6 @@ public class TiledLevel extends Level {
 
 	public TiledLevel() {
 		this("Tiled", null);
-		mapXYPath = "data/tiledMaps/levelXY.tmx";
-		mapXZPath = "data/tiledMaps/levelXZ.tmx";
-		levelFinishedPosition = 205;
-		addGameObjects();
 	}
 	
 	public TiledLevel(String levelName, String filepath) {
