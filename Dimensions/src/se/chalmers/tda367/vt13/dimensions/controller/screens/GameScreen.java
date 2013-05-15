@@ -183,7 +183,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			world.getPlayer().setIsGrounded(true);
 			view.changeMap(world.getDimension());
 		} else if (newWorldState == State.LEVEL_FINISHED) {
-			System.out.println("testing");
 			game.setScreen(new LevelFinishedScreen(game));
 		}
 	}

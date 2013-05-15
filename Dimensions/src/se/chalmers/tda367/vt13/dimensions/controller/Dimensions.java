@@ -5,6 +5,7 @@ import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
 import se.chalmers.tda367.vt13.dimensions.model.levels.LevelHandler;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 import se.chalmers.tda367.vt13.dimensions.util.LevelUtil;
 
 import com.badlogic.gdx.Game;

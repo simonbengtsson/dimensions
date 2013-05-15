@@ -1,0 +1,32 @@
+
+pack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button-hover
+  rotate: false
+  xy: 1, 1
+  size: 257, 100
+  split: 65, 177, 19, 66
+  pad: 66, 178, 24, 64
+  orig: 257, 100
+  offset: 0, 0
+  index: -1
+button-normal
+  rotate: false
+  xy: 260, 1
+  size: 257, 100
+  split: 78, 161, 19, 61
+  pad: 77, 158, 20, 63
+  orig: 257, 100
+  offset: 0, 0
+  index: -1
+button-pressed
+  rotate: false
+  xy: 519, 1
+  size: 257, 100
+  split: 178, 57, 45, 40
+  pad: 179, 63, 27, 60
+  orig: 257, 100
+  offset: 0, 0
+  index: -1

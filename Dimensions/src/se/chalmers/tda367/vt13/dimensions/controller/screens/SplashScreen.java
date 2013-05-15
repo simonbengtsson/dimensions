@@ -6,6 +6,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 //----------------------------------------------------
 //----------------------------------------------------
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,18 +21,14 @@ public class SplashScreen implements Screen {
 	Dimensions game;
 	Texture splashTexture;
 	Sprite splashSprite;
-	SpriteBatch batch;
+	SpriteBatch batch = new SpriteBatch();
 	long createTime;
 
 	public SplashScreen(Dimensions game) {
 		this.game = game;
-
-		// The picture to show on splashscreen
 		splashTexture = new Texture(Gdx.files.internal("data/boat.png"));
 		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		batch = new SpriteBatch();
-
+		//Assets.load();
 		createTime = System.currentTimeMillis();
 	}
 
@@ -39,15 +36,10 @@ public class SplashScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
 		batch.begin();
 		batch.draw(splashTexture, 10, 10);
-
 		batch.end();
-
-		// If splashscreen has been shown longer then 2s, tell master controller
-		// that the splashscreen is done
-		if ((System.currentTimeMillis() - createTime) > 2000) {
+		if ((System.currentTimeMillis() - createTime) > 1000) {
 			game.splashScreenDone();
 		}
 	}
@@ -87,16 +79,4 @@ public class SplashScreen implements Screen {
 		splashTexture.dispose();
 		// batch.dispose();
 	}
-
-	// A private class for loading everything into the master controller.
-	// Currently not in use
-	private class LoadStuff implements Runnable {
-
-		@Override
-		public void run() {
-			// game.loadGame();
-		}
-
-	}
-
 }

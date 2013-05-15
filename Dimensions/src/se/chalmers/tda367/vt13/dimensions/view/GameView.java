@@ -8,6 +8,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.util.Constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Game view.
@@ -169,6 +171,7 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
+			System.out.println();
 			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
