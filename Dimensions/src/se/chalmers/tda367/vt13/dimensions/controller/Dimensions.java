@@ -26,7 +26,7 @@ public class Dimensions extends Game {
 		gameOverScreen = new GameOverScreen(this);
 
 		// Which screen do you want to show on start up?
-		setScreen(gameScreen);
+		setScreen(mainMenuScreen);
 	}
 
 	public void newGame() {

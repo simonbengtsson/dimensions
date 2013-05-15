@@ -25,9 +25,10 @@ public class AbstractMenuScreen implements Screen {
 		this.game = game;
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+		font.scale(2f);
 		table = new Table();
 		stage = new Stage();
-		buttonStyle.font = new BitmapFont();
+		buttonStyle.font = font;
 		buttonStyle.fontColor = Color.WHITE;
 		buttonStyle.overFontColor = Color.RED;
 		buttonStyle.pressedOffsetY = 1f;
