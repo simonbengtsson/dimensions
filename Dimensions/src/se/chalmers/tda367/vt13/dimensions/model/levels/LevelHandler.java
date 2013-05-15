@@ -145,4 +145,8 @@ public class LevelHandler {
 		}
 		return returning;
 	}
+	
+	public ProgressLevel getProgressLevel(int i){
+		return (ProgressLevel) progressLevels.toArray()[i];
+	}
 }
