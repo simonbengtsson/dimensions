@@ -10,22 +10,11 @@ import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
  */
 public class ProgressLevel {
 	private boolean isCompleted;
-	private String name;
 	private int highScore;
 	private Level level;
-
-	public ProgressLevel(){
-		name = "";
-	}
 	
-	public ProgressLevel(String name){
-		this.name = name;
-	}
-	
-	public ProgressLevel(String name, Level level, int score) {
-		this.name = name;
+	public ProgressLevel(Level level) {
 		this.level = level;
-		this.highScore = score;
 	}
 
 	public boolean isCompleted() {
@@ -34,10 +23,6 @@ public class ProgressLevel {
 
 	public void setIsCompleted(boolean b) {
 		isCompleted = b;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getHighScore() {
