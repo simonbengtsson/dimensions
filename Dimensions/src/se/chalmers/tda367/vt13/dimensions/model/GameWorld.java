@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
-
 /**
  * Game model.
  * 
@@ -58,14 +56,14 @@ public class GameWorld {
 		this.collisionHandler = collisionHandler;
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
-		this.baseGravity = gravity;
+		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);
 		currentLevel = level;
 	}
 
 	public void update() {
-		State backupState = currentState;
+		//State backupState = currentState;
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
@@ -83,6 +81,7 @@ public class GameWorld {
 			updateDimensionChange();
 			break;
 		}
+		
 	}
 
 	/**
