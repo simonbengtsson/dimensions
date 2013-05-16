@@ -3,7 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 
 /**
