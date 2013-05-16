@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -33,40 +34,46 @@ public class MenuScreen implements Screen {
 		stage = new Stage();
 		init();
 	}
-	
-	private void init(){
-		
+
+	private void init() {
+
+		Texture bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
+		table.setBackground(new TextureRegionDrawable(new TextureRegion(
+				bgTexture)));
 		table.setFillParent(true);
 		table.debug();
 		stage.addActor(table);
 
 		final PlayButton playButton = new PlayButton();
 		playButton.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
+			public void changed(ChangeEvent event, Actor actor) {
+				dispose();
+				game.getGameScreen().nextLevel(
+						LevelHandler.getInstance().getNextUnfinishedLevel());
 				game.setScreen(game.getGameScreen());
 			}
 		});
 		Table newTable = new Table();
 		newTable.debug();
 		table.add(playButton).expandX();
-		
+
 		ButtonStyle optionButtonStyle = new ButtonStyle();
-		
-		optionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/settings.png")), 128, 128));
+		optionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
+				new Texture(Gdx.files.internal("data/settings.png")), 128, 128));
 		final Button optionButton = new Button(optionButtonStyle);
 		playButton.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
+			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(game.getGameScreen());
 			}
 		});
-		
+
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		buttonStyle.font = new BitmapFont();
 		buttonStyle.fontColor = Color.WHITE;
 		buttonStyle.overFontColor = Color.RED;
 		buttonStyle.pressedOffsetY = 1f;
 		buttonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1f);
-		
+
 		newTable.add(new TextButton("Select level", buttonStyle)).width(200);
 		newTable.row();
 		newTable.add(optionButton).bottom();
@@ -75,14 +82,13 @@ public class MenuScreen implements Screen {
 		table.add(newTable);
 	}
 
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
-		//Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override

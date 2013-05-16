@@ -9,14 +9,10 @@ import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
-
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-
-import se.chalmers.tda367.vt13.dimensions.model.Level;
-
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
+import se.chalmers.tda367.vt13.dimensions.model.Level;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;

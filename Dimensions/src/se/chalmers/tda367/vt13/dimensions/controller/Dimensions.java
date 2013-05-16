@@ -28,7 +28,7 @@ public class Dimensions extends Game {
 		menuScreen = new MenuScreen(this);
 
 		// Which screen do you want to show on start up?
-		setScreen(mainMenuScreen);
+		setScreen(menuScreen);
 	}
 
 	public Screen getGameOverScreen() {
@@ -51,7 +51,7 @@ public class Dimensions extends Game {
 	 * Called from the splashscreen when it's done.
 	 */
 	public void splashScreenDone() {
-		setScreen(new MainMenuScreen(this));
+		setScreen(menuScreen);
 		splashScreen.dispose();
 	}
 }

@@ -18,10 +18,7 @@ public class PlayButton extends Button {
 		Pixmap pixmap2 = new Pixmap(Gdx.files.internal("data/play.png"));
 		skin.add("play", new Texture(pixmap2));
 		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = skin.newDrawable("play");
-		buttonStyle.pressedOffsetY = 1000;
-		buttonStyle.pressedOffsetX = 1000;
-		buttonStyle.unpressedOffsetX = 1000;
+		buttonStyle.up = skin.newDrawable("play", Color.GREEN);
 		buttonStyle.down = skin.newDrawable("play", Color.BLUE);
 		buttonStyle.checked = skin.newDrawable("play");
 		buttonStyle.over = skin.newDrawable("play", Color.RED);

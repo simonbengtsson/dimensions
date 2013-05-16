@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
+import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
 import com.badlogic.gdx.Gdx;
@@ -9,14 +9,10 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -73,7 +69,7 @@ public class LevelFinishedScreen extends AbstractMenuScreen {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		final MenuButton button = new MenuButton();
+		final PlayButton button = new PlayButton();
 		table.add(button);
 		
 		// revert the checked state.
