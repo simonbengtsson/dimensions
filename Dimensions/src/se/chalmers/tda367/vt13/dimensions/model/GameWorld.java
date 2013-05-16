@@ -2,6 +2,8 @@ package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 
@@ -21,12 +23,12 @@ public class GameWorld {
 	}
 
 	public enum State {
-		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE;
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE,DIMENSION_WILLCHANGE;
 	}
 
 	private List<GameObject> gameObjects;
 	private Player player;
-	private CollisionHandler collisionHandler;
+	private CollisionHandler collisionHandler; 
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
@@ -123,22 +125,33 @@ public class GameWorld {
 	}
 
 	private void updateDimensionChange() {
-		// Hint dimension change?
 		notifyWorldListeners(State.DIMENSION_CHANGE);
 		updateRunning(); // Fix for avoiding lag
 		currentState = State.GAME_RUNNING;
+;		
 	}
 
 	/**
 	 * If dimension XY, change it to XZ and the opposite
 	 */
 	public void swapDimension() {
-		if (currentDimension == Dimension.XY) {
-			currentDimension = Dimension.XZ;
-		} else {
-			currentDimension = Dimension.XY;
-		}
-		currentState = State.DIMENSION_CHANGE;
+		notifyWorldListeners(State.DIMENSION_WILLCHANGE);
+		Timer t = new Timer();
+		t.schedule(new TimerTask(){
+
+			@Override
+			public void run() {
+				if (currentDimension == Dimension.XY) {
+					currentDimension = Dimension.XZ;
+				} else {
+					currentDimension = Dimension.XY;
+				}
+				currentState = State.DIMENSION_CHANGE;
+				
+			}
+			
+		}, 2000);
+		
 	}
 
 	/**

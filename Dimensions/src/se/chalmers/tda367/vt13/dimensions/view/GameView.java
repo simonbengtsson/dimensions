@@ -2,6 +2,8 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.controller.screens.AbstractMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
@@ -43,9 +45,11 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
+	private String dimensionWarning = "Warning, Dimension Changing!";
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
+	private boolean DimensionChange;
 
 	/**
 	 * Constructor.
@@ -71,8 +75,42 @@ public class GameView {
 			return mapXY;
 		} else if (world.getDimension() == Dimension.XZ) {
 			return mapXZ;
+
 		}
 		return null;
+	}
+
+	public void dimensionWillChange(final SpriteBatch batch) {
+
+		Timer t = new Timer();
+		TimerTask red = new TimerTask() {
+			@Override
+			public void run() {
+				batch.setColor(1, 0, 0, 1);
+			}
+		};
+		TimerTask blue = new TimerTask() {
+			@Override
+			public void run() {
+				batch.setColor(0, 0, 1, 1);
+			}
+		};
+
+		TimerTask green = new TimerTask() {
+			@Override
+			public void run() {
+				batch.setColor(0, 1, 0, 1);
+			}
+		};
+
+		t.schedule(red, 100);
+		t.schedule(blue, 700);
+		t.schedule(green, 1400);
+
+	}
+
+	public void setDimensionChange(boolean b) {
+		this.DimensionChange = b;
 	}
 
 	public void changeMap(Dimension d) {
@@ -104,6 +142,7 @@ public class GameView {
 	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		font.setScale(font.getScaleX()/10, font.getScaleY()/10);
 		// Uncomment below for making the camera follow the player on the y-axis
 		// updateCameraPosition(3);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
@@ -114,24 +153,29 @@ public class GameView {
 		// Draw gameObjects
 		SpriteBatch batch = renderer.getSpriteBatch();
 		batch.begin();
+		if(this.DimensionChange == true){
+			dimensionWillChange(batch);
+			
+			// Font drawing does not quite work yet
+			//font.draw(batch, dimensionWarning, world.getPlayer().getPosition().getX(), world.getPlayer().getPosition().getY()+5);
+		}
+
 		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ(batch);
 		}
-		// Doesn't play well with the down scaled game world. Added a github
-		// issue. The easiest thing might be to scale up the world again?
-		// font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
+
 		batch.end();
 	}
 
 	private void drawIsPaused() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		camera.position.x = 0;
 		camera.update();
-		
+
 		SpriteBatch batch = renderer.getSpriteBatch();
 		batch.begin();
 
