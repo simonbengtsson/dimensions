@@ -57,12 +57,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		view.draw();
 	}
 
-	public void r() {
-
-	}
-
-	public String hej = "";
-
 	private void getInput() {
 		getInputUp();
 		getInputDown();
