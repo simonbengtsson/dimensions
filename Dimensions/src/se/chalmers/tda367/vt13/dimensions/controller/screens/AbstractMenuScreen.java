@@ -19,7 +19,7 @@ public class AbstractMenuScreen implements Screen {
 	private BitmapFont font;
 	private final Table table;
 	private TextButtonStyle buttonStyle = new TextButtonStyle();
-	private Stage stage;
+	protected Stage stage;
 
 	public AbstractMenuScreen(final Dimensions game) {
 		this.game = game;

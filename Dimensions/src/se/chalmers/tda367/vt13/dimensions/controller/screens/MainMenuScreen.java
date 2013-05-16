@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -77,8 +78,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
