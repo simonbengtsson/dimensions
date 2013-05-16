@@ -78,7 +78,7 @@ public class GameOverScreen extends AbstractMenuScreen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		super.dispose();
 
 	}
 
