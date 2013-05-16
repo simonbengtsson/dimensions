@@ -53,6 +53,14 @@ public class AbstractMenuScreen implements Screen {
 	}
 
 	public TextButtonStyle getButtonStyle() {
+		font = new BitmapFont();
+		font.scale(2f);
+		stage = new Stage();
+		buttonStyle.font = font;
+		buttonStyle.fontColor = Color.WHITE;
+		buttonStyle.overFontColor = Color.RED;
+		buttonStyle.pressedOffsetY = 1f;
+		buttonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1f);
 		return this.buttonStyle;
 	}
 
@@ -82,7 +90,6 @@ public class AbstractMenuScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 
 	}
 

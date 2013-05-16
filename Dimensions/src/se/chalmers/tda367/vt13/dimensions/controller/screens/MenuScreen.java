@@ -1,29 +1,19 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import java.awt.Menu;
-
 import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -32,7 +22,6 @@ public class MenuScreen implements Screen {
 
 	private Dimensions game;
 	private Stage stage;
-	private SpriteBatch batch;
 	private Table mainTable = new Table();
 
 	public MenuScreen(final Dimensions game) {
@@ -53,7 +42,7 @@ public class MenuScreen implements Screen {
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
+				playButton.setChecked(false);
 				game.getGameScreen().nextLevel(
 						LevelHandler.getInstance().getNextUnfinishedLevel());
 				game.setScreen(game.getGameScreen());
@@ -65,7 +54,7 @@ public class MenuScreen implements Screen {
 		final Button levelSelectButton = new MenuButton("data/level_select.png");
 		levelSelectButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
+				levelSelectButton.setChecked(false);
 				game.setScreen(game.getLevelSelectScreen());
 			}
 		});
@@ -73,7 +62,7 @@ public class MenuScreen implements Screen {
 		final Button optionButton = new MenuButton("data/settings.png");
 		optionButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
+				optionButton.setChecked(false);
 				game.setScreen(game.getOptionScreen(game));
 			}
 		});
@@ -112,6 +101,7 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		stage.addActor(mainTable);
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -135,7 +125,6 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
 	}
 
 }

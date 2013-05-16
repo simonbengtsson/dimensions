@@ -14,7 +14,6 @@ import com.badlogic.gdx.Screen;
 
 public class Dimensions extends Game {
 
-	private MainMenuScreen mainMenuScreen;
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
 	private GameOverScreen gameOverScreen;
@@ -25,7 +24,6 @@ public class Dimensions extends Game {
 	@Override
 	public void create() {
 		LevelUtil.loadAllLevels(); // Loads all Levels into the game
-		mainMenuScreen = new MainMenuScreen(this);
 		gameScreen = new GameScreen(this);
 		splashScreen = new SplashScreen(this);
 		gameOverScreen = new GameOverScreen(this);
@@ -34,15 +32,15 @@ public class Dimensions extends Game {
 		levelSelectScreen = new LevelSelectScreen(this);
 
 		// Set startup screen
-		setScreen(mainMenuScreen);
+		setScreen(menuScreen);
 	}
 
 	public Screen getGameOverScreen() {
 		return gameOverScreen;
 	}
 
-	public Screen getMainMenuScreen() {
-		return mainMenuScreen;
+	public Screen getMenuScreen() {
+		return menuScreen;
 	}
 
 	public GameScreen getGameScreen() {
