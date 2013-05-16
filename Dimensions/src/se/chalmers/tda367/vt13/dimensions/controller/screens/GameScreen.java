@@ -9,6 +9,7 @@ import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
@@ -43,7 +44,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void show() {
 
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		CollisionHandler collisionHandler = new CollisionHandler(tiledMapHandler);
+		CollisionHandler collisionHandler = new CollisionHandler(
+				tiledMapHandler);
 		world = new GameWorld(nextLevel, collisionHandler);
 		world.addWorldListener(this);
 		view = new GameView(world, tiledMapHandler.getMap(nextLevel
@@ -51,7 +53,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				.getMapXZPath()));
 		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
-		
+
 	}
 
 	@Override
@@ -193,37 +195,31 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void worldChange(State newWorldState, final GameWorld world) {
 		if (newWorldState == State.GAME_OVER) {
 			game.setScreen(new GameOverScreen(game));
-			
+			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+					world.getScore(), false);
 		} else if (newWorldState == State.DIMENSION_CHANGE) {
 			world.getPlayer().setIsGrounded(true);
 			view.changeMap(world.getDimension());
 		}
-		
-		else if(newWorldState == State.DIMENSION_WILLCHANGE){
+
+		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
 			view.setDimensionChange(true);
-			
-			
+
 			Timer t = new Timer();
-			t.schedule(new TimerTask(){
+			t.schedule(new TimerTask() {
 
 				@Override
 				public void run() {
 					view.setDimensionChange(false);
-					
-				} 
-				
+
+				}
+
 			}, 2000);
-			
-			
-			
-			
-			 
-			
-			
-			
-			
+
 		} else if (newWorldState == State.LEVEL_FINISHED) {
 			game.setScreen(new LevelFinishedScreen(game));
+			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+					world.getScore(), true);
 		}
 	}
 }

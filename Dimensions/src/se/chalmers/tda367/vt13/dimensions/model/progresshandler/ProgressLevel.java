@@ -36,6 +36,11 @@ public class ProgressLevel {
 		}
 	}
 	
+	public void gameFinished(int score, boolean completed){
+		evaluateNewScore(score);
+		isCompleted = isCompleted || completed;
+	}
+	
 	public Level getLevel(){
 		return level;
 	}

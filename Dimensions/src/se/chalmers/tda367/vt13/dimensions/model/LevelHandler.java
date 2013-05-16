@@ -153,6 +153,10 @@ public class LevelHandler {
 		return (ProgressLevel) progressLevels.toArray()[i];
 	}
 	
+	public void gameFinished(Level l, int score, boolean completedLevel){
+		//getProgressFor(l).gameFinished(score, completedLevel);
+	}
+	
 	/*
 	 * If you want to a level to be dynamically created at start up, and not
 	 * read or written to file, create and register it in the LevelHandler here.
