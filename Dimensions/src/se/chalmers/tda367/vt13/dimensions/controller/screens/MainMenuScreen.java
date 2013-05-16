@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
+import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
 import com.badlogic.gdx.Gdx;
@@ -53,6 +54,8 @@ public class MainMenuScreen extends AbstractMenuScreen {
 			}
 		});
 		
+		getTable().add(new PlayButton());
+		getTable().row();
 		getTable().add(start);
 		getTable().row();
 		getTable().add(levelSelect);

@@ -3,9 +3,8 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.MenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
-import se.chalmers.tda367.vt13.dimensions.model.levels.LevelHandler;
-import se.chalmers.tda367.vt13.dimensions.util.Assets;
 import se.chalmers.tda367.vt13.dimensions.util.LevelUtil;
 
 import com.badlogic.gdx.Game;
@@ -17,6 +16,7 @@ public class Dimensions extends Game {
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
 	private GameOverScreen gameOverScreen;
+	private MenuScreen menuScreen;
 
 	@Override
 	public void create() {
@@ -25,6 +25,7 @@ public class Dimensions extends Game {
 		gameScreen = new GameScreen(this);
 		splashScreen = new SplashScreen(this);
 		gameOverScreen = new GameOverScreen(this);
+		menuScreen = new MenuScreen(this);
 
 		// Which screen do you want to show on start up?
 		setScreen(mainMenuScreen);
