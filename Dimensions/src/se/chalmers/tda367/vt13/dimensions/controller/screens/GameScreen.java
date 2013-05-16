@@ -210,7 +210,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				public void run() {
 					view.setDimensionChange(false);
 					
-				}
+				} 
 				
 			}, 2000);
 			

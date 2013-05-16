@@ -91,7 +91,7 @@ public class GameView {
 		TimerTask red = new TimerTask(){
 			@Override
 			public void run() {
-				batch.setColor(1,0,0,1);			}
+				batch.setColor(1,0,0,1); 			}
 		};
 		TimerTask blue = new TimerTask(){
 			@Override

@@ -28,7 +28,7 @@ public class GameWorld {
 
 	private List<GameObject> gameObjects;
 	private Player player;
-	private CollisionHandler collisionHandler;
+	private CollisionHandler collisionHandler; 
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
