@@ -1,30 +1,20 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
+import java.util.List;
+
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.Level;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LevelSelectScreen implements Screen {
 
@@ -40,6 +30,34 @@ public class LevelSelectScreen implements Screen {
 	}
 
 	private void init() {
+		List<Level> levels = LevelHandler.getInstance().getLevels();
+
+		for (final Level l : levels) {
+			TextButton levelButton = new TextButton(l.getName(),
+					getButtonStyle());
+			levelButton.addListener(new ClickListener() {
+				public void clicked(InputEvent e, float x, float y) {
+					game.getGameScreen().nextLevel(l);
+					game.setScreen(game.getGameScreen());
+				}
+			});
+
+			getTable().add(levelButton);
+			getTable().row();
+		}
+
+		TextButton goBack = new TextButton("Back", getButtonStyle());
+		goBack.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				dispose();
+				game.setScreen(new MainMenuScreen(game));
+			}
+		});
+
+		getTable().row();
+		getTable().add(goBack);
+
+		setStageInput();
 
 	}
 
