@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,11 +25,13 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		playButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
 				dispose();
+				game.getGameScreen().nextLevel(
+						LevelHandler.getInstance().getNextUnfinishedLevel());
 				game.setScreen(game.getGameScreen());
 
 			}
 		});
-		
+
 		levelSelect.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
 				dispose();
@@ -52,7 +55,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
 			}
 		});
-		
+
 		getTable().add(playButton);
 		getTable().row();
 		getTable().add(levelSelect);

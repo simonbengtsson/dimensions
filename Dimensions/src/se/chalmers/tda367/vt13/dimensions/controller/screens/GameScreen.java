@@ -6,15 +6,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+
+import se.chalmers.tda367.vt13.dimensions.model.Level;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
-import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
-import se.chalmers.tda367.vt13.dimensions.model.levels.TiledLevel;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
@@ -24,12 +27,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
-	GameWorld world;
-	GameView view;
-	Map<String, Sound> files;
-	Dimensions game;
+	private GameWorld world;
+	private GameView view;
+	private Map<String, Sound> files;
+	private Dimensions game;
 	private boolean wasEscapePressed = false;
 	private boolean wasEnterPressed = false;
+	private Level nextLevel;
 
 	public GameScreen(Dimensions game) {
 		this.game = game;
@@ -37,12 +41,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void show() {
-		Level level = new TiledLevel();
-		
+
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		world = new GameWorld(level, tiledMapHandler);
+		CollisionHandler collisionHandler = new CollisionHandler(tiledMapHandler);
+		world = new GameWorld(nextLevel, collisionHandler);
 		world.addWorldListener(this);
-		view = new GameView(world, tiledMapHandler.getMap(level.getMapXYPath()), tiledMapHandler.getMap(level.getMapXZPath()));
+		view = new GameView(world, tiledMapHandler.getMap(nextLevel
+				.getMapXYPath()), tiledMapHandler.getMap(nextLevel
+				.getMapXZPath()));
 		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
 		
@@ -116,6 +122,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			}
 
 		}
+	}
+
+	public void nextLevel(Level l) {
+		this.nextLevel = l;
 	}
 
 	/**

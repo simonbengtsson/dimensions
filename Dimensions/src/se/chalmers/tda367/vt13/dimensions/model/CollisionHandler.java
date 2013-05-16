@@ -7,17 +7,17 @@ import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
-import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
+import se.chalmers.tda367.vt13.dimensions.util.MapHandler;
 
 /**
  * Class handling all types of collisions.
  */
 public class CollisionHandler {
 
-	TiledMapHandler tiledMapHandler;
+	MapHandler mapHandler;
 	
-	public CollisionHandler(TiledMapHandler tiledMapHandler){
-		this.tiledMapHandler = tiledMapHandler;
+	public CollisionHandler(MapHandler mapHandler){
+		this.mapHandler = mapHandler;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class CollisionHandler {
 		for (int y = relevantPos; y <= relevantPos + relevantSize; y++) {
 			for (int x = (int) pos.getX(); x <= pos.getX() + (size.getX()); x++) {
 				// check if hit the ground / a platform (layer 1)
-				if (tiledMapHandler.isCellGround(x, y)) {
+				if (mapHandler.isCellGround(x, y)) {
 					if (speed.getY() <= 0) {
 						pos.setY((int) (y + 1)); // adjust position
 						player.setIsGrounded(true);
@@ -69,7 +69,7 @@ public class CollisionHandler {
 					}
 				}
 				// check if hit an obstacle (layer 2)
-				if (tiledMapHandler.isCellObstacle(x, y)) {
+				if (mapHandler.isCellObstacle(x, y)) {
 					world.notifyWorldListeners(State.GAME_OVER);
 				}
 			}

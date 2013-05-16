@@ -1,16 +1,10 @@
-package se.chalmers.tda367.vt13.dimensions.model.levels;
+package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.Platform;
-import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 
 /**
  * Class for creating a level with platforms and powerups
@@ -56,13 +50,15 @@ public class Level implements Serializable {
 	}
 
 	public Level(String name, float gravity, List<GameObject> gameObjects,
-			Dimension start, String TMXFileXY, String TMXFileXZ) {
+			Dimension start, String TMXFileXY, String TMXFileXZ,
+			float finishedPosition) {
 		this.levelname = name;
 		this.gravity = gravity;
 		this.gameObjects = gameObjects;
 		this.startingDimension = start;
 		this.mapXYPath = TMXFileXY;
 		this.mapXZPath = TMXFileXZ;
+		this.levelFinishedPosition = finishedPosition;
 	}
 
 	public List<GameObject> getGameObjects() {

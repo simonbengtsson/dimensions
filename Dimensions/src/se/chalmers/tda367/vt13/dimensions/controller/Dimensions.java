@@ -39,7 +39,7 @@ public class Dimensions extends Game {
 		return mainMenuScreen;
 	}
 
-	public Screen getGameScreen() {
+	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
 

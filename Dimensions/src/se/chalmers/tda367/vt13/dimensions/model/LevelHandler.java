@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.model.levels;
+package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -148,5 +151,22 @@ public class LevelHandler {
 	
 	public ProgressLevel getProgressLevel(int i){
 		return (ProgressLevel) progressLevels.toArray()[i];
+	}
+	
+	/*
+	 * If you want to a level to be dynamically created at start up, and not
+	 * read or written to file, create and register it in the LevelHandler here.
+	 * Use an instance of LevelCreator to create formations in your level.
+	 */
+	public void load() {
+		// Example Level
+		List<GameObject> gameObjects = new ArrayList<GameObject>();
+		gameObjects.add(new DimensionChangePowerUp(new Vector3(20, 4, 10), new Vector3(
+				1, 1, 1), new Vector3()));
+		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
+				1, 1, 1), new Vector3()));
+		Level level = new Level("Example", -0.05f, gameObjects, Dimension.XY,
+				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
+		registerLevel(level);
 	}
 }
