@@ -1,0 +1,122 @@
+System design document for Project Dimensions (SDD)
+
+1 Introduction
+1.1 Design goals
+1.2 Definitions, acronyms and abbreviations
+2 System design
+2.1 Overview
+2.1.2 Law of Demeter
+2.1.3 Event Handling
+2.2 Software decomposition
+2.2.1 General
+2.2.2 Decomposition into subsystems
+2.2.3 Layering
+2.2.4 Dependency analysis
+2.4 Persistent data management
+3 References
+
+Version: 0.1
+Date 2013-05-24
+Author: Kim Egenvall, Carl Fredricksson Simon Bengtsson, Kim Kling
+
+This version overrides all previous versions.
+
+1 Introduction
+1.1 Design goals
+The design must have loose and few connections between classes to reduce dependencies. 
+This is important to allow for easy expansion with new functionality, new card games like 
+Omaha poker for example, and to be able to easily build upon the applications client/server 
+architecture. The models and controllers should be testable. See RAD for usability.
+1.2 Definitions, acronyms and abbreviations
+Technical vocabulary:
+GUI - Graphical User Interface
+Java - platform independent programming language
+JRE - the Java Run time Environment.
+MVC - a design pattern where all classes belongs to one of the three categories model, view or control. Model classes contain all the data and relevant methods that describes the different states of the application, whereas the view classes contains all the GUI components. The controller classes handles the applications actions - controls the  program - by handling the communication between the different classes. All definitions regarding poker follow standard poker vocabulary
+
+Dash - A short speedboost issued by the player. Can be used to do long jumps and have a short cooldown.
+Jump - A action by the player, to navigate between platforms by jumping between them.
+Dimension-switch - When the two dimensional world 
+Player - Our main character who is a three dimensional figure, stuck in a two dimensional world.
+Camera - The view on the screen. Can be rotated and moved to see other parts of the world an dimensions.
+Cooldown - the time when a special ability is locked after usage for a amount of time.
+Powerup - An item that, for a limited or unlimited time, changes a property of the player or the world.
+Platform - An obsticle that can be jumped on. Used to jump to and from to transport one self from a location to another.
+Dimension - A viewport location. E.g, a dimension could be when you look from the side on the X-Y axes. Another can be from upside on the X-Z axes.
+
+2 System design
+2.1 Overview
+The application will follow a type of the MVC pattern. The most important thing is that the model is compeltly seperated and can be easily taken out and be used with another framework for example.
+
+The application uses the framework LibGDX. It is built up with different screens and each screen has the methods create, render, dispose and few others. Create is basically like a constructor, setting up the initial state of the application. Render is a method that is running every frame update on the active screen if not told otherwise. Dispose takes care of the garbage collection of assets no longer used.
+2.1.2 Law of Demeter
+We tried implementing our classes to follow the “Law of Demeter”. What it says is basically that classes should know as little as possible about other classes. In the MVC pettern it is adviced that the controller knows everything about the model however which also is the case in our application.
+
+2.1.3 Event handling
+In this application  event handling is processed by the game loop. When something happens the state of an object changes which is then recognized and handled by interested classes the next loop.
+
+2.2 Software decomposition
+2.2.1 General
+The system is decomposed into the following modules:
+Controller package: 
+Basically everything that has to do with the controller of the mvc pattern
+- AbstractScreen : General class of the MainMenu,Option and GameOverScreen.
+- GameScreen: The main controller for the MVC
+- SoundObserver
+- SplashScreen: Imagesplashscreen when starting the application
+- Collider: Deals with the collision testing (eller? dubletter i projektet)
+- Dimensions: The Game which creates all screens
+
+Model package: 
+The actual items in the game
+- GameModel: The model for MVC
+- GameObject: The type of objects in the game such as platforms, powerups and the player
+- ModelInterface: Interface containing gravity and the jump function
+- OptionsModel: Options for the PC version that applies settings
+- Vector 3: Describes object in the 3-dimensional space
+
+Level package:
+Contains classes for creating levels and writing/reading them from files.
+- Level: Abstract class describing a general level
+- NormalLevel: Programmer able to create a level through method
+- RandomLevel: A random generated level
+- ReadLevel: Reads level from file
+- WriteLevel: Write level to file
+
+Powerup package:
+Contains different kinds of powerups
+- Interface PowerUp 
+- LowGravity
+- Speed
+- Slow
+
+Util package: 
+Contains Constants only for name and version
+
+View package:
+- GameView: The main View for the MVC
+
+ 
+
+2.2.2 Decomposition into subsystems
+ReadLevel?
+2.2.3 Layering
+The layering is indicated in the image - insert name - done by the tool  - ta reda på namnet - 
+2.2.4 Dependency analysis
+Dependancies will be shown with a diagram by the tool   - ta reda på namnet - 
+
+2.4 Persistent data management
+
+3 References
+Law of Demeter. 
+http://www.cse.chalmers.se/edu/year/2012/course/TDA550/Lectures/F7-OH.pdf
+MVC, see http://en.wikipedia.org/wiki/Model-view-controller
+Policy File Locator and RmiStarter classes. http://code.nomad-labs.com/2010/03/26/an-improved-rmi-tutorial-with-eclipse/
+Texas Hold’em Hand Evaluator. [HandEvaluator, HandValue, HandValueType]
+http://code.google.com/p/texasholdem-java/source/browse/
+#svn%2Ftrunk%2Ftexasholdem%2Fsrc%2Fmain%2Fjava%2Forg%2Fozsoft%2Ftexasholdem%
+253Fstate%253Dclosed
+4 APPENDEIX
+4.1 Design Model
+4.2 Controller Communication Model
+
