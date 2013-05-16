@@ -43,7 +43,6 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private int thescore = 0;
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
@@ -59,15 +58,14 @@ public class GameView {
 		this.mapXY = mapXY;
 		this.mapXZ = mapXZ;
 		loadImageFiles();
-		renderer = new OrthogonalTiledMapRenderer(getCurrentMap(),
-				1 / 16f);
+		renderer = new OrthogonalTiledMapRenderer(getCurrentMap(), 1 / 16f);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
 		initWalkAnimation();
 		font.setColor(Color.YELLOW);
 	}
-	
+
 	public TiledMap getCurrentMap() {
 		if (world.getDimension() == Dimension.XY) {
 			return mapXY;
@@ -76,7 +74,7 @@ public class GameView {
 		}
 		return null;
 	}
-	
+
 	public void changeMap(Dimension d) {
 		if (d == Dimension.XY) {
 			renderer.setMap(mapXY);
@@ -89,9 +87,9 @@ public class GameView {
 	 * Draw GameObjects on the screen.
 	 */
 	public void draw() {
-		
-		switch(world.getCurrentState()){
-		case GAME_RUNNING: 
+
+		switch (world.getCurrentState()) {
+		case GAME_RUNNING:
 			drawIsRunning();
 			break;
 		case GAME_PAUSED:
@@ -100,10 +98,10 @@ public class GameView {
 		default:
 			break;
 		}
-		
+
 	}
-	
-	private void drawIsRunning(){
+
+	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		// Uncomment below for making the camera follow the player on the y-axis
@@ -112,7 +110,6 @@ public class GameView {
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
-		calculateScore();
 
 		// Draw gameObjects
 		SpriteBatch batch = renderer.getSpriteBatch();
@@ -124,29 +121,25 @@ public class GameView {
 		}
 		// Doesn't play well with the down scaled game world. Added a github
 		// issue. The easiest thing might be to scale up the world again?
-		//font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
-		batch.end();
-	}
-	
-	private void drawIsPaused(){
-		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		SpriteBatch batch = renderer.getSpriteBatch();
-		
-		BitmapFont font = new BitmapFont();
-		font.scale(2);
-		//font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		
-		batch.begin();
-		
-		// Why cant I draw text?
-		font.draw(batch, "Paused", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+		// font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
 		batch.end();
 	}
 
-	private void calculateScore() {
-		thescore = (int) world.getPlayer().getPosition().getX() / 10;
+	private void drawIsPaused() {
+		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		camera.position.x = 0;
+		camera.update();
+		
+		SpriteBatch batch = renderer.getSpriteBatch();
+		batch.begin();
+
+		BitmapFont font = new BitmapFont();
+		font.setScale(2);
+		font.draw(batch, "Test", 20, 20);
+
+		batch.end();
 	}
 
 	/**
