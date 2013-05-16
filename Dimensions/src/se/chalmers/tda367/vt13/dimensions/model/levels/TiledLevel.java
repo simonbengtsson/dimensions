@@ -25,6 +25,8 @@ public class TiledLevel extends Level {
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 5, 5), new Vector3(1, 1, 1), new Vector3()));
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(120, 5, 5), new Vector3(1, 1, 1), new Vector3()));
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(120, 5, 5), new Vector3(1, 1, 1), new Vector3()));
+		gameObjects.add(new Platform(new Vector3(46, 5, 5), new Vector3(2, 2, 2), new Vector3()));
+		gameObjects.add(new Platform(new Vector3(48, 5, 5), new Vector3(2, 2, 2), new Vector3()));
 		gameObjects.add(new Platform(new Vector3(50, 5, 5), new Vector3(2, 2, 2), new Vector3()));
 		gameObjects.add(new Platform(new Vector3(52, 5, 5), new Vector3(2, 2, 2), new Vector3()));
 		gameObjects.add(new Platform(new Vector3(54, 5, 5), new Vector3(2, 2, 2), new Vector3()));

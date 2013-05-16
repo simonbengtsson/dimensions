@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
@@ -36,7 +37,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void show() {
 		Level level = new TiledLevel();
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		world = new GameWorld(level, tiledMapHandler);
+		CollisionHandler collisionHandler = new CollisionHandler(tiledMapHandler);
+		world = new GameWorld(level, collisionHandler);
 		world.addWorldListener(this);
 		view = new GameView(world, tiledMapHandler.getMap(level.getMapXYPath()), tiledMapHandler.getMap(level.getMapXZPath()));
 		tiledMapHandler.setGameView(view);

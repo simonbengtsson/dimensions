@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.levels.Level;
-import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 
 /**
  * Game model.
@@ -42,8 +41,8 @@ public class GameWorld {
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Level level, TiledMapHandler tiledMapHandler) {
-		this(new Player(), level, tiledMapHandler);
+	public GameWorld(Level level, CollisionHandler collisionHandler) {
+		this(new Player(), level, collisionHandler);
 	}
 
 	/**
@@ -51,10 +50,10 @@ public class GameWorld {
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Player player, Level level, TiledMapHandler tiledMapHandler) {
+	public GameWorld(Player player, Level level, CollisionHandler collisionHandler) {
 		this.player = player;
 		this.gameObjects = level.getGameObjects();
-		this.collisionHandler = new CollisionHandler(tiledMapHandler);
+		this.collisionHandler = collisionHandler;
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = gravity;
