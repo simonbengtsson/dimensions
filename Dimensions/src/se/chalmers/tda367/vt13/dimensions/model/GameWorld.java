@@ -65,6 +65,7 @@ public class GameWorld {
 	}
 
 	public void update() {
+		State backupState = currentState;
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
@@ -112,7 +113,7 @@ public class GameWorld {
 	}
 
 	private void updatePaused() {
-		// TODO show paused screen
+		notifyWorldListeners(State.GAME_PAUSED);
 	}
 
 	private void updateLevelFinished() {
