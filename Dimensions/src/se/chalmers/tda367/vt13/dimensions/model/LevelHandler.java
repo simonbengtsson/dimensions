@@ -159,7 +159,7 @@ public class LevelHandler {
 	 * Use an instance of LevelCreator to create formations in your level.
 	 */
 	public void load() {
-		// Example Level
+		// Level named Example
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(20, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
@@ -168,5 +168,7 @@ public class LevelHandler {
 		Level level = new Level("Example", -0.05f, gameObjects, Dimension.XY,
 				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
 		registerLevel(level);
+		// End of Example Level
+		
 	}
 }

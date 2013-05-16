@@ -3,9 +3,11 @@ package se.chalmers.tda367.vt13.dimensions.view;
 import java.util.HashMap;
 import java.util.Map;
 
+import se.chalmers.tda367.vt13.dimensions.controller.screens.AbstractMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.util.Constants;
@@ -87,6 +89,21 @@ public class GameView {
 	 * Draw GameObjects on the screen.
 	 */
 	public void draw() {
+		
+		switch(world.getCurrentState()){
+		case GAME_RUNNING: 
+			drawIsRunning();
+			break;
+		case GAME_PAUSED:
+			drawIsPaused();
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	private void drawIsRunning(){
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		// Uncomment below for making the camera follow the player on the y-axis
@@ -108,6 +125,23 @@ public class GameView {
 		// Doesn't play well with the down scaled game world. Added a github
 		// issue. The easiest thing might be to scale up the world again?
 		//font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
+		batch.end();
+	}
+	
+	private void drawIsPaused(){
+		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		SpriteBatch batch = renderer.getSpriteBatch();
+		
+		BitmapFont font = new BitmapFont();
+		font.scale(2);
+		//font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		
+		batch.begin();
+		
+		// Why cant I draw text?
+		font.draw(batch, "Paused", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		batch.end();
 	}
 
