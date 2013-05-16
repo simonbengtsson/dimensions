@@ -106,16 +106,16 @@ public class LevelHandler {
 	 * @return
 	 */
 	public Level getNextUnfinishedLevel() {
-		Level returning = null;
+		Level nextLevel = null;
 		Iterator<ProgressLevel> iter = progressLevels.iterator();
 		while (iter.hasNext()) {
 			ProgressLevel progress = iter.next();
 			if (!progress.isCompleted()) {
-				returning = progress.getLevel();
+				nextLevel = progress.getLevel();
 				break;
 			}
 		}
-		return returning;
+		return nextLevel;
 	}
 
 	/**

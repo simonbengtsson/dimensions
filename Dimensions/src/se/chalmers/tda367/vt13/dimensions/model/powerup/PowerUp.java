@@ -11,6 +11,7 @@ public interface PowerUp  {
 	public static final int LOW_GRAVITY = 2;
 	public static final int DIMENSION_CHANGE = 3;
 	public static final int SLOW = 4;
+	
 	/**
 	 * Method called when collision is detected between
 	 * the player and the PowerUp. Affects the player
@@ -18,5 +19,6 @@ public interface PowerUp  {
 	 * PowerUp class.
 	 */
 	public void use(GameWorld gm);
+	public boolean isUsed();
 	
 }

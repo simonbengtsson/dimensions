@@ -107,7 +107,6 @@ public class CollisionHandler {
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(world);
-					iterator.remove();
 				}
 			}
 		}

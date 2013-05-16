@@ -5,14 +5,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import se.chalmers.tda367.vt13.dimensions.controller.screens.AbstractMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.util.Constants;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -25,7 +23,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Game view.
@@ -142,7 +139,7 @@ public class GameView {
 	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		font.setScale(font.getScaleX()/10, font.getScaleY()/10);
+		font.setScale(font.getScaleX() / 10, font.getScaleY() / 10);
 		// Uncomment below for making the camera follow the player on the y-axis
 		// updateCameraPosition(3);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
@@ -153,11 +150,13 @@ public class GameView {
 		// Draw gameObjects
 		SpriteBatch batch = renderer.getSpriteBatch();
 		batch.begin();
-		if(this.DimensionChange == true){
+		if (this.DimensionChange == true) {
 			dimensionWillChange(batch);
-			
+
 			// Font drawing does not quite work yet
-			//font.draw(batch, dimensionWarning, world.getPlayer().getPosition().getX(), world.getPlayer().getPosition().getY()+5);
+			// font.draw(batch, dimensionWarning,
+			// world.getPlayer().getPosition().getX(),
+			// world.getPlayer().getPosition().getY()+5);
 		}
 
 		if (world.getDimension() == GameWorld.Dimension.XY) {
@@ -228,13 +227,13 @@ public class GameView {
 	private void loadImageFiles() {
 		textures = new HashMap<String, Texture>();
 		for (GameObject g : world.getGameObjects()) {
-			String file = g.getImageFileAsString();
+			String file = g.getImagePath();
 			if (!textures.containsKey(file) && !file.equals("")) {
 				Texture t = new Texture(Gdx.files.internal(file));
 				textures.put(file, t);
 			}
 		}
-		String file = world.getPlayer().getImageFileAsString();
+		String file = world.getPlayer().getImagePath();
 		textures.put(file, new Texture(Gdx.files.internal(file)));
 	}
 
@@ -242,9 +241,15 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			System.out.println();
-			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
-					pos.getX(), pos.getY(), size.getX(), size.getY());
+			if (!(gameObject instanceof PowerUp)) {
+				spriteBatch.draw(
+						textures.get(gameObject.getImagePath()),
+						pos.getX(), pos.getY(), size.getX(), size.getY());
+			} else if (!((PowerUp) gameObject).isUsed()) {
+				spriteBatch.draw(
+						textures.get(gameObject.getImagePath()),
+						pos.getX(), pos.getY(), size.getX(), size.getY());
+			}
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
@@ -258,13 +263,20 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			spriteBatch.draw(textures.get(gameObject.getImageFileAsString()),
-					pos.getX(), pos.getZ(), size.getX(), size.getZ());
+			if (!(gameObject instanceof PowerUp)) {
+				spriteBatch.draw(
+						textures.get(gameObject.getImagePath()),
+						pos.getX(), pos.getY(), size.getX(), size.getY());
+			} else if (((PowerUp) gameObject).isUsed()) {
+				spriteBatch.draw(
+						textures.get(gameObject.getImagePath()),
+						pos.getX(), pos.getY(), size.getX(), size.getY());
+			}
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		Player p = world.getPlayer();
-		spriteBatch.draw(textures.get(p.getImageFileAsString()), p
+		spriteBatch.draw(textures.get(p.getImagePath()), p
 				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
 				.getX(), p.getSize().getZ());
 	}

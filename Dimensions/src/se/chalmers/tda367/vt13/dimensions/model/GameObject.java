@@ -79,7 +79,7 @@ public abstract class GameObject implements Serializable, SoundObservable {
 	 * 
 	 * @return
 	 */
-	public String getImageFileAsString(){
+	public String getImagePath(){
 		return imageFile;
 	}
 

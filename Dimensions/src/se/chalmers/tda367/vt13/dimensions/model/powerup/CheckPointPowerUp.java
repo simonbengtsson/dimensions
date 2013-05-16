@@ -13,4 +13,10 @@ public class CheckPointPowerUp extends GameObject implements PowerUp{
 		gm.placeCheckPoint();
 	}
 
+	@Override
+	public boolean isUsed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
