@@ -5,8 +5,10 @@ import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,14 +16,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MenuScreen implements Screen {
 
 	private Dimensions game;
-	Stage stage;
-	SpriteBatch batch;
+	private Stage stage;
+	private SpriteBatch batch;
+	private Table table = new Table();
 
 	public MenuScreen(final Dimensions game) {
 		this.game = game;
@@ -30,7 +35,7 @@ public class MenuScreen implements Screen {
 	}
 	
 	private void init(){
-		Table table = new Table();
+		
 		table.setFillParent(true);
 		table.debug();
 		stage.addActor(table);
@@ -41,18 +46,33 @@ public class MenuScreen implements Screen {
 				game.setScreen(game.getGameScreen());
 			}
 		});
-		table.add(playButton);
+		Table newTable = new Table();
+		newTable.debug();
+		table.add(playButton).expandX();
 		
 		ButtonStyle optionButtonStyle = new ButtonStyle();
 		
-		optionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/play.png"))));
+		optionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/settings.png")), 128, 128));
 		final Button optionButton = new Button(optionButtonStyle);
 		playButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				game.setScreen(game.getGameScreen());
 			}
 		});
-		table.add(optionButton);
+		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		buttonStyle.font = new BitmapFont();
+		buttonStyle.fontColor = Color.WHITE;
+		buttonStyle.overFontColor = Color.RED;
+		buttonStyle.pressedOffsetY = 1f;
+		buttonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1f);
+		
+		newTable.add(new TextButton("Select level", buttonStyle)).width(200);
+		newTable.row();
+		newTable.add(optionButton).bottom();
+		newTable.row();
+		newTable.add(new TextButton("Exit", buttonStyle));
+		table.add(newTable);
 	}
 
 
@@ -62,6 +82,7 @@ public class MenuScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
+		//Table.drawDebug(stage);
 	}
 
 	@Override
