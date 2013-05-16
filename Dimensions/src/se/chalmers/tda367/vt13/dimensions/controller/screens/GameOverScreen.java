@@ -27,7 +27,7 @@ public class GameOverScreen extends AbstractMenuScreen {
 		menu.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
 				dispose();
-				game.setScreen(new MainMenuScreen(game));
+				game.setScreen(game.getMenuScreen());
 
 			}
 		});

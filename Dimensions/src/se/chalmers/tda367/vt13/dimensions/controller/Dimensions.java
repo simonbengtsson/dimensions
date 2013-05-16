@@ -3,7 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.LevelSelectScreen;
-import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.OptionScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
