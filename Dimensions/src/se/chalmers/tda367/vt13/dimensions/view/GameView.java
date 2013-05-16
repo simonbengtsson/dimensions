@@ -2,10 +2,13 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.util.Constants;
@@ -42,9 +45,11 @@ public class GameView {
 	private TextureRegion currentFrame;
 	private float stateTime;
 	private int thescore = 0;
+	private String dimensionWarning = "Warning, Dimension Changing!";
 	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
+	private boolean DimensionChange;
 
 	/**
 	 * Constructor.
@@ -65,16 +70,56 @@ public class GameView {
 		initWalkAnimation();
 		font.setColor(Color.YELLOW);
 	}
-	
+
 	public TiledMap getCurrentMap() {
 		if (world.getDimension() == Dimension.XY) {
 			return mapXY;
 		} else if (world.getDimension() == Dimension.XZ) {
 			return mapXZ;
+
 		}
 		return null;
 	}
-	
+
+	public void dimensionWillChange(final SpriteBatch batch){
+
+		
+		
+
+		Timer t = new Timer();
+		TimerTask red = new TimerTask(){
+			@Override
+			public void run() {
+				batch.setColor(1,0,0,1);			}
+		};
+		TimerTask blue = new TimerTask(){
+			@Override
+			public void run() {
+				batch.setColor(0,0,1,1);
+				
+				
+				
+			}
+			
+		};
+
+		TimerTask green = new TimerTask(){
+			@Override
+			public void run() {
+				batch.setColor(0,1,0,1);
+				
+			}
+		};
+
+			t.schedule(red,100);
+			t.schedule(blue,700);
+			t.schedule(green,1400);
+
+	}
+
+	public void setDimensionChange(boolean b){
+		this.DimensionChange = b;
+	}
 	public void changeMap(Dimension d) {
 		if (d == Dimension.XY) {
 			renderer.setMap(mapXY);
@@ -83,12 +128,18 @@ public class GameView {
 		}
 	}
 
+
+
+
+
+
 	/**
 	 * Draw GameObjects on the screen.
 	 */
 	public void draw() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		font.setScale(font.getScaleX()/10, font.getScaleY()/10);
 		// Uncomment below for making the camera follow the player on the y-axis
 		// updateCameraPosition(3);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
@@ -100,6 +151,13 @@ public class GameView {
 		// Draw gameObjects
 		SpriteBatch batch = renderer.getSpriteBatch();
 		batch.begin();
+		if(this.DimensionChange == true){
+			dimensionWillChange(batch);
+			
+			// Font drawing does not quite work yet
+			//font.draw(batch, dimensionWarning, world.getPlayer().getPosition().getX(), world.getPlayer().getPosition().getY()+5);
+		}
+
 		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
@@ -107,7 +165,7 @@ public class GameView {
 		}
 		// Doesn't play well with the down scaled game world. Added a github
 		// issue. The easiest thing might be to scale up the world again?
-		//font.draw(batch, "Score: " + thescore, camera.position.x, 10f);
+		//font.draw(batch, "Score: " + thescore, camera.position.x, camera.position.y +5);
 		batch.end();
 	}
 
@@ -139,7 +197,7 @@ public class GameView {
 		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
 		TextureRegion[][] regions = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
-						/ FRAME_ROWS);
+				/ FRAME_ROWS);
 		walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {

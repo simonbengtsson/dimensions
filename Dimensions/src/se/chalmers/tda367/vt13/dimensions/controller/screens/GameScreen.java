@@ -2,10 +2,13 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
@@ -35,12 +38,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	@Override
 	public void show() {
 		Level level = new TiledLevel();
+		
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		world = new GameWorld(level, tiledMapHandler);
 		world.addWorldListener(this);
 		view = new GameView(world, tiledMapHandler.getMap(level.getMapXYPath()), tiledMapHandler.getMap(level.getMapXZPath()));
 		tiledMapHandler.setGameView(view);
 		loadSoundFiles();
+		
 	}
 
 	@Override
@@ -175,12 +180,38 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	 * Performs updates if world state changes
 	 */
 	@Override
-	public void worldChange(State newWorldState, GameWorld world) {
+	public void worldChange(State newWorldState, final GameWorld world) {
 		if (newWorldState == State.GAME_OVER) {
 			game.setScreen(new GameOverScreen(game));
+			
 		} else if (newWorldState == State.DIMENSION_CHANGE) {
 			world.getPlayer().setIsGrounded(true);
 			view.changeMap(world.getDimension());
+		}
+		
+		else if(newWorldState == State.DIMENSION_WILLCHANGE){
+			view.setDimensionChange(true);
+			
+			
+			Timer t = new Timer();
+			t.schedule(new TimerTask(){
+
+				@Override
+				public void run() {
+					view.setDimensionChange(false);
+					
+				}
+				
+			}, 2000);
+			
+			
+			
+			
+			 
+			
+			
+			
+			
 		} else if (newWorldState == State.LEVEL_FINISHED) {
 			game.setScreen(new LevelFinishedScreen(game));
 		}
