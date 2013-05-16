@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 /**
  * Class acting as an adapter from TiledMaps to the model.
  */
-public class TiledMapHandler {
+public class TiledMapHandler implements MapHandler {
 	
 	private GameView view;
 	
@@ -21,11 +21,13 @@ public class TiledMapHandler {
 		this.view = gameView;
 	}
 	
+	@Override
 	public boolean isCellGround(int x, int y) {
 		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(1))
 				.getCell(x, y) != null;
 	}
 	
+	@Override
 	public boolean isCellObstacle(int x, int y) {
 		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(2))
 				.getCell(x, y) != null;
