@@ -1,7 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import java.awt.Menu;
-
 import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
@@ -28,73 +26,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class MenuScreen implements Screen {
+public class LevelSelectScreen implements Screen {
 
 	private Dimensions game;
 	private Stage stage;
 	private SpriteBatch batch;
 	private Table mainTable = new Table();
 
-	public MenuScreen(final Dimensions game) {
+	public LevelSelectScreen(final Dimensions game) {
 		this.game = game;
-		stage = new Stage();
+		this.stage = new Stage();
 		init();
 	}
 
 	private void init() {
 
-		Texture bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
-		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-				bgTexture)));
-		mainTable.setFillParent(true);
-		mainTable.debug();
-		stage.addActor(mainTable);
-
-		final MenuButton playButton = new MenuButton("data/play.png");
-		playButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
-				game.getGameScreen().nextLevel(
-						LevelHandler.getInstance().getNextUnfinishedLevel());
-				game.setScreen(game.getGameScreen());
-			}
-		});
-		mainTable.add(playButton).expandX();
-		Table sidebarTable = new Table();
-		
-		final Button levelSelectButton = new MenuButton("data/level_select.png");
-		levelSelectButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
-				game.setScreen(game.getLevelSelectScreen());
-			}
-		});
-		
-		final Button optionButton = new MenuButton("data/settings.png");
-		optionButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				dispose();
-				game.setScreen(game.getOptionScreen(game));
-			}
-		});
-		
-		final Button exitButton = new MenuButton("data/exit.png");
-		exitButton.addListener(new ClickListener() {
-			public void clicked(InputEvent e, float x, float y) {
-				System.out.println("exit");
-				System.exit(0);
-			}
-		});
-
-		sidebarTable.add().width(200);
-		sidebarTable.row();
-		sidebarTable.add(levelSelectButton);
-		sidebarTable.row();
-		sidebarTable.add(optionButton);
-		sidebarTable.row();
-		sidebarTable.add(exitButton);
-		
-		mainTable.add(sidebarTable);
 	}
 
 	@Override
@@ -117,21 +63,14 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
+	public void resume() {}
 
 	@Override
 	public void dispose() {

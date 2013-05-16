@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
+import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
@@ -20,7 +20,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		levelSelect = new TextButton("Level Select", getButtonStyle());
 		option = new TextButton("Options", getButtonStyle());
 		exit = new TextButton("Exit game", getButtonStyle());
-		PlayButton playButton = new PlayButton();
+		MenuButton playButton = new MenuButton("data/play.png");
 
 		playButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
@@ -50,7 +50,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
 		exit.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-
 				System.exit(0);
 
 			}

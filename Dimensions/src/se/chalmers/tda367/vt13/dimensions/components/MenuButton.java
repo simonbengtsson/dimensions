@@ -9,19 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class MenuButton extends Button {
 
-	public MenuButton() {
-		super(getButtonStyle());
+	public MenuButton(String imagePath) {
+		super(getButtonStyle(imagePath));
 	}
 
-	private static ButtonStyle getButtonStyle(){
+	private static ButtonStyle getButtonStyle(String imagePath){
 		Skin skin = new Skin();
-		Pixmap pixmap2 = new Pixmap(Gdx.files.internal("data/play.png"));
-		skin.add("play", new Texture(pixmap2));
+		skin.add("play", new Texture(new Pixmap(Gdx.files.internal(imagePath))));
 		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = skin.newDrawable("play");
-		buttonStyle.pressedOffsetY = 1000;
-		buttonStyle.pressedOffsetX = 1000;
-		buttonStyle.unpressedOffsetX = 1000;
+		buttonStyle.up = skin.newDrawable("play", Color.GREEN);
 		buttonStyle.down = skin.newDrawable("play", Color.BLUE);
 		buttonStyle.checked = skin.newDrawable("play");
 		buttonStyle.over = skin.newDrawable("play", Color.RED);

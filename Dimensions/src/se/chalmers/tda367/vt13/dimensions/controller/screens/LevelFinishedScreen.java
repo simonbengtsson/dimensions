@@ -1,6 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.PlayButton;
+import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 
 import com.badlogic.gdx.Gdx;
@@ -69,13 +69,13 @@ public class LevelFinishedScreen extends AbstractMenuScreen {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		final PlayButton button = new PlayButton();
-		table.add(button);
+		final MenuButton playButton = new MenuButton("data/play.png");
+		table.add(playButton);
 		
 		// revert the checked state.
-		button.addListener(new ChangeListener() {
+		playButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				System.out.println(button.getStyle().pressedOffsetY);
+				System.out.println(playButton.getStyle().pressedOffsetY);
 				System.out.println("Clicked!");
 				game.setScreen(game.getGameScreen());
 			}

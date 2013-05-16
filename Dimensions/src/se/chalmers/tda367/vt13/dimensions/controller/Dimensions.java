@@ -2,8 +2,10 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.LevelSelectScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.MenuScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.OptionScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
 import se.chalmers.tda367.vt13.dimensions.util.LevelUtil;
 
@@ -17,6 +19,8 @@ public class Dimensions extends Game {
 	private GameScreen gameScreen;
 	private GameOverScreen gameOverScreen;
 	private MenuScreen menuScreen;
+	private OptionScreen optionScreen;
+	private LevelSelectScreen levelSelectScreen;
 
 	@Override
 	public void create() {
@@ -26,9 +30,11 @@ public class Dimensions extends Game {
 		splashScreen = new SplashScreen(this);
 		gameOverScreen = new GameOverScreen(this);
 		menuScreen = new MenuScreen(this);
+		optionScreen = new OptionScreen(this);
+		levelSelectScreen = new LevelSelectScreen(this);
 
-		// Which screen do you want to show on start up?
-		setScreen(menuScreen);
+		// Set startup screen
+		setScreen(mainMenuScreen);
 	}
 
 	public Screen getGameOverScreen() {
@@ -53,5 +59,13 @@ public class Dimensions extends Game {
 	public void splashScreenDone() {
 		setScreen(menuScreen);
 		splashScreen.dispose();
+	}
+
+	public Screen getOptionScreen(Dimensions game) {
+		return optionScreen;
+	}
+	
+	public Screen getLevelSelectScreen(){
+		return levelSelectScreen;
 	}
 }
