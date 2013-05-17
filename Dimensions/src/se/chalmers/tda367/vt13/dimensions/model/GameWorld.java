@@ -108,7 +108,7 @@ public class GameWorld {
 		}
 		if (isLevelFinished()) {
 			currentState = State.LEVEL_FINISHED;
-		}
+		} 
 	}
 	
 	public CheckPoint getCheckPoint(){

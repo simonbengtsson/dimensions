@@ -93,7 +93,7 @@ private Level lev;
 		w.placeCheckPoint();
 		CheckPoint newCp = w.getCheckPoint();
 		assertTrue(startCp != newCp);
-		
+		 
 			
 		
 	}
