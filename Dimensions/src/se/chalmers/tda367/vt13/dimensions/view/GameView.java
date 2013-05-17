@@ -241,15 +241,8 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			if (!(gameObject instanceof PowerUp)) {
-				spriteBatch.draw(
-						textures.get(gameObject.getImagePath()),
-						pos.getX(), pos.getY(), size.getX(), size.getY());
-			} else if (!((PowerUp) gameObject).isUsed()) {
-				spriteBatch.draw(
-						textures.get(gameObject.getImagePath()),
-						pos.getX(), pos.getY(), size.getX(), size.getY());
-			}
+			spriteBatch.draw(textures.get(gameObject.getImagePath()),
+					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
@@ -263,22 +256,15 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			if (!(gameObject instanceof PowerUp)) {
-				spriteBatch.draw(
-						textures.get(gameObject.getImagePath()),
-						pos.getX(), pos.getY(), size.getX(), size.getY());
-			} else if (((PowerUp) gameObject).isUsed()) {
-				spriteBatch.draw(
-						textures.get(gameObject.getImagePath()),
-						pos.getX(), pos.getY(), size.getX(), size.getY());
-			}
+			spriteBatch.draw(textures.get(gameObject.getImagePath()),
+					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		Player p = world.getPlayer();
-		spriteBatch.draw(textures.get(p.getImagePath()), p
-				.getPosition().getX(), p.getPosition().getZ(), p.getSize()
-				.getX(), p.getSize().getZ());
+		spriteBatch.draw(textures.get(p.getImagePath()),
+				p.getPosition().getX(), p.getPosition().getZ(), p.getSize()
+						.getX(), p.getSize().getZ());
 	}
 
 	public OrthographicCamera getCamera() {

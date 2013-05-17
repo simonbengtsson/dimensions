@@ -18,7 +18,6 @@ public class SpeedPowerUp extends GameObject implements PowerUp, Serializable {
 
 	private final float speedModifier = 2;
 	private static final long serialVersionUID = 1L;
-	private boolean isUsed = true;
 
 	/**
 	 * @param position
@@ -36,11 +35,5 @@ public class SpeedPowerUp extends GameObject implements PowerUp, Serializable {
 					.setX(gm.getPlayer().getSpeed().getX() * speedModifier);
 		}
 		playSound();
-		isUsed = true;
-	}
-
-	@Override
-	public boolean isUsed() {
-		return isUsed;
 	}
 }

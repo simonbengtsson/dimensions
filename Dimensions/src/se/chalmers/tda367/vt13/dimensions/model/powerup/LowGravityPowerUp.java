@@ -23,11 +23,4 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 	public void use(GameWorld gm) {
 		gm.setGravity(gm.getGravity() * 0.9f);
 	}
-
-	@Override
-	public boolean isUsed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

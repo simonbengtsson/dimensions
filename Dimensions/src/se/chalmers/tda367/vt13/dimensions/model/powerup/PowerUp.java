@@ -4,21 +4,22 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 
 /**
  * Interface to be implemented by all PowerUps.
+ * 
  * @author Carl Fredriksson
  */
-public interface PowerUp  {
+public interface PowerUp {
 	public static final int SPEED = 1;
 	public static final int LOW_GRAVITY = 2;
 	public static final int DIMENSION_CHANGE = 3;
 	public static final int SLOW = 4;
-	
+
 	/**
-	 * Method called when collision is detected between
-	 * the player and the PowerUp. Affects the player
-	 * in different ways, depending on the implementing
-	 * PowerUp class.
+	 * Method called when collision is detected between the player and the
+	 * PowerUp. Affects the player in different ways, depending on the
+	 * implementing PowerUp class.
+	 * 
+	 * @param gameWorld
+	 *            The GameWorld the power up should affect
 	 */
 	public void use(GameWorld gm);
-	public boolean isUsed();
-	
 }

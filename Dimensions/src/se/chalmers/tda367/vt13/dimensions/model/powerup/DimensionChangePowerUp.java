@@ -22,11 +22,4 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 		gw.swapDimension();
 		isUsed = true;
 	}
-
-	@Override
-	public boolean isUsed() {
-		// TODO Auto-generated method stub
-		return isUsed;
-	}
-
 }

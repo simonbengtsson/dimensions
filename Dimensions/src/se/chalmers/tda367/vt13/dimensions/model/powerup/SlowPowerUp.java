@@ -24,11 +24,4 @@ public class SlowPowerUp extends GameObject implements PowerUp {
 		s.setX(s.getX() * 0.5f);
 		
 	}
-
-	@Override
-	public boolean isUsed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
