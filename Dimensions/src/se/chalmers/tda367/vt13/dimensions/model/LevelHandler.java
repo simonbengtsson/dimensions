@@ -9,6 +9,7 @@ import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -164,7 +165,7 @@ public class LevelHandler {
 	public void load() {
 		// Level named Example
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
-		gameObjects.add(new DimensionChangePowerUp(new Vector3(20, 4, 10), new Vector3(
+		gameObjects.add(new LowGravityPowerUp(new Vector3(20, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
