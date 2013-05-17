@@ -169,7 +169,7 @@ public class LevelHandler {
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
 		Level level = new Level("Example", -0.05f, gameObjects, Dimension.XY,
-				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 25);
+				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
 		registerLevel(level);
 		// End of Example Level
 		
