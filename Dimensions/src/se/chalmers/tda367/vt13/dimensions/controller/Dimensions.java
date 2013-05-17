@@ -3,7 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.controller;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.LevelSelectScreen;
-import se.chalmers.tda367.vt13.dimensions.controller.screens.MenuScreen;
+import se.chalmers.tda367.vt13.dimensions.controller.screens.MainMenuScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.OptionScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.SplashScreen;
 import se.chalmers.tda367.vt13.dimensions.util.LevelUtil;
@@ -16,7 +16,7 @@ public class Dimensions extends Game {
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
 	private GameOverScreen gameOverScreen;
-	private MenuScreen menuScreen;
+	private MainMenuScreen menuScreen;
 	private OptionScreen optionScreen;
 	private LevelSelectScreen levelSelectScreen;
 
@@ -26,7 +26,7 @@ public class Dimensions extends Game {
 		gameScreen = new GameScreen(this);
 		splashScreen = new SplashScreen(this);
 		gameOverScreen = new GameOverScreen(this);
-		menuScreen = new MenuScreen(this);
+		menuScreen = new MainMenuScreen(this);
 		optionScreen = new OptionScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
 

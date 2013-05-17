@@ -5,28 +5,20 @@ import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class MenuScreen implements Screen {
+public class MainMenuScreen extends AbstractMenuScreen {
 
-	private Dimensions game;
-	private Stage stage;
-	private Table mainTable = new Table();
-
-	public MenuScreen(final Dimensions game) {
-		this.game = game;
-		stage = new Stage();
+	public MainMenuScreen(final Dimensions game) {
+		super(game);
 		init();
 	}
 
@@ -37,7 +29,7 @@ public class MenuScreen implements Screen {
 				bgTexture)));
 		mainTable.setFillParent(true);
 		mainTable.debug();
-		stage.addActor(mainTable);
+		mainStage.addActor(mainTable);
 
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
@@ -49,6 +41,10 @@ public class MenuScreen implements Screen {
 			}
 		});
 		mainTable.add(playButton).expandX();
+		initSidebar();
+	}
+	
+	private void initSidebar(){
 		Table sidebarTable = new Table();
 		
 		final Button levelSelectButton = new MenuButton("data/level_select.png");
@@ -85,46 +81,4 @@ public class MenuScreen implements Screen {
 		
 		mainTable.add(sidebarTable);
 	}
-
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		stage.setViewport(width, height, false);
-	}
-
-	@Override
-	public void show() {
-		stage.addActor(mainTable);
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-	}
-
 }
