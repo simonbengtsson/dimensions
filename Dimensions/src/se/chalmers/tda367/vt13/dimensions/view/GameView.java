@@ -76,9 +76,14 @@ public class GameView {
 		}
 		return null;
 	}
-
+	/** Visual feedback right now 2 seconds before Dimensions are changed.
+	 * Changes the color of the spritebatch which is noticable on the player
+	 * and the gameobjects of the level.
+	 * 
+	 * @param batch
+	 */
 	public void dimensionWillChange(final SpriteBatch batch) {
-
+		
 		Timer t = new Timer();
 		TimerTask red = new TimerTask() {
 			@Override

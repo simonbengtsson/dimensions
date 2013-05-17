@@ -22,6 +22,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
@@ -198,6 +199,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			view.changeMap(world.getDimension());
 		}
 
+		
+		/* If Dimensions are about to change, set a timer that specifies
+		 * The time before dimension actually changes
+		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
 			view.setDimensionChange(true);
 
@@ -207,6 +212,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				@Override
 				public void run() {
 					view.setDimensionChange(false);
+					
 
 				}
 
