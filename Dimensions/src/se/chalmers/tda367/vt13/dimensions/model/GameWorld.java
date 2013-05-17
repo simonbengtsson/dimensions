@@ -110,6 +110,10 @@ public class GameWorld {
 			currentState = State.LEVEL_FINISHED;
 		}
 	}
+	
+	public CheckPoint getCheckPoint(){
+		return this.cp;
+	}
 
 	private void updatePaused() {
 		notifyWorldListeners(State.GAME_PAUSED);
@@ -162,7 +166,7 @@ public class GameWorld {
 		return player.getPosition().getY() < 0;
 	}
 
-	private boolean isLevelFinished() {
+	public boolean isLevelFinished() {
 		return player.getPosition().getX() >= currentLevel
 				.getLevelFinishedPosition();
 	}
