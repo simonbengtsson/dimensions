@@ -18,47 +18,31 @@ public class Level implements Serializable {
 	protected String mapXYPath;
 	protected String mapXZPath;
 	protected float levelFinishedPosition;
-	private String levelname;
+	private String levelName;
 
-	@Deprecated
-	/**
-	 * 
-	 * @param name
-	 * @param gameObjects
-	 * @param gravity
-	 */
-	public Level(String name, float gravity) {
-		this.levelname = name;
-		this.gravity = gravity;
-	}
-
-	@Deprecated
-	/**
-	 * @param name
-	 */
-	public Level(String name) {
-		this(name, -0.05f);
-	}
-
-	@Deprecated
-	public Level(String name, float gravity, List<GameObject> gameObjects,
-			Dimension start) {
-		this.levelname = name;
-		this.gravity = gravity;
-		this.gameObjects = gameObjects;
-		this.startingDimension = start;
+	public Level() {
+		this("Empty Level", -0.05f, null, Dimension.XY, null, null, 100);
 	}
 
 	public Level(String name, float gravity, List<GameObject> gameObjects,
 			Dimension start, String TMXFileXY, String TMXFileXZ,
 			float finishedPosition) {
-		this.levelname = name;
+		this.levelName = name;
 		this.gravity = gravity;
 		this.gameObjects = gameObjects;
 		this.startingDimension = start;
 		this.mapXYPath = TMXFileXY;
 		this.mapXZPath = TMXFileXZ;
 		this.levelFinishedPosition = finishedPosition;
+	}
+	
+	@Override
+	public Level clone(){
+		ArrayList<GameObject> clonedGameObjects = new ArrayList<GameObject>();
+		for(GameObject gameObject : gameObjects) {
+		    clonedGameObjects.add(gameObject.clone());
+		}
+		return new Level(levelName, gravity, clonedGameObjects, startingDimension, mapXYPath, mapXZPath, levelFinishedPosition);
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -86,6 +70,6 @@ public class Level implements Serializable {
 	}
 
 	public String getName() {
-		return levelname;
+		return levelName;
 	}
 }

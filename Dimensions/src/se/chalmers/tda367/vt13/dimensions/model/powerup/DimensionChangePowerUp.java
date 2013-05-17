@@ -7,7 +7,6 @@ import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 @SuppressWarnings("serial")
 public class DimensionChangePowerUp extends GameObject implements PowerUp {
 
-	private boolean isUsed = false;
 	/**
 	 * @param position
 	 * @param size
@@ -20,6 +19,11 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 	@Override
 	public void use(GameWorld gw) {
 		gw.swapDimension();
-		isUsed = true;
+	}
+	
+	@Override
+	public DimensionChangePowerUp clone() {
+		return new DimensionChangePowerUp(getPosition().clone(), getSize().clone(),
+				getSpeed().clone());
 	}
 }

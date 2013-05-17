@@ -17,4 +17,10 @@ public class Platform extends GameObject implements Serializable {
 	public Platform(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed, "data/PlatformMini.png", "");
 	}
+	
+	@Override
+	public Platform clone() {
+		return new Platform(getPosition().clone(), getSize().clone(),
+				getSpeed().clone());
+	}
 }

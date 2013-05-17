@@ -12,4 +12,9 @@ public class CheckPointPowerUp extends GameObject implements PowerUp{
 	public void use(GameWorld gm) {
 		gm.placeCheckPoint();
 	}
+	
+	@Override
+	public CheckPointPowerUp clone() {
+		return new CheckPointPowerUp(getPosition().clone(), getSize().clone(), getSpeed().clone());
+	}
 }

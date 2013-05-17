@@ -143,9 +143,7 @@ public class Vector3 implements Serializable {
 		this.z = z;
 	}
 	
-	/**
-	 * Clones this vector and returns equal vector.
-	 */
+	@Override
 	public Vector3 clone(){
 		return new Vector3(x, y, z);
 	}
@@ -157,10 +155,7 @@ public class Vector3 implements Serializable {
 		hash =+ z*9;
 		return (int)hash;
 	}
-	
-	/**
-	 * Checks whether this vector equals another vector/object.
-	 */
+
 	public boolean equals(Object o){
 		if(o instanceof Vector3){
 			Vector3 v = (Vector3)o;
@@ -174,13 +169,8 @@ public class Vector3 implements Serializable {
 		}
 	}
 	
-	/**
-	 * Give the values of this vector as a string.
-	 */
 	public String toString(){
 		return "x=" + x + " y=" + y + " z=" + z;
 	}
-
-	// Private methods
 	
 }

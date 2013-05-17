@@ -23,4 +23,10 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 	public void use(GameWorld gm) {
 		gm.setGravity(gm.getGravity() * 0.9f);
 	}
+
+	@Override
+	public LowGravityPowerUp clone() {
+		return new LowGravityPowerUp(getPosition().clone(), getSize().clone(),
+				getSpeed().clone());
+	}
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class GameObject implements Serializable, SoundObservable {
+public abstract class GameObject implements Serializable, SoundObservable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,9 @@ public abstract class GameObject implements Serializable, SoundObservable {
 		this.soundFile = soundFile;
 		this.imageFile = imageFile;
 	}
+	
+	@Override
+	public abstract GameObject clone();
 
 	public String toString() {
 		return "Position : " + position + " Size : " + size + " Speed : "

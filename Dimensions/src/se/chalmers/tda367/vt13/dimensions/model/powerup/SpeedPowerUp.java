@@ -36,4 +36,10 @@ public class SpeedPowerUp extends GameObject implements PowerUp, Serializable {
 		}
 		playSound();
 	}
+	
+	@Override
+	public SpeedPowerUp clone() {
+		return new SpeedPowerUp(getPosition().clone(), getSize().clone(),
+				getSpeed().clone());
+	}
 }

@@ -13,15 +13,14 @@ public class SlowPowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void playSound() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void use(GameWorld gm) {
 		Vector3 s = gm.getPlayer().getSpeed();
 		s.setX(s.getX() * 0.5f);
-		
+	}
+	
+	@Override
+	public SlowPowerUp clone() {
+		return new SlowPowerUp(getPosition().clone(), getSize().clone(),
+				getSpeed().clone());
 	}
 }
