@@ -3,7 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.model.powerup;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.util.Constants;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 /**
  * This powerup sets the gravity to half of the current.
@@ -15,8 +15,8 @@ import se.chalmers.tda367.vt13.dimensions.util.Constants;
 public class LowGravityPowerUp extends GameObject implements PowerUp {
 
 	public LowGravityPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
-		super(position, size, speed, Constants.LOWGRAVITYPOWERUP_IMAGE,
-				Constants.LOWGRAVITYPOWERUP_SOUND);
+		super(position, size, speed, Assets.LOWGRAVITYPOWERUP_IMAGE,
+				Assets.LOWGRAVITYPOWERUP_SOUND);
 	}
 
 	@Override
