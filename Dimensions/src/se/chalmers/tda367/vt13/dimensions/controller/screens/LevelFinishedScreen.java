@@ -19,7 +19,6 @@ public class LevelFinishedScreen extends AbstractMenuScreen {
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				playButton.setChecked(false);
-				System.out.println(game);
 				game.getGameScreen().nextLevel(
 						LevelHandler.getInstance().getNextUnfinishedLevel());
 				game.setScreen(game.getGameScreen());

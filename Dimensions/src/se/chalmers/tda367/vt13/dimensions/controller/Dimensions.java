@@ -31,7 +31,7 @@ public class Dimensions extends Game {
 		levelSelectScreen = new LevelSelectScreen(this);
 
 		// Set startup screen
-		setScreen(menuScreen);
+		setScreen(splashScreen);
 	}
 
 	public Screen getGameOverScreen() {
@@ -48,14 +48,6 @@ public class Dimensions extends Game {
 
 	public Screen getSplashScreen() {
 		return splashScreen;
-	}
-
-	/**
-	 * Called from the splashscreen when it's done.
-	 */
-	public void splashScreenDone() {
-		setScreen(menuScreen);
-		splashScreen.dispose();
 	}
 
 	public Screen getOptionScreen(Dimensions game) {
