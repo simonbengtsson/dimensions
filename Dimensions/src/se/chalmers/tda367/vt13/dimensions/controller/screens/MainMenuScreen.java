@@ -51,7 +51,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		optionButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				optionButton.setChecked(false);
-				game.setScreen(game.getOptionScreen(game));
+				game.setScreen(game.getCreditScreen());
 			}
 		});
 		

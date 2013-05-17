@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.controller;
 
+import se.chalmers.tda367.vt13.dimensions.controller.screens.CreditsScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameOverScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.controller.screens.LevelSelectScreen;
@@ -19,6 +20,7 @@ public class Dimensions extends Game {
 	private MainMenuScreen menuScreen;
 	private OptionScreen optionScreen;
 	private LevelSelectScreen levelSelectScreen;
+	private CreditsScreen creditsScreen;
 
 	@Override
 	public void create() {
@@ -29,6 +31,7 @@ public class Dimensions extends Game {
 		menuScreen = new MainMenuScreen(this);
 		optionScreen = new OptionScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
+		creditsScreen = new CreditsScreen(this);
 
 		// Set startup screen
 		setScreen(splashScreen);
@@ -42,6 +45,9 @@ public class Dimensions extends Game {
 		return menuScreen;
 	}
 
+	public Screen getCreditScreen(){
+		return creditsScreen;
+	}
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
