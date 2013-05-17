@@ -1,6 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.util;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

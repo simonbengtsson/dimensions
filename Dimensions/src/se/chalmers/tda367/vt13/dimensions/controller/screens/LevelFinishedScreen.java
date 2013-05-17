@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class LevelFinishedScreen extends AbstractMenuScreen {
 
-	private Dimensions game;
 	public LevelFinishedScreen(Dimensions game) {
 		super(game);
 		init();
@@ -19,13 +18,13 @@ public class LevelFinishedScreen extends AbstractMenuScreen {
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println(playButton);
 				playButton.setChecked(false);
+				System.out.println(game);
 				game.getGameScreen().nextLevel(
 						LevelHandler.getInstance().getNextUnfinishedLevel());
-				//game.setScreen(game.getGameScreen());
+				game.setScreen(game.getGameScreen());
 			}
 		});
-		mainTable.add(playButton).expandX();
+		mainTable.add(playButton);		
 	}
 }

@@ -23,14 +23,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
 	}
 
 	private void init() {
-
-		Texture bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
-		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-				bgTexture)));
-		mainTable.setFillParent(true);
-		mainTable.debug();
-		mainStage.addActor(mainTable);
-
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {

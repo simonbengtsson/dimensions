@@ -9,7 +9,6 @@ import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -103,7 +102,7 @@ public class LevelHandler {
 	/**
 	 * Returns the next unfinished Level.
 	 * 
-	 * @return
+	 * @return The next unfinished level. <code>null</code> if all levels are finished.
 	 */
 	public Level getNextUnfinishedLevel() {
 		Level nextLevel = null;
@@ -112,10 +111,10 @@ public class LevelHandler {
 			ProgressLevel progress = iter.next();
 			if (!progress.isCompleted()) {
 				nextLevel = progress.getLevel();
-				break;
+				return nextLevel;
 			}
 		}
-		return nextLevel;
+		return null;
 	}
 
 	/**
@@ -170,7 +169,7 @@ public class LevelHandler {
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
 		Level level = new Level("Example", -0.05f, gameObjects, Dimension.XY,
-				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
+				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 25);
 		registerLevel(level);
 		// End of Example Level
 		
