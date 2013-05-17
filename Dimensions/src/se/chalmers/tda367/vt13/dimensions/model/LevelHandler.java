@@ -111,7 +111,7 @@ public class LevelHandler {
 			ProgressLevel progress = iter.next();
 			if (!progress.isCompleted()) {
 				nextLevel = progress.getLevel();
-				return nextLevel.clone();
+				return nextLevel;
 			}
 		}
 		return null;
