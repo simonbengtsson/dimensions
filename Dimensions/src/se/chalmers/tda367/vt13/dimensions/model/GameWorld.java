@@ -127,7 +127,6 @@ public class GameWorld {
 		notifyWorldListeners(State.DIMENSION_CHANGE);
 		updateRunning(); // Fix for avoiding lag
 		currentState = State.GAME_RUNNING;
-;		
 	}
 
 	/**

@@ -46,7 +46,7 @@ public class Level implements Serializable {
 	}
 
 	public List<GameObject> getGameObjects() {
-		return gameObjects;
+		return new ArrayList<GameObject>(gameObjects);
 	}
 
 	public float getLevelFinishedPosition() {
