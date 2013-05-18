@@ -25,14 +25,14 @@ public class SplashScreen implements Screen{
 	public SplashScreen(final Dimensions game) {
 		this.game = game;
 		initMainStage();
+		final MainMenuScreen menuScreen = new MainMenuScreen(game);
 		Timer t = new Timer();
 		t.schedule(new TimerTask(){
 
 			@Override
 			public void run() {
-				game.setScreen(game.getMenuScreen());
+				game.setScreen(menuScreen);
 			}
-			
 		}, 1000);
 	}
 	

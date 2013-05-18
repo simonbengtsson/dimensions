@@ -13,17 +13,16 @@ public class LevelFinishedScreen extends AbstractMenuScreen {
 		super(game);
 		init();
 	}
-	
-	private void init(){
+
+	private void init() {
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				game.getGameScreen().nextLevel(
-						LevelHandler.getInstance().getNextUnfinishedLevel());
-				game.setScreen(game.getGameScreen());
+				game.setScreen(new GameScreen(game, LevelHandler.getInstance()
+						.getNextUnfinishedLevel()));
 				dispose();
 			}
 		});
-		mainTable.add(playButton);		
+		mainTable.add(playButton);
 	}
 }

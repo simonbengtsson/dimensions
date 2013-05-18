@@ -25,8 +25,8 @@ public class LevelSelectScreen extends AbstractMenuScreen {
 					getButtonStyle());
 			levelButton.addListener(new ClickListener() {
 				public void clicked(InputEvent e, float x, float y) {
-					game.getGameScreen().nextLevel(l);
-					game.setScreen(game.getGameScreen());
+					game.setScreen(new GameScreen(game, l));
+					dispose();
 				}
 			});
 
@@ -37,8 +37,7 @@ public class LevelSelectScreen extends AbstractMenuScreen {
 		TextButton goBack = new TextButton("Back", getButtonStyle());
 		goBack.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-				dispose();
-				game.setScreen(game.getMenuScreen());
+				game.setScreen(new MainMenuScreen(game));
 			}
 		});
 

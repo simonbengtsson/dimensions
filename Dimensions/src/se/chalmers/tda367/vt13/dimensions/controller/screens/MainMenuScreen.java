@@ -4,16 +4,12 @@ import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MainMenuScreen extends AbstractMenuScreen {
 
@@ -26,9 +22,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				game.getGameScreen().nextLevel(
-						LevelHandler.getInstance().getNextUnfinishedLevel());
-				game.setScreen(game.getGameScreen());
+				game.setScreen(new GameScreen(game, LevelHandler.getInstance().getNextUnfinishedLevel()));
 				dispose();
 			}
 		});
@@ -43,7 +37,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		levelSelectButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				levelSelectButton.setChecked(false);
-				game.setScreen(game.getLevelSelectScreen());
+				game.setScreen(new LevelSelectScreen(game));
 			}
 		});
 		
@@ -51,7 +45,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		optionButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				optionButton.setChecked(false);
-				game.setScreen(game.getCreditScreen());
+				game.setScreen(new CreditsScreen(game));
 			}
 		});
 		

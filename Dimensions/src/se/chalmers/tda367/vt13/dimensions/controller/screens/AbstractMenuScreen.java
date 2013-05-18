@@ -49,6 +49,10 @@ public class AbstractMenuScreen implements Screen {
 		mainStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		mainStage.draw();
 	}
+	
+	public void setScreen(Screen screen) {
+		game.setScreen(screen);
+	}
 
 	protected TextButtonStyle getButtonStyle() {
 		return textButtonStyle;

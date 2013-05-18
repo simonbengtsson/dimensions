@@ -14,7 +14,7 @@ public class OptionScreen extends AbstractMenuScreen {
 		backButton = new TextButton("Back", getButtonStyle());
 		backButton.addListener(new ClickListener(){
 			public void clicked(InputEvent e, float x, float y){
-				game.setScreen(game.getMenuScreen());
+				game.setScreen(new MainMenuScreen(game));
 			}
 		});
 		mainTable.add(backButton);	

@@ -22,7 +22,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
@@ -33,8 +32,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private boolean wasEnterPressed = false;
 	private Level nextLevel;
 
-	public GameScreen(Dimensions game) {
+	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
+		this.nextLevel = level; 
 	}
 
 	@Override
