@@ -26,10 +26,10 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		final MenuButton playButton = new MenuButton("data/play.png");
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				playButton.setChecked(false);
 				game.getGameScreen().nextLevel(
 						LevelHandler.getInstance().getNextUnfinishedLevel());
 				game.setScreen(game.getGameScreen());
+				dispose();
 			}
 		});
 		mainTable.add(playButton).expandX();
