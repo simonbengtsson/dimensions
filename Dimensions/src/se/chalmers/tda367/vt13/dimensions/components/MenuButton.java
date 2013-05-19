@@ -13,7 +13,7 @@ public class MenuButton extends Button {
 		super(getButtonStyle(imagePath));
 	}
 
-	private static ButtonStyle getButtonStyle(String imagePath){
+	private static ButtonStyle getButtonStyle(String imagePath) {
 		Skin skin = new Skin();
 		skin.add("play", new Texture(new Pixmap(Gdx.files.internal(imagePath))));
 		ButtonStyle buttonStyle = new ButtonStyle();

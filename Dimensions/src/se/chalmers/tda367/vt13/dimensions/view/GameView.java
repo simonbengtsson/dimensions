@@ -10,7 +10,6 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -76,9 +75,14 @@ public class GameView {
 		}
 		return null;
 	}
-
+	/** Visual feedback right now 2 seconds before Dimensions are changed.
+	 * Changes the color of the spritebatch which is noticable on the player
+	 * and the gameobjects of the level.
+	 * 
+	 * @param batch
+	 */
 	public void dimensionWillChange(final SpriteBatch batch) {
-
+		
 		Timer t = new Timer();
 		TimerTask red = new TimerTask() {
 			@Override

@@ -32,8 +32,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private boolean wasEnterPressed = false;
 	private Level nextLevel;
 
-	public GameScreen(Dimensions game) {
+	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
+		this.nextLevel = level; 
 	}
 
 	@Override
@@ -198,6 +199,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			view.changeMap(world.getDimension());
 		}
 
+		
+		/* If Dimensions are about to change, set a timer that specifies
+		 * The time before dimension actually changes
+		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
 			view.setDimensionChange(true);
 
@@ -207,6 +212,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				@Override
 				public void run() {
 					view.setDimensionChange(false);
+					
 
 				}
 

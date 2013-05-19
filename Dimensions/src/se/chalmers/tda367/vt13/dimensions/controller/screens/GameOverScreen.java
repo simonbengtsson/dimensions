@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,8 +18,8 @@ public class GameOverScreen extends AbstractMenuScreen {
 		TextButton playButton = new TextButton("Play again", getButtonStyle());
 		playButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
+				game.setScreen(new GameScreen(game, LevelHandler.getInstance().getNextUnfinishedLevel()));
 				dispose();
-				game.setScreen(game.getGameScreen());
 
 			}
 		});
@@ -28,9 +29,7 @@ public class GameOverScreen extends AbstractMenuScreen {
 		TextButton menuButton = new TextButton("Go to menu", getButtonStyle());
 		menuButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-				dispose();
-				game.setScreen(game.getMenuScreen());
-
+				setScreen(new MainMenuScreen(game));
 			}
 		});
 		mainTable.add(menuButton);		

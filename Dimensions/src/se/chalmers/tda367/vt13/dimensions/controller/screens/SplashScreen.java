@@ -4,14 +4,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,14 +22,14 @@ public class SplashScreen implements Screen{
 	public SplashScreen(final Dimensions game) {
 		this.game = game;
 		initMainStage();
+		final MainMenuScreen menuScreen = new MainMenuScreen(game);
 		Timer t = new Timer();
 		t.schedule(new TimerTask(){
 
 			@Override
 			public void run() {
-				game.setScreen(game.getMenuScreen());
+				game.setScreen(menuScreen);
 			}
-			
 		}, 1000);
 	}
 	

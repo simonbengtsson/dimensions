@@ -80,6 +80,8 @@ public class GameWorld {
 		case DIMENSION_CHANGE:
 			updateDimensionChange();
 			break;
+		default:
+			break;
 		}
 		
 	}
@@ -190,7 +192,10 @@ public class GameWorld {
 	public void setScore(int i) {
 		score = i;
 	}
-
+	
+	public float getBaseGravity(){
+		return this.baseGravity;
+	}
 	public void setCurrentState(State newState) {
 		currentState = newState;
 	}
@@ -235,6 +240,10 @@ public class GameWorld {
 
 	public void addWorldListener(WorldListener newListener) {
 		listeners.add(newListener);
+	}
+	
+	public List<WorldListener> getWorldListeners(){
+		return this.listeners;
 	}
 
 }
