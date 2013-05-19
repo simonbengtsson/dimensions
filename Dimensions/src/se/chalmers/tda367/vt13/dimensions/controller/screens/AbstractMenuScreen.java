@@ -54,6 +54,9 @@ public class AbstractMenuScreen implements Screen {
 		game.setScreen(screen);
 	}
 
+	public Stage getStage(){
+		return this.mainStage;
+	}
 	protected TextButtonStyle getButtonStyle() {
 		return textButtonStyle;
 	}
