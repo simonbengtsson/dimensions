@@ -92,7 +92,8 @@ public class GameWorld {
 		player.getPosition().add(player.getSpeed());
 		collisionHandler.checkCollisions(this);
 		if (currentDimension == Dimension.XY) {
-			player.calculateYSpeed(this);
+			player.calculateYSpeed(gravity);
+			player.calculateXSpeed();
 			// Reset the player's speed to MAX_VELOCITY if it's too fast, the
 			// reason is to simulate drag
 			if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {

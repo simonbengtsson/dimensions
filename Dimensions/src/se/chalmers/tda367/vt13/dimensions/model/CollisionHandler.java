@@ -26,6 +26,7 @@ public class CollisionHandler {
 	 */
 	public void checkCollisions(GameWorld world) {
 		world.getPlayer().setIsGrounded(false);
+		world.getPlayer().setIsStuck(false);
 		checkTileCollisions(world);
 		checkObjectCollisions(world);
 	}
@@ -58,9 +59,13 @@ public class CollisionHandler {
 				// check if hit the ground / a platform (layer 1)
 				if (mapHandler.isCellGround(x, y)) {
 					if (speed.getY() <= 0) {
-						pos.setY((int) (y + 1)); // adjust position
+						if (speed.getY() < 0) {
+							pos.setY((int) (y + 1)); // adjust position
+						}
+						else if (speed.getY() == 0) {
+							player.setIsStuck(true);
+						}
 						player.setIsGrounded(true);
-						speed.setY(0);
 					}
 					// Fix for not grounded the first frameupdate. Should
 					// be possible to do it in another way

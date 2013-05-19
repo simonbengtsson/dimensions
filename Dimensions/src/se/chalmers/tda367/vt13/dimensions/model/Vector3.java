@@ -127,7 +127,7 @@ public class Vector3 implements Serializable {
 	 * Returns the vector as an array
 	 * @return an array
 	 */
-	public double[] getArray(){
+	public double[] getArray() {
 		return new double[]{x, y ,z};
 	}
 	
@@ -137,26 +137,26 @@ public class Vector3 implements Serializable {
 	 * @param y Sets y-value
 	 * @param z Sets z-value
 	 */
-	public void setXYZ(float x, float y, float z){
+	public void setXYZ(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	@Override
-	public Vector3 clone(){
+	public Vector3 clone() {
 		return new Vector3(x, y, z);
 	}
 	
 	public int hashCode(){
 		double hash = 0;
-		hash =+ x*5;
-		hash =+ y*7;
-		hash =+ z*9;
+		hash =+ x*9;
+		hash =+ y*13;
+		hash =+ z*17;
 		return (int)hash;
 	}
 
-	public boolean equals(Object o){
+	public boolean equals(Object o) {
 		if(o instanceof Vector3){
 			Vector3 v = (Vector3)o;
 			if(v.getX() == x && v.getY() == y && v.getZ() == z){
@@ -169,7 +169,7 @@ public class Vector3 implements Serializable {
 		}
 	}
 	
-	public String toString(){
+	public String toString() {
 		return "x=" + x + " y=" + y + " z=" + z;
 	}
 	

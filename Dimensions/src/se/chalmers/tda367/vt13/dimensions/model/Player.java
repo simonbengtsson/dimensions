@@ -14,6 +14,7 @@ public class Player extends GameObject {
 	public static float MAX_VELOCITY = 1f;
 	private float jumpSpeed;
 	private boolean isGrounded;
+	private boolean isStuck;
 	private final float baseXSpeed;
 	private final float baseZSpeed;
 	private boolean usingDash;
@@ -22,12 +23,12 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2),
-				new Vector3(0.3f, 0, 0), 1f, false);
+		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(0.3f,
+				0, 0), 1f, false);
 	}
 
 	/**
-	 * Creates player with spcified values
+	 * Creates player with specified values
 	 * 
 	 * @param position
 	 *            the position of the player within the game
@@ -109,11 +110,6 @@ public class Player extends GameObject {
 		getSpeed().setX(baseXSpeed);
 	}
 
-	/**
-	 * Get method for instance variable isGrounded.
-	 * 
-	 * @return if the player is standing on a platform or not
-	 */
 	public boolean getIsGrounded() {
 		return isGrounded;
 	}
@@ -121,7 +117,7 @@ public class Player extends GameObject {
 	/**
 	 * Method for setting the isGrounded field of the player. For example:
 	 * isGrounded should be set to true if proper collision with a platform is
-	 * detected in the GameController.
+	 * detected.
 	 * 
 	 * @param isGrounded
 	 *            if the player is standing on a platform or not
@@ -130,15 +126,39 @@ public class Player extends GameObject {
 		this.isGrounded = isGrounded;
 	}
 
+	public boolean getIsStuck() {
+		return isStuck;
+	}
+
+	/**
+	 * Method for setting the isStuck field of the player. For example:
+	 * isStuck should be set to true if proper collision with a platform is
+	 * detected.
+	 * 
+	 * @param isStuck
+	 *            if the player is running in to a platform or not
+	 */
+	public void setIsStuck(boolean isStuck) {
+		this.isStuck = isStuck;
+	}
+
 	/**
 	 * Check if the the player is grounded. Adjust speed accordingly.
 	 */
-	public void calculateYSpeed(GameWorld world) {
+	public void calculateYSpeed(float gravity) {
 		if (isGrounded) {
 			getSpeed().setY(0);
 		} else {
-			world.getPlayer().getSpeed()
-					.setY(getSpeed().getY() + world.getGravity());
+			getSpeed().setY(getSpeed().getY() + gravity);
+		}
+	}
+	
+	public void calculateXSpeed() {
+		if (isStuck) {
+			getSpeed().setX(0);
+		}
+		else {
+			resetXSpeed();
 		}
 	}
 

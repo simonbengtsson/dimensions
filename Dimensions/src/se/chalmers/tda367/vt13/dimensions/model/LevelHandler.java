@@ -164,8 +164,6 @@ public class LevelHandler {
 	public void load() {
 		// Level named Example
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
-		gameObjects.add(new DimensionChangePowerUp(new Vector3(20, 4, 10), new Vector3(
-				1, 1, 1), new Vector3()));
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
 		Level level = new Level("Example", -0.05f, gameObjects, Dimension.XY,
