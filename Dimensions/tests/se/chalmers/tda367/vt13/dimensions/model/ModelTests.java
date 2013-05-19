@@ -14,9 +14,11 @@ import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import java.util.*;
 public class ModelTests {
-private GameScreen g = new GameScreen(new Dimensions());
 private GameWorld w;
 private Level lev;
+private State TEST1;
+private State TEST2;
+private State TEST3;
 
 	//@Test
 	public void test() {
@@ -95,6 +97,47 @@ private Level lev;
 		assertTrue(startCp != newCp);
 		 
 			
+		
+	}
+	
+	@Test
+	public void testGravity(){
+		create();
+		assertTrue(w.getGravity() == w.getBaseGravity());
+		w.setGravity(w.getGravity()+0.1f);
+		assertTrue(w.getGravity() != w.getBaseGravity());
+		w.resetGravity();
+		assertTrue(w.getGravity() == w.getBaseGravity());
+		
+	}
+	
+	@Test
+	public void testListeners(){
+		create();
+		
+		class Tests implements WorldListener{
+			private State state;
+			@Override
+			public void worldChange(State newWorldState, GameWorld world) {
+				// TODO Auto-generated method stub
+				this.state = newWorldState;
+				
+			}
+		}
+		
+		List <WorldListener> list = w.getWorldListeners();
+		assertTrue(list != null);
+		int length = list.size();
+		
+		Tests t = new Tests();
+		w.addWorldListener(t);
+		assertTrue(w.getWorldListeners().size() > length);
+		
+		w.setCurrentState(TEST1);
+		assertTrue(t.state == TEST1);
+		w.setCurrentState(TEST2);
+		w.setCurrentState(TEST3);
+		assertTrue(t.state == TEST3);
 		
 	}
 	
