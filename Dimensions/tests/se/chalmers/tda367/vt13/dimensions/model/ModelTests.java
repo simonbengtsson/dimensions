@@ -1,18 +1,20 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.junit.Test;
 
-import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
-import se.chalmers.tda367.vt13.dimensions.view.GameView;
-
-import java.util.*;
 public class ModelTests {
 private GameWorld w;
 private Level lev;

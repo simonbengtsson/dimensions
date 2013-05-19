@@ -1,9 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 @SuppressWarnings("serial")
 public class SlowPowerUp extends GameObject implements PowerUp {

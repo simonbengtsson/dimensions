@@ -10,7 +10,6 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

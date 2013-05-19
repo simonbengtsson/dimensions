@@ -80,6 +80,8 @@ public class GameWorld {
 		case DIMENSION_CHANGE:
 			updateDimensionChange();
 			break;
+		default:
+			break;
 		}
 		
 	}

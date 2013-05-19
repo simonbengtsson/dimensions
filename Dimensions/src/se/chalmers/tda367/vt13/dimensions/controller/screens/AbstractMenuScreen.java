@@ -26,8 +26,8 @@ public class AbstractMenuScreen implements Screen {
 		initTextButtonStyle();
 		initMainStage();
 	}
-	
-	private void initMainStage(){
+
+	private void initMainStage() {
 		Texture bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
 		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
 				bgTexture)));
@@ -37,7 +37,8 @@ public class AbstractMenuScreen implements Screen {
 	}
 
 	private void initTextButtonStyle() {
-		BitmapFont font = new BitmapFont(Gdx.files.internal("impact50.fnt"), false);
+		BitmapFont font = new BitmapFont(Gdx.files.internal("impact50.fnt"),
+				false);
 		textButtonStyle.font = font;
 		textButtonStyle.downFontColor = Color.RED;
 	}
@@ -49,14 +50,15 @@ public class AbstractMenuScreen implements Screen {
 		mainStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		mainStage.draw();
 	}
-	
+
 	public void setScreen(Screen screen) {
 		game.setScreen(screen);
 	}
 
-	public Stage getStage(){
+	public Stage getStage() {
 		return this.mainStage;
 	}
+
 	protected TextButtonStyle getButtonStyle() {
 		return textButtonStyle;
 	}
