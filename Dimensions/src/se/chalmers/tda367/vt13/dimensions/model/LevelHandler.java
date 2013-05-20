@@ -115,9 +115,9 @@ public class LevelHandler {
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3()));
 		List<GameObject> exampleList = new ArrayList<GameObject>();
-		exampleList.add(new LowGravityPowerUp(new Vector3(20, 4, 10),
+		exampleList.add(new LowGravityPowerUp(new Vector3(15, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		exampleList.add(new DimensionChangePowerUp(new Vector3(30, 4, 10),
+		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		Level example = new Level("Example", -0.05f, exampleList, Dimension.XY, 
 				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);

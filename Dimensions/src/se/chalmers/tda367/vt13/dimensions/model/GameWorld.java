@@ -26,6 +26,7 @@ public class GameWorld {
 
 	private List<GameObject> gameObjects;
 	private Player player;
+	private Chaser chaser;
 	private CollisionHandler collisionHandler; 
 	private Dimension currentDimension;
 	private float baseGravity;
@@ -58,6 +59,8 @@ public class GameWorld {
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
+		this.chaser = new Chaser();
+		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
 		currentLevel = level;
 	}
@@ -93,6 +96,10 @@ public class GameWorld {
 	public void updateRunning() {
 		player.getPosition().add(player.getSpeed());
 		collisionHandler.checkCollisions(this);
+		chaser.getPosition().add(chaser.getSpeed());
+		if (chaser.getPosition().getX() >= player.getPosition().getX()) {
+			updateGameOver();
+		}
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);
 			player.calculateXSpeed();
