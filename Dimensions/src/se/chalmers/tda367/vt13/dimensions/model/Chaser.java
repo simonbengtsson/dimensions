@@ -10,8 +10,8 @@ public class Chaser extends GameObject {
 	 * Create a Chaser with default values.
 	 */
 	public Chaser() {
-		this(new Vector3(-20, 2, 0), new Vector3(2, 2, 2),
-				new Vector3(0.4f, 0, 0), "data/PlayerImg.png", "");
+		this(new Vector3(8, 2, 0), new Vector3(2, 2, 2),
+				new Vector3(0.2f, 0, 0), "data/PlayerImg.png", "");
 	}
 
 	/**
