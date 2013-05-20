@@ -36,6 +36,8 @@ public class GameView {
 	private OrthogonalTiledMapRenderer renderer;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
+	private OrthographicCamera layerCam;
+	private SpriteBatch layerBatch = new SpriteBatch();
 	private Animation walkAnimation;
 	private Texture walkSheet;
 	private TextureRegion[] walkFrames;
@@ -60,10 +62,14 @@ public class GameView {
 		loadImageFiles();
 		renderer = new OrthogonalTiledMapRenderer(getCurrentMap(), 1 / 16f);
 		camera = new OrthographicCamera();
+		layerCam = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
+		layerCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		layerCam.update();
 		camera.update();
 		initWalkAnimation();
 		font.setColor(Color.YELLOW);
+		layerBatch.setProjectionMatrix(layerCam.combined);
 	}
 
 	public TiledMap getCurrentMap() {
@@ -75,14 +81,16 @@ public class GameView {
 		}
 		return null;
 	}
-	/** Visual feedback right now 2 seconds before Dimensions are changed.
-	 * Changes the color of the spritebatch which is noticable on the player
-	 * and the gameobjects of the level.
+
+	/**
+	 * Visual feedback right now 2 seconds before Dimensions are changed.
+	 * Changes the color of the spritebatch which is noticable on the player and
+	 * the gameobjects of the level.
 	 * 
 	 * @param batch
 	 */
 	public void dimensionWillChange(final SpriteBatch batch) {
-		
+
 		Timer t = new Timer();
 		TimerTask red = new TimerTask() {
 			@Override
@@ -143,50 +151,36 @@ public class GameView {
 	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		font.setScale(font.getScaleX() / 10, font.getScaleY() / 10);
-		// Uncomment below for making the camera follow the player on the y-axis
-		// updateCameraPosition(3);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
 
 		// Draw gameObjects
-		SpriteBatch batch = renderer.getSpriteBatch();
-		batch.begin();
+		SpriteBatch tileBatch = renderer.getSpriteBatch();
+		tileBatch.begin();
 		if (this.DimensionChange == true) {
-			dimensionWillChange(batch);
-
-			// Font drawing does not quite work yet
-			// font.draw(batch, dimensionWarning,
-			// world.getPlayer().getPosition().getX(),
-			// world.getPlayer().getPosition().getY()+5);
+			dimensionWillChange(tileBatch);
 		}
 
 		if (world.getDimension() == GameWorld.Dimension.XY) {
-			drawGameObjectsXY(batch);
+			drawGameObjectsXY(tileBatch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
-			drawGameObjectsXZ(batch);
+			drawGameObjectsXZ(tileBatch);
 		}
 
-		batch.end();
+		tileBatch.end();
+
+		layerBatch.begin();
+		font.draw(layerBatch, dimensionWarning, 30, 30);
+		layerBatch.end();
+
 	}
 
 	private void drawIsPaused() {
-		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		camera.position.x = 0;
-		camera.update();
-
-		SpriteBatch batch = renderer.getSpriteBatch();
-		batch.begin();
-
-		BitmapFont font = new BitmapFont();
-		font.setScale(2);
-		font.draw(batch, "Test", 20, 20);
-
-		batch.end();
+		layerBatch.begin();
+		font.draw(layerBatch, "Pause", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		layerBatch.end();
 	}
 
 	/**
@@ -202,9 +196,9 @@ public class GameView {
 
 		// If the player's position is close to the camera bottom, just move
 		// the camera with the same speed as the player
-		if (delta > 200) {
+		if (delta > 10) {
 			camera.position.y = playerPositionY + Gdx.graphics.getHeight() / 2;
-		} else if (delta < -200) {
+		} else if (delta < -10) {
 			camera.position.y = playerPositionY - Gdx.graphics.getHeight() / 2;
 		}
 	}
