@@ -18,6 +18,7 @@ public class Player extends GameObject {
 	private final float baseXSpeed;
 	private final float baseZSpeed;
 	private boolean usingDash;
+	private static String imgpath = "data/PlayerImg.png";
 
 	/**
 	 * Creates player with default values
@@ -45,12 +46,16 @@ public class Player extends GameObject {
 	 */
 	public Player(Vector3 position, Vector3 size, Vector3 speed,
 			float jumpSpeed, boolean isGrounded) {
-		super(position, size, speed, "data/PlayerImg.png", "");
+		super(position, size, speed, imgpath, "");
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
 		baseZSpeed = 0.5f;
 		usingDash = false;
+	}
+	
+	public void setImagePath(String s){
+		Player.imgpath = "data/"+s+"png";
 	}
 
 	public float getBaseXSpeed() {

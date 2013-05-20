@@ -2,16 +2,28 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+
+/** Class for customizing player.
+ * Skins, character name etc for further use. 
+ * 
+ * @author kimegenvall
+ *
+ */
 public class CustomizeScreen extends AbstractMenuScreen{
 	private String charname = "";
 	private String characterTexture = "texture1";
+	private GameScreen g;
 	public CustomizeScreen(Dimensions game) {
 		super(game);
 		init();
@@ -19,18 +31,30 @@ public class CustomizeScreen extends AbstractMenuScreen{
 
 
 	public void init(){
-		TextButton name = new TextButton("Enter character name",getButtonStyle());
+		final TextButton name = new TextButton("Choose your hero",getButtonStyle());
 		name.setDisabled(true);
 		name.clearListeners();
 		TextFieldStyle style = new TextFieldStyle();
-		style.focusedFontColor = Color.BLUE;
-		style.messageFontColor = Color.RED;
+		style.focusedFontColor = Color.WHITE;
+		style.messageFontColor = Color.YELLOW;
 		style.fontColor = Color.BLACK;
-		//TextField nametext = new TextField(this.characterTexture, style);
-		//nametext.setMessageText("Enter Character name");
+		BitmapFont font = new BitmapFont();
+		style.font = font;
+		final TextField nametext = new TextField("", style);
+		nametext.setMessageText("Enter Character name");
 
 
 
+		nametext.setTextFieldListener(new TextFieldListener(){
+
+			@Override
+			public void keyTyped(TextField textField, char key) {
+				name.setText(nametext.getText());
+				charname = nametext.getText();
+				
+			}
+			
+		});
 
 
 
@@ -38,7 +62,8 @@ public class CustomizeScreen extends AbstractMenuScreen{
 		char1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				charname = char1.getName();
+				characterTexture = "level_select";
+				System.out.println(characterTexture);
 			}
 		});
 
@@ -47,8 +72,8 @@ public class CustomizeScreen extends AbstractMenuScreen{
 		char2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// Tell texturehandler that player should have this texture
-				charname = char2.getName();
+				characterTexture = "PlayerImg";
+				System.out.println(characterTexture);
 			}
 		});
 
@@ -66,19 +91,21 @@ public class CustomizeScreen extends AbstractMenuScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// Do saving stuff
+				g =new GameScreen(game, LevelHandler.getInstance().getNextUnfinishedLevel());
+				// Does not work. Nullpointer
+				//g.getGameModel().getPlayer().setImagePath(characterTexture);
 			}
 		});
 		
-		mainTable.add(name).fill();
+		mainTable.add(name).center();
 		mainTable.row();
-		//mainTable.add(nametext);
+		//mainTable.add(nametext).center();
 		mainTable.row();
-		mainTable.add(char1);
+		mainTable.add(char1).left();
+		mainTable.add(char2).right();
 		mainTable.row();
-		mainTable.add(char2);
-		mainTable.row();
-		mainTable.add(back).expandX();
-		mainTable.add(save).expandX();
+		mainTable.add(back).left();
+		mainTable.add(save).right();
 
 	}
 }
