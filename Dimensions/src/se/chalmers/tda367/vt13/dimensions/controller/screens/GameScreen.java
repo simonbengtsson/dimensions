@@ -164,7 +164,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 						.getHeight() / 2))) {
 			// Actions when dimension is XY
 			if (world.getDimension() == Dimension.XY) {
-				world.getPlayer().dash();
+				//world.getPlayer().dash();
 
 				// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
