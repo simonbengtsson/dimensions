@@ -22,4 +22,23 @@ public class SlowPowerUp extends GameObject implements PowerUp {
 		return new SlowPowerUp(getPosition().clone(), getSize().clone(),
 				getSpeed().clone());
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof SlowPowerUp) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		SlowPowerUp p = (SlowPowerUp)o;
+		if(this.getPosition().equals(p.getPosition()) && 
+			this.getSize().equals(p.getSize()) && 
+			this.getSpeed().equals(p.getSpeed())){
+			return true;
+		}
+		else{
+		return false;
+		}
+	}
 }

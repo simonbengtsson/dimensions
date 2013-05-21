@@ -45,6 +45,18 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	public Vector3 getPosition() {
 		return position;
 	}
+	
+	public abstract boolean equals(Object o);
+	
+		public int hashCode(){
+			double hash = 0;
+			hash =+ this.getPosition().hashCode()*9;
+			hash =+ this.getSize().hashCode()*13;
+			hash =+ this.getSpeed().hashCode()*17;
+			return (int)hash;
+			
+		}
+	
 
 	public Vector3 getSize() {
 		return size;

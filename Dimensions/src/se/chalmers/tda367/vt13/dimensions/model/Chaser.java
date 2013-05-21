@@ -34,11 +34,44 @@ public class Chaser extends GameObject {
 			String imageFile, String soundFile) {
 		super(position, size, speed, imageFile, soundFile);
 	}
+	
+	
 
 	@Override
-	public GameObject clone() {
+	public Chaser clone() {
 		return new Chaser(getPosition().clone(), getSize().clone(), getSpeed()
 				.clone(), getImagePath(), getSoundFileAsString());
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof Chaser) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		Chaser c = (Chaser)o;
+		if(this.getPosition().equals(c.getPosition()) && 
+			this.getSize().equals(c.getSize()) && 
+			this.getSpeed().equals(c.getSpeed())){
+			return true;
+		}
+		else{
+		return false;
+		}
+		
+	}
+	
+	// For testing purposes
+	public String toString(){
+		return "Position " + this.getPosition() + "Size" + this.getSize() + " Speed " + this.getSpeed();
+	}
+	
+	
+
+	
+
+
 
 }
