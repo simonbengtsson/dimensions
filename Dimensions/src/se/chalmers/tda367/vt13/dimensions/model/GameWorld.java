@@ -21,13 +21,13 @@ public class GameWorld {
 	}
 
 	public enum State {
-		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE,DIMENSION_WILLCHANGE;
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE, DIMENSION_WILLCHANGE;
 	}
 
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Chaser chaser;
-	private CollisionHandler collisionHandler; 
+	private CollisionHandler collisionHandler;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
@@ -35,7 +35,7 @@ public class GameWorld {
 	private State currentState;
 	private CheckPoint cp;
 	private int score;
-	private Level currentLevel;
+	private Level level;
 
 	/**
 	 * New GameWorld with given Level
@@ -51,7 +51,8 @@ public class GameWorld {
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Player player, Level level, CollisionHandler collisionHandler) {
+	public GameWorld(Player player, Level level,
+			CollisionHandler collisionHandler) {
 		this.player = player;
 		this.gameObjects = level.getGameObjects();
 		this.collisionHandler = collisionHandler;
@@ -62,11 +63,11 @@ public class GameWorld {
 		this.chaser = new Chaser();
 		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
-		currentLevel = level;
+		this.level = level;
 	}
 
 	public void update() {
-		//State backupState = currentState;
+		// State backupState = currentState;
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
@@ -86,7 +87,7 @@ public class GameWorld {
 		default:
 			break;
 		}
-		
+
 	}
 
 	/**
@@ -118,10 +119,10 @@ public class GameWorld {
 		}
 		if (isLevelFinished()) {
 			currentState = State.LEVEL_FINISHED;
-		} 
+		}
 	}
-	
-	public CheckPoint getCheckPoint(){
+
+	public CheckPoint getCheckPoint() {
 		return this.cp;
 	}
 
@@ -149,7 +150,7 @@ public class GameWorld {
 	public void swapDimension() {
 		notifyWorldListeners(State.DIMENSION_WILLCHANGE);
 		Timer t = new Timer();
-		t.schedule(new TimerTask(){
+		t.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
@@ -159,11 +160,10 @@ public class GameWorld {
 					currentDimension = Dimension.XY;
 				}
 				currentState = State.DIMENSION_CHANGE;
-				
 			}
-			
+
 		}, 2000);
-		
+
 	}
 
 	/**
@@ -176,16 +176,15 @@ public class GameWorld {
 	}
 
 	public boolean isLevelFinished() {
-		return player.getPosition().getX() >= currentLevel
-				.getLevelFinishedPosition();
+		return player.getPosition().getX() >= level.getLength();
 	}
 
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
 
-	public Level getCurrentLevel() {
-		return currentLevel;
+	public Level getLevel() {
+		return level;
 	}
 
 	public Player getPlayer() {
@@ -199,10 +198,11 @@ public class GameWorld {
 	public void setScore(int i) {
 		score = i;
 	}
-	
-	public float getBaseGravity(){
+
+	public float getBaseGravity() {
 		return this.baseGravity;
 	}
+
 	public void setCurrentState(State newState) {
 		currentState = newState;
 	}
@@ -248,9 +248,24 @@ public class GameWorld {
 	public void addWorldListener(WorldListener newListener) {
 		listeners.add(newListener);
 	}
-	
-	public List<WorldListener> getWorldListeners(){
+
+	public List<WorldListener> getWorldListeners() {
 		return this.listeners;
+	}
+
+	/**
+	 * Calculates the current progress
+	 * 
+	 * @return The progress in percentage
+	 */
+	public float getProgress() {
+		return player.getPosition().getX()
+				/ level.getLength();
+	}
+
+	public float getChaserProgress() {
+		return chaser.getPosition().getX()
+				/ level.getLength();
 	}
 
 }

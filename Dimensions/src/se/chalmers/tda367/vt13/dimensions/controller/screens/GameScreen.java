@@ -16,6 +16,7 @@ import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
+import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
@@ -25,7 +26,8 @@ import com.badlogic.gdx.audio.Sound;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
-	private GameView view;
+	private GameView gameView;
+	private GameLayerView gameLayerView;
 	private Map<String, Sound> files;
 	private Dimensions game;
 	private boolean wasEscapePressed = false;
@@ -34,34 +36,44 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
-		this.nextLevel = level; 
-	}
-
-	@Override
-	public void show() {
-
+		this.nextLevel = level;
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		CollisionHandler collisionHandler = new CollisionHandler(
 				tiledMapHandler);
 		world = new GameWorld(nextLevel, collisionHandler);
 		world.addWorldListener(this);
-		view = new GameView(world, tiledMapHandler.getMap(nextLevel
+		gameView = new GameView(world, tiledMapHandler.getMap(nextLevel
 				.getMapXYPath()), tiledMapHandler.getMap(nextLevel
 				.getMapXZPath()));
-		tiledMapHandler.setGameView(view);
+		gameLayerView = new GameLayerView(world);
+		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();
+	}
 
+	@Override
+	public void show() {
 	}
 
 	@Override
 	public void resize(int width, int height) {
 	}
 
-	@Override
+	@Override 
 	public void render(float delta) {
 		getInput();
 		world.update();
-		view.draw();
+		
+		switch (world.getCurrentState()) {
+		case GAME_RUNNING:
+			gameView.draw();
+			gameLayerView.draw();
+			break;
+		case GAME_PAUSED:
+			gameLayerView.drawPaused();
+			break;
+		default:
+			break;
+		}
 	}
 
 	private void getInput() {
@@ -192,35 +204,33 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void worldChange(State newWorldState, final GameWorld world) {
 		if (newWorldState == State.GAME_OVER) {
 			game.setScreen(new GameOverScreen(game));
-			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
 		} else if (newWorldState == State.DIMENSION_CHANGE) {
 			world.getPlayer().setIsGrounded(true);
-			view.changeMap(world.getDimension());
+			gameView.changeMap(world.getDimension());
 		}
 
-		
-		/* If Dimensions are about to change, set a timer that specifies
-		 * The time before dimension actually changes
+		/*
+		 * If Dimensions are about to change, set a timer that specifies The
+		 * time before dimension actually changes
 		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
-			view.setDimensionChange(true);
+			gameView.setDimensionChange(true);
 
 			Timer t = new Timer();
 			t.schedule(new TimerTask() {
 
 				@Override
 				public void run() {
-					view.setDimensionChange(false);
-					
-
+					gameView.setDimensionChange(false);
 				}
 
 			}, 2000);
 
 		} else if (newWorldState == State.LEVEL_FINISHED) {
-			game.setScreen(new LevelFinishedScreen(game));
-			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+			game.setScreen(new WinScreen(game));
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
 		}
 	}

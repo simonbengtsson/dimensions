@@ -4,6 +4,7 @@ package se.chalmers.tda367.vt13.dimensions.model;
  * Class for the agents chasing the player. Game over if the Chaser catches up
  * to the player.
  */
+@SuppressWarnings("serial")
 public class Chaser extends GameObject {
 
 	/**

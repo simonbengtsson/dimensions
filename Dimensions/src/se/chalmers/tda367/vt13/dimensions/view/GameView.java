@@ -12,7 +12,6 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,22 +35,16 @@ public class GameView {
 	private OrthogonalTiledMapRenderer renderer;
 	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
-	private OrthographicCamera layerCam;
-	private SpriteBatch layerBatch = new SpriteBatch();
 	private Animation walkAnimation;
 	private Texture walkSheet;
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private String dimensionWarning = "Warning, Dimension Changing!";
-	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 	private boolean DimensionChange;
 
 	/**
-	 * Constructor.
-	 * 
 	 * @param world
 	 *            the Gameworld
 	 */
@@ -62,14 +55,9 @@ public class GameView {
 		loadImageFiles();
 		renderer = new OrthogonalTiledMapRenderer(getCurrentMap(), 1 / 16f);
 		camera = new OrthographicCamera();
-		layerCam = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
-		layerCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		layerCam.update();
 		camera.update();
 		initWalkAnimation();
-		font.setColor(Color.YELLOW);
-		layerBatch.setProjectionMatrix(layerCam.combined);
 	}
 
 	public TiledMap getCurrentMap() {
@@ -130,25 +118,7 @@ public class GameView {
 		}
 	}
 
-	/**
-	 * Draw GameObjects on the screen.
-	 */
 	public void draw() {
-
-		switch (world.getCurrentState()) {
-		case GAME_RUNNING:
-			drawIsRunning();
-			break;
-		case GAME_PAUSED:
-			drawIsPaused();
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
@@ -157,31 +127,21 @@ public class GameView {
 		renderer.render();
 
 		// Draw gameObjects
-		SpriteBatch tileBatch = renderer.getSpriteBatch();
-		tileBatch.begin();
+		SpriteBatch batch = renderer.getSpriteBatch();
+		batch.begin();
 		if (this.DimensionChange == true) {
-			dimensionWillChange(tileBatch);
+			dimensionWillChange(batch);
 		}
-
 		if (world.getDimension() == GameWorld.Dimension.XY) {
-			drawGameObjectsXY(tileBatch);
+			drawGameObjectsXY(batch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
-			drawGameObjectsXZ(tileBatch);
+			drawGameObjectsXZ(batch);
 		}
 
-		tileBatch.end();
-
-		layerBatch.begin();
-		font.draw(layerBatch, dimensionWarning, 30, 30);
-		layerBatch.end();
-
+		batch.end();
 	}
 
-	private void drawIsPaused() {
-		layerBatch.begin();
-		font.draw(layerBatch, "Pause", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		layerBatch.end();
-	}
+
 
 	/**
 	 * Makes the camera smoothly follow the player y axis.
