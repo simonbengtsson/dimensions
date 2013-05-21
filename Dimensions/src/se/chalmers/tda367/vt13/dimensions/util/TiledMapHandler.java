@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class TiledMapHandler implements MapHandler {
 	
 	private GameView view;
+	private final int GROUND_LAYER = 1;
+	private final int OBSTACLE_LAYER = 2;
 	
 	public TiledMapHandler() {
 		
@@ -23,13 +25,13 @@ public class TiledMapHandler implements MapHandler {
 	
 	@Override
 	public boolean isCellGround(int x, int y) {
-		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(1))
+		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(GROUND_LAYER))
 				.getCell(x, y) != null;
 	}
 	
 	@Override
 	public boolean isCellObstacle(int x, int y) {
-		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(2))
+		return ((TiledMapTileLayer) view.getCurrentMap().getLayers().get(OBSTACLE_LAYER))
 				.getCell(x, y) != null;
 	}
 	

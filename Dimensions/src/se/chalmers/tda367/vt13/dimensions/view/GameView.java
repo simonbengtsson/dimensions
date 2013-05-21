@@ -215,7 +215,7 @@ public class GameView {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
 			spriteBatch.draw(textures.get(gameObject.getImagePath()),
-					pos.getX(), pos.getY(), size.getX(), size.getY());
+					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
