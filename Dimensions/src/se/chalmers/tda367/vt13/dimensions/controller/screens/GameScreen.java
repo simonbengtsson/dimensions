@@ -23,6 +23,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.FPSLogger;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
@@ -58,8 +59,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void resize(int width, int height) {
 	}
 
+	private FPSLogger fl = new FPSLogger();
 	@Override 
 	public void render(float delta) {
+		//sleep(delta);
+		fl.log();
 		getInput();
 		world.update();
 		
@@ -73,6 +77,18 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			break;
 		default:
 			break;
+		}
+	}
+	
+	private long last = System.nanoTime();
+	public void sleep(float delta) {
+		try {
+			long tmp = System.nanoTime() - last;
+			//System.out.println(0.000001*tmp);
+			last = System.nanoTime();
+			Thread.sleep((long)(8-delta));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
