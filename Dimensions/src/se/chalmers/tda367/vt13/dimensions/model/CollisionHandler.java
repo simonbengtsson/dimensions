@@ -7,7 +7,6 @@ import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
-import se.chalmers.tda367.vt13.dimensions.util.MapHandler;
 
 /**
  * Class handling all types of collisions.

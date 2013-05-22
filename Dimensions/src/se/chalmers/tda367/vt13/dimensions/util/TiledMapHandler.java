@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.util;
 
+import se.chalmers.tda367.vt13.dimensions.model.MapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;

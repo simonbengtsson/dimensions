@@ -32,18 +32,13 @@ public class GameView {
 	private OrthographicCamera camera;
 	private Animation walkAnimation;
 	private Texture walkSheet;
-	private Color batchColour = Color.RED;
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
-	/**
-	 * @param world
-	 *            the Gameworld
-	 */
 	public GameView(GameWorld world, TiledMap mapXY, TiledMap mapXZ) {
 		this.world = world;
 		this.mapXY = mapXY;
@@ -82,7 +77,6 @@ public class GameView {
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
-		batch.setColor(batchColour);
 
 		// Draw gameObjects
 		
@@ -92,30 +86,7 @@ public class GameView {
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
 			drawGameObjectsXZ(batch);
 		}
-
 		batch.end();
-	}
-
-
-
-	/**
-	 * Makes the camera smoothly follow the player y axis.
-	 * 
-	 * @param speed
-	 *            How fast the camera is following the player(y-axis)
-	 */
-	private void updateCameraPositionY(int speed) {
-		// Update camera position Y axis
-		float playerPositionY = world.getPlayer().getPosition().getY();
-		float delta = camera.position.y - playerPositionY;
-
-		// If the player's position is close to the camera bottom, just move
-		// the camera with the same speed as the player
-		if (delta > 10) {
-			camera.position.y = playerPositionY + Gdx.graphics.getHeight() / 2;
-		} else if (delta < -10) {
-			camera.position.y = playerPositionY - Gdx.graphics.getHeight() / 2;
-		}
 	}
 
 	private void initWalkAnimation() {
@@ -179,16 +150,16 @@ public class GameView {
 	}
 
 	public void setBatchColor(Color c) {
-		batchColour = c;
+		batch.setColor(c);
 	}
 
 	private boolean wasRight = true;
 	public void shakeCamera() {
 		if (wasRight) {
-		camera.position.y += 0.15f;
+		camera.position.y += 0.3f;
 		wasRight = false;
 		} else {
-			camera.position.y -= 0.15f;
+			camera.position.y -= 0.3f;
 			wasRight = true;
 		}
 	}
