@@ -32,7 +32,6 @@ public class LevelHandler {
 		}
 		return instance;
 	}
-
 	
 	/**
 	 * Adds a level to the handler.

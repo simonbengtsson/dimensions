@@ -80,7 +80,7 @@ public class CollisionHandler {
 		}
 
 		// GameOver if player moves out of bounds (XZ)
-		if (world.getDimension() == Dimension.XZ && !player.getIsGrounded()) {
+		if (world.getDimension() == Dimension.XZ && !player.isGrounded()) {
 			world.notifyWorldListeners(State.GAME_OVER);
 		}
 	}

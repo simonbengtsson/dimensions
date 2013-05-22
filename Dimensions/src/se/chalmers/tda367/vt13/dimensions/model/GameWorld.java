@@ -70,7 +70,6 @@ public class GameWorld {
 			break;
 		case GAME_PAUSED:
 			notifyWorldListeners(State.GAME_PAUSED);
-			// updateRunning();
 			break;
 		case LEVEL_FINISHED:
 			notifyWorldListeners(State.LEVEL_FINISHED);
@@ -99,8 +98,8 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
-		player.getPosition().add(player.getSpeed());
-		chaser.getPosition().add(chaser.getSpeed());
+		player.update();
+		chaser.update();
 		collisionHandler.checkCollisions(this);
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);

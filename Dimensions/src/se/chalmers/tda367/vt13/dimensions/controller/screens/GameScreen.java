@@ -3,6 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.controller.InputHandler;
 import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
@@ -18,7 +19,9 @@ import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -37,11 +40,13 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		this.nextLevel = level;
 		this.escapeWasPressed = false;
 		this.enterWasPressed = false;
+		InputHandler inputProcessor = new InputHandler(this);
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	@Override
 	public void show() {
-
+		
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		CollisionHandler collisionHandler = new CollisionHandler(
 				tiledMapHandler);
@@ -69,7 +74,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		getInput();
+		//inputRecieved(); //uncomment and change name if inputHandler is removed
+		getSpecialInput();
 		world.update();
 
 		switch (world.getCurrentState()) {
@@ -96,15 +102,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	}
 
-	private void getInput() {
-		getGameInput();
-		getSpecialInput();
-	}
-
 	/**
 	 * Handles game input.
 	 */
-	private void getGameInput() {
+	public void inputRecieved() {
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
 			// Different actions depending on what dimension is active
 			if (world.getDimension() == Dimension.XY) {

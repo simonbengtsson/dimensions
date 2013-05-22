@@ -50,23 +50,15 @@ public class Player extends GameObject {
 		this.jumpSpeed = jumpSpeed;
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
-		baseZSpeed = 0.5f;
+		baseZSpeed = 0.2f;
 		changingDirection = false;
 	}
 
-	public void setImagePath(String s) {
-		Player.imgpath = "data/" + s + "png";
-	}
-	
-	
-	
-
-	public float getBaseXSpeed() {
-		return baseXSpeed;
-	}
-
-	public float getBaseZSpeed() {
-		return baseZSpeed;
+	/**
+	 * Update the player. Method should be called each frame.
+	 */
+	public void update() {
+		getPosition().add(getSpeed());
 	}
 
 	/**
@@ -86,7 +78,6 @@ public class Player extends GameObject {
 	public void changeDirection() {
 		if (!changingDirection) {
 			changingDirection = true;
-			System.out.println(getSpeed().getZ());
 			if (getSpeed().getZ() < 0) {
 				getSpeed().setZ(baseZSpeed);
 			} else {
@@ -95,7 +86,7 @@ public class Player extends GameObject {
 			// Timer to avoid several direction changes with one keypress
 			Timer timer = new Timer();
 			long delay = 200;
-			timer.schedule(new TimerTask() { 
+			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					changingDirection = false;
@@ -103,44 +94,9 @@ public class Player extends GameObject {
 			}, delay);
 		}
 	}
-
-	public void resetXSpeed() {
-		getSpeed().setX(baseXSpeed);
-	}
-
-	public boolean getIsGrounded() {
-		return isGrounded;
-	}
-
+	
 	/**
-	 * Method for setting the isGrounded field of the player. For example:
-	 * isGrounded should be set to true if proper collision with a platform is
-	 * detected.
-	 * 
-	 * @param isGrounded
-	 *            if the player is standing on a platform or not
-	 */
-	public void setIsGrounded(boolean isGrounded) {
-		this.isGrounded = isGrounded;
-	}
-
-	public boolean getIsStuck() {
-		return isStuck;
-	}
-
-	/**
-	 * Method for setting the isStuck field of the player. For example: isStuck
-	 * should be set to true if proper collision with a platform is detected.
-	 * 
-	 * @param isStuck
-	 *            if the player is running in to a platform or not
-	 */
-	public void setIsStuck(boolean isStuck) {
-		this.isStuck = isStuck;
-	}
-
-	/**
-	 * Check if the the player is grounded. Adjust speed accordingly.
+	 * Adjust Y speed according to gravity.
 	 */
 	public void calculateYSpeed(float gravity) {
 		if (isGrounded) {
@@ -158,30 +114,73 @@ public class Player extends GameObject {
 		}
 	}
 
+	/**
+	 * Should be set to true if proper collision with a platform is detected
+	 * ahead of the player.
+	 * 
+	 * @param isStuck
+	 *            if the player is running in to a platform or not
+	 */
+	public void setIsStuck(boolean isStuck) {
+		this.isStuck = isStuck;
+	}
+
+	/**
+	 * Should be set to true if proper collision with a platform is detected
+	 * below the player.
+	 * 
+	 * @param isGrounded
+	 *            If the player is standing on a platform or not
+	 */
+	public void setIsGrounded(boolean isGrounded) {
+		this.isGrounded = isGrounded;
+	}
+
+	public boolean getIsStuck() {
+		return isStuck;
+	}
+
+	public void resetXSpeed() {
+		getSpeed().setX(baseXSpeed);
+	}
+
+	public boolean isGrounded() {
+		return isGrounded;
+	}
+
+	public void setImagePath(String s) {
+		Player.imgpath = "data/" + s + "png";
+	}
+
+	public float getBaseXSpeed() {
+		return baseXSpeed;
+	}
+
+	public float getBaseZSpeed() {
+		return baseZSpeed;
+	}
+
 	public Player clone() {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
 				.clone(), jumpSpeed, isGrounded);
 	}
+
 	@Override
 	public boolean equals(Object o) {
-		if(o == this)
+		if (o == this)
 			return true;
-		
-		if(!(o instanceof Player) || o == null || o.getClass() != this.getClass()){
+
+		if (!(o instanceof Player) || o == null
+				|| o.getClass() != this.getClass()) {
 			return false;
 		}
-		Player p = (Player)o;
-		return( 
-			this.getPosition().equals(p.getPosition()) && 
-			this.getSize().equals(p.getSize()) && 
-			this.getSpeed().equals(p.getSpeed()) &&
-			this.getBaseXSpeed() == p.getBaseXSpeed() &&
-			this.getIsGrounded() == p.getIsGrounded() && 
-			this.getIsStuck() == p.getIsStuck() && 
-			this.jumpSpeed == p.jumpSpeed && 
-			this.baseZSpeed == p.baseZSpeed);
-	
-				
-		
+		Player p = (Player) o;
+		return (this.getPosition().equals(p.getPosition())
+				&& this.getSize().equals(p.getSize())
+				&& this.getSpeed().equals(p.getSpeed())
+				&& this.getBaseXSpeed() == p.getBaseXSpeed()
+				&& this.isGrounded() == p.isGrounded()
+				&& this.getIsStuck() == p.getIsStuck()
+				&& this.jumpSpeed == p.jumpSpeed && this.baseZSpeed == p.baseZSpeed);
 	}
 }

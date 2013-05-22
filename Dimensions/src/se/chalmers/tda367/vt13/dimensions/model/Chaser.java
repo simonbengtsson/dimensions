@@ -35,8 +35,6 @@ public class Chaser extends GameObject {
 		super(position, size, speed, imageFile, soundFile);
 	}
 	
-	
-
 	@Override
 	public Chaser clone() {
 		return new Chaser(getPosition().clone(), getSize().clone(), getSpeed()
@@ -60,18 +58,14 @@ public class Chaser extends GameObject {
 		else{
 		return false;
 		}
-		
 	}
 	
-	// For testing purposes
+	// For testing purposes TODO remove (or implement properly?)
 	public String toString(){
 		return "Position " + this.getPosition() + "Size" + this.getSize() + " Speed " + this.getSpeed();
 	}
-	
-	
 
-	
-
-
-
+	public void update() {
+		getPosition().add(getSpeed());
+	}
 }
