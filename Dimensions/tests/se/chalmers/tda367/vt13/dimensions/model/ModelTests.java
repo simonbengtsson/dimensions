@@ -77,13 +77,13 @@ private State TEST3;
 		create();
 		
 		assertFalse(w.isGameOver());
-		w.getPlayer().setPosition(new Vector3(w.getCurrentLevel().getLevelFinishedPosition()+1,1,1));
+		w.getPlayer().setPosition(new Vector3(w.getLevel().getLength()+1,1,1));
 		assertTrue(w.isLevelFinished());
 		
-		w.getPlayer().setPosition(new Vector3(w.getCurrentLevel().getLevelFinishedPosition()-1,1,1));
+		w.getPlayer().setPosition(new Vector3(w.getLevel().getLength()-1,1,1));
 		assertFalse(w.isLevelFinished());
 		
-		w.getPlayer().setPosition(new Vector3(w.getCurrentLevel().getLevelFinishedPosition()+1,-1,1));
+		w.getPlayer().setPosition(new Vector3(w.getLevel().getLength()+1,-1,1));
 		assertTrue(w.isGameOver());
 		assertTrue(w.isLevelFinished());
 		
