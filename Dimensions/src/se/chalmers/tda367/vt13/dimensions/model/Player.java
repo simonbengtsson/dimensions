@@ -17,7 +17,7 @@ public class Player extends GameObject {
 	private boolean isStuck;
 	private final float baseXSpeed;
 	private final float baseZSpeed;
-	private boolean usingDash;
+	private boolean changingDirection;
 	private static String imgpath = "data/PlayerImg.png";
 
 	/**
@@ -51,11 +51,11 @@ public class Player extends GameObject {
 		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
 		baseZSpeed = 0.5f;
-		usingDash = false;
+		changingDirection = false;
 	}
-	
-	public void setImagePath(String s){
-		Player.imgpath = "data/"+s+"png";
+
+	public void setImagePath(String s) {
+		Player.imgpath = "data/" + s + "png";
 	}
 	
 	
@@ -65,8 +65,13 @@ public class Player extends GameObject {
 		return baseXSpeed;
 	}
 
+	public float getBaseZSpeed() {
+		return baseZSpeed;
+	}
+
 	/**
-	 * Increase the players ySpeed with jumpSpeed.
+	 * Increase the players ySpeed with jumpSpeed. Called when XY dimension is
+	 * active.
 	 */
 	public void jump() {
 		if (isGrounded) {
@@ -76,41 +81,26 @@ public class Player extends GameObject {
 	}
 
 	/**
-	 * Moves the player up with z-speed;
+	 * Change the players Z direction. Called when XZ dimension is active.
 	 */
-	public void moveUp() {
-		getSpeed().setZ(baseZSpeed);
-	}
-
-	/**
-	 * Moves the player down with z-speed;
-	 */
-	public void moveDown() {
-		getSpeed().setZ(-baseZSpeed);
-	}
-
-	public void dash() {
-		if (!isGrounded && !usingDash) {
-			usingDash = true;
-			getSpeed().setX(getSpeed().getX() + 1);
-
+	public void changeDirection() {
+		if (!changingDirection) {
+			changingDirection = true;
+			System.out.println(getSpeed().getZ());
+			if (getSpeed().getZ() < 0) {
+				getSpeed().setZ(baseZSpeed);
+			} else {
+				getSpeed().setZ(-baseZSpeed);
+			}
+			// Timer to avoid several direction changes with one keypress
 			Timer timer = new Timer();
-
-			// Resets the speed 500ms after used dash
-			timer.schedule(new TimerTask() {
+			long delay = 200;
+			timer.schedule(new TimerTask() { 
 				@Override
 				public void run() {
-					getSpeed().setX(getSpeed().getX() - 1);
+					changingDirection = false;
 				}
-			}, 500);
-
-			// Enables the player to use dash again after 5s
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					usingDash = false;
-				}
-			}, 5000);
+			}, delay);
 		}
 	}
 
@@ -139,9 +129,8 @@ public class Player extends GameObject {
 	}
 
 	/**
-	 * Method for setting the isStuck field of the player. For example:
-	 * isStuck should be set to true if proper collision with a platform is
-	 * detected.
+	 * Method for setting the isStuck field of the player. For example: isStuck
+	 * should be set to true if proper collision with a platform is detected.
 	 * 
 	 * @param isStuck
 	 *            if the player is running in to a platform or not
@@ -160,12 +149,11 @@ public class Player extends GameObject {
 			getSpeed().setY(getSpeed().getY() + gravity);
 		}
 	}
-	
+
 	public void calculateXSpeed() {
 		if (isStuck) {
 			getSpeed().setX(0);
-		}
-		else {
+		} else {
 			resetXSpeed();
 		}
 	}
