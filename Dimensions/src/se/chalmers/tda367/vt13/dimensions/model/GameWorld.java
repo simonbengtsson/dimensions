@@ -110,8 +110,6 @@ public class GameWorld {
 						Math.signum(player.getSpeed().getY())
 								* Player.MAX_VELOCITY);
 			}
-		} else if (currentDimension == Dimension.XZ) {
-			player.setSpeed(new Vector3(player.getSpeed().getX(), 0, 0));
 		}
 		if (isGameOver()) {
 			currentState = State.GAME_OVER;
@@ -155,6 +153,7 @@ public class GameWorld {
 			public void run() {
 				if (currentDimension == Dimension.XY) {
 					currentDimension = Dimension.XZ;
+					player.getSpeed().setZ(player.getBaseZSpeed());
 				} else {
 					currentDimension = Dimension.XY;
 				}

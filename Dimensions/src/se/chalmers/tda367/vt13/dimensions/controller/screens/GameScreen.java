@@ -28,13 +28,15 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameView view;
 	private Map<String, Sound> files;
 	private Dimensions game;
-	private boolean wasEscapePressed = false;
-	private boolean wasEnterPressed = false;
+	private boolean escapeWasPressed;
+	private boolean enterWasPressed;
 	private Level nextLevel;
 
 	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
-		this.nextLevel = level; 
+		this.nextLevel = level;
+		this.escapeWasPressed = false;
+		this.enterWasPressed = false;
 	}
 
 	@Override
@@ -65,31 +67,45 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	}
 
 	private void getInput() {
-		getInputUp();
-		getInputDown();
-		getInputSpecialKeys();
+		getGameInput();
+		getSpecialInput();
 	}
 
 	/**
+	 * Handles game input.
+	 */
+	private void getGameInput() {
+		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
+			// Different actions depending on what dimension is active
+			if (world.getDimension() == Dimension.XY) {
+				world.getPlayer().jump();
+			}
+			else if (world.getDimension() == Dimension.XZ) {
+				world.getPlayer().changeDirection();
+			}
+		}
+	}
+	
+	/**
 	 * Handles all input that isn't player navigation
 	 */
-	private void getInputSpecialKeys() {
+	private void getSpecialInput() {
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-			if (!wasEnterPressed) {
+			if (!enterWasPressed) {
 				world.resetToCheckPoint();
-				wasEnterPressed = true;
+				enterWasPressed = true;
 			}
 		} else {
-			wasEnterPressed = false;
+			enterWasPressed = false;
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			if (!wasEscapePressed) {
+			if (!escapeWasPressed) {
 				togglePause();
-				wasEscapePressed = true;
+				escapeWasPressed = true;
 			}
 		} else {
-			wasEscapePressed = false;
+			escapeWasPressed = false;
 		}
 	}
 
@@ -104,46 +120,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	}
 
-	/**
-	 * Handles all input from upkeys and uptouchareas.
-	 */
-	private void getInputUp() {
-		if (Gdx.input.isKeyPressed(Keys.UP)
-				|| (Gdx.input.isTouched() && (Gdx.input.getY() < Gdx.graphics
-						.getHeight() / 2))) {
-			// Actions when dimension is XY
-			if (world.getDimension() == Dimension.XY) {
-				world.getPlayer().jump();
-
-				// Actions when dimension is XZ
-			} else if (world.getDimension() == Dimension.XZ) {
-				world.getPlayer().moveUp();
-			}
-
-		}
-	}
-
 	public void nextLevel(Level l) {
 		this.nextLevel = l;
-	}
-
-	/**
-	 * Handles all input from downkeys and downtouchareas.
-	 */
-	private void getInputDown() {
-		if (Gdx.input.isKeyPressed(Keys.DOWN)
-				|| (Gdx.input.isTouched() && (Gdx.input.getY() >= Gdx.graphics
-						.getHeight() / 2))) {
-			// Actions when dimension is XY
-			if (world.getDimension() == Dimension.XY) {
-				world.getPlayer().dash();
-
-				// Actions when dimension is XZ
-			} else if (world.getDimension() == Dimension.XZ) {
-				world.getPlayer().moveDown();
-			}
-
-		}
 	}
 
 	public GameWorld getGameModel() {
@@ -199,9 +177,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			view.changeMap(world.getDimension());
 		}
 
-		
-		/* If Dimensions are about to change, set a timer that specifies
-		 * The time before dimension actually changes
+		/*
+		 * If Dimensions are about to change, set a timer that specifies The
+		 * time before dimension actually changes
 		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
 			view.setDimensionChange(true);
@@ -212,7 +190,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				@Override
 				public void run() {
 					view.setDimensionChange(false);
-					
 
 				}
 
