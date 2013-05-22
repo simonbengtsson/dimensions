@@ -8,7 +8,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 public class CheckPointPowerUp extends GameObject implements PowerUp{
 	private static final long serialVersionUID = -3976535550976929865L;
 
-	protected CheckPointPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
+	public CheckPointPowerUp(Vector3 position, Vector3 size, Vector3 speed) {
 		super(position, size, speed, "", "");
 	}
 
