@@ -14,6 +14,7 @@ import se.chalmers.tda367.vt13.dimensions.model.Level;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
@@ -29,7 +30,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
 	private GameView gameView;
 	private GameLayerView gameLayerView;
-	private Map<String, Sound> files;
 	private Dimensions game;
 	private boolean escapeWasPressed;
 	private boolean enterWasPressed;
@@ -156,19 +156,13 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void playSound(String s) {
-		files.get(s).play(0.5f);
+		Assets.playSound(s);
 	}
 
 	private void loadSoundFiles() {
-		files = new HashMap<String, Sound>();
 		for (GameObject g : world.getGameObjects()) {
 			g.addObserver(this);
-			String file = g.getSoundFileAsString();
-
-			if (!files.containsKey(file) && !file.equals("")) {
-				Sound sound = Gdx.audio.newSound(Gdx.files.internal(file));
-				files.put(file, sound);
-			}
+			Assets.registerSound(g.getSoundFileAsString());
 		}
 	}
 

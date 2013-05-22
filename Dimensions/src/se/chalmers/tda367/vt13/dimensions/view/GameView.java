@@ -1,14 +1,11 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -32,7 +29,6 @@ public class GameView {
 	private TiledMap mapXY;
 	private TiledMap mapXZ;
 	private OrthogonalTiledMapRenderer renderer;
-	private Map<String, Texture> textures;
 	private OrthographicCamera camera;
 	private Animation walkAnimation;
 	private Texture walkSheet;
@@ -142,23 +138,17 @@ public class GameView {
 	 * Loads the image files from all gameobjects and saves them in a HashMap
 	 */
 	private void loadImageFiles() {
-		textures = new HashMap<String, Texture>();
 		for (GameObject g : world.getGameObjects()) {
-			String file = g.getImagePath();
-			if (!textures.containsKey(file) && !file.equals("")) {
-				Texture t = new Texture(Gdx.files.internal(file));
-				textures.put(file, t);
-			}
+			Assets.registerTexture(g.getImagePath());
 		}
-		String file = world.getPlayer().getImagePath();
-		textures.put(file, new Texture(Gdx.files.internal(file)));
+		Assets.registerTexture(world.getPlayer().getImagePath());
 	}
 
 	private void drawGameObjectsXY(SpriteBatch spriteBatch) {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			spriteBatch.draw(textures.get(gameObject.getImagePath()),
+			spriteBatch.draw(Assets.getTexture(gameObject.getImagePath()),
 					pos.getX(), pos.getY(), size.getX(), size.getY());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
@@ -173,13 +163,13 @@ public class GameView {
 		for (GameObject gameObject : world.getGameObjects()) {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
-			spriteBatch.draw(textures.get(gameObject.getImagePath()),
+			spriteBatch.draw(Assets.getTexture(gameObject.getImagePath()),
 					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		Player p = world.getPlayer();
-		spriteBatch.draw(textures.get(p.getImagePath()),
+		spriteBatch.draw(Assets.getTexture(p.getImagePath()),
 				p.getPosition().getX(), p.getPosition().getZ(), p.getSize()
 						.getX(), p.getSize().getZ());
 	}

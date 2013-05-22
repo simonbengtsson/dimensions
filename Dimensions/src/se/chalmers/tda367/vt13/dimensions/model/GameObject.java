@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public abstract class GameObject implements Serializable, SoundObservable, Cloneable {
+public abstract class GameObject implements Serializable, SoundObservable,
+		Cloneable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,15 +25,20 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	 *            the size of the GameObject
 	 * @param speed
 	 *            the speed of the GameObject
+	 * @param imageFile
+	 *            string representing the imagefile
+	 * @param soundFile
+	 *            string representing the soundfile
 	 */
-	protected GameObject(Vector3 position, Vector3 size, Vector3 speed, String imageFile, String soundFile) {
+	protected GameObject(Vector3 position, Vector3 size, Vector3 speed,
+			String imageFile, String soundFile) {
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
 		this.soundFile = soundFile;
 		this.imageFile = imageFile;
 	}
-	
+
 	@Override
 	public abstract GameObject clone();
 
@@ -45,18 +50,17 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	public Vector3 getPosition() {
 		return position;
 	}
-	
+
 	public abstract boolean equals(Object o);
-	
-		public int hashCode(){
-			double hash = 0;
-			hash =+ this.getPosition().hashCode()*9;
-			hash =+ this.getSize().hashCode()*13;
-			hash =+ this.getSpeed().hashCode()*17;
-			return (int)hash;
-			
-		}
-	
+
+	public int hashCode() {
+		double hash = 0;
+		hash = +this.getPosition().hashCode() * 9;
+		hash = +this.getSize().hashCode() * 13;
+		hash = +this.getSpeed().hashCode() * 17;
+		return (int) hash;
+
+	}
 
 	public Vector3 getSize() {
 		return size;
@@ -84,7 +88,7 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	 * 
 	 * @return
 	 */
-	public String getSoundFileAsString(){
+	public String getSoundFileAsString() {
 		return soundFile;
 	}
 
@@ -94,7 +98,7 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	 * 
 	 * @return
 	 */
-	public String getImagePath(){
+	public String getImagePath() {
 		return imageFile;
 	}
 
@@ -112,9 +116,9 @@ public abstract class GameObject implements Serializable, SoundObservable, Clone
 	public List<SoundObserver> getObservers() {
 		return observers;
 	}
-	
-	public void playSound(){
-		for(SoundObserver s : observers){
+
+	public void playSound() {
+		for (SoundObserver s : observers) {
 			s.playSound(soundFile);
 		}
 	}
