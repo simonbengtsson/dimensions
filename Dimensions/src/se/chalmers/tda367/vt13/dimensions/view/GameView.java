@@ -2,8 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
@@ -12,11 +11,11 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -37,33 +36,13 @@ public class GameView {
 	private OrthographicCamera camera;
 	private Animation walkAnimation;
 	private Texture walkSheet;
+	private Color batchColour = Color.RED;
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
-	private boolean DimensionChange;
 	SpriteBatch batch;
-	Timer t = new Timer();
-	TimerTask red = new TimerTask() {
-		@Override
-		public void run() {
-			batch.setColor(1, 0, 0, 1);
-		}
-	};
-	TimerTask blue = new TimerTask() {
-		@Override
-		public void run() {
-			batch.setColor(0, 0, 1, 1);
-		}
-	};
-
-	TimerTask green = new TimerTask() {
-		@Override
-		public void run() {
-			batch.setColor(0, 1, 0, 1);
-		}
-	};
 
 	/**
 	 * @param world
@@ -92,23 +71,6 @@ public class GameView {
 		return null;
 	}
 
-	/**
-	 * Visual feedback right now 2 seconds before Dimensions are changed.
-	 * Changes the color of the spritebatch which is noticable on the player and
-	 * the gameobjects of the level.
-	 * 
-	 * @param batch
-	 */
-	public void dimensionWillChange() {
-		t.schedule(red, 0, 150);
-		t.schedule(blue, 50, 150);
-		t.schedule(green, 100, 150);
-	}
-
-	public void setDimensionChange(boolean b) {
-		this.DimensionChange = b;
-	}
-
 	public void changeMap(Dimension d) {
 		if (d == Dimension.XY) {
 			renderer.setMap(mapXY);
@@ -124,14 +86,11 @@ public class GameView {
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
+		batch.setColor(batchColour);
 
 		// Draw gameObjects
 		
 		batch.begin();
-		if (this.DimensionChange == true) {
-			dimensionWillChange();
-			DimensionChange = false;
-		}
 		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
@@ -227,5 +186,20 @@ public class GameView {
 
 	public OrthographicCamera getCamera() {
 		return this.camera;
+	}
+
+	public void setBatchColor(Color c) {
+		batchColour = c;
+	}
+
+	private boolean wasRight = true;
+	public void shakeCamera() {
+		if (wasRight) {
+		camera.position.y += 0.15f;
+		wasRight = false;
+		} else {
+			camera.position.y -= 0.15f;
+			wasRight = true;
+		}
 	}
 }

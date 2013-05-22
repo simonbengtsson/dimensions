@@ -17,8 +17,8 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void use(GameWorld gw) {
-		gw.swapDimension();
+	public void use(GameWorld world) {
+		world.startDimensionTimer();
 	}
 	
 	@Override

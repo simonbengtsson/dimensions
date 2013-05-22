@@ -16,12 +16,8 @@ public class GameWorld {
 		XY, XZ, YZ
 	}
 
-	public enum WorldEvent {
-		GAME_OVER, DIMENSION_CHANGED;
-	}
-
 	public enum State {
-		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGE, DIMENSION_WILLCHANGE;
+		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
 
 	private List<GameObject> gameObjects;
@@ -73,16 +69,24 @@ public class GameWorld {
 			updateRunning();
 			break;
 		case GAME_PAUSED:
-			updatePaused();
+			notifyWorldListeners(State.GAME_PAUSED);
+			// updateRunning();
 			break;
 		case LEVEL_FINISHED:
-			updateLevelFinished();
+			notifyWorldListeners(State.LEVEL_FINISHED);
 			break;
 		case GAME_OVER:
-			updateGameOver();
+			notifyWorldListeners(State.GAME_OVER);
 			break;
-		case DIMENSION_CHANGE:
-			updateDimensionChange();
+		case DIMENSION_CHANGED:
+			notifyWorldListeners(State.DIMENSION_CHANGED);
+			currentState = State.GAME_RUNNING;
+			player.setIsGrounded(true);
+			updateRunning();
+			break;
+		case DIMENSION_CHANGING:
+			notifyWorldListeners(State.DIMENSION_CHANGING);
+			updateRunning();
 			break;
 		default:
 			break;
@@ -96,11 +100,8 @@ public class GameWorld {
 	 */
 	public void updateRunning() {
 		player.getPosition().add(player.getSpeed());
-		collisionHandler.checkCollisions(this);
 		chaser.getPosition().add(chaser.getSpeed());
-		if (chaser.getPosition().getX() >= player.getPosition().getX()) {
-			updateGameOver();
-		}
+		collisionHandler.checkCollisions(this);
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);
 			player.calculateXSpeed();
@@ -124,45 +125,31 @@ public class GameWorld {
 		return this.cp;
 	}
 
-	private void updatePaused() {
-		notifyWorldListeners(State.GAME_PAUSED);
-	}
-
-	private void updateLevelFinished() {
-		notifyWorldListeners(State.LEVEL_FINISHED);
-	}
-
-	private void updateGameOver() {
-		notifyWorldListeners(State.GAME_OVER);
-	}
-
-	private void updateDimensionChange() {
-		notifyWorldListeners(State.DIMENSION_CHANGE);
-		updateRunning(); // Fix for avoiding lag
-		currentState = State.GAME_RUNNING;
-	}
-
 	/**
 	 * If dimension XY, change it to XZ and the opposite
 	 */
 	public void swapDimension() {
-		notifyWorldListeners(State.DIMENSION_WILLCHANGE);
+		if (currentDimension == Dimension.XY) {
+			currentDimension = Dimension.XZ;
+			player.getSpeed().setZ(player.getBaseZSpeed());
+		} else {
+			currentDimension = Dimension.XY;
+		}
+		currentState = State.DIMENSION_CHANGED;
+
+	}
+
+	public void startDimensionTimer() {
+		currentState = State.DIMENSION_CHANGING;
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
-				if (currentDimension == Dimension.XY) {
-					currentDimension = Dimension.XZ;
-					player.getSpeed().setZ(player.getBaseZSpeed());
-				} else {
-					currentDimension = Dimension.XY;
-				}
-				currentState = State.DIMENSION_CHANGE;
+				swapDimension();
 			}
 
 		}, 2000);
-
 	}
 
 	/**
@@ -171,7 +158,8 @@ public class GameWorld {
 	 * @return if game over
 	 */
 	public boolean isGameOver() {
-		return player.getPosition().getY() < 0;
+		return player.getPosition().getY() < 0
+				|| chaser.getPosition().getX() >= player.getPosition().getX();
 	}
 
 	public boolean isLevelFinished() {
@@ -238,9 +226,13 @@ public class GameWorld {
 		return currentDimension;
 	}
 
+	/**
+	 * Notify world listeners the the World's state has changed
+	 * @param newWorldState
+	 */
 	public void notifyWorldListeners(State newWorldState) {
 		for (WorldListener wordListener : listeners) {
-			wordListener.worldChange(newWorldState, this);
+			wordListener.worldChanged(newWorldState);
 		}
 	}
 
@@ -249,7 +241,7 @@ public class GameWorld {
 	}
 
 	public List<WorldListener> getWorldListeners() {
-		return this.listeners;
+		return listeners;
 	}
 
 	/**
@@ -258,13 +250,11 @@ public class GameWorld {
 	 * @return The progress in percentage
 	 */
 	public float getProgress() {
-		return player.getPosition().getX()
-				/ level.getLength();
+		return player.getPosition().getX() / level.getLength();
 	}
 
 	public float getChaserProgress() {
-		return chaser.getPosition().getX()
-				/ level.getLength();
+		return chaser.getPosition().getX() / level.getLength();
 	}
 
 }

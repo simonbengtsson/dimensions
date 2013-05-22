@@ -2,8 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
@@ -23,6 +22,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
@@ -70,17 +70,15 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		world.update();
 
 		switch (world.getCurrentState()) {
-		case GAME_RUNNING:
-			gameView.draw();
-			// gameLayerView.draw();
-			break;
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
 			break;
 		default:
+			gameView.draw();
+			// gameLayerView.draw();
 			break;
 		}
-		//System.out.println(delta*1000);
+		// System.out.println(delta*1000);
 		fl.log();
 		sleep(delta);
 	}
@@ -109,13 +107,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			// Different actions depending on what dimension is active
 			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().jump();
-			}
-			else if (world.getDimension() == Dimension.XZ) {
+			} else if (world.getDimension() == Dimension.XZ) {
 				world.getPlayer().changeDirection();
 			}
 		}
 	}
-	
+
 	/**
 	 * Handles all input that isn't player navigation
 	 */
@@ -197,33 +194,20 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	 * Performs updates if world state changes
 	 */
 	@Override
-	public void worldChange(State newWorldState, final GameWorld world) {
+	public void worldChanged(State newWorldState) {
 		if (newWorldState == State.GAME_OVER) {
 			game.setScreen(new GameOverScreen(game));
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
-		} else if (newWorldState == State.DIMENSION_CHANGE) {
-			world.getPlayer().setIsGrounded(true);
+		} else if (newWorldState == State.DIMENSION_CHANGED) {
 			gameView.changeMap(world.getDimension());
-		}
-
-		/*
-		 * If Dimensions are about to change, set a timer that specifies The
-		 * time before dimension actually changes
-		 */
-		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
-			gameView.setDimensionChange(true);
-
-			Timer t = new Timer();
-			t.schedule(new TimerTask() {
-
-				@Override
-				public void run() {
-					gameView.setDimensionChange(false);
-				}
-
-			}, 2000);
-
+			gameView.setBatchColor(Color.WHITE);
+		} else if (newWorldState == State.DIMENSION_CHANGING) {
+			Random rand = new Random();
+			gameView.setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
+					(int) (rand.nextFloat() + 0.5f),
+					(int) (rand.nextFloat() + 0.5f), 1));
+			gameView.shakeCamera();
 		} else if (newWorldState == State.LEVEL_FINISHED) {
 			game.setScreen(new WinScreen(game));
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
