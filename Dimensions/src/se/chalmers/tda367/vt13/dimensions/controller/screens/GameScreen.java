@@ -3,7 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.controller.InputHandler;
 import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;

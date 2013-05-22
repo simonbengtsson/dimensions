@@ -1,5 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.controller;
-import se.chalmers.tda367.vt13.dimensions.controller.screens.GameScreen;
+package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;

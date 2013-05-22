@@ -9,7 +9,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 /**
  * Class for creating a level with platforms and powerups
  */
-public class Level implements Serializable {
+public class Level implements Serializable, Cloneable {
 
 	
 
