@@ -72,7 +72,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		switch (world.getCurrentState()) {
 		case GAME_RUNNING:
 			gameView.draw();
-			// gameLayerView.draw();
+			 gameLayerView.draw();
 			break;
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
@@ -213,6 +213,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
 			gameView.setDimensionChange(true);
+			gameLayerView.setDimensionChange(true);
 
 			Timer t = new Timer();
 			t.schedule(new TimerTask() {
@@ -220,6 +221,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				@Override
 				public void run() {
 					gameView.setDimensionChange(false);
+					gameLayerView.setDimensionChange(false);
 				}
 
 			}, 2000);
