@@ -18,7 +18,7 @@ public class GameOverScreen extends AbstractMenuScreen {
 		TextButton playButton = new TextButton("Play again", getButtonStyle());
 		playButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-				game.setScreen(new GameScreen(game, LevelHandler.getInstance().getNextUnfinishedLevel()));
+				game.setScreen(new GameScreen(game, LevelHandler.getInstance().getLastPlayed()));
 				dispose();
 
 			}

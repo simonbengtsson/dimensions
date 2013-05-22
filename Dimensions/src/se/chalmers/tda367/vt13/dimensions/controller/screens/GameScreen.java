@@ -45,10 +45,16 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		CollisionHandler collisionHandler = new CollisionHandler(
 				tiledMapHandler);
-		world = new GameWorld(nextLevel, collisionHandler);
+		Level playLevel;
+		if(nextLevel != null){
+			playLevel = nextLevel;
+		}else{
+			playLevel = LevelHandler.getInstance().getProgressLevel(0).getLevel();
+		}
+		world = new GameWorld(playLevel, collisionHandler);
 		world.addWorldListener(this);
-		gameView = new GameView(world, tiledMapHandler.getMap(nextLevel
-				.getMapXYPath()), tiledMapHandler.getMap(nextLevel
+		gameView = new GameView(world, tiledMapHandler.getMap(playLevel
+				.getMapXYPath()), tiledMapHandler.getMap(playLevel
 				.getMapXZPath()));
 		gameLayerView = new GameLayerView(world);
 		tiledMapHandler.setGameView(gameView);
@@ -143,10 +149,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	}
 
-	public void nextLevel(Level l) {
-		this.nextLevel = l;
-	}
-
 	public GameWorld getGameModel() {
 		return world;
 	}
@@ -187,9 +189,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void worldChanged(State worldState) {
 		switch (worldState) {
 		case GAME_OVER:
-			game.setScreen(new GameOverScreen(game));
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
+			LevelHandler.getInstance().setLastPlayed(world.getLevel());
+			game.setScreen(new GameOverScreen(game));
 		case DIMENSION_CHANGED:
 			gameView.changeMap(world.getDimension());
 			gameView.setBatchColor(Color.WHITE);
@@ -202,9 +205,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			gameView.shakeCamera();
 			gameLayerView.setDimensionChange(true);
 		case LEVEL_FINISHED:
-			game.setScreen(new WinScreen(game));
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
+			game.setScreen(new WinScreen(game));
 		default:
 			break;
 		}

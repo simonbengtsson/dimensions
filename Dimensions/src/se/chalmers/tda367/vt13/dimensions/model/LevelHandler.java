@@ -15,6 +15,7 @@ import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 public class LevelHandler {
 	private Deque<ProgressLevel> progressLevels;
 	private static LevelHandler instance;
+	private Level lastPlayed;
 
 	private LevelHandler() {
 		progressLevels = new ArrayDeque<ProgressLevel>();
@@ -63,6 +64,14 @@ public class LevelHandler {
 			}
 		}
 		return null;
+	}
+	
+	public Level getLastPlayed(){
+		return lastPlayed;
+	}
+	
+	public void setLastPlayed(Level l){
+		lastPlayed = l;
 	}
 	
 	public boolean loadProgressFromFile(Deque<ProgressLevel> p){
