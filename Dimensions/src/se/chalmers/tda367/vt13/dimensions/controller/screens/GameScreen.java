@@ -60,17 +60,16 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	}
 
 	private FPSLogger fl = new FPSLogger();
-	@Override 
+
+	@Override
 	public void render(float delta) {
-		//sleep(delta);
-		fl.log();
 		getInput();
 		world.update();
-		
+
 		switch (world.getCurrentState()) {
 		case GAME_RUNNING:
 			gameView.draw();
-			gameLayerView.draw();
+			// gameLayerView.draw();
 			break;
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
@@ -78,15 +77,17 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		default:
 			break;
 		}
+		System.out.println(delta*1000);
+		fl.log();
+		sleep(delta);
 	}
-	
-	private long last = System.nanoTime();
+
 	public void sleep(float delta) {
+		int frameTime = 16;
 		try {
-			long tmp = System.nanoTime() - last;
-			//System.out.println(0.000001*tmp);
-			last = System.nanoTime();
-			Thread.sleep((long)(8-delta));
+			if (delta * 1000 < frameTime) {
+				Thread.sleep((long) (16 - delta * 1000));
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -164,7 +165,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 						.getHeight() / 2))) {
 			// Actions when dimension is XY
 			if (world.getDimension() == Dimension.XY) {
-				//world.getPlayer().dash();
+				// world.getPlayer().dash();
 
 				// Actions when dimension is XZ
 			} else if (world.getDimension() == Dimension.XZ) {
