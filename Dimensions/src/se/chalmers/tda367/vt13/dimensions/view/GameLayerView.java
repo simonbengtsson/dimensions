@@ -26,10 +26,9 @@ public class GameLayerView {
 	private BitmapFont headerFont = new BitmapFont(
 			Gdx.files.internal("impact50.fnt"), false);
 	private SpriteBatch batch = new SpriteBatch();
-	private BitmapFont warningtext = new BitmapFont(Gdx.files.internal("impact50.fnt"),false);
+	private BitmapFont warningtext = new BitmapFont(
+			Gdx.files.internal("impact50.fnt"), false);
 	private boolean DimensionChange;
-	
-	
 
 	public GameLayerView(GameWorld world) {
 		this.world = world;
@@ -37,34 +36,34 @@ public class GameLayerView {
 		initPauseStage();
 		warningtext.setColor(Color.RED);
 		initActionStage();
-		
+
 	}
-	
-	private void initActionStage(){
+
+	private void initActionStage() {
 		notMainTable.debug();
 		notMainTable.setFillParent(true);
 		LabelStyle pauseLabelStyle = new LabelStyle(headerFont, Color.RED);
 		notMainTable.add().expand();
 		notMainTable.row();
-		notMainTable.add(new Label("Warning, dimension unstable", pauseLabelStyle)).top();
+		notMainTable.add(
+				new Label("Warning, dimension unstable", pauseLabelStyle))
+				.top();
 		actionStage.addActor(notMainTable);
-		
+
 	}
-	
-	private void initAction(){
-		
-		ParallelAction para = Actions.parallel(Actions.moveTo(200,200,0.5f),Actions.fadeOut(0.5f));
-		
+
+	private void initAction() {
+
+		ParallelAction para = Actions.parallel(Actions.moveTo(200, 200, 0.5f),
+				Actions.fadeOut(0.5f));
+
 		SequenceAction sequence = Actions.sequence(
-	             Actions.moveTo(0, 200, 0.8f),
-	              Actions.fadeOut(0.5f),
-	              Actions.removeActor()             
-	            );
-		
-		//actionStage.addAction(para);
+				Actions.moveTo(0, 200, 0.8f), Actions.fadeOut(0.5f),
+				Actions.removeActor());
+
+		// actionStage.addAction(para);
 		actionStage.addAction(sequence);
-	
-				
+
 	}
 
 	private void initMainStage() {
@@ -76,9 +75,11 @@ public class GameLayerView {
 		mainTable.add(new Label("chaser", pauseLabelStyle)).bottom();
 		mainStage.addActor(mainTable);
 	}
+
 	public void setDimensionChange(boolean b) {
 		this.DimensionChange = b;
 	}
+
 	private void initPauseStage() {
 		Table mainTable = new Table();
 		mainTable.debug();
@@ -88,24 +89,28 @@ public class GameLayerView {
 		mainTable.add(new Label("Unpause with ESC", pauseLabelStyle));
 		pauseStage.addActor(mainTable);
 	}
-	
-	
 
 	/**
 	 * Main draw method. Draws all sub views.
 	 */
+
+	private Texture playerTexture = new Texture(
+			Gdx.files.internal("data/player-mini.png"));
+	private Texture chaserTexture = new Texture(
+			Gdx.files.internal("data/PlayerImg.png"));
+
 	public void draw() {
 		mainStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		mainStage.draw();
 		batch.begin();
-		if(this.DimensionChange == true){
-		initAction();
-		actionStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		actionStage.draw();
+		if (this.DimensionChange == true) {
+			initAction();
+			actionStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+			actionStage.draw();
 		}
-		batch.draw(new Texture(Gdx.files.internal("data/player-mini.png")),
+		batch.draw(playerTexture,
 				world.getProgress() * Gdx.graphics.getWidth(), 10, 40, 40);
-		batch.draw(new Texture(Gdx.files.internal("data/PlayerImg.png")),
+		batch.draw(chaserTexture,
 				world.getChaserProgress() * Gdx.graphics.getWidth(), 10, 40, 40);
 		batch.end();
 	}
