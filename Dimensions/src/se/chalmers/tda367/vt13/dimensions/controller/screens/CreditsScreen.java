@@ -1,9 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class CreditsScreen extends AbstractMenuScreen{
 

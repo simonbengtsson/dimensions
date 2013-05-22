@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -93,12 +94,6 @@ public class GameLayerView {
 	/**
 	 * Main draw method. Draws all sub views.
 	 */
-
-	private Texture playerTexture = new Texture(
-			Gdx.files.internal("data/player-mini.png"));
-	private Texture chaserTexture = new Texture(
-			Gdx.files.internal("data/PlayerImg.png"));
-
 	public void draw() {
 		mainStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		mainStage.draw();
@@ -108,9 +103,9 @@ public class GameLayerView {
 			actionStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 			actionStage.draw();
 		}
-		batch.draw(playerTexture,
+		batch.draw(Assets.getTexture(Assets.PLAYER_TEXTURE),
 				world.getProgress() * Gdx.graphics.getWidth(), 10, 40, 40);
-		batch.draw(chaserTexture,
+		batch.draw(Assets.getTexture(Assets.CHASER_TEXTURE),
 				world.getChaserProgress() * Gdx.graphics.getWidth(), 10, 40, 40);
 		batch.end();
 	}

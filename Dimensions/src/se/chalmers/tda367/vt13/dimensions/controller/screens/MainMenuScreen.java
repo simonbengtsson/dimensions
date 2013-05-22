@@ -67,4 +67,8 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		
 		mainTable.add(sidebarTable);
 	}
+	
+	public void dispose(){
+		super.dispose();
+	}
 }

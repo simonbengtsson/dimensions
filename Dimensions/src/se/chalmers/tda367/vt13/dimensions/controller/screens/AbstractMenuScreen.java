@@ -1,12 +1,12 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,9 +28,8 @@ public class AbstractMenuScreen implements Screen {
 	}
 
 	private void initMainStage() {
-		Texture bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
 		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-				bgTexture)));
+				Assets.getTexture(Assets.BG_IMAGE))));
 		mainTable.setFillParent(true);
 		mainTable.debug();
 		mainStage.addActor(mainTable);

@@ -13,6 +13,11 @@ public class Assets {
 
 	public static final String SPIKEOBSTACLE_IMAGE = "data/spikes.png";
 	public static final String SPIKEOBSTACLE_SOUND = "";
+	
+	public static final String PLAYER_TEXTURE = "data/player-mini.png";
+	public static final String CHASER_TEXTURE = "data/PlayerImg.png";
+	
+	public static final String BG_IMAGE = "data/bg.jpg";
 
 	public static final String CHECKPOINTPOWERUP_IMAGE = "";
 	public static final String CHECKPOINTPOWERUP_SOUND = "";
@@ -75,7 +80,10 @@ public class Assets {
 		sounds.get(file).play();
 	}
 
-	public static void loadAll() {
-
+	public static void loadAllAudioVisual() {
+		registerTexture(PLAYER_TEXTURE);
+		registerTexture(CHASER_TEXTURE);
+		registerTexture(BG_IMAGE);
+		
 	}
 }
