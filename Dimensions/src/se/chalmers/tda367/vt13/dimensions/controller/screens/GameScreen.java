@@ -77,7 +77,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		default:
 			break;
 		}
-		System.out.println(delta*1000);
+		//System.out.println(delta*1000);
 		fl.log();
 		sleep(delta);
 	}
