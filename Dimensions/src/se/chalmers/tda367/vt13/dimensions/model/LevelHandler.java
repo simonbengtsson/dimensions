@@ -32,6 +32,7 @@ public class LevelHandler {
 		return instance;
 	}
 
+	
 	/**
 	 * Adds a level to the handler.
 	 * 
@@ -62,6 +63,14 @@ public class LevelHandler {
 			}
 		}
 		return null;
+	}
+	
+	public boolean loadProgressFromFile(Deque<ProgressLevel> p){
+		if(p != null && !p.isEmpty()){
+			progressLevels = p;
+			return true;
+		}
+		return false;
 	}
 
 	/**
