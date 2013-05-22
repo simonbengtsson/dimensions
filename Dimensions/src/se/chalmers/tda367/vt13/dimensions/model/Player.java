@@ -57,6 +57,9 @@ public class Player extends GameObject {
 	public void setImagePath(String s) {
 		Player.imgpath = "data/" + s + "png";
 	}
+	
+	
+	
 
 	public float getBaseXSpeed() {
 		return baseXSpeed;
@@ -158,5 +161,27 @@ public class Player extends GameObject {
 	public Player clone() {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
 				.clone(), jumpSpeed, isGrounded);
+	}
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof Player) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		Player p = (Player)o;
+		return( 
+			this.getPosition().equals(p.getPosition()) && 
+			this.getSize().equals(p.getSize()) && 
+			this.getSpeed().equals(p.getSpeed()) &&
+			this.getBaseXSpeed() == p.getBaseXSpeed() &&
+			this.getIsGrounded() == p.getIsGrounded() && 
+			this.getIsStuck() == p.getIsStuck() && 
+			this.jumpSpeed == p.jumpSpeed && 
+			this.baseZSpeed == p.baseZSpeed);
+	
+				
+		
 	}
 }

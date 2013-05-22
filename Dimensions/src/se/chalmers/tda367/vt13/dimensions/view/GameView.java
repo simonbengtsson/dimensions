@@ -12,7 +12,6 @@ import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,15 +40,32 @@ public class GameView {
 	private TextureRegion[] walkFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
-	private String dimensionWarning = "Warning, Dimension Changing!";
-	private BitmapFont font = new BitmapFont();
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 	private boolean DimensionChange;
+	SpriteBatch batch;
+	Timer t = new Timer();
+	TimerTask red = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(1, 0, 0, 1);
+		}
+	};
+	TimerTask blue = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(0, 0, 1, 1);
+		}
+	};
+
+	TimerTask green = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(0, 1, 0, 1);
+		}
+	};
 
 	/**
-	 * Constructor.
-	 * 
 	 * @param world
 	 *            the Gameworld
 	 */
@@ -63,7 +79,7 @@ public class GameView {
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
 		initWalkAnimation();
-		font.setColor(Color.YELLOW);
+		batch = renderer.getSpriteBatch();
 	}
 
 	public TiledMap getCurrentMap() {
@@ -75,39 +91,18 @@ public class GameView {
 		}
 		return null;
 	}
-	/** Visual feedback right now 2 seconds before Dimensions are changed.
-	 * Changes the color of the spritebatch which is noticable on the player
-	 * and the gameobjects of the level.
+
+	/**
+	 * Visual feedback right now 2 seconds before Dimensions are changed.
+	 * Changes the color of the spritebatch which is noticable on the player and
+	 * the gameobjects of the level.
 	 * 
 	 * @param batch
 	 */
-	public void dimensionWillChange(final SpriteBatch batch) {
-		
-		Timer t = new Timer();
-		TimerTask red = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(1, 0, 0, 1);
-			}
-		};
-		TimerTask blue = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(0, 0, 1, 1);
-			}
-		};
-
-		TimerTask green = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(0, 1, 0, 1);
-			}
-		};
-
-		t.schedule(red, 100);
-		t.schedule(blue, 700);
-		t.schedule(green, 1400);
-
+	public void dimensionWillChange() {
+		t.schedule(red, 0, 150);
+		t.schedule(blue, 50, 150);
+		t.schedule(green, 100, 150);
 	}
 
 	public void setDimensionChange(boolean b) {
@@ -122,47 +117,21 @@ public class GameView {
 		}
 	}
 
-	/**
-	 * Draw GameObjects on the screen.
-	 */
 	public void draw() {
-
-		switch (world.getCurrentState()) {
-		case GAME_RUNNING:
-			drawIsRunning();
-			break;
-		case GAME_PAUSED:
-			drawIsPaused();
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	private void drawIsRunning() {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		font.setScale(font.getScaleX() / 10, font.getScaleY() / 10);
-		// Uncomment below for making the camera follow the player on the y-axis
-		// updateCameraPosition(3);
 		camera.position.x = world.getPlayer().getPosition().getX() + 12;
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
 
 		// Draw gameObjects
-		SpriteBatch batch = renderer.getSpriteBatch();
+		
 		batch.begin();
 		if (this.DimensionChange == true) {
-			dimensionWillChange(batch);
-
-			// Font drawing does not quite work yet
-			// font.draw(batch, dimensionWarning,
-			// world.getPlayer().getPosition().getX(),
-			// world.getPlayer().getPosition().getY()+5);
+			dimensionWillChange();
+			DimensionChange = false;
 		}
-
 		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
 		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
@@ -172,22 +141,7 @@ public class GameView {
 		batch.end();
 	}
 
-	private void drawIsPaused() {
-		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		camera.position.x = 0;
-		camera.update();
-
-		SpriteBatch batch = renderer.getSpriteBatch();
-		batch.begin();
-
-		BitmapFont font = new BitmapFont();
-		font.setScale(2);
-		font.draw(batch, "Test", 20, 20);
-
-		batch.end();
-	}
 
 	/**
 	 * Makes the camera smoothly follow the player y axis.
@@ -202,9 +156,9 @@ public class GameView {
 
 		// If the player's position is close to the camera bottom, just move
 		// the camera with the same speed as the player
-		if (delta > 200) {
+		if (delta > 10) {
 			camera.position.y = playerPositionY + Gdx.graphics.getHeight() / 2;
-		} else if (delta < -200) {
+		} else if (delta < -10) {
 			camera.position.y = playerPositionY - Gdx.graphics.getHeight() / 2;
 		}
 	}
@@ -261,7 +215,7 @@ public class GameView {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
 			spriteBatch.draw(textures.get(gameObject.getImagePath()),
-					pos.getX(), pos.getY(), size.getX(), size.getY());
+					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 

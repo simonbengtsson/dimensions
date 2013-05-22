@@ -16,16 +16,19 @@ import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
+import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.FPSLogger;
 
 public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameWorld world;
-	private GameView view;
+	private GameView gameView;
+	private GameLayerView gameLayerView;
 	private Map<String, Sound> files;
 	private Dimensions game;
 	private boolean escapeWasPressed;
@@ -47,23 +50,50 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				tiledMapHandler);
 		world = new GameWorld(nextLevel, collisionHandler);
 		world.addWorldListener(this);
-		view = new GameView(world, tiledMapHandler.getMap(nextLevel
+		gameView = new GameView(world, tiledMapHandler.getMap(nextLevel
 				.getMapXYPath()), tiledMapHandler.getMap(nextLevel
 				.getMapXZPath()));
-		tiledMapHandler.setGameView(view);
+		gameLayerView = new GameLayerView(world);
+		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 	}
 
+	private FPSLogger fl = new FPSLogger();
+
 	@Override
 	public void render(float delta) {
 		getInput();
 		world.update();
-		view.draw();
+
+		switch (world.getCurrentState()) {
+		case GAME_RUNNING:
+			gameView.draw();
+			// gameLayerView.draw();
+			break;
+		case GAME_PAUSED:
+			gameLayerView.drawPaused();
+			break;
+		default:
+			break;
+		}
+		//System.out.println(delta*1000);
+		fl.log();
+		sleep(delta);
+	}
+
+	public void sleep(float delta) {
+		int frameTime = 16;
+		try {
+			if (delta * 1000 < frameTime) {
+				Thread.sleep((long) (16 - delta * 1000));
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void getInput() {
@@ -170,11 +200,11 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void worldChange(State newWorldState, final GameWorld world) {
 		if (newWorldState == State.GAME_OVER) {
 			game.setScreen(new GameOverScreen(game));
-			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
 		} else if (newWorldState == State.DIMENSION_CHANGE) {
 			world.getPlayer().setIsGrounded(true);
-			view.changeMap(world.getDimension());
+			gameView.changeMap(world.getDimension());
 		}
 
 		/*
@@ -182,22 +212,21 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		 * time before dimension actually changes
 		 */
 		else if (newWorldState == State.DIMENSION_WILLCHANGE) {
-			view.setDimensionChange(true);
+			gameView.setDimensionChange(true);
 
 			Timer t = new Timer();
 			t.schedule(new TimerTask() {
 
 				@Override
 				public void run() {
-					view.setDimensionChange(false);
-
+					gameView.setDimensionChange(false);
 				}
 
 			}, 2000);
 
 		} else if (newWorldState == State.LEVEL_FINISHED) {
-			game.setScreen(new LevelFinishedScreen(game));
-			LevelHandler.getInstance().gameFinished(world.getCurrentLevel(),
+			game.setScreen(new WinScreen(game));
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
 		}
 	}

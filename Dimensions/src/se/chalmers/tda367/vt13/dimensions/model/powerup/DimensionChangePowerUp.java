@@ -26,4 +26,10 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 		return new DimensionChangePowerUp(getPosition().clone(), getSize().clone(),
 				getSpeed().clone());
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

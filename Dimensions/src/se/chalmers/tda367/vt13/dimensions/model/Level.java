@@ -17,7 +17,7 @@ public class Level implements Serializable {
 	protected Dimension startingDimension = Dimension.XY;
 	protected String mapXYPath;
 	protected String mapXZPath;
-	protected float levelFinishedPosition;
+	protected float length;
 	private String levelName;
 
 	public Level() {
@@ -26,14 +26,14 @@ public class Level implements Serializable {
 
 	public Level(String name, float gravity, List<GameObject> gameObjects,
 			Dimension start, String TMXFileXY, String TMXFileXZ,
-			float finishedPosition) {
+			float length) {
 		this.levelName = name;
 		this.gravity = gravity;
 		this.gameObjects = gameObjects;
 		this.startingDimension = start;
 		this.mapXYPath = TMXFileXY;
 		this.mapXZPath = TMXFileXZ;
-		this.levelFinishedPosition = finishedPosition;
+		this.length = length;
 	}
 	
 	@Override
@@ -42,15 +42,15 @@ public class Level implements Serializable {
 		for(GameObject gameObject : gameObjects) {
 		    clonedGameObjects.add(gameObject.clone());
 		}
-		return new Level(levelName, gravity, clonedGameObjects, startingDimension, mapXYPath, mapXZPath, levelFinishedPosition);
+		return new Level(levelName, gravity, clonedGameObjects, startingDimension, mapXYPath, mapXZPath, length);
 	}
 
 	public List<GameObject> getGameObjects() {
 		return new ArrayList<GameObject>(gameObjects);
 	}
 
-	public float getLevelFinishedPosition() {
-		return levelFinishedPosition;
+	public float getLength() {
+		return length;
 	}
 
 	public String getMapXYPath() {

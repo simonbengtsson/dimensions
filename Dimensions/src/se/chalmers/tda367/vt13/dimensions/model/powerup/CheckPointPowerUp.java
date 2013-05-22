@@ -2,6 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.Platform;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 
 public class CheckPointPowerUp extends GameObject implements PowerUp{
@@ -19,5 +20,24 @@ public class CheckPointPowerUp extends GameObject implements PowerUp{
 	@Override
 	public CheckPointPowerUp clone() {
 		return new CheckPointPowerUp(getPosition().clone(), getSize().clone(), getSpeed().clone());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof CheckPointPowerUp) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		CheckPointPowerUp p = (CheckPointPowerUp)o;
+		if(this.getPosition().equals(p.getPosition()) && 
+			this.getSize().equals(p.getSize()) && 
+			this.getSpeed().equals(p.getSpeed())){
+			return true;
+		}
+		else{
+		return false;
+		}
 	}
 }

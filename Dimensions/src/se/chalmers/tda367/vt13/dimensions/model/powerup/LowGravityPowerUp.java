@@ -29,4 +29,23 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 		return new LowGravityPowerUp(getPosition().clone(), getSize().clone(),
 				getSpeed().clone());
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof LowGravityPowerUp) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		LowGravityPowerUp p = (LowGravityPowerUp)o;
+		if(this.getPosition().equals(p.getPosition()) && 
+			this.getSize().equals(p.getSize()) && 
+			this.getSpeed().equals(p.getSpeed())){
+			return true;
+		}
+		else{
+		return false;
+		}
+	}
 }

@@ -7,9 +7,9 @@ import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class LevelFinishedScreen extends AbstractMenuScreen {
+public class WinScreen extends AbstractMenuScreen {
 
-	public LevelFinishedScreen(Dimensions game) {
+	public WinScreen(Dimensions game) {
 		super(game);
 		init();
 	}
