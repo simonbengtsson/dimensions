@@ -11,6 +11,7 @@ import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Storage {
 
@@ -37,7 +38,9 @@ public class Storage {
 		Deque<ProgressLevel> pl = null;
 		try {
 			pl =(Deque<ProgressLevel>) new ObjectInputStream(file.read()).readObject();
-		} catch (ClassNotFoundException e) {
+		} catch(GdxRuntimeException e){
+			
+		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
