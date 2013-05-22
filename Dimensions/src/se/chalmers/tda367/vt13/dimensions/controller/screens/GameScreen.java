@@ -193,10 +193,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 					world.getScore(), false);
 			LevelHandler.getInstance().setLastPlayed(world.getLevel());
 			game.setScreen(new GameOverScreen(game));
+			break;
 		case DIMENSION_CHANGED:
 			gameView.changeMap(world.getDimension());
 			gameView.setBatchColor(Color.WHITE);
 			gameLayerView.setDimensionChange(false);
+			break;
 		case DIMENSION_CHANGING:
 			Random rand = new Random();
 			gameView.setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
@@ -204,10 +206,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 					(int) (rand.nextFloat() + 0.5f), 1));
 			gameView.shakeCamera();
 			gameLayerView.setDimensionChange(true);
+			break;
 		case LEVEL_FINISHED:
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
 			game.setScreen(new WinScreen(game));
+			break;
 		default:
 			break;
 		}
