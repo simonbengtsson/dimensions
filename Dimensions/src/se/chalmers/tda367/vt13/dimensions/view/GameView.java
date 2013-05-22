@@ -43,6 +43,27 @@ public class GameView {
 	private static final int FRAME_COLS = 6;
 	private static final int FRAME_ROWS = 5;
 	private boolean DimensionChange;
+	SpriteBatch batch;
+	Timer t = new Timer();
+	TimerTask red = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(1, 0, 0, 1);
+		}
+	};
+	TimerTask blue = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(0, 0, 1, 1);
+		}
+	};
+
+	TimerTask green = new TimerTask() {
+		@Override
+		public void run() {
+			batch.setColor(0, 1, 0, 1);
+		}
+	};
 
 	/**
 	 * @param world
@@ -58,6 +79,7 @@ public class GameView {
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
 		initWalkAnimation();
+		batch = renderer.getSpriteBatch();
 	}
 
 	public TiledMap getCurrentMap() {
@@ -77,33 +99,10 @@ public class GameView {
 	 * 
 	 * @param batch
 	 */
-	public void dimensionWillChange(final SpriteBatch batch) {
-
-		Timer t = new Timer();
-		TimerTask red = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(1, 0, 0, 1);
-			}
-		};
-		TimerTask blue = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(0, 0, 1, 1);
-			}
-		};
-
-		TimerTask green = new TimerTask() {
-			@Override
-			public void run() {
-				batch.setColor(0, 1, 0, 1);
-			}
-		};
-
-		t.schedule(red, 100);
-		t.schedule(blue, 700);
-		t.schedule(green, 1400);
-
+	public void dimensionWillChange() {
+		t.schedule(red, 0, 150);
+		t.schedule(blue, 50, 150);
+		t.schedule(green, 100, 150);
 	}
 
 	public void setDimensionChange(boolean b) {
@@ -127,10 +126,11 @@ public class GameView {
 		renderer.render();
 
 		// Draw gameObjects
-		SpriteBatch batch = renderer.getSpriteBatch();
+		
 		batch.begin();
 		if (this.DimensionChange == true) {
-			dimensionWillChange(batch);
+			dimensionWillChange();
+			DimensionChange = false;
 		}
 		if (world.getDimension() == GameWorld.Dimension.XY) {
 			drawGameObjectsXY(batch);
@@ -215,7 +215,7 @@ public class GameView {
 			Vector3 pos = gameObject.getPosition();
 			Vector3 size = gameObject.getSize();
 			spriteBatch.draw(textures.get(gameObject.getImagePath()),
-					pos.getX(), pos.getY(), size.getX(), size.getY());
+					pos.getX(), pos.getZ(), size.getX(), size.getZ());
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
