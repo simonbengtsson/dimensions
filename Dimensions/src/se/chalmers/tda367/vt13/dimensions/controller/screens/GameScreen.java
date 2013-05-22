@@ -1,7 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
@@ -22,7 +20,6 @@ import se.chalmers.tda367.vt13.dimensions.view.GameView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 
