@@ -75,10 +75,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			break;
 		default:
 			gameView.draw();
-			// gameLayerView.draw();
+			gameLayerView.draw();
 			break;
 		}
-		// System.out.println(delta*1000);
 		fl.log();
 		sleep(delta);
 	}
@@ -202,12 +201,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		} else if (newWorldState == State.DIMENSION_CHANGED) {
 			gameView.changeMap(world.getDimension());
 			gameView.setBatchColor(Color.WHITE);
+			gameLayerView.setDimensionChange(false);
 		} else if (newWorldState == State.DIMENSION_CHANGING) {
 			Random rand = new Random();
 			gameView.setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
 					(int) (rand.nextFloat() + 0.5f),
 					(int) (rand.nextFloat() + 0.5f), 1));
 			gameView.shakeCamera();
+			gameLayerView.setDimensionChange(true);
 		} else if (newWorldState == State.LEVEL_FINISHED) {
 			game.setScreen(new WinScreen(game));
 			LevelHandler.getInstance().gameFinished(world.getLevel(),

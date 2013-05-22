@@ -29,7 +29,20 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
+		if(o == this)
+			return true;
+		
+		if(!(o instanceof DimensionChangePowerUp) || o == null || o.getClass() != this.getClass()){
+			return false;
+		}
+		DimensionChangePowerUp p = (DimensionChangePowerUp)o;
+		if(this.getPosition().equals(p.getPosition()) && 
+			this.getSize().equals(p.getSize()) && 
+			this.getSpeed().equals(p.getSpeed())){
+			return true;
+		}
+		else{
 		return false;
+		}
 	}
 }
