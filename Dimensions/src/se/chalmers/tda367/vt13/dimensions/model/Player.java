@@ -149,6 +149,7 @@ public class Player extends GameObject {
 	}
 
 	public void setImagePath(String s) {
+		//TODO findbugs gives error here. "Write to static field from instance method"
 		Player.imgpath = "data/" + s + "png";
 	}
 

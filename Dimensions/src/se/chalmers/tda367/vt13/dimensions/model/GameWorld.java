@@ -158,8 +158,10 @@ public class GameWorld {
 	 */
 	public boolean isGameOver() {
 		return player.getPosition().getY() < 0
-				|| chaser.getPosition().getX() >= player.getPosition().getX();
+				|| chaser.getPosition().getX() >= player.getPosition().getX() ||
+						(currentDimension == Dimension.XZ && !player.isGrounded());
 	}
+	
 
 	public boolean isLevelFinished() {
 		return player.getPosition().getX() >= level.getLength();
