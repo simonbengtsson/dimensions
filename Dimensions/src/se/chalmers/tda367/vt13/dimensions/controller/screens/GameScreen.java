@@ -73,7 +73,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		//inputRecieved(); //uncomment and change name if inputHandler is removed
+		inputRecieved(); //TODO
 		getSpecialInput();
 		world.update();
 

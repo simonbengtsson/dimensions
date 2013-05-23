@@ -41,6 +41,7 @@ public class TiledMapHandler implements MapHandler {
 	}
 
 	public TiledMap getMap(String mapString) {
+		System.out.println(mapString);
 		return new TmxMapLoader().load(mapString);
 	}
 

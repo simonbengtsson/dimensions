@@ -11,40 +11,98 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
  */
 public class Level implements Serializable, Cloneable {
 
-	
-
-	private static final long serialVersionUID = 2122723720243818390L;
-	protected List<GameObject> gameObjects = new ArrayList<GameObject>();
-	protected float gravity = -0.05f;
-	protected Dimension startingDimension = Dimension.XY;
-	protected String mapXYPath;
-	protected String mapXZPath;
-	protected float length;
+	private final static long serialVersionUID = 2122723720243818390L;
+	private final static float DEFAULT_GRAVITY = -0.06f;
+	private final static Dimension DEFAULT_STARTING_DIMENSION = Dimension.XY;
+	private List<GameObject> gameObjects = new ArrayList<GameObject>();
+	private float gravity;
+	private Dimension startingDimension = Dimension.XY;
+	private String mapXYPath;
+	private String mapXZPath;
+	private float length;
 	private String levelName;
 
+	/**
+	 * Empty level. Later the two maps or the gameobject list has to be set.
+	 */
 	public Level() {
-		this("Empty Level", -0.05f, null, Dimension.XY, null, null, 100);
+		this("Empty Level", DEFAULT_GRAVITY, null, DEFAULT_STARTING_DIMENSION,
+				null, null, 100);
 	}
 
+	/**
+	 * Creates a level with some default values.
+	 * 
+	 * @param name
+	 * @param gameObjects
+	 * @param TMXFileXY
+	 * @param TMXFileXZ
+	 * @param length
+	 */
+	public Level(String name, List<GameObject> gameObjects, String mapXYPath,
+			String mapXZPath, float length) {
+		this(name, DEFAULT_GRAVITY, gameObjects, DEFAULT_STARTING_DIMENSION,
+				mapXYPath, mapXZPath, length);
+	}
+
+	/**
+	 * Creates a level from scratch.
+	 * 
+	 * @param name
+	 * @param gravity
+	 * @param gameObjects
+	 * @param start
+	 * @param TMXFileXY
+	 * @param TMXFileXZ
+	 * @param length
+	 */
 	public Level(String name, float gravity, List<GameObject> gameObjects,
-			Dimension start, String TMXFileXY, String TMXFileXZ,
-			float length) {
+			Dimension start, String mapXYPath, String mapXZPath, float length) {
 		this.levelName = name;
 		this.gravity = gravity;
 		this.gameObjects = gameObjects;
 		this.startingDimension = start;
-		this.mapXYPath = TMXFileXY;
-		this.mapXZPath = TMXFileXZ;
+		this.mapXYPath = mapXYPath;
+		this.mapXZPath = mapXZPath;
 		this.length = length;
+	}
+
+	public List<GameObject> getGameObjects() {
+		return new ArrayList<GameObject>(gameObjects);
+	}
+
+	public float getLength() {
+		return length;
+	}
+
+	public String getMapXYPath() {
+		return mapXYPath;
+	}
+
+	public String getMapXZPath() {
+		return mapXZPath;
+	}
+
+	public Dimension getStartingDimension() {
+		return startingDimension;
+	}
+
+	public float getGravity() {
+		return gravity;
+	}
+
+	public String getName() {
+		return levelName;
 	}
 	
 	@Override
-	public Level clone(){
+	public Level clone() {
 		ArrayList<GameObject> clonedGameObjects = new ArrayList<GameObject>();
-		for(GameObject gameObject : gameObjects) {
-		    clonedGameObjects.add(gameObject.clone());
+		for (GameObject gameObject : gameObjects) {
+			clonedGameObjects.add(gameObject.clone());
 		}
-		return new Level(levelName, gravity, clonedGameObjects, startingDimension, mapXYPath, mapXZPath, length);
+		return new Level(levelName, gravity, clonedGameObjects,
+				startingDimension, mapXYPath, mapXZPath, length);
 	}
 	
 	@Override
@@ -68,7 +126,7 @@ public class Level implements Serializable, Cloneable {
 		return result;
 	}
 
-	//Needed for Level Testing
+	//TODO change it so that it is only one return statement
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -108,31 +166,4 @@ public class Level implements Serializable, Cloneable {
 		return true;
 	}
 
-	public List<GameObject> getGameObjects() {
-		return new ArrayList<GameObject>(gameObjects);
-	}
-
-	public float getLength() {
-		return length;
-	}
-
-	public String getMapXYPath() {
-		return mapXYPath;
-	}
-
-	public String getMapXZPath() {
-		return mapXZPath;
-	}
-
-	public Dimension getStartingDimension() {
-		return startingDimension;
-	}
-
-	public float getGravity() {
-		return gravity;
-	}
-
-	public String getName() {
-		return levelName;
-	}
 }
