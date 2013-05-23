@@ -3,9 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.util;
 import se.chalmers.tda367.vt13.dimensions.model.MapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 /**
  * Class acting as an adapter from TiledMaps to the model.
@@ -38,11 +36,6 @@ public class TiledMapHandler implements MapHandler {
 	
 	public void setGameView(GameView view) {
 		this.view = view;
-	}
-
-	public TiledMap getMap(String mapString) {
-		System.out.println(mapString);
-		return new TmxMapLoader().load(mapString);
 	}
 
 }

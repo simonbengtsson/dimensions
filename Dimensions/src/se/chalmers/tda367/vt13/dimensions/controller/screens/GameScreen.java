@@ -18,9 +18,7 @@ import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -45,21 +43,21 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void show() {
-		
+
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		CollisionHandler collisionHandler = new CollisionHandler(
 				tiledMapHandler);
 		Level playLevel;
-		if(nextLevel != null){
+		if (nextLevel != null) {
 			playLevel = nextLevel;
-		}else{
-			playLevel = LevelHandler.getInstance().getProgressLevel(0).getLevel();
+		} else {
+			playLevel = LevelHandler.getInstance().getProgressLevel(0)
+					.getLevel();
 		}
 		world = new GameWorld(playLevel, collisionHandler);
 		world.addWorldListener(this);
-		gameView = new GameView(world, tiledMapHandler.getMap(playLevel
-				.getMapXYPath()), tiledMapHandler.getMap(playLevel
-				.getMapXZPath()));
+		gameView = new GameView(world, Assets.getTiledMap(playLevel.getMapXYPath()),
+				Assets.getTiledMap(playLevel.getMapXZPath()));
 		gameLayerView = new GameLayerView(world);
 		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();
@@ -73,7 +71,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		inputRecieved(); //TODO
+		inputRecieved(); // TODO
 		getSpecialInput();
 		world.update();
 
