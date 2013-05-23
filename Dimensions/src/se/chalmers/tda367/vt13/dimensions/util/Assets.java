@@ -17,10 +17,10 @@ public class Assets {
 
 	public static final String SPIKEOBSTACLE_IMAGE = "data/spikes.png";
 	public static final String SPIKEOBSTACLE_SOUND = "";
-	
+
 	public static final String PLAYER_TEXTURE = "data/player-mini.png";
 	public static final String CHASER_TEXTURE = "data/PlayerImg.png";
-	
+
 	public static final String BG_IMAGE = "data/bg.jpg";
 
 	public static final String CHECKPOINTPOWERUP_IMAGE = "";
@@ -41,7 +41,7 @@ public class Assets {
 
 	public static Texture getTexture(String file) {
 		Texture t = textures.get(file);
-		if(t == null){
+		if (t == null) {
 			registerTexture(file);
 			t = textures.get(file);
 		}
@@ -59,32 +59,29 @@ public class Assets {
 	public static TextureRegion getTextureRegion(String name) {
 		return regions.get(name);
 	}
-	
-	public static TiledMap getTiledMap(String file){
+
+	public static TiledMap getTiledMap(String file) {
 		TiledMap t = tiledMaps.get(file);
-		if(t == null){
+		if (t == null) {
 			registerTiledMap(file);
 			t = tiledMaps.get(file);
 		}
 		return t;
 	}
-	
-	public static MenuButton getMenuButton(String file){
+
+	public static MenuButton getMenuButton(String file) {
 		MenuButton m = menuButtons.get(file);
-		if(m == null){
+		if (m == null) {
 			registerMenuButton(file);
 			m = menuButtons.get(file);
 		}
 		return m;
 	}
-	
-	public static void registerMenuButton(String file){
-		if(!menuButtons.containsKey(file) && !file.equals("")){
+
+	public static void registerMenuButton(String file) {
+		if (!menuButtons.containsKey(file) && !file.equals("")) {
 			MenuButton m = new MenuButton(file);
 			menuButtons.put(file, m);
-		}else{
-			System.out.println("MenuButton tom eller redan registrerad : " + file);
-			// TODO remove
 		}
 	}
 
@@ -92,9 +89,6 @@ public class Assets {
 		if (!textures.containsKey(file) && !file.equals("")) {
 			Texture t = new Texture(Gdx.files.internal(file));
 			textures.put(file, t);
-		}else{
-			System.out.println("Texturefil tom eller redan registrerad : " + file);
-			// TODO remove
 		}
 	}
 
@@ -102,9 +96,6 @@ public class Assets {
 		if (!sounds.containsKey(file) && !file.equals("")) {
 			Sound t = Gdx.audio.newSound(Gdx.files.internal(file));
 			sounds.put(file, t);
-		}else{
-			System.out.println("Ljudfil tom eller redan registrerad : " + file);
-			// TODO remove
 		}
 	}
 
@@ -120,15 +111,11 @@ public class Assets {
 			regions.put(name, t);
 		}
 	}
-	
-	public static void registerTiledMap(String file){
-		if(!tiledMaps.containsKey(file) && !file.equals("")){
+
+	public static void registerTiledMap(String file) {
+		if (!tiledMaps.containsKey(file) && !file.equals("")) {
 			tiledMaps.put(file, new TmxMapLoader().load(file));
-		}else{
-			System.out.println("Tiledmapfil tom eller redan registrerad : " + file);
-			// TODO remove
 		}
-		
 	}
 
 	public static void playSound(String file) {
@@ -139,12 +126,13 @@ public class Assets {
 		registerTexture(PLAYER_TEXTURE);
 		registerTexture(CHASER_TEXTURE);
 		registerTexture(BG_IMAGE);
-		registerTextureRegion("bg", new TextureRegion(Assets.getTexture(Assets.BG_IMAGE)));
+		registerTextureRegion("bg",
+				new TextureRegion(Assets.getTexture(Assets.BG_IMAGE)));
 		registerTexture("data/animation_sheet.png");
 		registerTexture("data/play.png");
 		registerTexture("data/level_select.png");
 		registerTexture("data/settings.png");
 		registerTexture("data/exit.png");
-		
+
 	}
 }
