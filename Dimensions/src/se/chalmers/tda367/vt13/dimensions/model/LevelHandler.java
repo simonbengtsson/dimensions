@@ -148,5 +148,13 @@ public class LevelHandler {
 		Level natureLevel = new Level("Nature", natureList,
 				"tiled_maps/natureXY.tmx", "tiled_maps/natureXZ.tmx", 205);
 		registerLevel(natureLevel);
+		
+		// crazy Level
+				List<GameObject> crazyList = new ArrayList<GameObject>();
+				natureList.add(new DimensionChangePowerUp(new Vector3(60, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				Level crazyLevel = new Level("Crazy", crazyList,
+						"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
+				registerLevel(crazyLevel);
 	}
 }
