@@ -24,6 +24,7 @@ public class GameWorld {
 	private Player player;
 	private Chaser chaser;
 	private CollisionHandler collisionHandler;
+	private MapHandler mapHandler;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
@@ -32,14 +33,15 @@ public class GameWorld {
 	private CheckPoint cp;
 	private int score;
 	private Level level;
+	
 
 	/**
 	 * New GameWorld with given Level
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Level level, CollisionHandler collisionHandler) {
-		this(new Player(), level, collisionHandler);
+	public GameWorld(Level level, MapHandler mapHandler) {
+		this(new Player(), level, mapHandler);
 	}
 
 	/**
@@ -47,11 +49,9 @@ public class GameWorld {
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Player player, Level level,
-			CollisionHandler collisionHandler) {
+	public GameWorld(Player player, Level level, MapHandler mapHandler) {
 		this.player = player;
 		this.gameObjects = level.getGameObjects();
-		this.collisionHandler = collisionHandler;
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = level.getGravity();
@@ -60,6 +60,8 @@ public class GameWorld {
 		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
 		this.level = level;
+		this.mapHandler = mapHandler;
+		this.collisionHandler = new CollisionHandler();
 	}
 
 	public void update() {
@@ -101,6 +103,7 @@ public class GameWorld {
 		player.update();
 		chaser.update();
 		collisionHandler.checkCollisions(this);
+		TileCollisionHandler.checkTileCollisions(this, mapHandler);
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);
 			player.calculateXSpeed();
