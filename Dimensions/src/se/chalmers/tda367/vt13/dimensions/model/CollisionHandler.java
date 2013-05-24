@@ -11,12 +11,6 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
  * Class handling all types of collisions.
  */
 public class CollisionHandler {
-
-	MapHandler mapHandler;
-	
-	public CollisionHandler(MapHandler mapHandler){
-		this.mapHandler = mapHandler;
-	}
 	
 	/**
 	 * Collision testing with tiles and game objects.
@@ -25,7 +19,6 @@ public class CollisionHandler {
 	public void checkCollisions(GameWorld world) {
 		world.getPlayer().setIsGrounded(false);
 		world.getPlayer().setIsStuck(false);
-		CheckTileCollisions.checkTileCollisions(world, mapHandler);
 		checkObjectCollisions(world);
 	}
 

@@ -24,6 +24,7 @@ public class GameWorld {
 	private Player player;
 	private Chaser chaser;
 	private CollisionHandler collisionHandler;
+	private MapHandler mapHandler;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
@@ -59,7 +60,8 @@ public class GameWorld {
 		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
 		this.level = level;
-		this.collisionHandler = new CollisionHandler(mapHandler);
+		this.mapHandler = mapHandler;
+		this.collisionHandler = new CollisionHandler();
 	}
 
 	public void update() {
@@ -101,6 +103,7 @@ public class GameWorld {
 		player.update();
 		chaser.update();
 		collisionHandler.checkCollisions(this);
+		TileCollisionHandler.checkTileCollisions(this, mapHandler);
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);
 			player.calculateXSpeed();
