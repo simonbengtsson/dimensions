@@ -17,8 +17,6 @@ public class CollisionHandler {
 	 * @param world the Game World
 	 */
 	public void checkCollisions(GameWorld world) {
-		world.getPlayer().setIsGrounded(false);
-		world.getPlayer().setIsStuck(false);
 		checkObjectCollisions(world);
 	}
 

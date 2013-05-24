@@ -33,7 +33,6 @@ public class GameWorld {
 	private CheckPoint cp;
 	private int score;
 	private Level level;
-	
 
 	/**
 	 * New GameWorld with given Level
@@ -65,7 +64,6 @@ public class GameWorld {
 	}
 
 	public void update() {
-		// State backupState = currentState;
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
@@ -100,26 +98,43 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
+		checkTileCollisions();
+		collisionHandler.checkCollisions(this);
 		player.update();
 		chaser.update();
-		collisionHandler.checkCollisions(this);
-		TileCollisionHandler.checkTileCollisions(this, mapHandler);
 		if (currentDimension == Dimension.XY) {
 			player.calculateYSpeed(gravity);
 			player.calculateXSpeed();
-			// Reset the player's speed to MAX_VELOCITY if it's too fast, the
-			// reason is to simulate drag
-			if (Math.abs(player.getSpeed().getY()) > Player.MAX_VELOCITY) {
-				player.getSpeed().setY(
-						Math.signum(player.getSpeed().getY())
-								* Player.MAX_VELOCITY);
-			}
 		}
 		if (isGameOver()) {
 			currentState = State.GAME_OVER;
 		}
 		if (isLevelFinished()) {
 			currentState = State.LEVEL_FINISHED;
+		}
+	}
+
+	private void checkTileCollisions() {
+		getPlayer().setIsGrounded(false);
+		switch (TileCollisionHandler.getCollisionType(this, mapHandler)) {
+		case OBSTACLE:
+			notifyWorldListeners(State.GAME_OVER);
+			break;
+		case GROUND:
+				 // adjust position
+				if (player.getSpeed().getY() < 0) {
+					player.getPosition().setY(
+							(int) player.getPosition().getY() + 1);									
+				} 
+				if (player.getSpeed().getY() == 0) {
+					player.setIsStuck(true);
+					player.getPosition().setX(
+							(int) player.getPosition().getX()-0.01f);	
+				}
+				player.setIsGrounded(true);	
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -161,10 +176,9 @@ public class GameWorld {
 	 */
 	public boolean isGameOver() {
 		return player.getPosition().getY() < 0
-				|| chaser.getPosition().getX() >= player.getPosition().getX() ||
-						(currentDimension == Dimension.XZ && !player.isGrounded());
+				|| chaser.getPosition().getX() >= player.getPosition().getX()
+				|| (currentDimension == Dimension.XZ && !player.isGrounded());
 	}
-	
 
 	public boolean isLevelFinished() {
 		return player.getPosition().getX() >= level.getLength();
@@ -232,6 +246,7 @@ public class GameWorld {
 
 	/**
 	 * Notify world listeners the the World's state has changed
+	 * 
 	 * @param newWorldState
 	 */
 	public void notifyWorldListeners(State newWorldState) {

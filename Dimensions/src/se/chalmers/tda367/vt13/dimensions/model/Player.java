@@ -3,6 +3,8 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+
 /**
  * Class for the player in the game.
  * 
@@ -11,7 +13,8 @@ import java.util.TimerTask;
 @SuppressWarnings("serial")
 public class Player extends GameObject {
 
-	public static float MAX_VELOCITY = 1f;
+	private static final float DEFAULT_XSPEED = 0.5f;
+	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private float jumpSpeed;
 	private boolean isGrounded;
 	private boolean isStuck;
@@ -24,8 +27,8 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(0.25f,
-				0, 0), 0.8f, false);
+		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(DEFAULT_XSPEED,
+				0, 0), DEFAULT_JUMP_SPEED, false);
 	}
 
 	/**
@@ -113,6 +116,7 @@ public class Player extends GameObject {
 			resetXSpeed();
 		}
 	}
+	
 
 	/**
 	 * Should be set to true if proper collision with a platform is detected
@@ -183,5 +187,17 @@ public class Player extends GameObject {
 				&& this.isGrounded() == p.isGrounded()
 				&& this.getIsStuck() == p.getIsStuck()
 				&& this.jumpSpeed == p.jumpSpeed && this.baseZSpeed == p.baseZSpeed);
+	}
+
+	public float getScreenY(Vector3 vector3, Dimension currentDimension) {
+		switch (currentDimension){
+		case XY:
+			return vector3.getY();
+		case XZ:
+			return vector3.getZ();
+		default:
+			break;
+		}
+		return 0;
 	}
 }

@@ -36,13 +36,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		this.nextLevel = level;
 		this.escapeWasPressed = false;
 		this.enterWasPressed = false;
-		InputHandler inputProcessor = new InputHandler(this);
-		Gdx.input.setInputProcessor(inputProcessor);
+		init();
 	}
 
-	@Override
-	public void show() {
-
+	public void init() {
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		Level playLevel;
 		if (nextLevel != null) {
@@ -53,25 +50,19 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 		world = new GameWorld(playLevel, tiledMapHandler);
 		world.addWorldListener(this);
-		gameView = new GameView(world, Assets.getTiledMap(playLevel.getMapXYPath()),
-				Assets.getTiledMap(playLevel.getMapXZPath()));
+		gameView = new GameView(world, Assets.getTiledMap(playLevel
+				.getMapXYPath()), Assets.getTiledMap(playLevel.getMapXZPath()));
 		gameLayerView = new GameLayerView(world);
 		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();
-	}
-
-	@Override
-	public void resize(int width, int height) {
 	}
 
 	private FPSLogger fl = new FPSLogger();
 
 	@Override
 	public void render(float delta) {
-		inputRecieved(); // TODO
-		getSpecialInput();
+		updateInput();
 		world.update();
-
 		switch (world.getCurrentState()) {
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
@@ -85,6 +76,12 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		sleep(delta);
 	}
 
+	/**
+	 * If having a computer running faster then 60 fps, slow it down.
+	 * 
+	 * @param delta
+	 *            The time since last frame
+	 */
 	public void sleep(float delta) {
 		int frameTime = 16;
 		try {
@@ -97,9 +94,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	}
 
 	/**
-	 * Handles game input.
+	 * Handles all input that isn't player navigation
 	 */
-	public void inputRecieved() {
+	private void updateInput() {
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
 			// Different actions depending on what dimension is active
 			if (world.getDimension() == Dimension.XY) {
@@ -108,12 +105,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				world.getPlayer().changeDirection();
 			}
 		}
-	}
-
-	/**
-	 * Handles all input that isn't player navigation
-	 */
-	private void getSpecialInput() {
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 			if (!enterWasPressed) {
 				world.resetToCheckPoint();
@@ -144,10 +135,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	}
 
-	public GameWorld getGameModel() {
-		return world;
-	}
-
 	@Override
 	public void playSound(String s) {
 		Assets.playSound(s);
@@ -158,23 +145,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			g.addObserver(this);
 			Assets.registerSound(g.getSoundFileAsString());
 		}
-	}
-
-	@Override
-	public void hide() {
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resume() {
-	}
-
-	@Override
-	public void dispose() {
-
 	}
 
 	/**
@@ -210,5 +180,34 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		default:
 			break;
 		}
+	}
+
+	public GameWorld getGameModel() {
+		return world;
+	}
+
+	@Override
+	public void show() {
+	}
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void dispose() {
+
 	}
 }
