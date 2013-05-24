@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="212" height="20" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset_nature" tilewidth="16" tileheight="16">
+  <image source="tileset_nature.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="257" name="brightsky" tilewidth="16" tileheight="16">
+  <image source="brightsky.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="258" name="cloud" tilewidth="16" tileheight="16">
+  <image source="cloud.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="266" name="box" tilewidth="16" tileheight="16">
+  <image source="box.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="267" name="fire" tilewidth="16" tileheight="16">
+  <image source="fire.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="268" name="HELP" tilewidth="16" tileheight="16">
+  <image source="HELP.png" width="64" height="32"/>
+ </tileset>
+ <layer name="background" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEOhDAMRcEEWBbuf2Hc0a/Q2glTTJ0nK/q9t9aBKS1hDVv4TPTWSC0Ve0Ztz27Zwzcc4ZzorZFaKvaM2l6phRqyN7Yqd+EXNvadd8naCzvF0yr8qay9mH2n+D9/CgAAAAAAAOBZZ7tltwAAAFR2ARVhIsI=
+  </data>
+ </layer>
+ <layer name="ground" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztm9EKgjAUQPWx2Uv4//9agwRb5nbjut3tngOHyCgn7KCumibogeXl/e3SeCzQP7eMo0NPoEnIODr0BJrQEz2BLp5bSnuiKdDAW0uRfUuco0AbTy1F6Al6Yp2/52vcZgV6AtBj+SH4IcyfSl8HOXQHLdiumUYjthOvU/fSE+TY5oqU9B5kNFhXH4da120e18sl8L2vXXK/Sag9ny2MwTr0ZJdQ+FhrLFa6tgw9teVxYsn56ez9mmqNQ5Naxy4x7an1eLyZ+x/Ev6brTDlzn1Wyv9JxaXG0T8lxIfbuerBuIn2+baMX9O7V5ydET9ITXukTBT4wPg==
+  </data>
+ </layer>
+ <layer name="obstacles" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2TEKwCAQBEBT5wMW/v+daZIihXgXkBgyA4tg4XHlYikAAAAAAN/VgncAAPC2fbsHRuoZAACAlVydtncC89VkRm9F5kXM/qfN7AUAALC6bLd70vn4pwO+TgRF
+  </data>
+ </layer>
+</map>

@@ -37,6 +37,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		this.nextLevel = level;
 		this.escapeWasPressed = false;
 		this.enterWasPressed = false;
+		InputHandler inputProcessor = new InputHandler(this);
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	@Override
@@ -46,16 +48,16 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		CollisionHandler collisionHandler = new CollisionHandler(
 				tiledMapHandler);
 		Level playLevel;
-		if(nextLevel != null){
+		if (nextLevel != null) {
 			playLevel = nextLevel;
-		}else{
-			playLevel = LevelHandler.getInstance().getProgressLevel(0).getLevel();
+		} else {
+			playLevel = LevelHandler.getInstance().getProgressLevel(0)
+					.getLevel();
 		}
 		world = new GameWorld(playLevel, collisionHandler);
 		world.addWorldListener(this);
-		gameView = new GameView(world, tiledMapHandler.getMap(playLevel
-				.getMapXYPath()), tiledMapHandler.getMap(playLevel
-				.getMapXZPath()));
+		gameView = new GameView(world, Assets.getTiledMap(playLevel.getMapXYPath()),
+				Assets.getTiledMap(playLevel.getMapXZPath()));
 		gameLayerView = new GameLayerView(world);
 		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();
@@ -69,7 +71,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		getInput();
+		inputRecieved(); // TODO
+		getSpecialInput();
 		world.update();
 
 		switch (world.getCurrentState()) {
@@ -96,15 +99,10 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 	}
 
-	private void getInput() {
-		getGameInput();
-		getSpecialInput();
-	}
-
 	/**
 	 * Handles game input.
 	 */
-	private void getGameInput() {
+	public void inputRecieved() {
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
 			// Different actions depending on what dimension is active
 			if (world.getDimension() == Dimension.XY) {

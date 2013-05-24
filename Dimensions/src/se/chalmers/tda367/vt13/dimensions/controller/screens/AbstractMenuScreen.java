@@ -8,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -28,8 +27,7 @@ public class AbstractMenuScreen implements Screen {
 	}
 
 	private void initMainStage() {
-		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-				Assets.getTexture(Assets.BG_IMAGE))));
+		mainTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("bg")));
 		mainTable.setFillParent(true);
 		mainTable.debug();
 		mainStage.addActor(mainTable);

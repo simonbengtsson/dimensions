@@ -64,6 +64,7 @@ public class CustomizeScreen extends AbstractMenuScreen{
 			public void changed(ChangeEvent event, Actor actor) {
 				characterTexture = "level_select";
 				System.out.println(characterTexture);
+				// TODO What's this?
 			}
 		});
 
@@ -74,6 +75,7 @@ public class CustomizeScreen extends AbstractMenuScreen{
 			public void changed(ChangeEvent event, Actor actor) {
 				characterTexture = "PlayerImg";
 				System.out.println(characterTexture);
+				//TODO Felsökning?
 			}
 		});
 

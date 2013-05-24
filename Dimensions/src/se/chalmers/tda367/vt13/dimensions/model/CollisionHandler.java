@@ -78,11 +78,6 @@ public class CollisionHandler {
 				}
 			}
 		}
-
-		// GameOver if player moves out of bounds (XZ)
-		if (world.getDimension() == Dimension.XZ && !player.getIsGrounded()) {
-			world.notifyWorldListeners(State.GAME_OVER);
-		}
 	}
 
 	/**

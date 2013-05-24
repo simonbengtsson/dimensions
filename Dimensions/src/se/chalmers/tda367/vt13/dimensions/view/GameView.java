@@ -90,7 +90,7 @@ public class GameView {
 	}
 
 	private void initWalkAnimation() {
-		walkSheet = new Texture(Gdx.files.internal("data/animation_sheet.png"));
+		walkSheet = Assets.getTexture("data/animation_sheet.png");
 		TextureRegion[][] regions = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
 						/ FRAME_ROWS);

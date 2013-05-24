@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="212" height="20" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset_nature" tilewidth="16" tileheight="16">
+  <image source="tileset_nature.png" width="256" height="256"/>
+ </tileset>
+ <layer name="background" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAeDZCQAAB
+  </data>
+ </layer>
+ <layer name="ground" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt1cEJADAIBEG/9t9wnnmHgyAyA9eBi1UAAAAAAAAAAAAA/3Q42CDtQA9Mlt6mDuDyJwAAAIAXB58qAjg=
+  </data>
+ </layer>
+ <layer name="obstacle" width="212" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAeDZCQAAB
+  </data>
+ </layer>
+</map>

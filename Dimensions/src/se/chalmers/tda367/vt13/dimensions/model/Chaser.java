@@ -11,8 +11,9 @@ public class Chaser extends GameObject {
 	 * Create a Chaser with default values.
 	 */
 	public Chaser() {
+		//TODO set speed of chaser again
 		this(new Vector3(8, 2, 0), new Vector3(2, 2, 2),
-				new Vector3(0.2f, 0, 0), "data/PlayerImg.png", "");
+				new Vector3(0f, 0, 0), "data/PlayerImg.png", "");
 	}
 
 	/**
@@ -35,8 +36,6 @@ public class Chaser extends GameObject {
 		super(position, size, speed, imageFile, soundFile);
 	}
 	
-	
-
 	@Override
 	public Chaser clone() {
 		return new Chaser(getPosition().clone(), getSize().clone(), getSpeed()
@@ -60,18 +59,14 @@ public class Chaser extends GameObject {
 		else{
 		return false;
 		}
-		
 	}
 	
-	// For testing purposes
+	// For testing purposes TODO remove (or implement properly?)
 	public String toString(){
 		return "Position " + this.getPosition() + "Size" + this.getSize() + " Speed " + this.getSpeed();
 	}
-	
-	
 
-	
-
-
-
+	public void update() {
+		getPosition().add(getSpeed());
+	}
 }

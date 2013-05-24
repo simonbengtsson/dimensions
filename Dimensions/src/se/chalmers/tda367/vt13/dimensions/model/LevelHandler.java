@@ -33,7 +33,6 @@ public class LevelHandler {
 		return instance;
 	}
 
-	
 	/**
 	 * Adds a level to the handler.
 	 * 
@@ -42,8 +41,8 @@ public class LevelHandler {
 	public void registerLevel(Level l) {
 		progressLevels.addLast(new ProgressLevel(l));
 	}
-	
-	public Collection<ProgressLevel> getProgressLevels(){
+
+	public Collection<ProgressLevel> getProgressLevels() {
 		return new ArrayDeque<ProgressLevel>(progressLevels);
 	}
 
@@ -65,17 +64,17 @@ public class LevelHandler {
 		}
 		return null;
 	}
-	
-	public Level getLastPlayed(){
+
+	public Level getLastPlayed() {
 		return lastPlayed;
 	}
-	
-	public void setLastPlayed(Level l){
+
+	public void setLastPlayed(Level l) {
 		lastPlayed = l;
 	}
-	
-	public boolean loadProgressFromFile(Deque<ProgressLevel> p){
-		if(p != null && !p.isEmpty()){
+
+	public boolean loadProgressFromFile(Deque<ProgressLevel> p) {
+		if (p != null && !p.isEmpty()) {
 			progressLevels = p;
 			return true;
 		}
@@ -128,29 +127,34 @@ public class LevelHandler {
 	 * Use an instance of LevelCreator to create formations in your level.
 	 */
 	public void load() {
-		// Level named Example
+		// Old level
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
-		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10), new Vector3(
-				1, 1, 1), new Vector3()));
+		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10),
+				new Vector3(1, 1, 1), new Vector3()));
 		List<GameObject> exampleList = new ArrayList<GameObject>();
 		exampleList.add(new LowGravityPowerUp(new Vector3(15, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		Level example = new Level("Example", -0.05f, exampleList, Dimension.XY, 
-				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
+		Level example = new Level("Old", -0.05f, exampleList, Dimension.XY,
+				"tiled_maps/levelXY.tmx", "tiled_maps/levelXZ.tmx", 205);
 		registerLevel(example);
 		// End of Example Level
 
-		// Level named DimensionChange
-		List<GameObject> dimensionChangeList = new ArrayList<GameObject>();
-		dimensionChangeList.add(new DimensionChangePowerUp(new Vector3(30, 4,
+		// Nature Level
+		List<GameObject> natureList = new ArrayList<GameObject>();
+		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15,
 				10), new Vector3(1, 1, 1), new Vector3()));
-		dimensionChangeList.add(new DimensionChangePowerUp(new Vector3(50, 4,
-				10), new Vector3(1, 1, 1), new Vector3()));
-		Level dimensionChange = new Level("Dimension Change", -0.03f,
-				dimensionChangeList, Dimension.XZ,
-				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 150);
-		registerLevel(dimensionChange);
+		Level natureLevel = new Level("Nature", natureList,
+				"tiled_maps/natureXY.tmx", "tiled_maps/natureXZ.tmx", 205);
+		registerLevel(natureLevel);
+		
+		// crazy Level
+				List<GameObject> crazyList = new ArrayList<GameObject>();
+				natureList.add(new DimensionChangePowerUp(new Vector3(60, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				Level crazyLevel = new Level("Crazy", crazyList,
+						"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
+				registerLevel(crazyLevel);
 	}
 }
