@@ -71,12 +71,6 @@ public class GameWorld {
 		case GAME_PAUSED:
 			notifyWorldListeners(State.GAME_PAUSED);
 			break;
-		case LEVEL_FINISHED:
-			notifyWorldListeners(State.LEVEL_FINISHED);
-			break;
-		case GAME_OVER:
-			notifyWorldListeners(State.GAME_OVER);
-			break;
 		case DIMENSION_CHANGED:
 			notifyWorldListeners(State.DIMENSION_CHANGED);
 			currentState = State.GAME_RUNNING;
@@ -98,20 +92,12 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
-		checkTileCollisions();
-		collisionHandler.checkCollisions(this);
-		player.update();
+		player.update(currentDimension, gravity);
 		chaser.update();
-		if (currentDimension == Dimension.XY) {
-			player.calculateYSpeed(gravity);
-			player.calculateXSpeed();
-		}
-		if (isGameOver()) {
-			currentState = State.GAME_OVER;
-		}
-		if (isLevelFinished()) {
-			currentState = State.LEVEL_FINISHED;
-		}
+		collisionHandler.checkCollisions(this);
+		checkTileCollisions();
+		checkGameOver();
+		checkLevelFinished();
 	}
 
 	private void checkTileCollisions() {
@@ -121,25 +107,21 @@ public class GameWorld {
 			notifyWorldListeners(State.GAME_OVER);
 			break;
 		case GROUND:
-				 // adjust position
-				if (player.getSpeed().getY() < 0) {
-					player.getPosition().setY(
-							(int) player.getPosition().getY() + 1);									
-				} 
-				if (player.getSpeed().getY() == 0) {
-					player.setIsStuck(true);
-					player.getPosition().setX(
-							(int) player.getPosition().getX()-0.01f);	
-				}
-				player.setIsGrounded(true);	
+			// adjust position
+			if (player.getSpeed().getY() < 0) {
+				player.getPosition()
+						.setY((int) player.getPosition().getY() + 1);
+			}
+			if (player.getSpeed().getY() == 0) {
+				player.setIsStuck(true);
+				player.getPosition().setX(
+						(int) player.getPosition().getX() - 0.01f);
+			}
+			player.setIsGrounded(true);
 			break;
 		default:
 			break;
 		}
-	}
-
-	public CheckPoint getCheckPoint() {
-		return this.cp;
 	}
 
 	/**
@@ -170,18 +152,29 @@ public class GameWorld {
 	}
 
 	/**
-	 * Game over conditions, only if player is below 0 on the y-axis for now
+	 * Game over conditions
 	 * 
 	 * @return if game over
 	 */
-	public boolean isGameOver() {
-		return player.getPosition().getY() < 0
+	public void checkGameOver() {
+		if (player.getPosition().getY() < 0
 				|| chaser.getPosition().getX() >= player.getPosition().getX()
-				|| (currentDimension == Dimension.XZ && !player.isGrounded());
+				|| (currentDimension == Dimension.XZ && !player.isGrounded())) {
+			notifyWorldListeners(State.GAME_OVER);
+		}
 	}
 
-	public boolean isLevelFinished() {
-		return player.getPosition().getX() >= level.getLength();
+	/**
+	 * Notify listeners if the player has reached the end of the level
+	 */
+	public void checkLevelFinished() {
+		if (player.getPosition().getX() >= level.getLength()) {
+			notifyWorldListeners(State.LEVEL_FINISHED);
+		}
+	}
+
+	public CheckPoint getCheckPoint() {
+		return this.cp;
 	}
 
 	public List<GameObject> getGameObjects() {

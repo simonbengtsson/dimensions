@@ -13,6 +13,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 @SuppressWarnings("serial")
 public class Player extends GameObject {
 
+	public static final float MAX_VELOCITY_Y = 1f;
 	private static final float DEFAULT_XSPEED = 0.5f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private float jumpSpeed;
@@ -27,8 +28,8 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(DEFAULT_XSPEED,
-				0, 0), DEFAULT_JUMP_SPEED, false);
+		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(
+				DEFAULT_XSPEED, 0, 0), DEFAULT_JUMP_SPEED, false);
 	}
 
 	/**
@@ -60,8 +61,12 @@ public class Player extends GameObject {
 	/**
 	 * Update the player. Method should be called each frame.
 	 */
-	public void update() {
+	public void update(Dimension currentDimension, float gravity) {
 		getPosition().add(getSpeed());
+		if (currentDimension == Dimension.XY) {
+			calculateYSpeed(gravity);
+			calculateXSpeed();
+		}
 	}
 
 	/**
@@ -97,7 +102,7 @@ public class Player extends GameObject {
 			}, delay);
 		}
 	}
-	
+
 	/**
 	 * Adjust Y speed according to gravity.
 	 */
@@ -106,6 +111,11 @@ public class Player extends GameObject {
 			getSpeed().setY(0);
 		} else {
 			getSpeed().setY(getSpeed().getY() + gravity);
+		}
+		// simulates drag
+		if (Math.abs(getSpeed().getY()) > MAX_VELOCITY_Y) {
+			getSpeed().setY(
+					Math.signum(getSpeed().getY()) * Player.MAX_VELOCITY_Y);
 		}
 	}
 
@@ -116,7 +126,6 @@ public class Player extends GameObject {
 			resetXSpeed();
 		}
 	}
-	
 
 	/**
 	 * Should be set to true if proper collision with a platform is detected
@@ -153,7 +162,8 @@ public class Player extends GameObject {
 	}
 
 	public void setImagePath(String s) {
-		//TODO findbugs gives error here. "Write to static field from instance method"
+		// TODO findbugs gives error here.
+		// "Write to static field from instance method"
 		Player.imgpath = "data/" + s + "png";
 	}
 
@@ -190,7 +200,7 @@ public class Player extends GameObject {
 	}
 
 	public float getScreenY(Vector3 vector3, Dimension currentDimension) {
-		switch (currentDimension){
+		switch (currentDimension) {
 		case XY:
 			return vector3.getY();
 		case XZ:
