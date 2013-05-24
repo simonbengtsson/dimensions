@@ -10,4 +10,4 @@ public class DimensionsDesktop {
 		new LwjglApplication(new Dimensions(), Constants.NAME + " "
 				+ Constants.VERSION, 1000, 500, false);
 	}
-}
+} 

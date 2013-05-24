@@ -32,14 +32,15 @@ public class GameWorld {
 	private CheckPoint cp;
 	private int score;
 	private Level level;
+	
 
 	/**
 	 * New GameWorld with given Level
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Level level, CollisionHandler collisionHandler) {
-		this(new Player(), level, collisionHandler);
+	public GameWorld(Level level, MapHandler mapHandler) {
+		this(new Player(), level, mapHandler);
 	}
 
 	/**
@@ -47,11 +48,9 @@ public class GameWorld {
 	 * 
 	 * @param gameObjects
 	 */
-	public GameWorld(Player player, Level level,
-			CollisionHandler collisionHandler) {
+	public GameWorld(Player player, Level level, MapHandler mapHandler) {
 		this.player = player;
 		this.gameObjects = level.getGameObjects();
-		this.collisionHandler = collisionHandler;
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = level.getGravity();
@@ -60,6 +59,7 @@ public class GameWorld {
 		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
 		this.level = level;
+		this.collisionHandler = new CollisionHandler(mapHandler);
 	}
 
 	public void update() {

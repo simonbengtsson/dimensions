@@ -3,7 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
-import se.chalmers.tda367.vt13.dimensions.model.CollisionHandler;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
@@ -45,8 +44,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	public void show() {
 
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		CollisionHandler collisionHandler = new CollisionHandler(
-				tiledMapHandler);
 		Level playLevel;
 		if (nextLevel != null) {
 			playLevel = nextLevel;
@@ -54,7 +51,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			playLevel = LevelHandler.getInstance().getProgressLevel(0)
 					.getLevel();
 		}
-		world = new GameWorld(playLevel, collisionHandler);
+		world = new GameWorld(playLevel, tiledMapHandler);
 		world.addWorldListener(this);
 		gameView = new GameView(world, Assets.getTiledMap(playLevel.getMapXYPath()),
 				Assets.getTiledMap(playLevel.getMapXZPath()));
