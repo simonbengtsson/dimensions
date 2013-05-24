@@ -42,7 +42,6 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void show() {
-
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
 		Level playLevel;
 		if (nextLevel != null) {
@@ -53,8 +52,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		}
 		world = new GameWorld(playLevel, tiledMapHandler);
 		world.addWorldListener(this);
-		gameView = new GameView(world, Assets.getTiledMap(playLevel.getMapXYPath()),
-				Assets.getTiledMap(playLevel.getMapXZPath()));
+		gameView = new GameView(world, Assets.getTiledMap(playLevel
+				.getMapXYPath()), Assets.getTiledMap(playLevel.getMapXZPath()));
 		gameLayerView = new GameLayerView(world);
 		tiledMapHandler.setGameView(gameView);
 		loadSoundFiles();

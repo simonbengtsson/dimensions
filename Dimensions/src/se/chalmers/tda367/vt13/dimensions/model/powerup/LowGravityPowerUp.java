@@ -1,12 +1,12 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.PowerUpHandler;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 /**
- * This powerup sets the gravity to half of the current.
+ * This powerup lowers the gravity.
  * 
  * @author Kim Kling
  */
@@ -20,8 +20,8 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void use(GameWorld gm) {
-		gm.setGravity(gm.getGravity() * 0.9f);
+	public void use(PowerUpHandler powerUpHandler) {
+		powerUpHandler.useLowGravityPowerUp();
 	}
 
 	@Override
@@ -32,20 +32,20 @@ public class LowGravityPowerUp extends GameObject implements PowerUp {
 
 	@Override
 	public boolean equals(Object o) {
-		if(o == this)
+		if (o == this)
 			return true;
-		
-		if(!(o instanceof LowGravityPowerUp) || o == null || o.getClass() != this.getClass()){
+
+		if (!(o instanceof LowGravityPowerUp) || o == null
+				|| o.getClass() != this.getClass()) {
 			return false;
 		}
-		LowGravityPowerUp p = (LowGravityPowerUp)o;
-		if(this.getPosition().equals(p.getPosition()) && 
-			this.getSize().equals(p.getSize()) && 
-			this.getSpeed().equals(p.getSpeed())){
+		LowGravityPowerUp p = (LowGravityPowerUp) o;
+		if (this.getPosition().equals(p.getPosition())
+				&& this.getSize().equals(p.getSize())
+				&& this.getSpeed().equals(p.getSpeed())) {
 			return true;
-		}
-		else{
-		return false;
+		} else {
+			return false;
 		}
 	}
 }

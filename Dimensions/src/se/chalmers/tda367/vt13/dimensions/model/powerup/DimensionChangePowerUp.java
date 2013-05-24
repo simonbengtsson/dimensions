@@ -1,10 +1,13 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.PowerUpHandler;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
+/**
+ * This PowerUp changes the active dimension.
+ */
 @SuppressWarnings("serial")
 public class DimensionChangePowerUp extends GameObject implements PowerUp {
 
@@ -19,8 +22,8 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 	}
 
 	@Override
-	public void use(GameWorld world) {
-		world.startDimensionTimer();
+	public void use(PowerUpHandler powerUpHandler) {
+		powerUpHandler.useDimensionChangePowerUp();
 	}
 
 	@Override

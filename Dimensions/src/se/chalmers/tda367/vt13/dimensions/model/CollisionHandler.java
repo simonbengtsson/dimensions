@@ -1,6 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,10 +10,12 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
  * Class handling all types of collisions.
  */
 public class CollisionHandler {
-	
+
 	/**
 	 * Collision testing with tiles and game objects.
-	 * @param world the Game World
+	 * 
+	 * @param world
+	 *            the Game World
 	 */
 	public void checkCollisions(GameWorld world) {
 		world.getPlayer().setIsGrounded(false);
@@ -24,17 +25,18 @@ public class CollisionHandler {
 
 	/**
 	 * Collision testing with the gameObjects.
-	 * @param world the Game World
+	 * 
+	 * @param world
+	 *            the Game World
 	 */
 	private void checkObjectCollisions(GameWorld world) {
 		if (world.getDimension() == Dimension.XY) {
 			checkObjectCollisionsXY(world);
-		}
-		else if (world.getDimension() == Dimension.XZ) {
+		} else if (world.getDimension() == Dimension.XZ) {
 			checkObjectCollisionsXZ(world);
 		}
 	}
-	
+
 	private void checkObjectCollisionsXY(GameWorld world) {
 		Player player = world.getPlayer();
 		List<GameObject> gameObjects = world.getGameObjects();
@@ -47,13 +49,15 @@ public class CollisionHandler {
 					player.setIsGrounded(true);
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
-					((PowerUp) gameObject).use(world);
+					PowerUpHandler powerUpHandler = NormalPowerUpHandler
+							.getInstance(world);
+					((PowerUp) gameObject).use(powerUpHandler);
 					iterator.remove();
 				}
 			}
 		}
 	}
-	
+
 	private void checkObjectCollisionsXZ(GameWorld world) {
 		Player player = world.getPlayer();
 		List<GameObject> gameObjects = world.getGameObjects();
@@ -62,13 +66,15 @@ public class CollisionHandler {
 			GameObject gameObject = iterator.next();
 			if (checkCollisionXZ(player, gameObject)) {
 				if (gameObject instanceof PowerUp) {
-					((PowerUp) gameObject).use(world);
+					PowerUpHandler powerUpHandler = NormalPowerUpHandler
+							.getInstance(world);
+					((PowerUp) gameObject).use(powerUpHandler);
 					iterator.remove();
 				}
 			}
 		}
 	}
-	
+
 	private boolean checkCollisionXY(GameObject object, GameObject otherObject) {
 		return !(object.getPosition().getX() > otherObject.getPosition().getX()
 				+ otherObject.getSize().getX()
@@ -98,5 +104,5 @@ public class CollisionHandler {
 			object.getPosition().setY(object.getPosition().getY() + yOverlap);
 		}
 	}
-	
+
 }

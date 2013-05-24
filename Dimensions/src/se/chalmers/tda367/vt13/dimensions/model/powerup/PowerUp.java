@@ -1,6 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
+import se.chalmers.tda367.vt13.dimensions.model.PowerUpHandler;
+
 
 /**
  * Interface to be implemented by all PowerUps.
@@ -18,8 +19,8 @@ public interface PowerUp {
 	 * PowerUp. Affects the player in different ways, depending on the
 	 * implementing PowerUp class.
 	 * 
-	 * @param gameWorld
-	 *            The GameWorld the power up should affect
+	 * @param powerUpHandler
+	 *            The PowerUpHandler handling PowerUp usage.
 	 */
-	public void use(GameWorld gm);
+	public void use(PowerUpHandler powerUpHandler);
 }
