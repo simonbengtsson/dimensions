@@ -1,6 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -50,18 +49,18 @@ public class GameWorld {
 	 * @param gameObjects
 	 */
 	public GameWorld(Player player, Level level, MapHandler mapHandler) {
+		this.level = level;
 		this.player = player;
+		this.collisionHandler = new CollisionHandler();
+		this.tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
+		this.chaser = new Chaser();
 		this.gameObjects = level.getGameObjects();
+		gameObjects.add(chaser);
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
-		this.chaser = new Chaser();
-		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
-		this.level = level;
-		this.collisionHandler = new CollisionHandler();
-		this.tileCollisionHandler = new TileCollisionHandler(player, mapHandler);
 	}
 
 	public void update() {
@@ -93,28 +92,21 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
-		tileCollisionHandler.updatePlayer(currentDimension, gravity);
+		updatePlayer();
 		chaser.update();
 		//collisionHandler.checkCollisions(this);
 		checkGameOver();
 		checkLevelFinished();
 	}
-
-//	private void checkTileCollisions() {
-//		switch (tileCollisionHandler.getCollisionType(currentDimension)) {
-//		case OBSTACLE:
-//			//notifyWorldListeners(State.GAME_OVER);
-//			break;
-//		case GROUND:
-//			//player.updateY();
-//			break;
-//		case NONE:
-//			player.update(currentDimension, gravity);
-//			break;
-//		default:
-//			break;
-//		}
-//	}
+	
+	private void updatePlayer(){
+		if(!tileCollisionHandler.isGroundBelow()){
+			player.updateY(gravity);
+		}
+		if(!tileCollisionHandler.isGroundLeft()){
+			player.updateX();
+		}
+	}
 
 	/**
 	 * If dimension XY, change it to XZ and the opposite

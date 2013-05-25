@@ -1,9 +1,11 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
 public class TileCollisionHandler {
 
@@ -11,37 +13,95 @@ public class TileCollisionHandler {
 		OBSTACLE, GROUND, NONE;
 	}
 
+	private GameWorld world;
 	private Player player;
 	private Vector3 playerSize;
 	private Vector3 playerSpeed;
 	private Vector3 playerPos;
 	private MapHandler mapHandler;
+	private float gravity;
 
-	public TileCollisionHandler(Player player, MapHandler mapHandler) {
+	public TileCollisionHandler(GameWorld world, MapHandler mapHandler) {
+		this.world = world;
 		this.mapHandler = mapHandler;
-		this.player = player;
+		this.gravity = world.getGravity();
+		this.player = world.getPlayer();
 		playerSize = player.getSize();
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
 	}
 
-	public void updatePlayer(Dimension currentDimension, float gravity) {
-		for (Rectangle rect : getBottomTiles()) {
-			switch (getCollisionType(rect)) {
+	public boolean isGroundBelow() {
+		player.setGrounded(false);
+		for (Point point : getTiles(getTileAreaBottom(), 0)) {
+			switch (checkCollision(point)) {
 			case OBSTACLE:
-				return;
+				world.notifyWorldListeners(State.GAME_OVER);
+				return true;
 			case GROUND:
-				playerPos.setY(rect.y + 1);
-				player.setGrounded(true);
-				return;
+				setPlayerOnTile(point.y);
+				return true;
 			default:
 				break;
 			}
 		}
-		if(!(player.isGrounded())){
-			player.updateY(gravity);
-		}
+		return false;
+	}
 
+	public boolean isGroundLeft() {
+		player.setStuck(false);
+		for (Point point : getTiles(getTileAreaLeft(), 1)) {
+			switch (checkCollision(point)) {
+			case OBSTACLE:
+				world.notifyWorldListeners(State.GAME_OVER);
+				return true;
+			case GROUND:
+				player.setStuck(false);
+				setPlayerBeforeTile(point.x);
+				return true;
+			default:
+				break;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Doensn't really make sense, area.y = (int) playerPos.getY(); should be
+	 * area.y = (int) playerPos.getY() - getAreaHeight();?
+	 * 
+	 * @return
+	 */
+	private Rectangle getTileAreaBottom() {
+		Rectangle area = new Rectangle();
+		area.height = getAreaHeight();
+		area.width = (int) Math.ceil(player.getSize().getX());
+		area.y = (int) playerPos.getY();
+		area.x = (int) playerPos.getX() + 1;
+		return area;
+	}
+
+	private Rectangle getTileAreaLeft() {
+		Rectangle area = new Rectangle();
+		area.height = (int) Math.ceil(playerSize.getY());
+		area.width = getAreaWidth();
+		area.y = (int) playerPos.getY() + area.height;
+		area.x = (int) Math.ceil(playerPos.getX()
+				+ (int) Math.ceil(player.getSize().getX()));
+		System.out.println("Area: " + area);
+		return area;
+	}
+
+	private void setPlayerOnTile(int tilePosY) {
+		playerPos.setY(tilePosY + 1f);
+		player.setGrounded(true);
+		player.getSpeed().setY(0);
+	}
+	
+	private void setPlayerBeforeTile(int tilePosX) {
+		playerPos.setX(tilePosX + 1f);
+		player.setStuck(true);
+		player.getSpeed().setX(0);
 	}
 
 	/**
@@ -50,42 +110,63 @@ public class TileCollisionHandler {
 	 * @param world
 	 *            the Game World
 	 */
-	public CollisionType getCollisionType(Rectangle rect) {
-		if (mapHandler.isCellGround(rect.x, rect.y)) {
+	public CollisionType checkCollision(Point point) {
+		if (mapHandler.isCellGround(point.x, point.y)) {
 			return CollisionType.GROUND;
-		} else if (mapHandler.isCellObstacle(rect.x, rect.y)) {
+		} else if (mapHandler.isCellObstacle(point.x, point.y)) {
 			return CollisionType.OBSTACLE;
 		}
 		return CollisionType.NONE;
 	}
 
 	/**
-	 * Get the tiles that is going to be passed through during the next frame
 	 * 
-	 * @param world
-	 *            The GameWorld
-	 * @return An ArrayList containing a Rectangle for each tile that is going
-	 *         to be passed
+	 * @param area
+	 * @return Tiles in the given area
 	 */
-	public ArrayList<Rectangle> getBottomTiles() {
-		ArrayList<Rectangle> tiles = new ArrayList<Rectangle>();
-		if (playerSpeed.getY() < 0) {
-			System.out.println("test");
-			for (int j = 0; j < getPassingTilesCount(); j++) {
-				for (int i = 0; i < playerSize.getX(); i++) {
-					addRectangle(playerPos.getX() + i, playerPos.getY() - 1,
-							tiles);
+	public ArrayList<Point> getTiles(Rectangle area, int order) {
+		ArrayList<Point> tiles = new ArrayList<Point>();
+		if (order == 0) {
+			for (int j = 0; j < area.height; j++) {
+				for (int i = 0; i < area.width; i++) {
+					addPoint(area.x + i, area.y - j - 1, tiles);
 				}
-				// System.out.println("j: " + j);
 			}
+			return tiles;
+		} else {
+			for (int j = 0; j < area.width; j++) {
+				for (int i = 0; i < area.height; i++) {
+					addPoint(area.x + j, area.y + i, tiles);
+				}
+			}
+			System.out.println(tiles);
+			System.out.println(playerPos.getX());
+			return tiles;
 		}
-		return tiles;
 	}
 
-	private int getPassingTilesCount() {
-		float positionOnTile = Math.abs(playerPos.getY()
-				- (int) playerPos.getY());
-		return (int) (Math.abs(playerPos.getY()) + 1 + positionOnTile);
+	/**
+	 * @return The amount of tiles below the player that is going to be passed
+	 *         during the next player update
+	 */
+	private int getAreaHeight() {
+		if (playerSpeed.getY() <= 0) {
+			return (int) (Math.abs(playerSpeed.getY() + gravity) + 1 + getPositionOnTileY());
+		}
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return The amount of tiles to the left of player that is going to be
+	 *         passed during the next player update
+	 */
+	private int getAreaWidth() {
+		return (int) (playerSpeed.getX() + 1 + getPositionOnTileY());
+	}
+
+	private float getPositionOnTileY() {
+		return playerPos.getY() - (int) playerPos.getY();
 	}
 
 	/**
@@ -96,8 +177,10 @@ public class TileCollisionHandler {
 	 * @param y
 	 *            The y position
 	 */
-	private void addRectangle(float x, float y, ArrayList<Rectangle> tiles) {
-		tiles.add(new Rectangle((int) x, (int) y, 1, 1));
+	private void addPoint(int x, int y, ArrayList<Point> tiles) {
+		if (x >= 0 && y >= 0) {
+			tiles.add(new Point(x, y));
+		}
 	}
 
 	public float getScreenY(Vector3 vector3, Dimension currentDimension) {

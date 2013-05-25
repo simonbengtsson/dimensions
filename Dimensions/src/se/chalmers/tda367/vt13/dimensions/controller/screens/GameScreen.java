@@ -61,8 +61,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		updateInput();
 		world.update();
+		updateInput();
 		switch (world.getCurrentState()) {
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
