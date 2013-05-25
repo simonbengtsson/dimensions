@@ -36,7 +36,7 @@ public class TileCollisionHandler {
 		for (Point point : getTiles(getTileAreaBottom(), 0)) {
 			switch (checkCollision(point)) {
 			case OBSTACLE:
-				world.notifyWorldListeners(State.GAME_OVER);
+				//world.notifyWorldListeners(State.GAME_OVER);
 				return true;
 			case GROUND:
 				setPlayerOnTile(point.y);
@@ -53,7 +53,7 @@ public class TileCollisionHandler {
 		for (Point point : getTiles(getTileAreaLeft(), 1)) {
 			switch (checkCollision(point)) {
 			case OBSTACLE:
-				world.notifyWorldListeners(State.GAME_OVER);
+				//world.notifyWorldListeners(State.GAME_OVER);
 				return true;
 			case GROUND:
 				player.setStuck(false);
@@ -66,12 +66,6 @@ public class TileCollisionHandler {
 		return false;
 	}
 
-	/**
-	 * Doensn't really make sense, area.y = (int) playerPos.getY(); should be
-	 * area.y = (int) playerPos.getY() - getAreaHeight();?
-	 * 
-	 * @return
-	 */
 	private Rectangle getTileAreaBottom() {
 		Rectangle area = new Rectangle();
 		area.height = getAreaHeight();
@@ -88,18 +82,17 @@ public class TileCollisionHandler {
 		area.y = (int) playerPos.getY() + area.height;
 		area.x = (int) Math.ceil(playerPos.getX()
 				+ (int) Math.ceil(player.getSize().getX()));
-		System.out.println("Area: " + area);
 		return area;
 	}
 
 	private void setPlayerOnTile(int tilePosY) {
-		playerPos.setY(tilePosY + 1f);
+		playerPos.setY(tilePosY);
 		player.setGrounded(true);
 		player.getSpeed().setY(0);
 	}
 	
 	private void setPlayerBeforeTile(int tilePosX) {
-		playerPos.setX(tilePosX + 1f);
+		playerPos.setX(tilePosX-player.getSize().getX()-0.1f);
 		player.setStuck(true);
 		player.getSpeed().setX(0);
 	}
@@ -111,9 +104,9 @@ public class TileCollisionHandler {
 	 *            the Game World
 	 */
 	public CollisionType checkCollision(Point point) {
-		if (mapHandler.isCellGround(point.x, point.y)) {
+		if (mapHandler.isCellGround(point.x, point.y-1)) {
 			return CollisionType.GROUND;
-		} else if (mapHandler.isCellObstacle(point.x, point.y)) {
+		} else if (mapHandler.isCellObstacle(point.x, point.y-1)) {
 			return CollisionType.OBSTACLE;
 		}
 		return CollisionType.NONE;
@@ -129,18 +122,17 @@ public class TileCollisionHandler {
 		if (order == 0) {
 			for (int j = 0; j < area.height; j++) {
 				for (int i = 0; i < area.width; i++) {
-					addPoint(area.x + i, area.y - j - 1, tiles);
+					addPoint(area.x + i, area.y - j, tiles);
 				}
 			}
+			System.out.println(tiles);
 			return tiles;
 		} else {
 			for (int j = 0; j < area.width; j++) {
 				for (int i = 0; i < area.height; i++) {
-					addPoint(area.x + j, area.y + i, tiles);
+					addPoint(area.x + j, area.y - i, tiles);
 				}
 			}
-			System.out.println(tiles);
-			System.out.println(playerPos.getX());
 			return tiles;
 		}
 	}

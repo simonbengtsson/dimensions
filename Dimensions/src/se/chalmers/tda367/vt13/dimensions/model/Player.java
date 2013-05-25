@@ -28,7 +28,7 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(1f, 3f, 3f), new Vector3(
+		this(new Vector3(10, 10, 10), new Vector3(2f, 3f, 3f), new Vector3(
 				DEFAULT_XSPEED, 0, 0), DEFAULT_JUMP_SPEED, false);
 	}
 
@@ -62,7 +62,7 @@ public class Player extends GameObject {
 	}
 
 	public void updateX() {
-		getPosition().setX(getPosition().getX() + getSpeed().getX());
+		getPosition().setX(getPosition().getX() + DEFAULT_XSPEED);
 	}
 
 	/**
