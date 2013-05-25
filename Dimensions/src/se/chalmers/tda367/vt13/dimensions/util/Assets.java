@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.util;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -31,6 +34,9 @@ public class Assets {
 	public static final String SPEEDPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
 	public static final String LOWGRAVITYPOWERUP_IMAGE = "data/LowGravityPowerUpImg.png";
 	public static final String LOWGRAVITYPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
+	
+	private static final BitmapFont fontImpact50 = new BitmapFont(Gdx.files.internal("impact50.fnt"), false);
+	private static final BitmapFont fontStandard = new BitmapFont();
 
 	private static Map<String, Texture> textures = new HashMap<String, Texture>();
 	private static Map<String, Music> music = new HashMap<String, Music>();
@@ -121,6 +127,14 @@ public class Assets {
 	public static void playSound(String file) {
 		sounds.get(file).play();
 	}
+	
+	public static BitmapFont getFontImpact50(){
+		return fontImpact50;
+	}
+	
+	public static BitmapFont getFontStandard(){
+		return fontStandard;
+	}
 
 	public static void loadAllAudioVisual() {
 		registerTexture(PLAYER_TEXTURE);
@@ -133,6 +147,7 @@ public class Assets {
 		registerTexture("data/level_select.png");
 		registerTexture("data/settings.png");
 		registerTexture("data/exit.png");
+		registerTexture("data/xp.jpg");
 
 	}
 }
