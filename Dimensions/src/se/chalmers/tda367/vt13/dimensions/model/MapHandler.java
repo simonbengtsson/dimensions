@@ -21,5 +21,5 @@ public interface MapHandler {
 	 * @return true if the cell contains an obstacle, otherwise false
 	 */
 	public boolean isCellObstacle(int x, int y);
-	
+		
 }

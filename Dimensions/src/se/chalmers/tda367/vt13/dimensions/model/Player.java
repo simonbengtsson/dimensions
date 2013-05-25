@@ -17,7 +17,7 @@ public class Player extends GameObject {
 	private static final float DEFAULT_XSPEED = 0.5f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private float jumpSpeed;
-	private boolean isGrounded;
+	private boolean isGrounded = false;
 	private boolean isStuck;
 	private final float baseXSpeed;
 	private final float baseZSpeed;
@@ -28,7 +28,7 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2, 2, 2), new Vector3(
+		this(new Vector3(10, 10, 10), new Vector3(3f, 3f, 3f), new Vector3(
 				DEFAULT_XSPEED, 0, 0), DEFAULT_JUMP_SPEED, false);
 	}
 
@@ -65,8 +65,12 @@ public class Player extends GameObject {
 		getPosition().add(getSpeed());
 		if (currentDimension == Dimension.XY) {
 			calculateYSpeed(gravity);
-			calculateXSpeed();
 		}
+	}
+
+	public void updateY(float gravity) {
+		getSpeed().setY(getSpeed().getY() + gravity);
+		getPosition().setY(getPosition().getY() + getSpeed().getY());
 	}
 
 	/**
@@ -106,7 +110,7 @@ public class Player extends GameObject {
 	/**
 	 * Adjust Y speed according to gravity.
 	 */
-	public void calculateYSpeed(float gravity) {
+	private void calculateYSpeed(float gravity) {
 		if (isGrounded) {
 			getSpeed().setY(0);
 		} else {
@@ -119,14 +123,6 @@ public class Player extends GameObject {
 		}
 	}
 
-	public void calculateXSpeed() {
-		if (isStuck) {
-			getSpeed().setX(0);
-		} else {
-			resetXSpeed();
-		}
-	}
-
 	/**
 	 * Should be set to true if proper collision with a platform is detected
 	 * ahead of the player.
@@ -134,7 +130,7 @@ public class Player extends GameObject {
 	 * @param isStuck
 	 *            if the player is running in to a platform or not
 	 */
-	public void setIsStuck(boolean isStuck) {
+	public void setStuck(boolean isStuck) {
 		this.isStuck = isStuck;
 	}
 
@@ -145,11 +141,12 @@ public class Player extends GameObject {
 	 * @param isGrounded
 	 *            If the player is standing on a platform or not
 	 */
-	public void setIsGrounded(boolean isGrounded) {
+	public void setGrounded(boolean isGrounded) {
+		getSpeed().setY(0);
 		this.isGrounded = isGrounded;
 	}
 
-	public boolean getIsStuck() {
+	public boolean isStuck() {
 		return isStuck;
 	}
 
@@ -195,19 +192,7 @@ public class Player extends GameObject {
 				&& this.getSpeed().equals(p.getSpeed())
 				&& this.getBaseXSpeed() == p.getBaseXSpeed()
 				&& this.isGrounded() == p.isGrounded()
-				&& this.getIsStuck() == p.getIsStuck()
+				&& this.isStuck() == p.isStuck()
 				&& this.jumpSpeed == p.jumpSpeed && this.baseZSpeed == p.baseZSpeed);
-	}
-
-	public float getScreenY(Vector3 vector3, Dimension currentDimension) {
-		switch (currentDimension) {
-		case XY:
-			return vector3.getY();
-		case XZ:
-			return vector3.getZ();
-		default:
-			break;
-		}
-		return 0;
 	}
 }

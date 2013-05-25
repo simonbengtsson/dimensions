@@ -12,7 +12,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 public class Level implements Serializable, Cloneable {
 
 	private final static long serialVersionUID = 2122723720243818390L;
-	private final static float DEFAULT_GRAVITY = -0.06f;
+	private final static float DEFAULT_GRAVITY = -0.05f;
 	private final static Dimension DEFAULT_STARTING_DIMENSION = Dimension.XY;
 	private List<GameObject> gameObjects = new ArrayList<GameObject>();
 	private float gravity;

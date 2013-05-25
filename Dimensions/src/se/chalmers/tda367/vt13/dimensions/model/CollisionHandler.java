@@ -42,7 +42,7 @@ public class CollisionHandler {
 			if (checkCollisionXY(player, gameObject)) {
 				if (gameObject instanceof Platform
 						&& player.getSpeed().getY() < 0) {
-					player.setIsGrounded(true);
+					player.setGrounded(true);
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
 					((PowerUp) gameObject).use(world);

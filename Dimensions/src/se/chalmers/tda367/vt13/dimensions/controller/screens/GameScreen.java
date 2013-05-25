@@ -86,7 +86,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		int frameTime = 16;
 		try {
 			if (delta * 1000 < frameTime) {
-				Thread.sleep((long) (16 - delta * 1000));
+				Thread.sleep((long) (frameTime - delta * 1000));
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

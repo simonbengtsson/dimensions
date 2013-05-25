@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -24,7 +25,7 @@ public class GameWorld {
 	private Player player;
 	private Chaser chaser;
 	private CollisionHandler collisionHandler;
-	private MapHandler mapHandler;
+	private TileCollisionHandler tileCollisionHandler;
 	private Dimension currentDimension;
 	private float baseGravity;
 	private float gravity;
@@ -59,8 +60,8 @@ public class GameWorld {
 		gameObjects.add(chaser);
 		cp = new CheckPoint(this);
 		this.level = level;
-		this.mapHandler = mapHandler;
 		this.collisionHandler = new CollisionHandler();
+		this.tileCollisionHandler = new TileCollisionHandler(player, mapHandler);
 	}
 
 	public void update() {
@@ -74,7 +75,7 @@ public class GameWorld {
 		case DIMENSION_CHANGED:
 			notifyWorldListeners(State.DIMENSION_CHANGED);
 			currentState = State.GAME_RUNNING;
-			player.setIsGrounded(true);
+			player.setGrounded(true);
 			updateRunning();
 			break;
 		case DIMENSION_CHANGING:
@@ -92,37 +93,28 @@ public class GameWorld {
 	 * player.
 	 */
 	public void updateRunning() {
-		player.update(currentDimension, gravity);
+		tileCollisionHandler.updatePlayer(currentDimension, gravity);
 		chaser.update();
-		collisionHandler.checkCollisions(this);
-		checkTileCollisions();
+		//collisionHandler.checkCollisions(this);
 		checkGameOver();
 		checkLevelFinished();
 	}
 
-	private void checkTileCollisions() {
-		getPlayer().setIsGrounded(false);
-		switch (TileCollisionHandler.getCollisionType(this, mapHandler)) {
-		case OBSTACLE:
-			notifyWorldListeners(State.GAME_OVER);
-			break;
-		case GROUND:
-			// adjust position
-			if (player.getSpeed().getY() < 0) {
-				player.getPosition()
-						.setY((int) player.getPosition().getY() + 1);
-			}
-			if (player.getSpeed().getY() == 0) {
-				player.setIsStuck(true);
-				player.getPosition().setX(
-						(int) player.getPosition().getX() - 0.01f);
-			}
-			player.setIsGrounded(true);
-			break;
-		default:
-			break;
-		}
-	}
+//	private void checkTileCollisions() {
+//		switch (tileCollisionHandler.getCollisionType(currentDimension)) {
+//		case OBSTACLE:
+//			//notifyWorldListeners(State.GAME_OVER);
+//			break;
+//		case GROUND:
+//			//player.updateY();
+//			break;
+//		case NONE:
+//			player.update(currentDimension, gravity);
+//			break;
+//		default:
+//			break;
+//		}
+//	}
 
 	/**
 	 * If dimension XY, change it to XZ and the opposite
