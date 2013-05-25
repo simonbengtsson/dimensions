@@ -21,7 +21,6 @@ public class PowerUpTest {
 	
 	public void create(){
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		CollisionHandler collisionHandler = new CollisionHandler(tiledMapHandler);
 		LevelHandler l = LevelHandler.getInstance();
 		
 		l.load();
@@ -36,7 +35,7 @@ public class PowerUpTest {
 				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
 
 		
-		this.w = new GameWorld(this.lev, collisionHandler);
+		this.w = new GameWorld(this.lev, tiledMapHandler);
 	}
 	@Test
 	public void testEquals(){
@@ -86,11 +85,11 @@ public class PowerUpTest {
 		
 		SpeedPowerUp speed = new SpeedPowerUp(new Vector3(30, 4,
 				10), new Vector3(1, 1, 1), new Vector3());
-		
+		PowerUpHandler powerUpHandler = NormalPowerUpHandler.getInstance(w);
 		
 		// cpp test. Expected outcome: Variable Checkpoint in Gameworld changed
 		CheckPoint cfirst = w.getCheckPoint();
-		cpp.use(w);
+		cpp.use(powerUpHandler);
 		CheckPoint csecond = w.getCheckPoint();
 		assertTrue(cfirst != csecond);
 		
@@ -100,28 +99,28 @@ public class PowerUpTest {
 		//Dimension swapping w.swapDimension() is tested in ModelTests.java, further info about
 		//the requirements for this test to be done can be found there.
 		
-		dcp.use(w); // Note: Must meet requirements in ModelTests.java -> testDimensionChange()
+		dcp.use(powerUpHandler); // Note: Must meet requirements in ModelTests.java -> testDimensionChange()
 		
 		
 		//lgp test. Expected outcome: GameWorld Gravity will be higher before use than after
 		// Note: Since gravity is negative, this means preuse < postuse after use
 		
 		float preuse = w.getGravity();
-		lgp.use(w);
+		lgp.use(powerUpHandler);
 		float postuse = w.getGravity();
 		assertTrue(preuse<postuse);
 		
 		
 		//sp test: Expected outcome: Player speed is higher pre use than post use
 		float preslowuse = w.getPlayer().getSpeed().getX();
-		sp.use(w);
+		sp.use(powerUpHandler);
 		float postslowuse = w.getPlayer().getSpeed().getX();
 		assertTrue(preslowuse > postslowuse);
 		
 		
 		//speed test: Expected outcome: Player speed is higer post use than pre use
 		float prespeeduse = w.getPlayer().getSpeed().getX();
-		speed.use(w);
+		speed.use(powerUpHandler);
 		float postspeeduse = w.getPlayer().getSpeed().getX();
 		assertTrue(prespeeduse < postspeeduse);
 		

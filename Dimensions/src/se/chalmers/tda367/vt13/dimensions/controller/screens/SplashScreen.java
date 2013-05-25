@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class SplashScreen implements Screen{
+public class SplashScreen implements Screen {
 	private Table mainTable = new Table();
 	private Stage mainStage = new Stage();
 	private Dimensions game;
@@ -24,7 +25,7 @@ public class SplashScreen implements Screen{
 		initMainStage();
 		final MainMenuScreen menuScreen = new MainMenuScreen(game);
 		Timer t = new Timer();
-		t.schedule(new TimerTask(){
+		t.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
@@ -32,11 +33,10 @@ public class SplashScreen implements Screen{
 			}
 		}, 1000);
 	}
-	
-	private void initMainStage(){
-		Texture bgTexture = new Texture(Gdx.files.internal("data/xp.jpg"));
+
+	private void initMainStage() {
 		mainTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-				bgTexture)));
+				Assets.getTexture("data/xp.jpg"))));
 		mainTable.setFillParent(true);
 		mainStage.addActor(mainTable);
 	}

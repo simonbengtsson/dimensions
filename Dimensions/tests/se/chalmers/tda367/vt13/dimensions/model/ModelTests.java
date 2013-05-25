@@ -30,8 +30,6 @@ public class ModelTests {
 
 	public void create() {
 		TiledMapHandler tiledMapHandler = new TiledMapHandler();
-		CollisionHandler collisionHandler = new CollisionHandler(
-				tiledMapHandler);
 		LevelHandler l = LevelHandler.getInstance();
 
 		l.load();
@@ -44,7 +42,7 @@ public class ModelTests {
 		this.lev = new Level("Example", -0.05f, gameObjects, Dimension.XY,
 				"data/tiledMaps/levelXY.tmx", "data/tiledMaps/levelXZ.tmx", 205);
 
-		this.w = new GameWorld(this.lev, collisionHandler);
+		this.w = new GameWorld(this.lev, tiledMapHandler);
 	}
 
 	// @Test
