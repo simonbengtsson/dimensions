@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -27,16 +26,15 @@ public class AbstractMenuScreen implements Screen {
 	}
 
 	private void initMainStage() {
-		mainTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("bg")));
+		mainTable.setBackground(new TextureRegionDrawable(Assets
+				.getTextureRegion("bg")));
 		mainTable.setFillParent(true);
 		mainTable.debug();
 		mainStage.addActor(mainTable);
 	}
 
 	private void initTextButtonStyle() {
-		BitmapFont font = new BitmapFont(Gdx.files.internal("impact50.fnt"),
-				false);
-		textButtonStyle.font = font;
+		textButtonStyle.font = Assets.getFontImpact50();
 		textButtonStyle.downFontColor = Color.RED;
 	}
 

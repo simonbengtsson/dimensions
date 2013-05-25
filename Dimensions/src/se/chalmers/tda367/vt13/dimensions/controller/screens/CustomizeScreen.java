@@ -3,6 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
+import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,8 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  *
  */
 public class CustomizeScreen extends AbstractMenuScreen{
-	private String charname = "";
-	private String characterTexture = "texture1";
+//	private String charname = "";
+//	private String characterTexture = "texture1";
 	private GameScreen g;
 	public CustomizeScreen(Dimensions game) {
 		super(game);
@@ -38,7 +39,7 @@ public class CustomizeScreen extends AbstractMenuScreen{
 		style.focusedFontColor = Color.WHITE;
 		style.messageFontColor = Color.YELLOW;
 		style.fontColor = Color.BLACK;
-		BitmapFont font = new BitmapFont();
+		BitmapFont font = Assets.getFontStandard();
 		style.font = font;
 		final TextField nametext = new TextField("", style);
 		nametext.setMessageText("Enter Character name");
@@ -50,7 +51,7 @@ public class CustomizeScreen extends AbstractMenuScreen{
 			@Override
 			public void keyTyped(TextField textField, char key) {
 				name.setText(nametext.getText());
-				charname = nametext.getText();
+				//charname = nametext.getText();
 				
 			}
 			
@@ -62,8 +63,8 @@ public class CustomizeScreen extends AbstractMenuScreen{
 		char1.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				characterTexture = "level_select";
-				System.out.println(characterTexture);
+//				characterTexture = "level_select";
+//				System.out.println(characterTexture);
 				// TODO What's this?
 			}
 		});
@@ -73,9 +74,9 @@ public class CustomizeScreen extends AbstractMenuScreen{
 		char2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				characterTexture = "PlayerImg";
-				System.out.println(characterTexture);
-				//TODO Felsökning?
+//				characterTexture = "PlayerImg";
+//				System.out.println(characterTexture);
+//				//TODO Debug?
 			}
 		});
 

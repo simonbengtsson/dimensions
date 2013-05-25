@@ -23,11 +23,9 @@ public class GameLayerView {
 	private Stage pauseStage = new Stage();
 	private Table mainTable = new Table();
 	private Table notMainTable = new Table();
-	private BitmapFont headerFont = new BitmapFont(
-			Gdx.files.internal("impact50.fnt"), false);
+	private BitmapFont headerFont = Assets.getFontImpact50();
 	private SpriteBatch batch = new SpriteBatch();
-	private BitmapFont warningtext = new BitmapFont(
-			Gdx.files.internal("impact50.fnt"), false);
+	private BitmapFont warningtext = Assets.getFontImpact50();
 	private boolean DimensionChange;
 
 	public GameLayerView(GameWorld world) {
