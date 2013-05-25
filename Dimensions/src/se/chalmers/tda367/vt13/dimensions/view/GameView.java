@@ -81,9 +81,9 @@ public class GameView {
 		// Draw gameObjects
 		
 		batch.begin();
-		if (world.getDimension() == GameWorld.Dimension.XY) {
+		if (world.getDimension() == Dimension.XY) {
 			drawGameObjectsXY(batch);
-		} else if (world.getDimension() == GameWorld.Dimension.XZ) {
+		} else if (world.getDimension() == Dimension.XZ) {
 			drawGameObjectsXZ(batch);
 		}
 		batch.end();
