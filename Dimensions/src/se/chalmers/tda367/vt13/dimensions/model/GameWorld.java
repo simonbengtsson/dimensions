@@ -71,12 +71,6 @@ public class GameWorld {
 		case GAME_PAUSED:
 			notifyWorldListeners(State.GAME_PAUSED);
 			break;
-		case DIMENSION_CHANGED:
-			notifyWorldListeners(State.DIMENSION_CHANGED);
-			currentState = State.GAME_RUNNING;
-			player.setGrounded(true);
-			updateRunning();
-			break;
 		case DIMENSION_CHANGING:
 			notifyWorldListeners(State.DIMENSION_CHANGING);
 			updateRunning();
@@ -114,12 +108,14 @@ public class GameWorld {
 	public void swapDimension() {
 		if (currentDimension == Dimension.XY) {
 			currentDimension = Dimension.XZ;
-			player.getSpeed().setZ(player.getBaseZSpeed());
+			player.prepareForXZ();
+			
 		} else {
 			currentDimension = Dimension.XY;
+			player.prepareForXY();
 		}
-		currentState = State.DIMENSION_CHANGED;
-
+		notifyWorldListeners(State.DIMENSION_CHANGED);
+		currentState = State.GAME_RUNNING;
 	}
 
 	public void startDimensionTimer() {

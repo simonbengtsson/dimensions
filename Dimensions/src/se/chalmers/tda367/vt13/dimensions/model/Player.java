@@ -13,7 +13,7 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 @SuppressWarnings("serial")
 public class Player extends GameObject {
 
-	public static final float MAX_VELOCITY_Y = 0.5f;
+	private static final float MAX_VELOCITY_Y = 0.5f;
 	private static final float DEFAULT_XSPEED = 0.5f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private float jumpSpeed;
@@ -169,5 +169,13 @@ public class Player extends GameObject {
 				&& this.isGrounded() == p.isGrounded()
 				&& this.isStuck() == p.isStuck()
 				&& this.jumpSpeed == p.jumpSpeed && this.baseZSpeed == p.baseZSpeed);
+	}
+
+	public void prepareForXZ() {
+		getSpeed().setZ(getBaseZSpeed());
+	}
+
+	public void prepareForXY() {
+		;
 	}
 }

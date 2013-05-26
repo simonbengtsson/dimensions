@@ -27,14 +27,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameView gameView;
 	private GameLayerView gameLayerView;
 	private Dimensions game;
-	private boolean escapeWasPressed;
+	private boolean pauseWasPressed;
 	private boolean enterWasPressed;
 	private Level nextLevel;
 
 	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
 		this.nextLevel = level;
-		this.escapeWasPressed = false;
+		this.pauseWasPressed = false;
 		this.enterWasPressed = false;
 		init();
 	}
@@ -113,14 +113,13 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		} else {
 			enterWasPressed = false;
 		}
-
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			if (!escapeWasPressed) {
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE) || Gdx.input.isKeyPressed(Keys.BACK)) {
+			if (!pauseWasPressed) {
 				togglePause();
-				escapeWasPressed = true;
+				pauseWasPressed = true;
 			}
 		} else {
-			escapeWasPressed = false;
+			pauseWasPressed = false;
 		}
 	}
 

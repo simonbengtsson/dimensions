@@ -4,11 +4,18 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
+/**
+ * 
+ * @author Simon Bengtsson
+ *
+ */
 public class TileCollisionHandler {
 
 	private GameWorld world;
+	private Dimension dimension;
 	private Player player;
 	private Vector3 playerSize;
 	private Vector3 playerSpeed;
@@ -21,6 +28,7 @@ public class TileCollisionHandler {
 		this.mapHandler = mapHandler;
 		this.gravity = world.getGravity();
 		this.player = world.getPlayer();
+		this.dimension = world.getDimension();
 		playerSize = player.getSize();
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
