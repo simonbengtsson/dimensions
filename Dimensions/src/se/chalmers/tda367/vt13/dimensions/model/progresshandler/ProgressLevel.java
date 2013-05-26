@@ -15,10 +15,10 @@ public class ProgressLevel implements Serializable {
 
 	private boolean isCompleted;
 	private int highScore;
-	private Level level;
+	private String name;
 
-	public ProgressLevel(Level level) {
-		this.level = level;
+	public ProgressLevel(String name) {
+		this.name = name;
 		isCompleted = false;
 	}
 
@@ -45,8 +45,8 @@ public class ProgressLevel implements Serializable {
 		isCompleted = isCompleted || completed;
 	}
 
-	public Level getLevel() {
-		return level;
+	public String getLevel() {
+		return name;
 	}
 
 }

@@ -27,10 +27,10 @@ public class LevelSelectScreen extends AbstractMenuScreen {
 				prefix = "Completed - ";
 			}
 			TextButton levelButton = new TextButton(prefix
-					+ pl.getLevel().getName(), getButtonStyle());
+					+ pl.getLevel(), getButtonStyle());
 			levelButton.addListener(new ClickListener() {
 				public void clicked(InputEvent e, float x, float y) {
-					game.setScreen(new GameScreen(game, pl.getLevel()));
+					game.setScreen(new GameScreen(game, LevelHandler.getInstance().getLevel(pl.getLevel())));
 					dispose();
 				}
 			});

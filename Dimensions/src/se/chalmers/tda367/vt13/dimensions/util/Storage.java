@@ -32,7 +32,7 @@ public class Storage {
 
 	}
 
-	public static boolean loadProgress() {
+	public static void loadProgress() {
 		FileHandle file = null;
 		if (Gdx.files.isLocalStorageAvailable()) {
 			file = Gdx.files.internal(Constants.SAVE_FOLDER + "/"
@@ -49,7 +49,7 @@ public class Storage {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return LevelHandler.getInstance().loadProgressFromFile(pl);
+		LevelHandler.getInstance().loadProgressFromFile(pl);
 	}
 
 }

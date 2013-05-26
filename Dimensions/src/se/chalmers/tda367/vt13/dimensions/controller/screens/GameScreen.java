@@ -10,6 +10,7 @@ import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.util.Assets;
+import se.chalmers.tda367.vt13.dimensions.util.Storage;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
@@ -42,8 +43,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		if (nextLevel != null) {
 			playLevel = nextLevel;
 		} else {
-			playLevel = LevelHandler.getInstance().getProgressLevel(0)
-					.getLevel();
+			playLevel = LevelHandler.getInstance().getLevel(0);
 		}
 		world = new GameWorld(playLevel, tiledMapHandler);
 		world.addWorldListener(this);
@@ -161,7 +161,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
 			LevelHandler.getInstance().setLastPlayed(world.getLevel());
-			// Storage.saveProgress();
+			Storage.saveProgress();
 			game.setScreen(new GameOverScreen(game));
 			break;
 		case DIMENSION_CHANGED:
@@ -176,7 +176,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		case LEVEL_FINISHED:
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
-			// Storage.saveProgress();
+			Storage.saveProgress();
 			game.setScreen(new WinScreen(game));
 			break;
 		default:

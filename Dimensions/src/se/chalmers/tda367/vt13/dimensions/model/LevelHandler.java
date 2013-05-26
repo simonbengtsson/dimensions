@@ -4,8 +4,10 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
@@ -14,11 +16,13 @@ import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
 	private Deque<ProgressLevel> progressLevels;
+	private Map<String, Level> levels;
 	private static LevelHandler instance;
 	private Level lastPlayed;
 
 	private LevelHandler() {
 		progressLevels = new ArrayDeque<ProgressLevel>();
+		levels = new HashMap<String, Level>();
 	}
 
 	/**
@@ -39,7 +43,12 @@ public class LevelHandler {
 	 * @param l
 	 */
 	public void registerLevel(Level l) {
-		progressLevels.addLast(new ProgressLevel(l));
+		levels.put(l.getName(), l);
+		if(getProgressFor(l) == null){
+			System.out.println("Did not find progress.");
+			progressLevels.addLast(new ProgressLevel(l.getName()));
+		}
+		
 	}
 
 	public Collection<ProgressLevel> getProgressLevels() {
@@ -53,13 +62,12 @@ public class LevelHandler {
 	 *         finished.
 	 */
 	public Level getNextUnfinishedLevel() {
-		Level nextLevel = null;
 		Iterator<ProgressLevel> iter = progressLevels.iterator();
 		while (iter.hasNext()) {
 			ProgressLevel progress = iter.next();
 			if (!progress.isCompleted()) {
-				nextLevel = progress.getLevel();
-				return nextLevel;
+				Level l = levels.get(progress.getLevel());
+				return l;
 			}
 		}
 		return null;
@@ -76,27 +84,10 @@ public class LevelHandler {
 	public boolean loadProgressFromFile(Collection<ProgressLevel> p) {
 		if (p != null && !p.isEmpty()) {
 			progressLevels = new ArrayDeque<ProgressLevel>(p);
+			System.out.println("Progress filled (" + progressLevels.size() + ")");
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Returns a list with all finished ProgressLevels, containing score and the
-	 * Level itself.
-	 * 
-	 * @return
-	 */
-	public List<ProgressLevel> getAllFinishedLevels() {
-		List<ProgressLevel> list = new ArrayList<ProgressLevel>();
-		Iterator<ProgressLevel> iter = progressLevels.iterator();
-		while (iter.hasNext()) {
-			ProgressLevel pl = iter.next();
-			if (pl.isCompleted()) {
-				list.add(pl);
-			}
-		}
-		return list;
 	}
 
 	public ProgressLevel getProgressFor(Level l) {
@@ -104,7 +95,7 @@ public class LevelHandler {
 		Iterator<ProgressLevel> iter = progressLevels.iterator();
 		while (iter.hasNext()) {
 			ProgressLevel p = iter.next();
-			if (p.getLevel() == l) {
+			if (p.getLevel() == l.getName()) {
 				returning = p;
 				return p;
 			}
@@ -112,8 +103,16 @@ public class LevelHandler {
 		return returning;
 	}
 
+	public Level getLevel(String s){
+		return levels.get(s);
+	}
+	
 	public ProgressLevel getProgressLevel(int i) {
 		return (ProgressLevel) progressLevels.toArray()[i];
+	}
+	
+	public Level getLevel(int i){
+		return levels.get(getProgressLevel(i).getLevel());
 	}
 
 	public void gameFinished(Level l, int score, boolean completedLevel) {

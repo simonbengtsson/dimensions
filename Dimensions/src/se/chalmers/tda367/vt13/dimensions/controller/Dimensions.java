@@ -11,9 +11,9 @@ public class Dimensions extends Game {
 
 	@Override
 	public void create() {
-		if (!Storage.loadProgress()) {
-			LevelHandler.getInstance().load();
-		}
+		Storage.loadProgress();
+		LevelHandler.getInstance().load();
+
 		Assets.loadAllAudioVisual();
 		setScreen(new MainMenuScreen(this));
 	}
