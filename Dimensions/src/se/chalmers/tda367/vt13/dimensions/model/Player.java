@@ -1,7 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-
-
 /**
  * Class for the player in the game.
  * 
@@ -55,7 +53,7 @@ public class Player extends GameObject {
 		this.isGrounded = isGrounded;
 		this.baseXSpeed = baseXSpeed;
 		this.baseZSpeed = baseZSpeed;
-		//changingDirection = false;
+		// changingDirection = false;
 		this.isStuck = isStuck;
 	}
 
@@ -156,8 +154,8 @@ public class Player extends GameObject {
 
 	public Player clone() {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
-				.clone(), jumpSpeed, isGrounded, isStuck,
-				baseXSpeed, baseZSpeed);
+				.clone(), jumpSpeed, isGrounded, isStuck, baseXSpeed,
+				baseZSpeed);
 	}
 
 	@Override

@@ -134,43 +134,42 @@ public class LevelHandler {
 		List<GameObject> exampleList = new ArrayList<GameObject>();
 		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 8, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		Level example = new Level("Old", exampleList,
-				"tiled_maps/levelXY.tmx", "tiled_maps/levelXZ.tmx", 205);
+		Level example = new Level("Old", exampleList, "tiled_maps/levelXY.tmx",
+				"tiled_maps/levelXZ.tmx", 205);
 		registerLevel(example);
 		// End of Example Level
 
 		// Nature Level
 		List<GameObject> natureList = new ArrayList<GameObject>();
-		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15,
-				10), new Vector3(1, 1, 1), new Vector3()));
+		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
 		Level natureLevel = new Level("Nature", natureList,
 				"tiled_maps/natureXY.tmx", "tiled_maps/natureXZ.tmx", 205);
 		registerLevel(natureLevel);
-		
-		// crazy Level
-				List<GameObject> crazyList = new ArrayList<GameObject>();
-				natureList.add(new DimensionChangePowerUp(new Vector3(60, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				Level crazyLevel = new Level("Crazy", crazyList,
-						"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
-				registerLevel(crazyLevel);
-				
-				
-				// Nature Level
-				List<GameObject> demoList = new ArrayList<GameObject>();
-				demoList.add(new DimensionChangePowerUp(new Vector3(60, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				demoList.add(new DimensionChangePowerUp(new Vector3(110, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				demoList.add(new DimensionChangePowerUp(new Vector3(110, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				
-				demoList.add(new LowGravityPowerUp(new Vector3(166, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				demoList.add(new SpeedPowerUp(new Vector3(170, 15,
-						10), new Vector3(1, 1, 1), new Vector3()));
-				Level demoLevel = new Level("Demo", demoList,
-						"tiled_maps/demoXY.tmx", "tiled_maps/demoXZ.tmx", 205);
-				registerLevel(demoLevel);
+
+		// Demo Level
+		List<GameObject> demoList = new ArrayList<GameObject>();
+		demoList.add(new DimensionChangePowerUp(new Vector3(60, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+		demoList.add(new DimensionChangePowerUp(new Vector3(110, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+		demoList.add(new DimensionChangePowerUp(new Vector3(110, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+
+		demoList.add(new LowGravityPowerUp(new Vector3(166, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+		demoList.add(new SpeedPowerUp(new Vector3(170, 15, 10), new Vector3(1,
+				1, 1), new Vector3()));
+		Level demoLevel = new Level("Demo", demoList, "tiled_maps/demoXY.tmx",
+				"tiled_maps/demoXZ.tmx", 205);
+		registerLevel(demoLevel);
+
+		List<GameObject> crazyList = new ArrayList<GameObject>();
+		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+		Level crazyLevel = new Level("Crazy", crazyList,
+				"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
+		registerLevel(crazyLevel);
+
 	}
 }

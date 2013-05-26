@@ -13,12 +13,13 @@ public class GameOverScreen extends AbstractMenuScreen {
 		super(game);
 		init();
 	}
-	
-	private void init(){
+
+	private void init() {
 		TextButton playButton = new TextButton("Play again", getButtonStyle());
 		playButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-				game.setScreen(new GameScreen(game, LevelHandler.getInstance().getLastPlayed()));
+				game.setScreen(new GameScreen(game, LevelHandler.getInstance()
+						.getLastPlayed()));
 				dispose();
 
 			}
@@ -32,6 +33,6 @@ public class GameOverScreen extends AbstractMenuScreen {
 				setScreen(new MainMenuScreen(game));
 			}
 		});
-		mainTable.add(menuButton);		
+		mainTable.add(menuButton);
 	}
 }

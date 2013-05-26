@@ -87,13 +87,13 @@ public class GameWorld {
 		chaser.update();
 		checkState();
 	}
-	
-	private void checkState(){
-		if(isGameOver()){
+
+	private void checkState() {
+		if (isGameOver()) {
 			notifyWorldListeners(State.GAME_OVER);
 		}
-		if(isLevelFinished()){
-			 notifyWorldListeners(State.LEVEL_FINISHED);
+		if (isLevelFinished()) {
+			notifyWorldListeners(State.LEVEL_FINISHED);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class GameWorld {
 			if (!tileCollisionHandler.isGroundBelow()) {
 				player.updateY(gravity);
 			}
-			
+
 			if (!tileCollisionHandler.isGroundRight()) {
 				player.updateX();
 			}
@@ -148,7 +148,8 @@ public class GameWorld {
 
 	/**
 	 * Game over Check
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public boolean isGameOver() {
 		return player.getPosition().getY() < 0

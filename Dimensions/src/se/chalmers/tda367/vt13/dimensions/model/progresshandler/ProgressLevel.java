@@ -12,11 +12,11 @@ import se.chalmers.tda367.vt13.dimensions.model.Level;
  */
 public class ProgressLevel implements Serializable {
 	private static final long serialVersionUID = 1938174933064799673L;
-	
+
 	private boolean isCompleted;
 	private int highScore;
 	private Level level;
-	
+
 	public ProgressLevel(Level level) {
 		this.level = level;
 		isCompleted = false;
@@ -35,17 +35,17 @@ public class ProgressLevel implements Serializable {
 	}
 
 	public void evaluateNewScore(int i) {
-		if(i >= highScore){
+		if (i >= highScore) {
 			highScore = i;
 		}
 	}
-	
-	public void gameFinished(int score, boolean completed){
+
+	public void gameFinished(int score, boolean completed) {
 		evaluateNewScore(score);
 		isCompleted = isCompleted || completed;
 	}
-	
-	public Level getLevel(){
+
+	public Level getLevel() {
 		return level;
 	}
 

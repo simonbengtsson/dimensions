@@ -7,16 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class OptionScreen extends AbstractMenuScreen {
-	
-	public OptionScreen(final Dimensions game){
+
+	public OptionScreen(final Dimensions game) {
 		super(game);
 		TextButton backButton;
 		backButton = new TextButton("Back", getButtonStyle());
-		backButton.addListener(new ClickListener(){
-			public void clicked(InputEvent e, float x, float y){
+		backButton.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
 				game.setScreen(new MainMenuScreen(game));
 			}
 		});
-		mainTable.add(backButton);	
+		mainTable.add(backButton);
 	}
 }

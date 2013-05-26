@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * Class for creating a level with platforms and powerups
  */
@@ -94,7 +92,7 @@ public class Level implements Serializable, Cloneable {
 	public String getName() {
 		return levelName;
 	}
-	
+
 	@Override
 	public Level clone() {
 		ArrayList<GameObject> clonedGameObjects = new ArrayList<GameObject>();
@@ -104,7 +102,7 @@ public class Level implements Serializable, Cloneable {
 		return new Level(levelName, gravity, clonedGameObjects,
 				startingDimension, mapXYPath, mapXZPath, length);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,7 +124,7 @@ public class Level implements Serializable, Cloneable {
 		return result;
 	}
 
-	//TODO change it so that it is only one return statement
+	// TODO change it so that it is only one return statement
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

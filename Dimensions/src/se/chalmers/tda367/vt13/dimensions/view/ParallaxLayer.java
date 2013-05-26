@@ -7,23 +7,24 @@ public class ParallaxLayer {
 
 	private TextureRegion region;
 	private float xRatio;
-	
-	public ParallaxLayer(TextureRegion region,float xRatio){
+
+	public ParallaxLayer(TextureRegion region, float xRatio) {
 		super();
 		this.region = region;
 		this.xRatio = xRatio;
-		
+
 	}
-	
-	public TextureRegion getRegion(){
+
+	public TextureRegion getRegion() {
 		return region;
 	}
-	
-	public float getxRatio(){
+
+	public float getxRatio() {
 		return xRatio;
 	}
-	
-	public void render(float xPos,float yPos, float width, float height, SpriteBatch sprite){
+
+	public void render(float xPos, float yPos, float width, float height,
+			SpriteBatch sprite) {
 		sprite.draw(region, xPos, yPos, width, height);
 	}
 }

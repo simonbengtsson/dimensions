@@ -18,15 +18,16 @@ public class LevelSelectScreen extends AbstractMenuScreen {
 	}
 
 	private void init() {
-		Collection<ProgressLevel> levels = LevelHandler.getInstance().getProgressLevels();
+		Collection<ProgressLevel> levels = LevelHandler.getInstance()
+				.getProgressLevels();
 
 		for (final ProgressLevel pl : levels) {
 			String prefix = "";
-			if(pl.isCompleted()){
+			if (pl.isCompleted()) {
 				prefix = "Completed - ";
 			}
-			TextButton levelButton = new TextButton(prefix + pl.getLevel().getName(),
-					getButtonStyle());
+			TextButton levelButton = new TextButton(prefix
+					+ pl.getLevel().getName(), getButtonStyle());
 			levelButton.addListener(new ClickListener() {
 				public void clicked(InputEvent e, float x, float y) {
 					game.setScreen(new GameScreen(game, pl.getLevel()));

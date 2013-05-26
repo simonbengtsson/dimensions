@@ -32,8 +32,9 @@ public class Assets {
 	public static final String SPEEDPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
 	public static final String LOWGRAVITYPOWERUP_IMAGE = "data/LowGravityPowerUpImg.png";
 	public static final String LOWGRAVITYPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
-	
-	private static final BitmapFont fontImpact50 = new BitmapFont(Gdx.files.internal("impact50.fnt"), false);
+
+	private static final BitmapFont fontImpact50 = new BitmapFont(
+			Gdx.files.internal("impact50.fnt"), false);
 	private static final BitmapFont fontStandard = new BitmapFont();
 
 	private static Map<String, Texture> textures = new HashMap<String, Texture>();
@@ -125,12 +126,12 @@ public class Assets {
 	public static void playSound(String file) {
 		sounds.get(file).play();
 	}
-	
-	public static BitmapFont getFontImpact50(){
+
+	public static BitmapFont getFontImpact50() {
 		return fontImpact50;
 	}
-	
-	public static BitmapFont getFontStandard(){
+
+	public static BitmapFont getFontStandard() {
 		return fontStandard;
 	}
 

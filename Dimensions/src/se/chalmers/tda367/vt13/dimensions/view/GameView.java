@@ -81,7 +81,7 @@ public class GameView {
 		renderer.render();
 
 		// Draw gameObjects
-		
+
 		batch.begin();
 		if (world.getDimension() == Dimension.XY) {
 			drawGameObjectsXY(batch);
@@ -142,15 +142,15 @@ public class GameView {
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		Player p = world.getPlayer();
-		spriteBatch.draw(Assets.getTexture(p.getImagePath()),
-				p.getPosition().getX(), p.getPosition().getZ(), p.getSize()
-						.getX(), p.getSize().getZ());
+		spriteBatch.draw(Assets.getTexture(p.getImagePath()), p.getPosition()
+				.getX(), p.getPosition().getZ(), p.getSize().getX(), p
+				.getSize().getZ());
 	}
 
 	public OrthographicCamera getCamera() {
 		return this.camera;
 	}
-	
+
 	public void dimensionChanging() {
 		Random rand = new Random();
 		setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
@@ -164,10 +164,11 @@ public class GameView {
 	}
 
 	private boolean wasRight = true;
+
 	private void shakeCamera() {
 		if (wasRight) {
-		camera.position.y += 0.3f;
-		wasRight = false;
+			camera.position.y += 0.3f;
+			wasRight = false;
 		} else {
 			camera.position.y -= 0.3f;
 			wasRight = true;

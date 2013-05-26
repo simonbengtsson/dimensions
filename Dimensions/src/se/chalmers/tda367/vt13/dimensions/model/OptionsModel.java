@@ -11,20 +11,21 @@ import java.util.Scanner;
 public class OptionsModel {
 	private static OptionsModel instance;
 
-	//private boolean fullscreen;
-	//private boolean newFullscreen;
-	//private Dimension screenSize;
-	//private Dimension newScreenSize;
+	// private boolean fullscreen;
+	// private boolean newFullscreen;
+	// private Dimension screenSize;
+	// private Dimension newScreenSize;
 	private int refreshRate;
 	private int newRefreshRate;
 	private int bitsPerPixel;
 	private int newBitsPerPixel;
 	private boolean vSync;
 	private boolean newVSync;
-	//private int jumpKey;
-	//private int newJumpKey;
-	//private int dashKey;
-	//private int newDashKey;
+
+	// private int jumpKey;
+	// private int newJumpKey;
+	// private int dashKey;
+	// private int newDashKey;
 
 	// Required methods.
 
@@ -52,33 +53,33 @@ public class OptionsModel {
 	}
 
 	public String toString() {
-		return " refreshRate:" + refreshRate + " bitsPerPixel:"
-				+ bitsPerPixel + " vSync:" + vSync;
+		return " refreshRate:" + refreshRate + " bitsPerPixel:" + bitsPerPixel
+				+ " vSync:" + vSync;
 	}
 
 	// Usefull methods.
 
-//	/**
-//	 * Gets the monitor resolution and applies it to the game. Enables
-//	 * fullscreen.
-//	 */
-//	public void setFullscreenSmart() {
-//		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//		fullscreen = true;
-//	}
+	// /**
+	// * Gets the monitor resolution and applies it to the game. Enables
+	// * fullscreen.
+	// */
+	// public void setFullscreenSmart() {
+	// screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	// fullscreen = true;
+	// }
 
 	/**
 	 * Applys all settings. Every setting can be saved in the model, but isnt
 	 * always applied by default.
 	 */
 	public void applySettings() {
-		//fullscreen = newFullscreen;
-		//screenSize = new Dimension(newScreenSize);
+		// fullscreen = newFullscreen;
+		// screenSize = new Dimension(newScreenSize);
 		refreshRate = newRefreshRate;
 		bitsPerPixel = newBitsPerPixel;
 		vSync = newVSync;
-		//jumpKey = newJumpKey;
-		//dashKey = newDashKey;
+		// jumpKey = newJumpKey;
+		// dashKey = newDashKey;
 
 		// Gdx.graphics.setDisplayMode(screenSize.width, screenSize.height,
 		// fullscreen);
@@ -86,26 +87,26 @@ public class OptionsModel {
 	}
 
 	public void resetToDefault() {
-		//newJumpKey = Keys.UP;
-		//newDashKey = Keys.DOWN;
-		//newScreenSize = new Dimension(1000, 500);
-		//newFullscreen = false;
+		// newJumpKey = Keys.UP;
+		// newDashKey = Keys.DOWN;
+		// newScreenSize = new Dimension(1000, 500);
+		// newFullscreen = false;
 		newRefreshRate = 120;
 		newBitsPerPixel = 10;
 		newVSync = false;
 	}
 
-//	public DisplayMode[] getDisplayModes() {
-//		return Gdx.graphics.getDisplayModes();
-//	}
+	// public DisplayMode[] getDisplayModes() {
+	// return Gdx.graphics.getDisplayModes();
+	// }
 
-//	public void setDisplayMode(DisplayMode d) {
-//		newScreenSize.height = d.height;
-//		newScreenSize.width = d.width;
-//		newRefreshRate = d.refreshRate;
-//		newBitsPerPixel = d.bitsPerPixel;
-//
-//	}
+	// public void setDisplayMode(DisplayMode d) {
+	// newScreenSize.height = d.height;
+	// newScreenSize.width = d.width;
+	// newRefreshRate = d.refreshRate;
+	// newBitsPerPixel = d.bitsPerPixel;
+	//
+	// }
 
 	public void setVSync(boolean s) {
 		newVSync = s;
@@ -115,41 +116,41 @@ public class OptionsModel {
 		return vSync;
 	}
 
-//	public void setJumpKey(int key) {
-//		newJumpKey = key;
-//	}
-//
-//	public int getJumpKey() {
-//		return jumpKey;
-//	}
-//
-//	public int getDashKey() {
-//		return dashKey;
-//	}
-//
-//	public void setDashKey(int key) {
-//		newDashKey = key;
-//	}
-//
-//	public void setScreenSize(int width, int height) {
-//		newScreenSize.width = width;
-//		newScreenSize.height = height;
-//	}
-//
-//	public void setFullscreen(boolean fullscreen) {
-//		newFullscreen = fullscreen;
-//	}
-//
-//	public boolean isFullscreen() {
-//		return fullscreen;
-//	}
+	// public void setJumpKey(int key) {
+	// newJumpKey = key;
+	// }
+	//
+	// public int getJumpKey() {
+	// return jumpKey;
+	// }
+	//
+	// public int getDashKey() {
+	// return dashKey;
+	// }
+	//
+	// public void setDashKey(int key) {
+	// newDashKey = key;
+	// }
+	//
+	// public void setScreenSize(int width, int height) {
+	// newScreenSize.width = width;
+	// newScreenSize.height = height;
+	// }
+	//
+	// public void setFullscreen(boolean fullscreen) {
+	// newFullscreen = fullscreen;
+	// }
+	//
+	// public boolean isFullscreen() {
+	// return fullscreen;
+	// }
 
 	// File handling
 
 	public void saveToFile() {
 		String content = toFileString();
 		try {
-			
+
 			File file = new File("dimensions.settings");
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -177,20 +178,19 @@ public class OptionsModel {
 	}
 
 	private String toFileString() {
-		String s = "::" + refreshRate + "::" + bitsPerPixel
-				+ "::" + vSync;
+		String s = "::" + refreshRate + "::" + bitsPerPixel + "::" + vSync;
 		return s;
 	}
 
 	private void initilizeSettings(String[] s) {
-		//newFullscreen = Boolean.parseBoolean(s[0]);
-		//newScreenSize = new Dimension(Integer.parseInt(s[1]),
-		//		Integer.parseInt(s[2]));
+		// newFullscreen = Boolean.parseBoolean(s[0]);
+		// newScreenSize = new Dimension(Integer.parseInt(s[1]),
+		// Integer.parseInt(s[2]));
 		newRefreshRate = Integer.parseInt(s[3]);
 		newBitsPerPixel = Integer.parseInt(s[4]);
 		newVSync = Boolean.parseBoolean(s[5]);
-		//newJumpKey = Integer.parseInt(s[6]);
-		//newDashKey = Integer.parseInt(s[7]);
+		// newJumpKey = Integer.parseInt(s[6]);
+		// newDashKey = Integer.parseInt(s[7]);
 	}
 
 }

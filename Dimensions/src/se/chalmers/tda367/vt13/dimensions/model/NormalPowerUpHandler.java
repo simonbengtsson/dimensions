@@ -10,14 +10,14 @@ public class NormalPowerUpHandler implements PowerUpHandler {
 	private final float lowGravityModifier = 0.9f;
 	private final float slowModifier = 0.5f;
 	private final float speedModifier = 2f;
-	
+
 	/**
 	 * Constructor is private to prevent initialization.
 	 */
 	private NormalPowerUpHandler(GameWorld world) {
 		this.world = world;
 	}
-	
+
 	@Override
 	public void useCheckPointPowerUp() {
 		world.placeCheckPoint();
@@ -41,7 +41,8 @@ public class NormalPowerUpHandler implements PowerUpHandler {
 
 	@Override
 	public void useSpeedPowerUp() {
-		if (world.getPlayer().getSpeed().getX() <= world.getPlayer().getBaseXSpeed()) {
+		if (world.getPlayer().getSpeed().getX() <= world.getPlayer()
+				.getBaseXSpeed()) {
 			world.getPlayer().getSpeed()
 					.setX(world.getPlayer().getSpeed().getX() * speedModifier);
 		}
@@ -53,5 +54,5 @@ public class NormalPowerUpHandler implements PowerUpHandler {
 		}
 		return instance;
 	}
-	
+
 }

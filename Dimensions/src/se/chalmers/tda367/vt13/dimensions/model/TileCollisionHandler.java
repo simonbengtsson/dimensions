@@ -108,8 +108,8 @@ public class TileCollisionHandler {
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
-		//playerPos.setX(tilePosX - player.getSize().getX());
-		//player.setStuck(true);
+		// playerPos.setX(tilePosX - player.getSize().getX());
+		// player.setStuck(true);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class TileCollisionHandler {
 	public ArrayList<Point> getTestTiles(Rectangle area, int order) {
 		ArrayList<Point> tiles = new ArrayList<Point>();
 		if (order == 0) {
-			//DONE TODO
+			// DONE TODO
 			for (int j = 0; j < area.height; j++) {
 				for (int i = 0; i < area.width; i++) {
 					addPoint(area.x + i, area.y - j - 1, tiles);
@@ -138,7 +138,7 @@ public class TileCollisionHandler {
 			}
 			return tiles;
 		} else {
-			//DONE TODO
+			// DONE TODO
 			for (int j = 0; j < area.width; j++) {
 				for (int i = 0; i < area.height; i++) {
 					addPoint(area.x + j, area.y - i - 1, tiles);
