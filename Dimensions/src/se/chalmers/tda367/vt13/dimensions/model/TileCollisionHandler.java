@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
 /**
  * 
@@ -112,7 +113,7 @@ public class TileCollisionHandler {
 		if (mapHandler.isCellGround(point.x, point.y - 1)) {
 			return true;
 		} else if (mapHandler.isCellObstacle(point.x, point.y - 1)) {
-			// world.notifyWorldListeners(State.GAME_OVER);
+			world.notifyWorldListeners(State.GAME_OVER);
 		}
 		return false;
 	}

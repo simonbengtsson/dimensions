@@ -9,7 +9,7 @@ package se.chalmers.tda367.vt13.dimensions.model;
 public class Player extends GameObject {
 
 	private static final float MAX_VELOCITY_Y = 0.5f;
-	private static final float DEFAULT_XSPEED = 0.5f;
+	private static final float DEFAULT_XSPEED = 0.2f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private boolean isDirectionUp;
 	private float jumpSpeed;
