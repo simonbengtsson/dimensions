@@ -1,5 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,9 +19,10 @@ public class Storage {
 	public static void saveProgress(){
 		Collection<ProgressLevel> progress = LevelHandler.getInstance().getProgressLevels();
 		FileHandle file = null;
-		if(Gdx.files.isLocalStorageAvailable()){
-			file = Gdx.files.internal(Constants.SAVE_FOLDER + "/" + Constants.SAVE_FILE);
-		}
+		FileHandle folder = new FileHandle(new File(Constants.SAVE_FOLDER));
+		if(!folder.exists()) folder.mkdirs();
+		
+		file = folder.child(Constants.SAVE_FILE);
 		try {
 			new ObjectOutputStream(file.write(false)).writeObject(progress);
 		} catch (IOException e) {
@@ -35,9 +37,9 @@ public class Storage {
 		if(Gdx.files.isLocalStorageAvailable()){
 			file = Gdx.files.internal(Constants.SAVE_FOLDER + "/" + Constants.SAVE_FILE);
 		}
-		Deque<ProgressLevel> pl = null;
+		Collection<ProgressLevel> pl = null;
 		try {
-			pl =(Deque<ProgressLevel>) new ObjectInputStream(file.read()).readObject();
+			pl =(Collection<ProgressLevel>) new ObjectInputStream(file.read()).readObject();
 		} catch(GdxRuntimeException e){
 			
 		}catch (ClassNotFoundException e) {

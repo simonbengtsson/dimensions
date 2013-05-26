@@ -7,9 +7,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -73,9 +71,9 @@ public class LevelHandler {
 		lastPlayed = l;
 	}
 
-	public boolean loadProgressFromFile(Deque<ProgressLevel> p) {
+	public boolean loadProgressFromFile(Collection<ProgressLevel> p) {
 		if (p != null && !p.isEmpty()) {
-			progressLevels = p;
+			progressLevels = new ArrayDeque<ProgressLevel>(p);
 			return true;
 		}
 		return false;
