@@ -3,15 +3,16 @@ package se.chalmers.tda367.vt13.dimensions.controller.screens;
 import java.util.Random;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
+import se.chalmers.tda367.vt13.dimensions.model.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.Level;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.SoundObserver;
 import se.chalmers.tda367.vt13.dimensions.model.WorldListener;
 import se.chalmers.tda367.vt13.dimensions.util.Assets;
+import se.chalmers.tda367.vt13.dimensions.util.Storage;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;
 import se.chalmers.tda367.vt13.dimensions.view.GameLayerView;
 import se.chalmers.tda367.vt13.dimensions.view.GameView;
@@ -105,14 +106,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				world.getPlayer().changeDirection();
 			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-			if (!enterWasPressed) {
-				world.resetToCheckPoint();
-				enterWasPressed = true;
-			}
-		} else {
-			enterWasPressed = false;
-		}
+//		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
+//			if (!enterWasPressed) {
+//				world.resetToCheckPoint();
+//				enterWasPressed = true;
+//			}
+//		} else {
+//			enterWasPressed = false;
+//		}
 
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			if (!escapeWasPressed) {
@@ -157,6 +158,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
 			LevelHandler.getInstance().setLastPlayed(world.getLevel());
+			//Storage.saveProgress();
 			game.setScreen(new GameOverScreen(game));
 			break;
 		case DIMENSION_CHANGED:
@@ -175,6 +177,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		case LEVEL_FINISHED:
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
+			//Storage.saveProgress();
 			game.setScreen(new WinScreen(game));
 			break;
 		default:
