@@ -109,14 +109,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 				gameInputWasPressed = false;
 			}
 		}
-		// if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-		// if (!enterWasPressed) {
-		// world.resetToCheckPoint();
-		// enterWasPressed = true;
-		// }
-		// } else {
-		// enterWasPressed = false;
-		// }
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
+			if (!enterWasPressed) {
+				world.resetToCheckPoint();
+				enterWasPressed = true;
+			}
+		} else {
+			enterWasPressed = false;
+		}
 
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			if (!pauseWasPressed) {
