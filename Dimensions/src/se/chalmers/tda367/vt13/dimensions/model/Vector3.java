@@ -4,7 +4,7 @@ import java.io.Serializable;
  * Class describing a three dimensional vector.
  * @author Carl Fredriksson
  */
-public class Vector3 implements Serializable {
+public class Vector3 implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -159,7 +159,7 @@ public class Vector3 implements Serializable {
 	public boolean equals(Object o) {
 		if(o instanceof Vector3){
 			Vector3 v = (Vector3)o;
-			if(v.getX() == x && v.getY() == y && v.getZ() == z){
+			if(Math.abs(v.getX() - x) < 0.00001 && Math.abs(v.getY() - y) < 0.00001 && Math.abs(v.getZ() - z) < 0.00001 ){
 				return true;
 			}else{
 				return false;
