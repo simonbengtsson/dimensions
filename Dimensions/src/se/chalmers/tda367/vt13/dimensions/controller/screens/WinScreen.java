@@ -1,11 +1,11 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class WinScreen extends AbstractMenuScreen {
 
@@ -15,14 +15,24 @@ public class WinScreen extends AbstractMenuScreen {
 	}
 
 	private void init() {
-		final MenuButton playButton = new MenuButton("data/play.png");
-		playButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
+		TextButton playButton = new TextButton("Play next", getButtonStyle());
+		playButton.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
 				game.setScreen(new GameScreen(game, LevelHandler.getInstance()
 						.getNextUnfinishedLevel()));
 				dispose();
+
 			}
 		});
 		mainTable.add(playButton);
+		mainTable.row();
+
+		TextButton menuButton = new TextButton("Go to menu", getButtonStyle());
+		menuButton.addListener(new ClickListener() {
+			public void clicked(InputEvent e, float x, float y) {
+				setScreen(new MainMenuScreen(game));
+			}
+		});
+		mainTable.add(menuButton);
 	}
 }

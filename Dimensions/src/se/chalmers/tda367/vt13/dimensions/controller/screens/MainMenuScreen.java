@@ -1,8 +1,8 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
+import se.chalmers.tda367.vt13.dimensions.view.MenuButton;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -42,14 +42,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
 			}
 		});
 
-		final Button optionButton = new MenuButton("data/settings.png");
-		optionButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				optionButton.setChecked(false);
-				game.setScreen(new CustomizeScreen(game));
-			}
-		});
-
 		final Button exitButton = new MenuButton("data/exit.png");
 		exitButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
@@ -61,8 +53,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		sidebarTable.add().width(200);
 		sidebarTable.row();
 		sidebarTable.add(levelSelectButton);
-		sidebarTable.row();
-		sidebarTable.add(optionButton);
 		sidebarTable.row();
 		sidebarTable.add(exitButton);
 

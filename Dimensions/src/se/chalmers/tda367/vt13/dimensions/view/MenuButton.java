@@ -1,4 +1,4 @@
-package se.chalmers.tda367.vt13.dimensions.components;
+package se.chalmers.tda367.vt13.dimensions.view;
 
 import se.chalmers.tda367.vt13.dimensions.util.Assets;
 
