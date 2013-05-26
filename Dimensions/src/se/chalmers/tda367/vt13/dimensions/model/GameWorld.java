@@ -55,7 +55,7 @@ public class GameWorld {
 		this.gameObjects = level.getGameObjects();
 		this.gameObjects.add(chaser);
 		this.gravity = level.getGravity();
-		this.currentDimension = level.getStartingDimension();
+		this.currentDimension = Dimension.XZ;
 		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
 		this.cp = new CheckPoint(this);
@@ -88,18 +88,24 @@ public class GameWorld {
 	public void updateRunning() {
 		updatePlayer();
 		chaser.update();
-		collisionHandler.checkCollisions(this);
 		checkGameOver();
 		checkLevelFinished();
 	}
-	
-	private void updatePlayer(){
-		if(!tileCollisionHandler.isGroundBelow()){
-			player.updateY(gravity);
-		}
-		if(!tileCollisionHandler.isGroundLeft()){
+
+	private void updatePlayer() {
+		if (currentDimension == Dimension.XY) {
+			if (!tileCollisionHandler.isGroundBelow()) {
+				player.updateY(gravity);
+			}
+
+			if (!tileCollisionHandler.isGroundRight()) {
+				player.updateX();
+			}
+		} else {
 			player.updateX();
+			player.updateZ();
 		}
+		collisionHandler.checkCollisions(this);
 	}
 
 	/**
@@ -109,7 +115,7 @@ public class GameWorld {
 		if (currentDimension == Dimension.XY) {
 			currentDimension = Dimension.XZ;
 			player.prepareForXZ();
-			
+
 		} else {
 			currentDimension = Dimension.XY;
 			player.prepareForXY();
@@ -132,14 +138,11 @@ public class GameWorld {
 	}
 
 	/**
-	 * Game over conditions
-	 * 
-	 * @return if game over
+	 * Game over Check
 	 */
 	public void checkGameOver() {
 		if (player.getPosition().getY() < 0
-				|| chaser.getPosition().getX() >= player.getPosition().getX()
-				|| (currentDimension == Dimension.XZ && !player.isGrounded())) {
+				|| chaser.getPosition().getX() >= player.getPosition().getX()) {
 			notifyWorldListeners(State.GAME_OVER);
 		}
 	}

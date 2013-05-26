@@ -5,12 +5,11 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
 /**
  * 
  * @author Simon Bengtsson
- *
+ * 
  */
 public class TileCollisionHandler {
 
@@ -33,39 +32,43 @@ public class TileCollisionHandler {
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
 	}
-	
+
 	private float visualY(Vector3 vector3) {
-		if(dimension == Dimension.XY){
+		if (dimension == Dimension.XY) {
 			return vector3.getY();
-		} else{
+		} else {
 			return vector3.getZ();
 		}
 	}
 
 	public boolean isGroundBelow() {
 		player.setGrounded(false);
-		for (Point point : getTiles(getTileAreaBottom(), 0)) {
-			if(checkCollision(point)){
-				setPlayerOnTile(point.y);
+		for (Point point : getTestTiles(getTestAreaBottom(), 0)) {
+			if (checkCollision(point)) {
+				if (dimension == Dimension.XY) {
+					setPlayerOnTile(point.y);
+				}
 				return true;
 			}
-				 
+
 		}
 		return false;
 	}
 
-	public boolean isGroundLeft() {
+	public boolean isGroundRight() {
 		player.setStuck(false);
-		for (Point point : getTiles(getTileAreaLeft(), 1)) {
-			if(checkCollision(point)){
-				setPlayerBeforeTile(point.x);
+		for (Point point : getTestTiles(getTestAreaRight(), 1)) {
+			if (checkCollision(point)) {
+				if (dimension == Dimension.XY) {
+					setPlayerBeforeTile(point.x);
+				}
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private Rectangle getTileAreaBottom() {
+	private Rectangle getTestAreaBottom() {
 		Rectangle area = new Rectangle();
 		area.height = getAreaHeight();
 		area.width = (int) Math.ceil(player.getSize().getX());
@@ -74,7 +77,7 @@ public class TileCollisionHandler {
 		return area;
 	}
 
-	private Rectangle getTileAreaLeft() {
+	private Rectangle getTestAreaRight() {
 		Rectangle area = new Rectangle();
 		area.height = (int) Math.ceil(visualY(playerSize));
 		area.width = getAreaWidth();
@@ -87,7 +90,10 @@ public class TileCollisionHandler {
 	private void setPlayerOnTile(int tilePosY) {
 		playerPos.setY(tilePosY);
 		player.setGrounded(true);
-		player.getSpeed().setY(0);
+		if (dimension == Dimension.XY) {
+			System.out.println("testing");
+			player.getSpeed().setY(0);
+		}
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
@@ -106,7 +112,7 @@ public class TileCollisionHandler {
 		if (mapHandler.isCellGround(point.x, point.y - 1)) {
 			return true;
 		} else if (mapHandler.isCellObstacle(point.x, point.y - 1)) {
-			world.notifyWorldListeners(State.GAME_OVER);
+			// world.notifyWorldListeners(State.GAME_OVER);
 		}
 		return false;
 	}
@@ -116,7 +122,7 @@ public class TileCollisionHandler {
 	 * @param area
 	 * @return Tiles in the given area
 	 */
-	public ArrayList<Point> getTiles(Rectangle area, int order) {
+	public ArrayList<Point> getTestTiles(Rectangle area, int order) {
 		ArrayList<Point> tiles = new ArrayList<Point>();
 		if (order == 0) {
 			for (int j = 0; j < area.height; j++) {

@@ -1,10 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-
 /**
  * Class for the player in the game.
  * 
@@ -16,12 +11,12 @@ public class Player extends GameObject {
 	private static final float MAX_VELOCITY_Y = 0.5f;
 	private static final float DEFAULT_XSPEED = 0.5f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
+	private boolean isDirectionUp;
 	private float jumpSpeed;
 	private boolean isGrounded = false;
-	private boolean isStuck;
+	private boolean isStuck = false;
 	private final float baseXSpeed;
 	private final float baseZSpeed;
-	private boolean changingDirection;
 	private static String imgpath = "data/PlayerImg.png";
 
 	/**
@@ -45,10 +40,8 @@ public class Player extends GameObject {
 			float jumpSpeed, boolean isGrounded) {
 		super(position, size, speed, imgpath, "");
 		this.jumpSpeed = jumpSpeed;
-		this.isGrounded = isGrounded;
 		baseXSpeed = speed.getX();
 		baseZSpeed = 0.2f;
-		changingDirection = false;
 	}
 
 	/**
@@ -59,6 +52,15 @@ public class Player extends GameObject {
 	public void updateY(float gravity) {
 		getSpeed().setY(getSpeed().getY() + gravity);
 		getPosition().setY(getPosition().getY() + getSpeed().getY());
+	}
+
+	/**
+	 * Update when falling
+	 * 
+	 * @param gravity
+	 */
+	public void updateZ() {
+		getPosition().setZ(getPosition().getZ() + getSpeed().getZ());
 	}
 
 	public void updateX() {
@@ -79,23 +81,17 @@ public class Player extends GameObject {
 	/**
 	 * Change the players Z direction. Called when XZ dimension is active.
 	 */
-	public void changeDirection() {
-		if (!changingDirection) {
-			changingDirection = true;
-			if (getSpeed().getZ() < 0) {
-				getSpeed().setZ(baseZSpeed);
-			} else {
-				getSpeed().setZ(-baseZSpeed);
-			}
-			// Timer to avoid several direction changes with one keypress
-			Timer timer = new Timer();
-			long delay = 200;
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					changingDirection = false;
-				}
-			}, delay);
+	public void goStraight() {
+		getSpeed().setZ(0);
+	}
+
+	public void swapDirection() {
+		if(isDirectionUp) {
+			isDirectionUp = false;
+			getSpeed().setZ(baseZSpeed);
+		} else {
+			getSpeed().setZ(-baseZSpeed);
+			isDirectionUp = true;
 		}
 	}
 

@@ -27,15 +27,14 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	private GameView gameView;
 	private GameLayerView gameLayerView;
 	private Dimensions game;
-	private boolean pauseWasPressed;
-	private boolean enterWasPressed;
 	private Level nextLevel;
+	private boolean pauseWasPressed = false;
+	private boolean enterWasPressed = false;
+	private boolean gameInputWasPressed = false;
 
 	public GameScreen(Dimensions game, Level level) {
 		this.game = game;
 		this.nextLevel = level;
-		this.pauseWasPressed = false;
-		this.enterWasPressed = false;
 		init();
 	}
 
@@ -61,8 +60,8 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 
 	@Override
 	public void render(float delta) {
-		world.update();
 		updateInput();
+		world.update();
 		switch (world.getCurrentState()) {
 		case GAME_PAUSED:
 			gameLayerView.drawPaused();
@@ -98,11 +97,16 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 	 */
 	private void updateInput() {
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
-			// Different actions depending on what dimension is active
 			if (world.getDimension() == Dimension.XY) {
 				world.getPlayer().jump();
 			} else if (world.getDimension() == Dimension.XZ) {
-				world.getPlayer().changeDirection();
+				world.getPlayer().goStraight();
+			}
+			gameInputWasPressed = true;
+		} else {
+			if(gameInputWasPressed) {
+				world.getPlayer().swapDirection();
+				gameInputWasPressed = false;
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
