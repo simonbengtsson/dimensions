@@ -1,5 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model.progresshandler;
 
+import java.io.Serializable;
+
 import se.chalmers.tda367.vt13.dimensions.model.Level;
 
 /**
@@ -8,7 +10,9 @@ import se.chalmers.tda367.vt13.dimensions.model.Level;
  * @author Kim
  * 
  */
-public class ProgressLevel {
+public class ProgressLevel implements Serializable {
+	private static final long serialVersionUID = 1938174933064799673L;
+	
 	private boolean isCompleted;
 	private int highScore;
 	private Level level;

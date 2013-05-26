@@ -2,7 +2,7 @@ package se.chalmers.tda367.vt13.dimensions.view;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
+import se.chalmers.tda367.vt13.dimensions.model.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.Player;
 import se.chalmers.tda367.vt13.dimensions.model.Vector3;
 import se.chalmers.tda367.vt13.dimensions.util.Assets;

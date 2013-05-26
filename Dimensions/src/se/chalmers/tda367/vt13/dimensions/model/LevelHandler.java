@@ -71,9 +71,9 @@ public class LevelHandler {
 		lastPlayed = l;
 	}
 
-	public boolean loadProgressFromFile(Deque<ProgressLevel> p) {
+	public boolean loadProgressFromFile(Collection<ProgressLevel> p) {
 		if (p != null && !p.isEmpty()) {
-			progressLevels = p;
+			progressLevels = new ArrayDeque<ProgressLevel>(p);
 			return true;
 		}
 		return false;

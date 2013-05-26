@@ -12,10 +12,6 @@ import java.util.TimerTask;
  */
 public class GameWorld {
 
-	public enum Dimension {
-		XY, XZ, YZ
-	}
-
 	public enum State {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
