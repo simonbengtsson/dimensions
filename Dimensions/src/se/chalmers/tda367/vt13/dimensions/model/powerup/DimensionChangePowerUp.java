@@ -23,7 +23,6 @@ public class DimensionChangePowerUp extends GameObject implements PowerUp {
 
 	@Override
 	public void use(PowerUpHandler powerUpHandler) {
-		System.out.println("using");
 		powerUpHandler.useDimensionChangePowerUp();
 	}
 

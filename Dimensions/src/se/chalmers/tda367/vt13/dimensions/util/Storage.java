@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
-import java.util.Deque;
 
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
@@ -26,7 +25,6 @@ public class Storage {
 		try {
 			new ObjectOutputStream(file.write(false)).writeObject(progress);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
@@ -43,10 +41,8 @@ public class Storage {
 		} catch(GdxRuntimeException e){
 			
 		}catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return LevelHandler.getInstance().loadProgressFromFile(pl);

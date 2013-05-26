@@ -52,7 +52,7 @@ public class GameWorld {
 		gameObjects = level.getGameObjects();
 		gameObjects.add(chaser);
 		gravity = DEFAULT_GRAVITY;
-		currentDimension = Dimension.XY;
+		currentDimension = level.getStartingDimension();
 		baseGravity = gravity;
 		currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);

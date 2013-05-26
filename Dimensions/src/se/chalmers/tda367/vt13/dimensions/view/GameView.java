@@ -1,5 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.view;
 
+import java.util.Random;
+
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld;
 import se.chalmers.tda367.vt13.dimensions.model.Dimension;
@@ -148,13 +150,21 @@ public class GameView {
 	public OrthographicCamera getCamera() {
 		return this.camera;
 	}
+	
+	public void dimensionChanging() {
+		Random rand = new Random();
+		setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
+				(int) (rand.nextFloat() + 0.5f),
+				(int) (rand.nextFloat() + 0.5f), 1));
+		shakeCamera();
+	}
 
 	public void setBatchColor(Color c) {
 		batch.setColor(c);
 	}
 
 	private boolean wasRight = true;
-	public void shakeCamera() {
+	private void shakeCamera() {
 		if (wasRight) {
 		camera.position.y += 0.3f;
 		wasRight = false;

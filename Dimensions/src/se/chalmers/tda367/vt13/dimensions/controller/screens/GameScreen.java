@@ -1,7 +1,5 @@
 package se.chalmers.tda367.vt13.dimensions.controller.screens;
 
-import java.util.Random;
-
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameObject;
@@ -104,21 +102,21 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			}
 			gameInputWasPressed = true;
 		} else {
-			if(gameInputWasPressed) {
-				if(world.getDimension() == Dimension.XZ){
+			if (gameInputWasPressed) {
+				if (world.getDimension() == Dimension.XZ) {
 					world.getPlayer().swapDirection();
 				}
 				gameInputWasPressed = false;
 			}
 		}
-//		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-//			if (!enterWasPressed) {
-//				world.resetToCheckPoint();
-//				enterWasPressed = true;
-//			}
-//		} else {
-//			enterWasPressed = false;
-//		}
+		// if (Gdx.input.isKeyPressed(Keys.ENTER)) {
+		// if (!enterWasPressed) {
+		// world.resetToCheckPoint();
+		// enterWasPressed = true;
+		// }
+		// } else {
+		// enterWasPressed = false;
+		// }
 
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			if (!pauseWasPressed) {
@@ -163,7 +161,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
 			LevelHandler.getInstance().setLastPlayed(world.getLevel());
-			//Storage.saveProgress();
+			// Storage.saveProgress();
 			game.setScreen(new GameOverScreen(game));
 			break;
 		case DIMENSION_CHANGED:
@@ -172,17 +170,13 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			gameLayerView.setDimensionChange(false);
 			break;
 		case DIMENSION_CHANGING:
-			Random rand = new Random();
-			gameView.setBatchColor(new Color((int) (rand.nextFloat() + 0.5f),
-					(int) (rand.nextFloat() + 0.5f),
-					(int) (rand.nextFloat() + 0.5f), 1));
-			gameView.shakeCamera();
+			gameView.dimensionChanging();
 			gameLayerView.setDimensionChange(true);
 			break;
 		case LEVEL_FINISHED:
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), true);
-			//Storage.saveProgress();
+			// Storage.saveProgress();
 			game.setScreen(new WinScreen(game));
 			break;
 		default:

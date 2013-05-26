@@ -184,6 +184,6 @@ public class Player extends GameObject {
 	}
 
 	public void prepareForXY() {
-		;
+		getSpeed().setX(baseXSpeed);
 	}
 }
