@@ -33,6 +33,14 @@ public class TileCollisionHandler {
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
 	}
+	
+	private float visualY(Vector3 vector3) {
+		if(dimension == Dimension.XY){
+			return vector3.getY();
+		} else{
+			return vector3.getZ();
+		}
+	}
 
 	public boolean isGroundBelow() {
 		player.setGrounded(false);
@@ -61,16 +69,16 @@ public class TileCollisionHandler {
 		Rectangle area = new Rectangle();
 		area.height = getAreaHeight();
 		area.width = (int) Math.ceil(player.getSize().getX());
-		area.y = (int) playerPos.getY();
+		area.y = (int) visualY(playerPos);
 		area.x = (int) playerPos.getX();
 		return area;
 	}
 
 	private Rectangle getTileAreaLeft() {
 		Rectangle area = new Rectangle();
-		area.height = (int) Math.ceil(playerSize.getY());
+		area.height = (int) Math.ceil(visualY(playerSize));
 		area.width = getAreaWidth();
-		area.y = (int) playerPos.getY() + area.height;
+		area.y = (int) visualY(playerPos) + area.height;
 		area.x = (int) Math.ceil(playerPos.getX()
 				+ (int) Math.ceil(player.getSize().getX()));
 		return area;
@@ -132,8 +140,8 @@ public class TileCollisionHandler {
 	 *         during the next player update
 	 */
 	private int getAreaHeight() {
-		if (playerSpeed.getY() <= 0) {
-			return (int) (Math.abs(playerSpeed.getY() + gravity) + 1 + getPositionOnTileY());
+		if (visualY(playerSpeed) <= 0) {
+			return (int) (Math.abs(visualY(playerSpeed) + gravity) + 1 + getPositionOnTileY());
 		}
 		return 0;
 	}
@@ -148,7 +156,7 @@ public class TileCollisionHandler {
 	}
 
 	private float getPositionOnTileY() {
-		return playerPos.getY() - (int) playerPos.getY();
+		return visualY(playerPos) - (int) visualY(playerPos);
 	}
 
 	private void addPoint(int x, int y, ArrayList<Point> tiles) {

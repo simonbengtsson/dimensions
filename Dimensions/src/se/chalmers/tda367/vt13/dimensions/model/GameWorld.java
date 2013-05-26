@@ -51,16 +51,16 @@ public class GameWorld {
 	public GameWorld(Player player, Level level, MapHandler mapHandler) {
 		this.level = level;
 		this.player = player;
-		this.collisionHandler = new CollisionHandler();
-		this.tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
 		this.chaser = new Chaser();
 		this.gameObjects = level.getGameObjects();
-		gameObjects.add(chaser);
+		this.gameObjects.add(chaser);
 		this.gravity = level.getGravity();
 		this.currentDimension = level.getStartingDimension();
 		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
-		cp = new CheckPoint(this);
+		this.cp = new CheckPoint(this);
+		this.collisionHandler = new CollisionHandler();
+		this.tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
 	}
 
 	public void update() {
