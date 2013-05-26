@@ -3,8 +3,6 @@ package se.chalmers.tda367.vt13.dimensions.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
-
 /**
  * Class for the player in the game.
  * 
@@ -49,6 +47,18 @@ public class Player extends GameObject {
 		baseXSpeed = speed.getX();
 		baseZSpeed = 0.2f;
 		changingDirection = false;
+	}
+
+	public Player(Vector3 position, Vector3 size, Vector3 speed,
+			float jumpSpeed, boolean isGrounded, boolean isStuck,
+			boolean changinDirection, float baseXSpeed, float baseZSpeed) {
+		super(position, size, speed, imgpath, "");
+		this.jumpSpeed = jumpSpeed;
+		this.isGrounded = isGrounded;
+		this.baseXSpeed = baseXSpeed;
+		this.baseZSpeed = baseZSpeed;
+		changingDirection = false;
+		this.isStuck = isStuck;
 	}
 
 	/**
@@ -133,12 +143,6 @@ public class Player extends GameObject {
 		return isGrounded;
 	}
 
-	public void setImagePath(String s) {
-		// TODO findbugs gives error here.
-		// "Write to static field from instance method"
-		Player.imgpath = "data/" + s + "png";
-	}
-
 	public float getBaseXSpeed() {
 		return baseXSpeed;
 	}
@@ -149,7 +153,8 @@ public class Player extends GameObject {
 
 	public Player clone() {
 		return new Player(getPosition().clone(), getSize().clone(), getSpeed()
-				.clone(), jumpSpeed, isGrounded);
+				.clone(), jumpSpeed, isGrounded, isStuck, changingDirection,
+				baseXSpeed, baseZSpeed);
 	}
 
 	@Override
