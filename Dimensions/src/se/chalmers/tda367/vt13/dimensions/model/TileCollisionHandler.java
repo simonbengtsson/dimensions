@@ -14,7 +14,6 @@ import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 public class TileCollisionHandler {
 
 	private GameWorld world;
-	private Dimension dimension;
 	private Player player;
 	private Vector3 playerSize;
 	private Vector3 playerSpeed;
@@ -27,14 +26,13 @@ public class TileCollisionHandler {
 		this.mapHandler = mapHandler;
 		this.gravity = world.getGravity();
 		this.player = world.getPlayer();
-		this.dimension = world.getDimension();
 		playerSize = player.getSize();
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
 	}
 
 	private float visualY(Vector3 vector3) {
-		if (dimension == Dimension.XY) {
+		if (world.getDimension() == Dimension.XY) {
 			return vector3.getY();
 		} else {
 			return vector3.getZ();
@@ -45,12 +43,11 @@ public class TileCollisionHandler {
 		player.setGrounded(false);
 		for (Point point : getTestTiles(getTestAreaBottom(), 0)) {
 			if (checkCollision(point)) {
-				if (dimension == Dimension.XY) {
+				if (world.getDimension() == Dimension.XY) {
 					setPlayerOnTile(point.y + 1);
 				}
 				return true;
 			}
-
 		}
 		return false;
 	}
@@ -59,6 +56,9 @@ public class TileCollisionHandler {
 		player.setStuck(false);
 		for (Point point : getTestTiles(getTestAreaRight(), 1)) {
 			if (checkCollision(point)) {
+				if (world.getDimension() == Dimension.XY) {
+					setPlayerBeforeTile(point.x);
+				}
 				return true;
 			}
 		}
@@ -66,6 +66,8 @@ public class TileCollisionHandler {
 	}
 
 	/**
+	 * DONE TODO
+	 * 
 	 * @return
 	 */
 	private Rectangle getTestAreaBottom() {
@@ -106,8 +108,9 @@ public class TileCollisionHandler {
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
-		playerPos.setX(tilePosX - player.getSize().getX());
-		player.setStuck(true);
+		System.out.println(world.getDimension());
+		//playerPos.setX(tilePosX - player.getSize().getX());
+		//player.setStuck(true);
 	}
 
 	/**

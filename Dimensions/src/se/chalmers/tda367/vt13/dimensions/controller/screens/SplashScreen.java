@@ -31,7 +31,7 @@ public class SplashScreen implements Screen {
 			public void run() {
 				game.setScreen(menuScreen);
 			}
-		}, 1000);
+		}, 200);
 	}
 
 	private void initMainStage() {

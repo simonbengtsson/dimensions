@@ -90,7 +90,6 @@ public class GameWorld {
 	}
 
 	private void updatePlayer() {
-		System.out.println("Before: " + player.getPosition().getX());
 		if (currentDimension == Dimension.XY) {
 			if (!tileCollisionHandler.isGroundBelow()) {
 				player.updateY(gravity);
@@ -100,16 +99,13 @@ public class GameWorld {
 				player.updateX();
 			}
 		} else {
-			System.out.println("Hey1!: " + player.getPosition().getX());
 			if (tileCollisionHandler.isGroundRight()) {
-				System.out.println("Hey2!: " + player.getPosition().getX());
 				player.updateX();
 				player.updateZ();
 			} else {
 				notifyWorldListeners(State.GAME_OVER);
 			}
 		}
-		System.out.println("After: " + player.getPosition().getX());
 		collisionHandler.checkCollisions(this);
 	}
 
