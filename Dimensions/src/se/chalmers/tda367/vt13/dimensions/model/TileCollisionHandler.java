@@ -59,9 +59,6 @@ public class TileCollisionHandler {
 		player.setStuck(false);
 		for (Point point : getTestTiles(getTestAreaRight(), 1)) {
 			if (checkCollision(point)) {
-				if (dimension == Dimension.XY) {
-					setPlayerBeforeTile(point.x);
-				}
 				return true;
 			}
 		}
@@ -69,8 +66,6 @@ public class TileCollisionHandler {
 	}
 
 	/**
-	 * DONE TODO
-	 * 
 	 * @return
 	 */
 	private Rectangle getTestAreaBottom() {
@@ -113,7 +108,6 @@ public class TileCollisionHandler {
 	private void setPlayerBeforeTile(int tilePosX) {
 		playerPos.setX(tilePosX - player.getSize().getX());
 		player.setStuck(true);
-		System.out.println("im here");
 	}
 
 	/**
