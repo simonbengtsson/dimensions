@@ -55,7 +55,7 @@ public class GameWorld {
 		this.gameObjects = level.getGameObjects();
 		this.gameObjects.add(chaser);
 		this.gravity = level.getGravity();
-		this.currentDimension = Dimension.XZ;
+		this.currentDimension = Dimension.XY;
 		this.baseGravity = level.getGravity();
 		this.currentState = State.GAME_RUNNING;
 		this.cp = new CheckPoint(this);
@@ -102,8 +102,12 @@ public class GameWorld {
 				player.updateX();
 			}
 		} else {
-			player.updateX();
-			player.updateZ();
+			if (tileCollisionHandler.isGroundRight()) {
+				player.updateX();
+				player.updateZ();
+			} else {
+				notifyWorldListeners(State.GAME_OVER);
+			}
 		}
 		collisionHandler.checkCollisions(this);
 	}

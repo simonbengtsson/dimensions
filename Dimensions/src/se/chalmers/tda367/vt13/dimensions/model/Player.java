@@ -10,6 +10,7 @@ public class Player extends GameObject {
 
 	private static final float MAX_VELOCITY_Y = 0.5f;
 	private static final float DEFAULT_XSPEED = 0.2f;
+	private static final float DEFAULT_ZSPEED = 0.3f;
 	private static final float DEFAULT_JUMP_SPEED = 1.2f;
 	private boolean isDirectionUp;
 	private float jumpSpeed;
@@ -24,7 +25,7 @@ public class Player extends GameObject {
 	 */
 	public Player() {
 		this(new Vector3(10, 10, 10), new Vector3(2f, 3f, 3f), new Vector3(
-				DEFAULT_XSPEED, 0, 0), DEFAULT_JUMP_SPEED, false);
+				DEFAULT_XSPEED, 0, DEFAULT_ZSPEED), DEFAULT_JUMP_SPEED, false);
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class Player extends GameObject {
 		super(position, size, speed, imgpath, "");
 		this.jumpSpeed = jumpSpeed;
 		baseXSpeed = speed.getX();
-		baseZSpeed = 0.2f;
+		baseZSpeed = speed.getZ();
 	}
 
 	/**
