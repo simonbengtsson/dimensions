@@ -1,8 +1,6 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Class for the player in the game.
@@ -12,10 +10,10 @@ import java.util.TimerTask;
 @SuppressWarnings("serial")
 public class Player extends GameObject {
 
-	private static final float MAX_VELOCITY_Y = 0.9f;
+	private static final float MAX_VELOCITY_Y = 2f;
 	private static final float DEFAULT_XSPEED = 0.2f;
 	private static final float DEFAULT_ZSPEED = 0.3f;
-	private static final float DEFAULT_JUMP_SPEED = 0.8f;
+	private static final float DEFAULT_JUMP_SPEED = 1.3f;
 	private boolean isDirectionUp;
 	private float jumpSpeed;
 	private boolean isGrounded = false;

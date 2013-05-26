@@ -16,7 +16,7 @@ public class GameWorld {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
 
-	private static final float DEFAULT_GRAVITY = -0.02f;
+	private static final float DEFAULT_GRAVITY = -0.06f;
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Chaser chaser;
