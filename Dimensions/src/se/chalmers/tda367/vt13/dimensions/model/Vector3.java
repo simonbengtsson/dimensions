@@ -6,14 +6,9 @@ import java.io.Serializable;
  */
 public class Vector3 implements Serializable, Cloneable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	// Instance variables
 	private float x, y, z;
 	
-	// Public methods
 	/**
 	 * Default constructor.
 	 */

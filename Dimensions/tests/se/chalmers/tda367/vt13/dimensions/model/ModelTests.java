@@ -11,7 +11,6 @@ import java.util.TimerTask;
 
 import org.junit.Test;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.util.TiledMapHandler;

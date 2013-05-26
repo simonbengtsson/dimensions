@@ -108,7 +108,6 @@ public class TileCollisionHandler {
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
-		System.out.println(world.getDimension());
 		//playerPos.setX(tilePosX - player.getSize().getX());
 		//player.setStuck(true);
 	}

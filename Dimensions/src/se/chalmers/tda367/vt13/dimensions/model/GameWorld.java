@@ -61,7 +61,6 @@ public class GameWorld {
 	}
 
 	public void update() {
-		System.out.println(player.getPosition().getX());
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
@@ -86,8 +85,16 @@ public class GameWorld {
 	public void updateRunning() {
 		updatePlayer();
 		chaser.update();
-		checkGameOver();
-		checkLevelFinished();
+		checkState();
+	}
+	
+	private void checkState(){
+		if(isGameOver()){
+			notifyWorldListeners(State.GAME_OVER);
+		}
+		if(isLevelFinished()){
+			 notifyWorldListeners(State.LEVEL_FINISHED);
+		}
 	}
 
 	private void updatePlayer() {
@@ -141,21 +148,18 @@ public class GameWorld {
 
 	/**
 	 * Game over Check
+	 * @return 
 	 */
-	public void checkGameOver() {
-		if (player.getPosition().getY() < 0
-				|| chaser.getPosition().getX() >= player.getPosition().getX()) {
-			notifyWorldListeners(State.GAME_OVER);
-		}
+	public boolean isGameOver() {
+		return player.getPosition().getY() < 0
+				|| chaser.getPosition().getX() >= player.getPosition().getX();
 	}
 
 	/**
 	 * Notify listeners if the player has reached the end of the level
 	 */
-	public void checkLevelFinished() {
-		if (player.getPosition().getX() >= level.getLength()) {
-			notifyWorldListeners(State.LEVEL_FINISHED);
-		}
+	public boolean isLevelFinished() {
+		return (player.getPosition().getX() >= level.getLength());
 	}
 
 	public CheckPoint getCheckPoint() {
