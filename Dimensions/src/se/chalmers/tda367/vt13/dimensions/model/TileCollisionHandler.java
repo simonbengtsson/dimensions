@@ -4,14 +4,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
 public class TileCollisionHandler {
-
-	public enum CollisionType {
-		OBSTACLE, GROUND, NONE;
-	}
 
 	private GameWorld world;
 	private Player player;
@@ -34,16 +29,11 @@ public class TileCollisionHandler {
 	public boolean isGroundBelow() {
 		player.setGrounded(false);
 		for (Point point : getTiles(getTileAreaBottom(), 0)) {
-			switch (checkCollision(point)) {
-			case OBSTACLE:
-				//world.notifyWorldListeners(State.GAME_OVER);
-				return true;
-			case GROUND:
+			if(checkCollision(point)){
 				setPlayerOnTile(point.y);
 				return true;
-			default:
-				break;
 			}
+				 
 		}
 		return false;
 	}
@@ -51,16 +41,9 @@ public class TileCollisionHandler {
 	public boolean isGroundLeft() {
 		player.setStuck(false);
 		for (Point point : getTiles(getTileAreaLeft(), 1)) {
-			switch (checkCollision(point)) {
-			case OBSTACLE:
-				//world.notifyWorldListeners(State.GAME_OVER);
-				return true;
-			case GROUND:
-				player.setStuck(false);
+			if(checkCollision(point)){
 				setPlayerBeforeTile(point.x);
 				return true;
-			default:
-				break;
 			}
 		}
 		return false;
@@ -71,7 +54,7 @@ public class TileCollisionHandler {
 		area.height = getAreaHeight();
 		area.width = (int) Math.ceil(player.getSize().getX());
 		area.y = (int) playerPos.getY();
-		area.x = (int) playerPos.getX() + 1;
+		area.x = (int) playerPos.getX();
 		return area;
 	}
 
@@ -90,9 +73,9 @@ public class TileCollisionHandler {
 		player.setGrounded(true);
 		player.getSpeed().setY(0);
 	}
-	
+
 	private void setPlayerBeforeTile(int tilePosX) {
-		playerPos.setX(tilePosX-player.getSize().getX()-0.1f);
+		playerPos.setX(tilePosX - player.getSize().getX());
 		player.setStuck(true);
 		player.getSpeed().setX(0);
 	}
@@ -103,13 +86,13 @@ public class TileCollisionHandler {
 	 * @param world
 	 *            the Game World
 	 */
-	public CollisionType checkCollision(Point point) {
-		if (mapHandler.isCellGround(point.x, point.y-1)) {
-			return CollisionType.GROUND;
-		} else if (mapHandler.isCellObstacle(point.x, point.y-1)) {
-			return CollisionType.OBSTACLE;
+	public boolean checkCollision(Point point) {
+		if (mapHandler.isCellGround(point.x, point.y - 1)) {
+			return true;
+		} else if (mapHandler.isCellObstacle(point.x, point.y - 1)) {
+			world.notifyWorldListeners(State.GAME_OVER);
 		}
-		return CollisionType.NONE;
+		return false;
 	}
 
 	/**
@@ -125,7 +108,6 @@ public class TileCollisionHandler {
 					addPoint(area.x + i, area.y - j, tiles);
 				}
 			}
-			System.out.println(tiles);
 			return tiles;
 		} else {
 			for (int j = 0; j < area.width; j++) {
@@ -161,29 +143,9 @@ public class TileCollisionHandler {
 		return playerPos.getY() - (int) playerPos.getY();
 	}
 
-	/**
-	 * Adds a rectangle to the temporary tiles list
-	 * 
-	 * @param x
-	 *            The x position
-	 * @param y
-	 *            The y position
-	 */
 	private void addPoint(int x, int y, ArrayList<Point> tiles) {
 		if (x >= 0 && y >= 0) {
 			tiles.add(new Point(x, y));
 		}
-	}
-
-	public float getScreenY(Vector3 vector3, Dimension currentDimension) {
-		switch (currentDimension) {
-		case XY:
-			return vector3.getY();
-		case XZ:
-			return vector3.getZ();
-		default:
-			break;
-		}
-		return 0;
 	}
 }

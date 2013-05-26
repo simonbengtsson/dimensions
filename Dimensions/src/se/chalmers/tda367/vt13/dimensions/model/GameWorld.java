@@ -94,7 +94,7 @@ public class GameWorld {
 	public void updateRunning() {
 		updatePlayer();
 		chaser.update();
-		//collisionHandler.checkCollisions(this);
+		collisionHandler.checkCollisions(this);
 		checkGameOver();
 		checkLevelFinished();
 	}
