@@ -10,7 +10,6 @@ import java.util.List;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
 	private Deque<ProgressLevel> progressLevels;
