@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
+import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -152,5 +154,23 @@ public class LevelHandler {
 				Level crazyLevel = new Level("Crazy", crazyList,
 						"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
 				registerLevel(crazyLevel);
+				
+				
+				// Nature Level
+				List<GameObject> demoList = new ArrayList<GameObject>();
+				demoList.add(new DimensionChangePowerUp(new Vector3(60, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				demoList.add(new DimensionChangePowerUp(new Vector3(110, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				demoList.add(new DimensionChangePowerUp(new Vector3(110, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				
+				demoList.add(new LowGravityPowerUp(new Vector3(166, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				demoList.add(new SpeedPowerUp(new Vector3(170, 15,
+						10), new Vector3(1, 1, 1), new Vector3()));
+				Level demoLevel = new Level("Demo", demoList,
+						"tiled_maps/demoXY.tmx", "tiled_maps/demoXZ.tmx", 205);
+				registerLevel(demoLevel);
 	}
 }
