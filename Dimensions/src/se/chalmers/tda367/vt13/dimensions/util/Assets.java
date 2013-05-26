@@ -26,7 +26,7 @@ public class Assets {
 
 	public static final String CHECKPOINTPOWERUP_IMAGE = "";
 	public static final String CHECKPOINTPOWERUP_SOUND = "";
-	public static final String DIMENSIONCHANGE_IMAGE = "data/SpeedPowerUpMini.png";
+	public static final String DIMENSIONCHANGE_IMAGE = "data/DimensionChangePowerUpImg.png";
 	public static final String DIMENSIONCHANGE_SOUND = "sound/SpeedPowerUp.mp3";
 	public static final String SPEEDPOWERUP_IMAGE = "data/SpeedPowerUpImg.png";
 	public static final String SPEEDPOWERUP_SOUND = "sound/SpeedPowerUp.mp3";
