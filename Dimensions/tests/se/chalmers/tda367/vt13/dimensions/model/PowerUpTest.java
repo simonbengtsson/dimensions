@@ -36,28 +36,28 @@ public class PowerUpTest {
 
 	@Test
 	public void testEquals() {
-		SlowPowerUp sp = new SlowPowerUp(new Vector3(30, 4, 10), new Vector3(1,
+		SpeedPowerUp sp = new SpeedPowerUp(new Vector3(30, 4, 10), new Vector3(1,
 				1, 1), new Vector3());
-		SlowPowerUp sp2 = new SlowPowerUp(new Vector3(30, 4, 10), new Vector3(
+		SpeedPowerUp sp2 = new SpeedPowerUp(new Vector3(30, 4, 10), new Vector3(
 				1, 1, 1), new Vector3());
-		SlowPowerUp sp3 = new SlowPowerUp(new Vector3(20, 4, 10), new Vector3(
+		LowGravityPowerUp sp3 = new LowGravityPowerUp(new Vector3(20, 4, 10), new Vector3(
 				1, 1, 1), new Vector3());
 
-		SpeedPowerUp speed = new SpeedPowerUp(new Vector3(30, 4, 10),
+		DimensionChangePowerUp dim = new DimensionChangePowerUp(new Vector3(30, 4, 10),
 				new Vector3(1, 1, 1), new Vector3());
 
 		assertTrue(sp != sp2);
 		assertTrue(sp.equals(sp2));
-		assertFalse(sp.equals(speed));
+		assertFalse(sp.equals(dim));
 		assertFalse(sp3.equals(sp));
 	}
 
 	@Test
 	public void testClone() {
-		SlowPowerUp sp = new SlowPowerUp(new Vector3(30, 4, 10), new Vector3(1,
+		SpeedPowerUp sp = new SpeedPowerUp(new Vector3(30, 4, 10), new Vector3(1,
 				1, 1), new Vector3());
-		SlowPowerUp sp2 = sp.clone();
-		SlowPowerUp sp3 = sp;
+		SpeedPowerUp sp2 = sp.clone();
+		SpeedPowerUp sp3 = sp;
 
 		assertTrue(sp3 == sp);
 		assertTrue(sp2 != sp && sp2 != sp3);
@@ -68,8 +68,7 @@ public class PowerUpTest {
 	@Test
 	public void testUse() {
 		create();
-		CheckPointPowerUp cpp = new CheckPointPowerUp(new Vector3(30, 4, 10),
-				new Vector3(1, 1, 1), new Vector3());
+		
 
 		DimensionChangePowerUp dcp = new DimensionChangePowerUp(new Vector3(30,
 				4, 10), new Vector3(1, 1, 1), new Vector3());
@@ -77,18 +76,13 @@ public class PowerUpTest {
 		LowGravityPowerUp lgp = new LowGravityPowerUp(new Vector3(30, 4, 10),
 				new Vector3(1, 1, 1), new Vector3());
 
-		SlowPowerUp sp = new SlowPowerUp(new Vector3(30, 4, 10), new Vector3(1,
-				1, 1), new Vector3());
+		
 
 		SpeedPowerUp speed = new SpeedPowerUp(new Vector3(30, 4, 10),
 				new Vector3(1, 1, 1), new Vector3());
 		PowerUpHandler powerUpHandler = NormalPowerUpHandler.getInstance(w);
 
-		// cpp test. Expected outcome: Variable Checkpoint in Gameworld changed
-		CheckPoint cfirst = w.getCheckPoint();
-		cpp.use(powerUpHandler);
-		CheckPoint csecond = w.getCheckPoint();
-		assertTrue(cfirst != csecond);
+	
 
 		// dcp test. Expected outcome: Dimension changed in Gameworld caused by
 		// w.swapDimension()
@@ -109,12 +103,7 @@ public class PowerUpTest {
 		float postuse = w.getGravity();
 		assertTrue(preuse < postuse);
 
-		// sp test: Expected outcome: Player speed is higher pre use than post
-		// use
-		float preslowuse = w.getPlayer().getSpeed().getX();
-		sp.use(powerUpHandler);
-		float postslowuse = w.getPlayer().getSpeed().getX();
-		assertTrue(preslowuse > postslowuse);
+		
 
 		// speed test: Expected outcome: Player speed is higer post use than pre
 		// use
