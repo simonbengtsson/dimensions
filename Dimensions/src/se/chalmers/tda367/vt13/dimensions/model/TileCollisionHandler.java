@@ -47,7 +47,7 @@ public class TileCollisionHandler {
 		for (Point point : getTestTiles(getTestAreaBottom(), 0)) {
 			if (checkCollision(point)) {
 				if (dimension == Dimension.XY) {
-					setPlayerOnTile(point.y);
+					// setPlayerOnTile(point.y);
 				}
 				return true;
 			}
@@ -73,8 +73,9 @@ public class TileCollisionHandler {
 		Rectangle area = new Rectangle();
 		area.height = getAreaHeight();
 		area.width = (int) Math.ceil(player.getSize().getX());
-		area.y = (int) visualY(playerPos);
+		area.y = (int) (visualY(playerPos) - player.getSpeed().getY() + 1);
 		area.x = (int) playerPos.getX();
+		System.out.println(area);
 		return area;
 	}
 
@@ -83,8 +84,8 @@ public class TileCollisionHandler {
 		area.height = (int) Math.ceil(visualY(playerSize));
 		area.width = getAreaWidth();
 		area.y = (int) visualY(playerPos) + area.height;
-		area.x = (int) Math.ceil(playerPos.getX()
-				+ (int) Math.ceil(player.getSize().getX()));
+		area.x = (int) (playerPos.getX() + player.getSize().getX() + player
+				.getSpeed().getX());
 		return area;
 	}
 
@@ -92,7 +93,6 @@ public class TileCollisionHandler {
 		playerPos.setY(tilePosY);
 		player.setGrounded(true);
 		if (dimension == Dimension.XY) {
-			System.out.println("testing");
 			player.getSpeed().setY(0);
 		}
 	}

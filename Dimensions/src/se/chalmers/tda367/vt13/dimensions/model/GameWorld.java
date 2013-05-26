@@ -20,6 +20,7 @@ public class GameWorld {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
 
+	private static final float DEFAULT_GRAVITY = -0.001f;
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Chaser chaser;
@@ -51,16 +52,16 @@ public class GameWorld {
 	public GameWorld(Player player, Level level, MapHandler mapHandler) {
 		this.level = level;
 		this.player = player;
-		this.chaser = new Chaser();
-		this.gameObjects = level.getGameObjects();
-		this.gameObjects.add(chaser);
-		this.gravity = level.getGravity();
-		this.currentDimension = Dimension.XY;
-		this.baseGravity = level.getGravity();
-		this.currentState = State.GAME_RUNNING;
-		this.cp = new CheckPoint(this);
-		this.collisionHandler = new CollisionHandler();
-		this.tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
+		chaser = new Chaser();
+		gameObjects = level.getGameObjects();
+		gameObjects.add(chaser);
+		gravity = DEFAULT_GRAVITY;
+		currentDimension = Dimension.XY;
+		baseGravity = gravity;
+		currentState = State.GAME_RUNNING;
+		cp = new CheckPoint(this);
+		collisionHandler = new CollisionHandler();
+		tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
 	}
 
 	public void update() {
