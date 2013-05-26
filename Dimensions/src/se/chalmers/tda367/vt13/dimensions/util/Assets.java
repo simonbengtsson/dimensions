@@ -3,7 +3,7 @@ package se.chalmers.tda367.vt13.dimensions.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.chalmers.tda367.vt13.dimensions.components.MenuButton;
+import se.chalmers.tda367.vt13.dimensions.view.MenuButton;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

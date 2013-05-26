@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.SpeedPowerUp;

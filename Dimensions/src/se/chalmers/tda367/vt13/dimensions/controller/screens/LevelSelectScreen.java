@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import se.chalmers.tda367.vt13.dimensions.controller.Dimensions;
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
-import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
+import se.chalmers.tda367.vt13.dimensions.model.ProgressLevel;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;

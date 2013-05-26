@@ -46,20 +46,12 @@ public class TileCollisionHandler {
 		world.getPlayer().setStuck(false);
 		for (Point point : getTestTiles(getTestAreaRight(), 1)) {
 			if (checkCollision(point)) {
-				if (world.getDimension() == Dimension.XY) {
-					setPlayerBeforeTile(point.x);
-				}
 				return true;
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * DONE TODO
-	 * 
-	 * @return
-	 */
 	private Rectangle getTestAreaBottom() {
 		Rectangle area = new Rectangle();
 		area.height = getTestAreaHeight();
@@ -69,11 +61,6 @@ public class TileCollisionHandler {
 		return area;
 	}
 
-	/**
-	 * DONE TODO
-	 * 
-	 * @return
-	 */
 	private int getTestAreaHeight() {
 		if (visualY(world.getPlayer().getSpeed()) <= 0) {
 			return (int) Math.ceil(Math.abs(visualY(world.getPlayer().getSpeed()) + world.getGravity()));
@@ -97,11 +84,6 @@ public class TileCollisionHandler {
 		world.getPlayer().getSpeed().setY(0);
 	}
 
-	private void setPlayerBeforeTile(int tilePosX) {
-		// playerPos.setX(tilePosX - player.getSize().getX());
-		// player.setStuck(true);
-	}
-
 	/**
 	 * Collision testing with the tiles.
 	 * 
@@ -120,7 +102,6 @@ public class TileCollisionHandler {
 	public ArrayList<Point> getTestTiles(Rectangle area, int order) {
 		ArrayList<Point> tiles = new ArrayList<Point>();
 		if (order == 0) {
-			// DONE TODO
 			for (int j = 0; j < area.height; j++) {
 				for (int i = 0; i < area.width; i++) {
 					addPoint(area.x + i, area.y - j - 1, tiles);
@@ -128,7 +109,6 @@ public class TileCollisionHandler {
 			}
 			return tiles;
 		} else {
-			// DONE TODO
 			for (int j = 0; j < area.width; j++) {
 				for (int i = 0; i < area.height; i++) {
 					addPoint(area.x + j, area.y - i - 1, tiles);

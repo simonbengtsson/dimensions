@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 
 import se.chalmers.tda367.vt13.dimensions.model.LevelHandler;
-import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
+import se.chalmers.tda367.vt13.dimensions.model.ProgressLevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

@@ -1,8 +1,7 @@
-package se.chalmers.tda367.vt13.dimensions.model.progresshandler;
+package se.chalmers.tda367.vt13.dimensions.model;
 
 import java.io.Serializable;
 
-import se.chalmers.tda367.vt13.dimensions.model.Level;
 
 /**
  * A class to handle progress for a individual level.
