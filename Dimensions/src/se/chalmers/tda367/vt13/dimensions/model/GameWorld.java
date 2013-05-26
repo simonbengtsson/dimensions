@@ -61,6 +61,7 @@ public class GameWorld {
 	}
 
 	public void update() {
+		System.out.println(player.getPosition().getX());
 		switch (currentState) {
 		case GAME_RUNNING:
 			updateRunning();
