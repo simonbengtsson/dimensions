@@ -7,9 +7,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 
-import se.chalmers.tda367.vt13.dimensions.model.GameWorld.Dimension;
 import se.chalmers.tda367.vt13.dimensions.model.powerup.DimensionChangePowerUp;
-import se.chalmers.tda367.vt13.dimensions.model.powerup.LowGravityPowerUp;
 import se.chalmers.tda367.vt13.dimensions.model.progresshandler.ProgressLevel;
 
 public class LevelHandler {
@@ -132,8 +130,8 @@ public class LevelHandler {
 		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		List<GameObject> exampleList = new ArrayList<GameObject>();
-//		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 8, 10),
-//				new Vector3(1, 1, 1), new Vector3()));
+		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 8, 10),
+				new Vector3(1, 1, 1), new Vector3()));
 		Level example = new Level("Old", exampleList,
 				"tiled_maps/levelXY.tmx", "tiled_maps/levelXZ.tmx", 205);
 		registerLevel(example);

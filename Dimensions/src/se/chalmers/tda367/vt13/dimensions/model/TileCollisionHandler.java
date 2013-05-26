@@ -47,7 +47,7 @@ public class TileCollisionHandler {
 		for (Point point : getTestTiles(getTestAreaBottom(), 0)) {
 			if (checkCollision(point)) {
 				if (dimension == Dimension.XY) {
-					// setPlayerOnTile(point.y);
+					setPlayerOnTile(point.y + 1);
 				}
 				return true;
 			}
@@ -69,20 +69,36 @@ public class TileCollisionHandler {
 		return false;
 	}
 
+	/**
+	 * DONE TODO
+	 * 
+	 * @return
+	 */
 	private Rectangle getTestAreaBottom() {
 		Rectangle area = new Rectangle();
-		area.height = getAreaHeight();
-		area.width = (int) Math.ceil(player.getSize().getX());
-		area.y = (int) (visualY(playerPos) - player.getSpeed().getY() + 1);
+		area.height = getTestAreaHeight();
+		area.width = (int) Math.ceil(playerSize.getX());
+		area.y = (int) (visualY(playerPos));
 		area.x = (int) playerPos.getX();
-		System.out.println(area);
 		return area;
+	}
+
+	/**
+	 * DONE TODO
+	 * 
+	 * @return
+	 */
+	private int getTestAreaHeight() {
+		if (visualY(playerSpeed) <= 0) {
+			return (int) Math.ceil(Math.abs(visualY(playerSpeed) + gravity));
+		}
+		return 0;
 	}
 
 	private Rectangle getTestAreaRight() {
 		Rectangle area = new Rectangle();
 		area.height = (int) Math.ceil(visualY(playerSize));
-		area.width = getAreaWidth();
+		area.width = (int) Math.ceil(playerSpeed.getX());
 		area.y = (int) visualY(playerPos) + area.height;
 		area.x = (int) (playerPos.getX() + player.getSize().getX() + player
 				.getSpeed().getX());
@@ -92,15 +108,13 @@ public class TileCollisionHandler {
 	private void setPlayerOnTile(int tilePosY) {
 		playerPos.setY(tilePosY);
 		player.setGrounded(true);
-		if (dimension == Dimension.XY) {
-			player.getSpeed().setY(0);
-		}
+		player.getSpeed().setY(0);
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
 		playerPos.setX(tilePosX - player.getSize().getX());
 		player.setStuck(true);
-		player.getSpeed().setX(0);
+		System.out.println("im here");
 	}
 
 	/**
@@ -110,60 +124,33 @@ public class TileCollisionHandler {
 	 *            the Game World
 	 */
 	public boolean checkCollision(Point point) {
-		if (mapHandler.isCellGround(point.x, point.y - 1)) {
+		if (mapHandler.isCellGround(point.x, point.y)) {
 			return true;
-		} else if (mapHandler.isCellObstacle(point.x, point.y - 1)) {
+		} else if (mapHandler.isCellObstacle(point.x, point.y)) {
 			world.notifyWorldListeners(State.GAME_OVER);
 		}
 		return false;
 	}
 
-	/**
-	 * 
-	 * @param area
-	 * @return Tiles in the given area
-	 */
 	public ArrayList<Point> getTestTiles(Rectangle area, int order) {
 		ArrayList<Point> tiles = new ArrayList<Point>();
 		if (order == 0) {
+			//DONE TODO
 			for (int j = 0; j < area.height; j++) {
 				for (int i = 0; i < area.width; i++) {
-					addPoint(area.x + i, area.y - j, tiles);
+					addPoint(area.x + i, area.y - j - 1, tiles);
 				}
 			}
 			return tiles;
 		} else {
+			//DONE TODO
 			for (int j = 0; j < area.width; j++) {
 				for (int i = 0; i < area.height; i++) {
-					addPoint(area.x + j, area.y - i, tiles);
+					addPoint(area.x + j, area.y - i - 1, tiles);
 				}
 			}
 			return tiles;
 		}
-	}
-
-	/**
-	 * @return The amount of tiles below the player that is going to be passed
-	 *         during the next player update
-	 */
-	private int getAreaHeight() {
-		if (visualY(playerSpeed) <= 0) {
-			return (int) (Math.abs(visualY(playerSpeed) + gravity) + 1 + getPositionOnTileY());
-		}
-		return 0;
-	}
-
-	/**
-	 * 
-	 * @return The amount of tiles to the left of player that is going to be
-	 *         passed during the next player update
-	 */
-	private int getAreaWidth() {
-		return (int) (playerSpeed.getX() + 1 + getPositionOnTileY());
-	}
-
-	private float getPositionOnTileY() {
-		return visualY(playerPos) - (int) visualY(playerPos);
 	}
 
 	private void addPoint(int x, int y, ArrayList<Point> tiles) {

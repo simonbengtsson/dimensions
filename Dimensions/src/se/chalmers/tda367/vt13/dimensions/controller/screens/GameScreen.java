@@ -105,7 +105,9 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 			gameInputWasPressed = true;
 		} else {
 			if(gameInputWasPressed) {
-				world.getPlayer().swapDirection();
+				if(world.getDimension() == Dimension.XZ){
+					world.getPlayer().swapDirection();
+				}
 				gameInputWasPressed = false;
 			}
 		}

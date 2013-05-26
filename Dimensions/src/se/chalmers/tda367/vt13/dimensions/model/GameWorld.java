@@ -20,7 +20,7 @@ public class GameWorld {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
 
-	private static final float DEFAULT_GRAVITY = -0.001f;
+	private static final float DEFAULT_GRAVITY = -0.02f;
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Chaser chaser;
@@ -94,11 +94,12 @@ public class GameWorld {
 	}
 
 	private void updatePlayer() {
+		
 		if (currentDimension == Dimension.XY) {
 			if (!tileCollisionHandler.isGroundBelow()) {
 				player.updateY(gravity);
 			}
-
+			
 			if (!tileCollisionHandler.isGroundRight()) {
 				player.updateX();
 			}

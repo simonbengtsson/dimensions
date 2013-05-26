@@ -8,10 +8,10 @@ package se.chalmers.tda367.vt13.dimensions.model;
 @SuppressWarnings("serial")
 public class Player extends GameObject {
 
-	private static final float MAX_VELOCITY_Y = 0.5f;
+	private static final float MAX_VELOCITY_Y = 0.9f;
 	private static final float DEFAULT_XSPEED = 0.2f;
 	private static final float DEFAULT_ZSPEED = 0.3f;
-	private static final float DEFAULT_JUMP_SPEED = 1.2f;
+	private static final float DEFAULT_JUMP_SPEED = 0.8f;
 	private boolean isDirectionUp;
 	private float jumpSpeed;
 	private boolean isGrounded = false;
@@ -24,7 +24,7 @@ public class Player extends GameObject {
 	 * Creates player with default values
 	 */
 	public Player() {
-		this(new Vector3(10, 10, 10), new Vector3(2f, 3f, 3f), new Vector3(
+		this(new Vector3(0, 2, 10), new Vector3(2f, 3f, 3f), new Vector3(
 				DEFAULT_XSPEED, 0, DEFAULT_ZSPEED), DEFAULT_JUMP_SPEED, false);
 	}
 
@@ -51,7 +51,9 @@ public class Player extends GameObject {
 	 * @param gravity
 	 */
 	public void updateY(float gravity) {
-		getSpeed().setY(getSpeed().getY() + gravity);
+		if (Math.abs(getSpeed().getY()) + gravity < MAX_VELOCITY_Y) {
+			getSpeed().setY(getSpeed().getY() + gravity);
+		}
 		getPosition().setY(getPosition().getY() + getSpeed().getY());
 	}
 
@@ -87,7 +89,7 @@ public class Player extends GameObject {
 	}
 
 	public void swapDirection() {
-		if(isDirectionUp) {
+		if (isDirectionUp) {
 			isDirectionUp = false;
 			getSpeed().setZ(baseZSpeed);
 		} else {
