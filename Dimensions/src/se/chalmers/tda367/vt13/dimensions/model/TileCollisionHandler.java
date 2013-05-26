@@ -6,9 +6,15 @@ import java.util.ArrayList;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
 
+/**
+ * 
+ * @author Simon Bengtsson
+ * 
+ */
 public class TileCollisionHandler {
 
 	private GameWorld world;
+	private Dimension dimension;
 	private Player player;
 	private Vector3 playerSize;
 	private Vector3 playerSpeed;
@@ -21,57 +27,73 @@ public class TileCollisionHandler {
 		this.mapHandler = mapHandler;
 		this.gravity = world.getGravity();
 		this.player = world.getPlayer();
+		this.dimension = world.getDimension();
 		playerSize = player.getSize();
 		playerSpeed = player.getSpeed();
 		playerPos = player.getPosition();
 	}
 
+	private float visualY(Vector3 vector3) {
+		if (dimension == Dimension.XY) {
+			return vector3.getY();
+		} else {
+			return vector3.getZ();
+		}
+	}
+
 	public boolean isGroundBelow() {
 		player.setGrounded(false);
-		for (Point point : getTiles(getTileAreaBottom(), 0)) {
-			if(checkCollision(point)){
-				setPlayerOnTile(point.y);
+		for (Point point : getTestTiles(getTestAreaBottom(), 0)) {
+			if (checkCollision(point)) {
+				if (dimension == Dimension.XY) {
+					// setPlayerOnTile(point.y);
+				}
 				return true;
 			}
-				 
+
 		}
 		return false;
 	}
 
-	public boolean isGroundLeft() {
+	public boolean isGroundRight() {
 		player.setStuck(false);
-		for (Point point : getTiles(getTileAreaLeft(), 1)) {
-			if(checkCollision(point)){
-				setPlayerBeforeTile(point.x);
+		for (Point point : getTestTiles(getTestAreaRight(), 1)) {
+			if (checkCollision(point)) {
+				if (dimension == Dimension.XY) {
+					setPlayerBeforeTile(point.x);
+				}
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private Rectangle getTileAreaBottom() {
+	private Rectangle getTestAreaBottom() {
 		Rectangle area = new Rectangle();
 		area.height = getAreaHeight();
 		area.width = (int) Math.ceil(player.getSize().getX());
-		area.y = (int) playerPos.getY();
+		area.y = (int) (visualY(playerPos) - player.getSpeed().getY() + 1);
 		area.x = (int) playerPos.getX();
+		System.out.println(area);
 		return area;
 	}
 
-	private Rectangle getTileAreaLeft() {
+	private Rectangle getTestAreaRight() {
 		Rectangle area = new Rectangle();
-		area.height = (int) Math.ceil(playerSize.getY());
+		area.height = (int) Math.ceil(visualY(playerSize));
 		area.width = getAreaWidth();
-		area.y = (int) playerPos.getY() + area.height;
-		area.x = (int) Math.ceil(playerPos.getX()
-				+ (int) Math.ceil(player.getSize().getX()));
+		area.y = (int) visualY(playerPos) + area.height;
+		area.x = (int) (playerPos.getX() + player.getSize().getX() + player
+				.getSpeed().getX());
 		return area;
 	}
 
 	private void setPlayerOnTile(int tilePosY) {
 		playerPos.setY(tilePosY);
 		player.setGrounded(true);
-		player.getSpeed().setY(0);
+		if (dimension == Dimension.XY) {
+			player.getSpeed().setY(0);
+		}
 	}
 
 	private void setPlayerBeforeTile(int tilePosX) {
@@ -100,7 +122,7 @@ public class TileCollisionHandler {
 	 * @param area
 	 * @return Tiles in the given area
 	 */
-	public ArrayList<Point> getTiles(Rectangle area, int order) {
+	public ArrayList<Point> getTestTiles(Rectangle area, int order) {
 		ArrayList<Point> tiles = new ArrayList<Point>();
 		if (order == 0) {
 			for (int j = 0; j < area.height; j++) {
@@ -124,8 +146,8 @@ public class TileCollisionHandler {
 	 *         during the next player update
 	 */
 	private int getAreaHeight() {
-		if (playerSpeed.getY() <= 0) {
-			return (int) (Math.abs(playerSpeed.getY() + gravity) + 1 + getPositionOnTileY());
+		if (visualY(playerSpeed) <= 0) {
+			return (int) (Math.abs(visualY(playerSpeed) + gravity) + 1 + getPositionOnTileY());
 		}
 		return 0;
 	}
@@ -140,7 +162,7 @@ public class TileCollisionHandler {
 	}
 
 	private float getPositionOnTileY() {
-		return playerPos.getY() - (int) playerPos.getY();
+		return visualY(playerPos) - (int) visualY(playerPos);
 	}
 
 	private void addPoint(int x, int y, ArrayList<Point> tiles) {

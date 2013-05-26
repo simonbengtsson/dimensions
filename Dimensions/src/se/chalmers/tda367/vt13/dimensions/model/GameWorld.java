@@ -16,6 +16,7 @@ public class GameWorld {
 		GAME_RUNNING, GAME_PAUSED, GAME_OVER, LEVEL_FINISHED, DIMENSION_CHANGED, DIMENSION_CHANGING;
 	}
 
+	private static final float DEFAULT_GRAVITY = -0.001f;
 	private List<GameObject> gameObjects;
 	private Player player;
 	private Chaser chaser;
@@ -47,16 +48,16 @@ public class GameWorld {
 	public GameWorld(Player player, Level level, MapHandler mapHandler) {
 		this.level = level;
 		this.player = player;
-		this.collisionHandler = new CollisionHandler();
-		this.tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
-		this.chaser = new Chaser();
-		this.gameObjects = level.getGameObjects();
+		chaser = new Chaser();
+		gameObjects = level.getGameObjects();
 		gameObjects.add(chaser);
-		this.gravity = level.getGravity();
-		this.currentDimension = level.getStartingDimension();
-		this.baseGravity = level.getGravity();
-		this.currentState = State.GAME_RUNNING;
+		gravity = DEFAULT_GRAVITY;
+		currentDimension = Dimension.XY;
+		baseGravity = gravity;
+		currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);
+		collisionHandler = new CollisionHandler();
+		tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
 	}
 
 	public void update() {
@@ -66,12 +67,6 @@ public class GameWorld {
 			break;
 		case GAME_PAUSED:
 			notifyWorldListeners(State.GAME_PAUSED);
-			break;
-		case DIMENSION_CHANGED:
-			notifyWorldListeners(State.DIMENSION_CHANGED);
-			currentState = State.GAME_RUNNING;
-			player.setGrounded(true);
-			updateRunning();
 			break;
 		case DIMENSION_CHANGING:
 			notifyWorldListeners(State.DIMENSION_CHANGING);
@@ -90,18 +85,28 @@ public class GameWorld {
 	public void updateRunning() {
 		updatePlayer();
 		chaser.update();
-		collisionHandler.checkCollisions(this);
 		checkGameOver();
 		checkLevelFinished();
 	}
-	
-	private void updatePlayer(){
-		if(!tileCollisionHandler.isGroundBelow()){
-			player.updateY(gravity);
+
+	private void updatePlayer() {
+		if (currentDimension == Dimension.XY) {
+			if (!tileCollisionHandler.isGroundBelow()) {
+				player.updateY(gravity);
+			}
+
+			if (!tileCollisionHandler.isGroundRight()) {
+				player.updateX();
+			}
+		} else {
+			if (tileCollisionHandler.isGroundRight()) {
+				player.updateX();
+				player.updateZ();
+			} else {
+				notifyWorldListeners(State.GAME_OVER);
+			}
 		}
-		if(!tileCollisionHandler.isGroundLeft()){
-			player.updateX();
-		}
+		collisionHandler.checkCollisions(this);
 	}
 
 	/**
@@ -110,12 +115,14 @@ public class GameWorld {
 	public void swapDimension() {
 		if (currentDimension == Dimension.XY) {
 			currentDimension = Dimension.XZ;
-			player.getSpeed().setZ(player.getBaseZSpeed());
+			player.prepareForXZ();
+
 		} else {
 			currentDimension = Dimension.XY;
+			player.prepareForXY();
 		}
-		currentState = State.DIMENSION_CHANGED;
-
+		notifyWorldListeners(State.DIMENSION_CHANGED);
+		currentState = State.GAME_RUNNING;
 	}
 
 	public void startDimensionTimer() {
@@ -132,14 +139,11 @@ public class GameWorld {
 	}
 
 	/**
-	 * Game over conditions
-	 * 
-	 * @return if game over
+	 * Game over Check
 	 */
 	public void checkGameOver() {
 		if (player.getPosition().getY() < 0
-				|| chaser.getPosition().getX() >= player.getPosition().getX()
-				|| (currentDimension == Dimension.XZ && !player.isGrounded())) {
+				|| chaser.getPosition().getX() >= player.getPosition().getX()) {
 			notifyWorldListeners(State.GAME_OVER);
 		}
 	}
