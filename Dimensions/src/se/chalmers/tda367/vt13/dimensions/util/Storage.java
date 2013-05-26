@@ -15,32 +15,36 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Storage {
 
-	public static void saveProgress(){
-		Collection<ProgressLevel> progress = LevelHandler.getInstance().getProgressLevels();
+	public static void saveProgress() {
+		Collection<ProgressLevel> progress = LevelHandler.getInstance()
+				.getProgressLevels();
 		FileHandle file = null;
 		FileHandle folder = new FileHandle(new File(Constants.SAVE_FOLDER));
-		if(!folder.exists()) folder.mkdirs();
-		
+		if (!folder.exists())
+			folder.mkdirs();
+
 		file = folder.child(Constants.SAVE_FILE);
 		try {
 			new ObjectOutputStream(file.write(false)).writeObject(progress);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			
+
 	}
-	
-	public static boolean loadProgress(){
+
+	public static boolean loadProgress() {
 		FileHandle file = null;
-		if(Gdx.files.isLocalStorageAvailable()){
-			file = Gdx.files.internal(Constants.SAVE_FOLDER + "/" + Constants.SAVE_FILE);
+		if (Gdx.files.isLocalStorageAvailable()) {
+			file = Gdx.files.internal(Constants.SAVE_FOLDER + "/"
+					+ Constants.SAVE_FILE);
 		}
 		Collection<ProgressLevel> pl = null;
 		try {
-			pl =(Collection<ProgressLevel>) new ObjectInputStream(file.read()).readObject();
-		} catch(GdxRuntimeException e){
-			
-		}catch (ClassNotFoundException e) {
+			pl = (Collection<ProgressLevel>) new ObjectInputStream(file.read())
+					.readObject();
+		} catch (GdxRuntimeException e) {
+
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

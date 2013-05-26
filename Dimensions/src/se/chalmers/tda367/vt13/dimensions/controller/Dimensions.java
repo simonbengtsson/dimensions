@@ -11,11 +11,12 @@ public class Dimensions extends Game {
 
 	@Override
 	public void create() {
-		if(!Storage.loadProgress()){
-			LevelHandler.getInstance().load(); // Loads all new Levels into the game
+		if (!Storage.loadProgress()) {
+			LevelHandler.getInstance().load(); // Loads all new Levels into the
+												// game
 		}
 		Assets.loadAllAudioVisual();
-		
+
 		// Set startup screen
 		setScreen(new SplashScreen(this));
 	}

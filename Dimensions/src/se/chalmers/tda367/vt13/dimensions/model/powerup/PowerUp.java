@@ -2,7 +2,6 @@ package se.chalmers.tda367.vt13.dimensions.model.powerup;
 
 import se.chalmers.tda367.vt13.dimensions.model.PowerUpHandler;
 
-
 /**
  * Interface to be implemented by all PowerUps.
  * 

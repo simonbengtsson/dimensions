@@ -7,12 +7,13 @@ import org.junit.Test;
 
 /**
  * Testing the CollisionHandler.
+ * 
  * @author simon
- *
+ * 
  */
 public class TileCollisionHandlerTests {
 	@Test
 	public void tileMapCollisions() {
-		
+
 	}
 }
