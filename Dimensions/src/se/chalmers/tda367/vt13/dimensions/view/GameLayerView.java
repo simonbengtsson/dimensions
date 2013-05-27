@@ -79,8 +79,7 @@ public class GameLayerView {
 		mainTable.debug();
 		mainTable.setFillParent(true);
 		LabelStyle pauseLabelStyle = new LabelStyle(headerFont, Color.WHITE);
-		mainTable.bottom();
-		mainTable.add(new Label("Unpause with ESC", pauseLabelStyle));
+		mainTable.add(new Label("Unpause", pauseLabelStyle));
 		pauseStage.addActor(mainTable);
 	}
 
