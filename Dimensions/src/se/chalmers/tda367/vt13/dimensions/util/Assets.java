@@ -19,8 +19,10 @@ public class Assets {
 	public static final String SPIKEOBSTACLE_IMAGE = "data/spikes.png";
 	public static final String SPIKEOBSTACLE_SOUND = "";
 
-	public static final String PLAYER_TEXTURE = "data/player-mini.png";
-	public static final String CHASER_TEXTURE = "data/PlayerImg.png";
+	public static final String PLAYER_MINI_TEXTURE = "data/player-mini.png";
+	public static final String CHASER_TEXTURE = "data/agent.png";
+	public static final String PLAYERXZ_TEXTURE = "data/player-xy.png";
+
 
 	public static final String BG_IMAGE = "data/bg.jpg";
 
@@ -136,12 +138,12 @@ public class Assets {
 	}
 
 	public static void loadAllAudioVisual() {
-		registerTexture(PLAYER_TEXTURE);
+		registerTexture(PLAYER_MINI_TEXTURE);
 		registerTexture(CHASER_TEXTURE);
 		registerTexture(BG_IMAGE);
 		registerTextureRegion("bg",
 				new TextureRegion(Assets.getTexture(Assets.BG_IMAGE)));
-		registerTexture("data/animation_sheet.png");
+		registerTexture("data/agent.png");
 		registerTexture("data/play.png");
 		registerTexture("data/level_select.png");
 		registerTexture("data/settings.png");

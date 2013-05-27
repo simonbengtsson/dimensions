@@ -142,7 +142,7 @@ public class LevelHandler {
 	public void load() {
 		// Old level
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
-		gameObjects.add(new DimensionChangePowerUp(new Vector3(30, 4, 10),
+		gameObjects.add(new DimensionChangePowerUp(new Vector3(20, 4, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		List<GameObject> exampleList = new ArrayList<GameObject>();
 		exampleList.add(new DimensionChangePowerUp(new Vector3(25, 8, 10),
@@ -154,7 +154,7 @@ public class LevelHandler {
 
 		// Nature Level
 		List<GameObject> natureList = new ArrayList<GameObject>();
-		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15, 10),
+		natureList.add(new DimensionChangePowerUp(new Vector3(85, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		Level natureLevel = new Level("Nature", natureList,
 				"tiled_maps/natureXY.tmx", "tiled_maps/natureXZ.tmx", 205);
@@ -171,22 +171,12 @@ public class LevelHandler {
 
 		demoList.add(new LowGravityPowerUp(new Vector3(166, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		demoList.add(new SpeedPowerUp(new Vector3(170, 15, 10), new Vector3(1,
-				1, 1), new Vector3()));
 		demoList.add(new LowGravityPowerUp(new Vector3(293, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		demoList.add(new SpeedPowerUp(new Vector3(294, 15, 10), new Vector3(1,
-				1, 1), new Vector3()));
 		Level demoLevel = new Level("Demo", demoList, "tiled_maps/demoXY.tmx",
 				"tiled_maps/demoXZ.tmx", 308);
 		registerLevel(demoLevel);
 
-		List<GameObject> crazyList = new ArrayList<GameObject>();
-		natureList.add(new DimensionChangePowerUp(new Vector3(60, 15, 10),
-				new Vector3(1, 1, 1), new Vector3()));
-		Level crazyLevel = new Level("Crazy", crazyList,
-				"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
-		registerLevel(crazyLevel);
 
 		// Remove faulty progressfiles. Run last.
 		cleanUpProgressLevels();

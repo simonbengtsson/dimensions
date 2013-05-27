@@ -24,9 +24,9 @@ public class ChaserTest {
 		init();
 		assertTrue(chaser1.equals(chaser2));
 		Chaser chaser3 = new Chaser(new Vector3(8, 2, 0), new Vector3(2, 2, 2),
-				new Vector3(0.4f, 0, 0), "data/PlayerImg.png", "");
+				new Vector3(0.4f, 0, 0), "data/agent.png", "");
 		Chaser chaser4 = new Chaser(new Vector3(8, 2, 0), new Vector3(2, 2, 2),
-				new Vector3(0.4f, 0, 0), "data/PlayerImg.png", "");
+				new Vector3(0.4f, 0, 0), "data/agent.png", "");
 
 		assertTrue(chaser3 != chaser4);
 		assertTrue(chaser3.equals(chaser4));

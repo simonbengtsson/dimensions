@@ -12,7 +12,7 @@ public class Chaser extends GameObject {
 	 */
 	public Chaser() {
 		this(new Vector3(-2, 2, 0), new Vector3(2, 2, 2), new Vector3(0.2f, 0, 0),
-				"data/PlayerImg.png", "");
+				"data/agent.png", "");
 	}
 
 	/**

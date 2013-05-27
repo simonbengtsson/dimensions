@@ -95,7 +95,7 @@ public class GameLayerView {
 			actionStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 			actionStage.draw();
 		}
-		batch.draw(Assets.getTexture(Assets.PLAYER_TEXTURE),
+		batch.draw(Assets.getTexture(Assets.PLAYER_MINI_TEXTURE),
 				world.getProgress() * Gdx.graphics.getWidth(), 10, 40, 40);
 		batch.draw(Assets.getTexture(Assets.CHASER_TEXTURE),
 				world.getChaserProgress() * Gdx.graphics.getWidth(), 10, 40, 40);

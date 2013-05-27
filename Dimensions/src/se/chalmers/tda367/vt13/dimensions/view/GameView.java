@@ -92,7 +92,7 @@ public class GameView {
 	}
 
 	private void initWalkAnimation() {
-		walkSheet = Assets.getTexture("data/animation_sheet.png");
+		walkSheet = Assets.getTexture("data/player-xy.png");
 		TextureRegion[][] regions = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
 						/ FRAME_ROWS);
@@ -103,7 +103,7 @@ public class GameView {
 				walkFrames[index++] = regions[i][j];
 			}
 		}
-		walkAnimation = new Animation(0.025f, walkFrames);
+		walkAnimation = new Animation(0.05f, walkFrames);
 		stateTime = 0f;
 	}
 

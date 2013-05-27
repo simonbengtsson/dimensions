@@ -1,7 +1,7 @@
 package se.chalmers.tda367.vt13.dimensions.model;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+
+
 import java.util.ArrayList;
 
 import se.chalmers.tda367.vt13.dimensions.model.GameWorld.State;
