@@ -11,8 +11,7 @@ public class Chaser extends GameObject {
 	 * Create a Chaser with default values.
 	 */
 	public Chaser() {
-		// TODO set speed of chaser again
-		this(new Vector3(-2, 2, 0), new Vector3(2, 2, 2), new Vector3(0, 0, 0),
+		this(new Vector3(-2, 2, 0), new Vector3(2, 2, 2), new Vector3(0.2f, 0, 0),
 				"data/PlayerImg.png", "");
 	}
 

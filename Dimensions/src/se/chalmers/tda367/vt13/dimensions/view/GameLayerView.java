@@ -58,8 +58,6 @@ public class GameLayerView {
 		SequenceAction sequence = Actions.sequence(
 				Actions.moveTo(0, 200, 0.8f), Actions.fadeOut(0.5f),
 				Actions.removeActor());
-
-		// actionStage.addAction(para);
 		actionStage.addAction(sequence);
 
 	}
@@ -69,8 +67,6 @@ public class GameLayerView {
 		mainTable.setFillParent(true);
 		LabelStyle pauseLabelStyle = new LabelStyle(headerFont, Color.WHITE);
 		mainTable.add().expand();
-		mainTable.row();
-		mainTable.add(new Label("chaser", pauseLabelStyle)).bottom();
 		mainStage.addActor(mainTable);
 	}
 
@@ -83,8 +79,7 @@ public class GameLayerView {
 		mainTable.debug();
 		mainTable.setFillParent(true);
 		LabelStyle pauseLabelStyle = new LabelStyle(headerFont, Color.WHITE);
-		mainTable.bottom();
-		mainTable.add(new Label("Unpause with ESC", pauseLabelStyle));
+		mainTable.add(new Label("Unpause", pauseLabelStyle));
 		pauseStage.addActor(mainTable);
 	}
 
