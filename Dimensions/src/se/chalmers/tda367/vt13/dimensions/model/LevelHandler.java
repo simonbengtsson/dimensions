@@ -17,7 +17,7 @@ public class LevelHandler {
 	private Deque<ProgressLevel> progressLevels;
 	private Map<String, Level> levels;
 	private static LevelHandler instance;
-	private Level lastPlayed;
+	private String lastPlayed;
 
 	private LevelHandler() {
 		progressLevels = new ArrayDeque<ProgressLevel>();
@@ -44,7 +44,6 @@ public class LevelHandler {
 	public void registerLevel(Level l) {
 		levels.put(l.getName(), l);
 		if(getProgressFor(l) == null){
-			System.out.println("Did not find progress.");
 			progressLevels.addLast(new ProgressLevel(l.getName()));
 		}
 		
@@ -73,17 +72,17 @@ public class LevelHandler {
 	}
 
 	public Level getLastPlayed() {
-		return lastPlayed;
+		return levels.get(lastPlayed).clone();
 	}
 
-	public void setLastPlayed(Level l) {
-		lastPlayed = l;
+	public void setLastPlayed(String s) {
+		lastPlayed = s;
 	}
 
 	public boolean loadProgressFromFile(Collection<ProgressLevel> p) {
 		if (p != null && !p.isEmpty()) {
 			progressLevels = new ArrayDeque<ProgressLevel>(p);
-			System.out.println("Progress filled (" + progressLevels.size() + ")");
+			System.out.println("Progress file found for " + progressLevels.size() + " levels.");
 			return true;
 		}
 		return false;
@@ -94,7 +93,7 @@ public class LevelHandler {
 		Iterator<ProgressLevel> iter = progressLevels.iterator();
 		while (iter.hasNext()) {
 			ProgressLevel p = iter.next();
-			if (p.getLevel() == l.getName()) {
+			if (p.getLevel().equals(l.getName())) {
 				returning = p;
 				return p;
 			}
@@ -103,7 +102,7 @@ public class LevelHandler {
 	}
 
 	public Level getLevel(String s){
-		return levels.get(s);
+		return levels.get(s).clone();
 	}
 	
 	public ProgressLevel getProgressLevel(int i) {
@@ -111,7 +110,7 @@ public class LevelHandler {
 	}
 	
 	public Level getLevel(int i){
-		return levels.get(getProgressLevel(i).getLevel());
+		return levels.get(getProgressLevel(i).getLevel()).clone();
 	}
 
 	public void gameFinished(Level l, int score, boolean completedLevel) {

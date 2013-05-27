@@ -160,7 +160,7 @@ public class GameScreen implements Screen, SoundObserver, WorldListener {
 		case GAME_OVER:
 			LevelHandler.getInstance().gameFinished(world.getLevel(),
 					world.getScore(), false);
-			LevelHandler.getInstance().setLastPlayed(world.getLevel());
+			LevelHandler.getInstance().setLastPlayed(world.getLevel().getName());
 			Storage.saveProgress();
 			game.setScreen(new GameOverScreen(game));
 			break;

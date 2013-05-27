@@ -95,10 +95,7 @@ public class Level implements Serializable, Cloneable {
 
 	@Override
 	public Level clone() {
-		ArrayList<GameObject> clonedGameObjects = new ArrayList<GameObject>();
-		for (GameObject gameObject : gameObjects) {
-			clonedGameObjects.add(gameObject.clone());
-		}
+		ArrayList<GameObject> clonedGameObjects = new ArrayList<GameObject>(gameObjects);
 		return new Level(levelName, gravity, clonedGameObjects,
 				startingDimension, mapXYPath, mapXZPath, length);
 	}

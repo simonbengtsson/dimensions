@@ -2,6 +2,7 @@
 Dimensions/reports/
 Dimensions-android/bin/dexedLibs/
 Dimensions-android/bin/res/
+*/save/lastSave.dat
 
 #Eclipse metadata folder#
 .metadata/
