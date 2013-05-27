@@ -166,15 +166,19 @@ public class LevelHandler {
 				new Vector3(1, 1, 1), new Vector3()));
 		demoList.add(new DimensionChangePowerUp(new Vector3(110, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
-		demoList.add(new DimensionChangePowerUp(new Vector3(110, 15, 10),
+		demoList.add(new DimensionChangePowerUp(new Vector3(220, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 
 		demoList.add(new LowGravityPowerUp(new Vector3(166, 15, 10),
 				new Vector3(1, 1, 1), new Vector3()));
 		demoList.add(new SpeedPowerUp(new Vector3(170, 15, 10), new Vector3(1,
 				1, 1), new Vector3()));
+		demoList.add(new LowGravityPowerUp(new Vector3(293, 15, 10),
+				new Vector3(1, 1, 1), new Vector3()));
+		demoList.add(new SpeedPowerUp(new Vector3(294, 15, 10), new Vector3(1,
+				1, 1), new Vector3()));
 		Level demoLevel = new Level("Demo", demoList, "tiled_maps/demoXY.tmx",
-				"tiled_maps/demoXZ.tmx", 205);
+				"tiled_maps/demoXZ.tmx", 308);
 		registerLevel(demoLevel);
 
 		List<GameObject> crazyList = new ArrayList<GameObject>();
