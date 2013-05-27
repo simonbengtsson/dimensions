@@ -10,15 +10,20 @@ import se.chalmers.tda367.vt13.dimensions.model.powerup.PowerUp;
  * Class handling all types of collisions.
  */
 public class CollisionHandler {
-
+	private GameWorld world;
+	
+	public CollisionHandler(GameWorld world){
+		this.world = world;
+	}
+	
 	/**
 	 * Collision testing with tiles and game objects.
 	 * 
 	 * @param world
 	 *            the Game World
 	 */
-	public void checkCollisions(GameWorld world) {
-		checkObjectCollisions(world);
+	public void checkCollisions() {
+		checkObjectCollisions();
 	}
 
 	/**
@@ -27,15 +32,15 @@ public class CollisionHandler {
 	 * @param world
 	 *            the Game World
 	 */
-	private void checkObjectCollisions(GameWorld world) {
+	private void checkObjectCollisions() {
 		if (world.getDimension() == Dimension.XY) {
-			checkObjectCollisionsXY(world);
+			checkObjectCollisionsXY();
 		} else if (world.getDimension() == Dimension.XZ) {
-			checkObjectCollisionsXZ(world);
+			checkObjectCollisionsXZ();
 		}
 	}
 
-	private void checkObjectCollisionsXY(GameWorld world) {
+	private void checkObjectCollisionsXY() {
 		Player player = world.getPlayer();
 		List<GameObject> gameObjects = world.getGameObjects();
 		Iterator<GameObject> iterator = gameObjects.iterator();
@@ -47,8 +52,7 @@ public class CollisionHandler {
 					player.setGrounded(true);
 					adjustPosition(player, gameObject);
 				} else if (gameObject instanceof PowerUp) {
-					PowerUpHandler powerUpHandler = NormalPowerUpHandler
-							.getInstance(world);
+					PowerUpHandler powerUpHandler = new NormalPowerUpHandler(world);
 					((PowerUp) gameObject).use(powerUpHandler);
 					iterator.remove();
 				}
@@ -56,7 +60,7 @@ public class CollisionHandler {
 		}
 	}
 
-	private void checkObjectCollisionsXZ(GameWorld world) {
+	private void checkObjectCollisionsXZ() {
 		Player player = world.getPlayer();
 		List<GameObject> gameObjects = world.getGameObjects();
 		Iterator<GameObject> iterator = gameObjects.iterator();
@@ -64,8 +68,7 @@ public class CollisionHandler {
 			GameObject gameObject = iterator.next();
 			if (checkCollisionXZ(player, gameObject)) {
 				if (gameObject instanceof PowerUp) {
-					PowerUpHandler powerUpHandler = NormalPowerUpHandler
-							.getInstance(world);
+					PowerUpHandler powerUpHandler = new NormalPowerUpHandler(world);
 					((PowerUp) gameObject).use(powerUpHandler);
 					iterator.remove();
 				}

@@ -5,16 +5,12 @@ package se.chalmers.tda367.vt13.dimensions.model;
  */
 public class NormalPowerUpHandler implements PowerUpHandler {
 
-	private static NormalPowerUpHandler instance = null;
 	private GameWorld world;
 	private final float lowGravityModifier = 0.9f;
 	private final float slowModifier = 0.5f;
 	private final float speedModifier = 2f;
 
-	/**
-	 * Constructor is private to prevent initialization.
-	 */
-	private NormalPowerUpHandler(GameWorld world) {
+	public NormalPowerUpHandler(GameWorld world) {
 		this.world = world;
 	}
 
@@ -46,13 +42,6 @@ public class NormalPowerUpHandler implements PowerUpHandler {
 			world.getPlayer().getSpeed()
 					.setX(world.getPlayer().getSpeed().getX() * speedModifier);
 		}
-	}
-
-	public static PowerUpHandler getInstance(GameWorld world) {
-		if (instance == null) {
-			instance = new NormalPowerUpHandler(world);
-		}
-		return instance;
 	}
 
 }

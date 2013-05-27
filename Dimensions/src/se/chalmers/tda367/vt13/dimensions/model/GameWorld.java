@@ -56,7 +56,7 @@ public class GameWorld {
 		baseGravity = gravity;
 		currentState = State.GAME_RUNNING;
 		cp = new CheckPoint(this);
-		collisionHandler = new CollisionHandler();
+		collisionHandler = new CollisionHandler(this);
 		tileCollisionHandler = new TileCollisionHandler(this, mapHandler);
 	}
 
@@ -114,7 +114,7 @@ public class GameWorld {
 				notifyWorldListeners(State.GAME_OVER);
 			}
 		}
-		collisionHandler.checkCollisions(this);
+		collisionHandler.checkCollisions();
 	}
 
 	/**

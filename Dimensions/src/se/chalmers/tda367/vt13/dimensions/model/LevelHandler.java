@@ -43,10 +43,25 @@ public class LevelHandler {
 	 */
 	public void registerLevel(Level l) {
 		levels.put(l.getName(), l);
-		if(getProgressFor(l) == null){
+		if (getProgressFor(l) == null) {
 			progressLevels.addLast(new ProgressLevel(l.getName()));
 		}
-		
+
+	}
+
+	/**
+	 * Run after adding levels in case of a progress have been saved for a level not
+	 * in use.
+	 */
+	private void cleanUpProgressLevels() {
+		Iterator<ProgressLevel> iter = progressLevels.iterator();
+		while (iter.hasNext()) {
+			ProgressLevel p = iter.next();
+			if (levels.get(p.getLevel()) == null) {
+				iter.remove();
+				System.out.println("Deleted '" + p.getLevel() + "' from list.");
+			}
+		}
 	}
 
 	public Collection<ProgressLevel> getProgressLevels() {
@@ -82,7 +97,8 @@ public class LevelHandler {
 	public boolean loadProgressFromFile(Collection<ProgressLevel> p) {
 		if (p != null && !p.isEmpty()) {
 			progressLevels = new ArrayDeque<ProgressLevel>(p);
-			System.out.println("Progress file found for " + progressLevels.size() + " levels.");
+			System.out.println("Progress file found for "
+					+ progressLevels.size() + " levels.");
 			return true;
 		}
 		return false;
@@ -101,15 +117,15 @@ public class LevelHandler {
 		return returning;
 	}
 
-	public Level getLevel(String s){
+	public Level getLevel(String s) {
 		return levels.get(s).clone();
 	}
-	
+
 	public ProgressLevel getProgressLevel(int i) {
 		return (ProgressLevel) progressLevels.toArray()[i];
 	}
-	
-	public Level getLevel(int i){
+
+	public Level getLevel(int i) {
 		return levels.get(getProgressLevel(i).getLevel()).clone();
 	}
 
@@ -168,5 +184,7 @@ public class LevelHandler {
 				"tiled_maps/crazyXY.tmx", "tiled_maps/crazyXZ.tmx", 205);
 		registerLevel(crazyLevel);
 
+		// Remove faulty progressfiles. Run last.
+		cleanUpProgressLevels();
 	}
 }

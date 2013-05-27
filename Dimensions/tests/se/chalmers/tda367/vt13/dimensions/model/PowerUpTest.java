@@ -80,7 +80,7 @@ public class PowerUpTest {
 
 		SpeedPowerUp speed = new SpeedPowerUp(new Vector3(30, 4, 10),
 				new Vector3(1, 1, 1), new Vector3());
-		PowerUpHandler powerUpHandler = NormalPowerUpHandler.getInstance(w);
+		PowerUpHandler powerUpHandler = new NormalPowerUpHandler(w);
 
 	
 

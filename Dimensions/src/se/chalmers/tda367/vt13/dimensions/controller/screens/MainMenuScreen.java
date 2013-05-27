@@ -45,7 +45,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		final Button exitButton = new MenuButton("data/exit.png");
 		exitButton.addListener(new ClickListener() {
 			public void clicked(InputEvent e, float x, float y) {
-				System.out.println("exit");
 				System.exit(0);
 			}
 		});
