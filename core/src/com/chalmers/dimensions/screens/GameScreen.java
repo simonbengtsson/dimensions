@@ -1,0 +1,215 @@
+package com.chalmers.dimensions.screens;
+
+import com.chalmers.dimensions.DimensionsGdxGame;
+import com.chalmers.dimensions.model.Dimension;
+import com.chalmers.dimensions.model.GameObject;
+import com.chalmers.dimensions.model.GameWorld;
+import com.chalmers.dimensions.model.GameWorld.State;
+import com.chalmers.dimensions.model.Level;
+import com.chalmers.dimensions.model.LevelHandler;
+import com.chalmers.dimensions.model.SoundObserver;
+import com.chalmers.dimensions.model.WorldListener;
+import com.chalmers.dimensions.util.Assets;
+import com.chalmers.dimensions.util.Storage;
+import com.chalmers.dimensions.util.TiledMapHandler;
+import com.chalmers.dimensions.view.GameLayerView;
+import com.chalmers.dimensions.view.GameView;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
+
+public class GameScreen implements Screen, SoundObserver, WorldListener {
+	private GameWorld world;
+	private GameView gameView;
+	private GameLayerView gameLayerView;
+	private DimensionsGdxGame game;
+	private Level nextLevel;
+	private boolean pauseWasPressed = false;
+	private boolean enterWasPressed = false;
+	private boolean gameInputWasPressed = false;
+
+	public GameScreen(DimensionsGdxGame game, Level level) {
+		this.game = game;
+		this.nextLevel = level;
+		init();
+	}
+
+	public void init() {
+		TiledMapHandler tiledMapHandler = new TiledMapHandler();
+		Level playLevel;
+		if (nextLevel != null) {
+			playLevel = nextLevel;
+		} else {
+			playLevel = LevelHandler.getInstance().getLevel(0);
+		}
+		world = new GameWorld(playLevel, tiledMapHandler);
+		world.addWorldListener(this);
+		gameView = new GameView(world, Assets.getTiledMap(playLevel
+				.getMapXYPath()), Assets.getTiledMap(playLevel.getMapXZPath()));
+		gameLayerView = new GameLayerView(world);
+		tiledMapHandler.setGameView(gameView);
+		loadSoundFiles();
+	}
+
+	private FPSLogger fl = new FPSLogger();
+
+	@Override
+	public void render(float delta) {
+		updateInput();
+		world.update();
+		switch (world.getCurrentState()) {
+		case GAME_PAUSED:
+			gameLayerView.drawPaused();
+			break;
+		default:
+			gameView.draw();
+			gameLayerView.draw();
+			break;
+		}
+		fl.log();
+		sleep(delta);
+	}
+
+	/**
+	 * If having a computer running faster then 60 fps, slow it down.
+	 * 
+	 * @param delta
+	 *            The time since last frame
+	 */
+	public void sleep(float delta) {
+		int frameTime = 16;
+		try {
+			if (delta * 1000 < frameTime) {
+				Thread.sleep((long) (frameTime - delta * 1000));
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Handles all input that isn't player navigation
+	 */
+	private void updateInput() {
+		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
+			if (world.getDimension() == Dimension.XY) {
+				world.getPlayer().jump();
+			} else if (world.getDimension() == Dimension.XZ) {
+				world.getPlayer().goStraight();
+			}
+			gameInputWasPressed = true;
+		} else {
+			if (gameInputWasPressed) {
+				if (world.getDimension() == Dimension.XZ) {
+					world.getPlayer().swapDirection();
+				}
+				gameInputWasPressed = false;
+			}
+		}
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
+			if (!enterWasPressed) {
+				world.resetToCheckPoint();
+				enterWasPressed = true;
+			}
+		} else {
+			enterWasPressed = false;
+		}
+
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			if (!pauseWasPressed) {
+				togglePause();
+				pauseWasPressed = true;
+			}
+		} else {
+			pauseWasPressed = false;
+		}
+	}
+
+	/**
+	 * Called when the game should be paused.
+	 */
+	private void togglePause() {
+		if (world.getCurrentState() == State.GAME_RUNNING) {
+			world.setCurrentState(State.GAME_PAUSED);
+		} else {
+			world.setCurrentState(State.GAME_RUNNING);
+		}
+	}
+
+	@Override
+	public void playSound(String s) {
+		Assets.playSound(s);
+	}
+
+	private void loadSoundFiles() {
+		for (GameObject g : world.getGameObjects()) {
+			g.addObserver(this);
+			Assets.registerSound(g.getSoundFileAsString());
+		}
+	}
+
+	/**
+	 * Performs updates if world state changes
+	 */
+	@Override
+	public void worldChanged(State worldState) {
+		switch (worldState) {
+		case GAME_OVER:
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
+					world.getScore(), false);
+			LevelHandler.getInstance().setLastPlayed(world.getLevel().getName());
+			Storage.saveProgress();
+			game.setScreen(new GameOverScreen(game));
+			break;
+		case DIMENSION_CHANGED:
+			gameView.changeMap(world.getDimension());
+			gameView.setBatchColor(Color.WHITE);
+			gameLayerView.setDimensionChange(false);
+			break;
+		case DIMENSION_CHANGING:
+			gameView.dimensionChanging();
+			gameLayerView.setDimensionChange(true);
+			break;
+		case LEVEL_FINISHED:
+			LevelHandler.getInstance().gameFinished(world.getLevel(),
+					world.getScore(), true);
+			Storage.saveProgress();
+			game.setScreen(new WinScreen(game));
+			break;
+		default:
+			break;
+		}
+	}
+
+	public GameWorld getGameModel() {
+		return world;
+	}
+
+	@Override
+	public void show() {
+	}
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void dispose() {
+
+	}
+}

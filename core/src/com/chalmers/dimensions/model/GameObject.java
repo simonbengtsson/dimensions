@@ -1,0 +1,125 @@
+package com.chalmers.dimensions.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class GameObject implements Serializable, SoundObservable,
+		Cloneable {
+
+	private static final long serialVersionUID = 1L;
+
+	private Vector3 position;
+	private Vector3 size;
+	private Vector3 speed;
+	private String soundFile;
+	private String imageFile;
+	private List<SoundObserver> observers = new ArrayList<SoundObserver>();
+
+	/**
+	 * Constructor to be used by sub classes.
+	 * 
+	 * @param position
+	 *            the position of the GameObject
+	 * @param size
+	 *            the size of the GameObject
+	 * @param speed
+	 *            the speed of the GameObject
+	 * @param imageFile
+	 *            string representing the imagefile
+	 * @param soundFile
+	 *            string representing the soundfile
+	 */
+	protected GameObject(Vector3 position, Vector3 size, Vector3 speed,
+			String imageFile, String soundFile) {
+		this.position = position;
+		this.size = size;
+		this.speed = speed;
+		this.soundFile = soundFile;
+		this.imageFile = imageFile;
+	}
+
+	@Override
+	public abstract GameObject clone();
+
+	public String toString() {
+		return "Position : " + position + " Size : " + size + " Speed : "
+				+ speed;
+	}
+
+	public Vector3 getPosition() {
+		return position;
+	}
+
+	public abstract boolean equals(Object o);
+
+	public int hashCode() {
+		double hash = 0;
+		hash = +this.getPosition().hashCode() * 9;
+		hash = +this.getSize().hashCode() * 13;
+		hash = +this.getSpeed().hashCode() * 17;
+		return (int) hash;
+
+	}
+
+	public Vector3 getSize() {
+		return size;
+	}
+
+	public Vector3 getSpeed() {
+		return speed;
+	}
+
+	public void setPosition(Vector3 position) {
+		this.position = position;
+	}
+
+	public void setSize(Vector3 size) {
+		this.size = size;
+	}
+
+	public void setSpeed(Vector3 speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * Makes it possible for the controller to store String's and the
+	 * corresponding Sound() in a map for fast access
+	 * 
+	 * @return
+	 */
+	public String getSoundFileAsString() {
+		return soundFile;
+	}
+
+	/**
+	 * Makes it possible for the view to store String's and the corresponding
+	 * Texture() in a map for fast access
+	 * 
+	 * @return
+	 */
+	public String getImagePath() {
+		return imageFile;
+	}
+
+	@Override
+	public void addObserver(SoundObserver s) {
+		observers.add(s);
+	}
+
+	@Override
+	public void removeObserver(SoundObserver s) {
+		observers.remove(s);
+	}
+
+	@Override
+	public List<SoundObserver> getObservers() {
+		return observers;
+	}
+
+	public void playSound() {
+		for (SoundObserver s : observers) {
+			s.playSound(soundFile);
+		}
+	}
+}
